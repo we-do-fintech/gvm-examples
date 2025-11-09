@@ -11,6 +11,8 @@ You can either browse the source code or test it using **live-server**:
 live-server .  # Then open your browser to view the examples
 ```
 
+See this repo live at: [gvm.showcase.getviamsg.wdft.ovh](https://gvm.showcase.getviamsg.wdft.ovh)
+
 ---
 
 ## Hide Strategy
