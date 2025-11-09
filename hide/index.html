@@ -42,6 +42,9 @@
         align-items: center;
         justify-content: center;
       }
+      .mini {
+        width: 480px;
+      }
     </style>
   </head>
 
@@ -60,7 +63,7 @@
     <!-- Template declaration for the payment modal - this will be omited during website render -->
     <template data-gvm-template="payment" data-gvm-template-inject-to="body">
       <dialog open>
-        <article>
+        <article class="mini">
           <!-- Header -->
           <header>
             <hgroup>
@@ -76,7 +79,7 @@
               <span data-gvm-bind-currency></span>
             </div>
             <div>
-              <span data-gvm-bind-qr>
+              <span class="flex" data-gvm-bind-qr>
                 <span aria-busy="true"></span>
               </span>
               <div class="flex items-center row">
