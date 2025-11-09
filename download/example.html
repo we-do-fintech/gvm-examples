@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>gvm.js - showcase</title>
+  <link rel="stylesheet" href="/assets/pico.css">
+  <style>
+    .pointer {
+      cursor: pointer;
+    }
+  </style>
+
+  <!-- Here I inject scripts gvm.js -->
+  <script src="https://esm.sh/@wdft/micropayments-sdk@latest/gvm.js" type="module"></script>
+
+  <!-- Customizations -->
+  <script>
+    // Enable debug logging in the console
+    window.wdftDebug = true;
+  </script>
+</head>
+
+<!-- Declare gvm basic values on the body tag such as currency, tenant, and condition; env is optional, demo can be used to simulate -->
+<!-- Try to add condition! then reload on small screen will work, on big not, check console logs
+  data-gvm-cond="device matchMedia 'max-width:768px,landscape:portrait'"  
+-->
+<!-- You can set env as "demo" to mock behaviour -->
+<body
+    data-gvm
+    data-gvm-tenant="wdft_simulator_qa"
+    data-gvm-env="qa"
+    data-gvm-currency="PLN">
+  <!-- Template declaration for the payment modal - this will be omited during website render -->
+  <template data-gvm-template="payment" data-gvm-template-inject-to="body">
+    <dialog open>
+      <div>
+        <div>
+          Time Remaining <span data-gvm-bind-time-remaining></span>
+        </div>
+        <div>
+          Price: <span data-gvm-bind-price></span> <span data-gvm-bind-currency></span>
+        </div>
+        <p 
+          data-gvm-bind-status
+          data-gvm-bind-status-initializing="Generating QR"
+          data-gvm-bind-status-waiting="Waiting for SMS"
+          data-gvm-bind-status-duplicated="Duplicated"
+          data-gvm-bind-status-resolved="Received! Unlocking content..."
+          data-gvm-bind-status-rejected="Issue occurred. Please try again"
+        ></p>
+        <div>
+          <span data-gvm-bind-qr>
+            <span aria-busy="true"></span>
+          </span>
+          <div>
+            <button data-gvm-bind-send-sms>Scan QR or Click</button>
+            <button data-gvm-bind-cancel>Cancel</button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  </template>
+
+  <!-- Paid article content; a free preview is visible -->
+  <main class="container">
+    <section>
+      <header>
+        <hgroup>
+          <h1>Showcase: gvm.js - "download" strategy</h1>
+          <h2>This is the one of proxy strategy. In best scenario you should always set download behind proxy server, with check status middleware.</h2>
+        </hgroup>
+      </header>
+      <!-- Configuration for content, price, and metadata like reference and title -->
+      <div>
+        <p>With the <kbd>gvm.js</kbd> download strategy, you can easily wrap your existing website. During page load, our scripts bind to all <b>data-gvm-*</b> attributes and bind download items to trigger paywall.</p>
+        <div>
+          <ul>
+            <li>
+              <!-- First item for sell -->
+              <div>
+                <span>Unknown artist - unknown title 4:33</span>
+                <span>&nbsp;</span>
+                <kbd
+                  class="pointer"
+                  data-gvm-reference="showcase-download-strategy-item"
+                  data-gvm-price="1.15"
+                  data-gvm-template-name="payment"
+                  data-gvm-metadata-title="Showcase download strategy item"
+                  data-gvm-http-download="/download/item.data">Download</kbd>
+                  <!-- When download starts, query params with payments infromation are joined to url -->
+              </div>
+            </li>
+            <li>
+              <!-- Second item for sell with other reference and price! -->
+              <div>
+                <span>Unknown artist - unknown title - second 2:22</span>
+                <span>&nbsp;</span>
+                <kbd
+                  class="pointer"
+                  data-gvm-reference="showcase-download-strategy-item-2"
+                  data-gvm-price="0.88"
+                  data-gvm-template-name="payment"
+                  data-gvm-metadata-title="Showcase download strategy item 2"
+                  data-gvm-http-download="/download/item2.data">Download</kbd>
+                  <!-- When download starts, query params with payments infromation are joined to url -->
+              </div>
+            </li>
+          </ul>
+        </div>
+        <p>Explore other strategies for integrating gvm.js scripts. Don’t forget to check the source of this file!</p>
+        <p>PS. After a successful payment, future attempts are automatically resolved. Even if you clear cookies or storage, the system records it but marks it as a duplicate during settlement for the same number.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
