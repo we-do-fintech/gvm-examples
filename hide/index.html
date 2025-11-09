@@ -1,78 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" data-theme="light">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>gvm.js - showcase</title>
-  <link rel="stylesheet" href="/assets/pico.css">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>gvm.js - showcase</title>
+    <link rel="stylesheet" href="/assets/pico.css">
 
-  <!-- Here I inject scripts gvm.js -->
-  <script src="https://esm.sh/@wdft/micropayments-sdk@latest/gvm.js" type="module"></script>
+    <!-- Here I inject scripts gvm.js -->
+    <script
+      src="https://esm.sh/@wdft/micropayments-sdk@latest/gvm.js"
+      type="module"
+    ></script>
 
-  <!-- Customizations -->
-  <script>
-    // Enable debug logging in the console
-    window.wdftDebug = true;
-    // When the page loads, remove the wait-for-script class from all elements
-    // This prevents content from flashing before GetViaMsg scripts are fully loaded
-    window.addEventListener('DOMContentLoaded', () => {
-      const elements = document.querySelectorAll('.wait-for-script');
-      for (const el of elements) {
-        el.classList.remove('wait-for-script')
+    <!-- Customizations -->
+    <script>
+      // Enable debug logging in the console
+      window.wdftDebug = true;
+      // When the page loads, remove the wait-for-script class from all elements
+      // This prevents content from flashing before GetViaMsg scripts are fully loaded
+      window.addEventListener("DOMContentLoaded", () => {
+        const elements = document.querySelectorAll(".wait-for-script");
+        for (const el of elements) {
+          el.classList.remove("wait-for-script");
+        }
+      });
+    </script>
+    <!-- Hide article initially, wait for wdft scripts -->
+    <style>
+      .wait-for-script {
+        display: none;
       }
-    })
-  </script>
-  <!-- Hide article initially, wait for wdft scripts -->
-  <style>
-    .wait-for-script {
-      display: none;
-    }
-  </style>
-</head>
+      /* Some additional classess for dialog styling */
+      .flex {
+        display: flex;
+        flex-direction: column;
+      }
+      .row {
+        flex-direction: row;
+      }
+      .items-center {
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
 
-<!-- Declare gvm basic values on the body tag such as currency, tenant, and condition; env is optional, demo can be used to simulate -->
-<!-- Try to add condition! then reload on small screen will work, on big not, check console logs
+  <!-- Declare gvm basic values on the body tag such as currency, tenant, and condition; env is optional, demo can be used to simulate -->
+  <!-- Try to add condition! then reload on small screen will work, on big not, check console logs
   data-gvm-cond="device matchMedia 'max-width:768px,landscape:portrait'"  
 -->
-<!-- You can set env as "demo" to mock behaviour -->
-<body
+  <!-- You can set env as "demo" to mock behaviour -->
+  <body
     data-gvm
     data-gvm-tenant="wdft_showcase_qa"
     data-gvm-env="qa"
-    data-gvm-currency="PLN">
-  <!-- Template declaration for the payment modal - this will be omited during website render -->
-  <template data-gvm-template="payment" data-gvm-template-inject-to="body">
-    <dialog open>
-      <div>
-        <div>
-          Time Remaining <span data-gvm-bind-time-remaining></span>
-        </div>
-        <div>
-          Price: <span data-gvm-bind-price></span> <span data-gvm-bind-currency></span>
-        </div>
-        <p 
-          data-gvm-bind-status
-          data-gvm-bind-status-initializing="Generating QR"
-          data-gvm-bind-status-waiting="Waiting for SMS"
-          data-gvm-bind-status-duplicated="Duplicated"
-          data-gvm-bind-status-resolved="Received! Unlocking content..."
-          data-gvm-bind-status-rejected="Issue occurred. Please try again"
-        ></p>
-        <div>
-          <span data-gvm-bind-qr>
-            <span aria-busy="true"></span>
-          </span>
-          <div>
-            <button data-gvm-bind-send-sms>Scan QR or Click</button>
-            <button data-gvm-bind-cancel>Cancel</button>
-          </div>
-        </div>
-      </div>
-    </dialog>
-  </template>
+    data-gvm-currency="PLN"
+  >
+    <!-- Template declaration for the payment modal - this will be omited during website render -->
+    <!-- Template declaration for the payment modal - this will be omited during website render -->
+    <template data-gvm-template="payment" data-gvm-template-inject-to="body">
+      <dialog open>
+        <article>
+          <!-- Header -->
+          <header>
+            <hgroup>
+              <h3>Unlock by text msg</h3>
+              <p>Content will be unlocked after we receive your text</p>
+            </hgroup>
+          </header>
+          <!-- Main content -->
+          <section class="flex items-center">
+            <div>
+              <strong>Price:</strong>
+              <span data-gvm-bind-price></span>
+              <span data-gvm-bind-currency></span>
+            </div>
+            <div>
+              <span data-gvm-bind-qr>
+                <span aria-busy="true"></span>
+              </span>
+              <div class="flex items-center row">
+                <span
+                  data-gvm-bind-status
+                  data-gvm-bind-status-initializing="Generating QR"
+                  data-gvm-bind-status-waiting="Waiting for SMS"
+                  data-gvm-bind-status-duplicated="Duplicated"
+                  data-gvm-bind-status-resolved="Received! Unlocking content..."
+                  data-gvm-bind-status-rejected="Issue occurred. Please try again"
+                >
+                </span> (
+                  <span data-gvm-bind-time-remaining></span>
+                )
+              </div>
+              <div class="grid">
+                <div>
+                  <button data-gvm-bind-send-sms>Scan QR or Click</button>
+                  <button data-gvm-bind-cancel class="contrast">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </section>
 
-  <!-- Template will be injected into the hidden article section - this will be omited during render website-->
-  <template data-gvm-template="paywall" data-gvm-template-inject-to="#article">
+          <!-- Footer -->
+          <footer>
+            <small>GetViaMsg by <a href="https://getviamsg.wdft.ovh/"
+              >WDFT</a></small>
+          </footer>
+        </article>
+      </dialog>
+    </template>
+
+    <!-- Template will be injected into the hidden article section - this will be omited during render website-->
+    <template
+      data-gvm-template="paywall"
+      data-gvm-template-inject-to="#article"
+    >
       <style>
         .wait-for-script {
           display: block;
@@ -88,47 +130,107 @@
       </style>
       <div class="paywall">
         <p>
-          This article is <span data-gvm-bind-reading-time></span> minutes or <span data-gvm-bind-reading-words></span> words long. Want to read more?</p>
+          This article is <span data-gvm-bind-reading-time></span> minutes or
+          <span data-gvm-bind-reading-words></span> words long. Want to read
+          more?
+        </p>
         <button data-gvm-bind-pay>
-          Read more for <span data-gvm-bind-price></span> <span data-gvm-bind-currency></span>
+          Read more for <span data-gvm-bind-price></span>
+          <span data-gvm-bind-currency></span>
         </button>
       </div>
-  </template>
+    </template>
 
-  <!-- Paid article content; a free preview is visible -->
-  <main class="container">
-    <section>
-      <header>
-        <hgroup>
-          <h1>Showcase: gvm.js - "hide" strategy</h1>
-          <h2>This is the simplest strategy. No additional backend is required.</h2>
-        </hgroup>
-      </header>
-      <!-- Configuration for content, price, and metadata like reference and title -->
-      <div 
-        id="article"
-        class="wait-for-script"
-        data-gvm-reference="showcase-hide-strategy"
-        data-gvm-price="0.75"
-        data-gvm-template-name="payment"
-        data-gvm-metadata-title="Showcase hide strategy"
-        data-gvm-hide-template-name="paywall"
-        data-gvm-hide-strategy="hide" 
-        data-gvm-hide-sections="6">
-        <p>With the <kbd>gvm.js</kbd> hide strategy, you can easily wrap your existing website. During page load, our scripts hide some content and display a paywall. Once the user interacts with the paywall, the content becomes visible after a successful payment. This is the simplest way to integrate GetViaMsg—it’s not perfect, but it’s easy and functional.</p>
-        <p>There are some security considerations—for instance, advanced users could bypass this integration by disabling JavaScript or inspecting network traffic. However, this approach is still valuable for testing engagement and understanding how many users interact with the payment solution.</p>
-        <p>On mobile devices, bypassing this integration is more difficult. Globally, 90% of digital content traffic comes from mobile devices, making this strategy practical.</p>
-        <p>Conditional integration is also supported. You can enable gvm.js only for specific devices, traffic sources, or social media campaigns.</p>
-        <p>The hide strategy includes additional templates for locking content and the payment modal. Check the source code in this file to see how everything is declared and connected.</p>
-        <p>The following paragraphs are paid content and will be blocked by the scripts after page load.</p>
-        <p>This section becomes visible only after a successful payment. You can also enable integration based on query parameters (e.g., utm_source), A/B testing, or device type to test the solution on a subset of production traffic.</p>
-        <p>For example, by adding <code>data-gvm-cond="utm_source == 'testing-gvm' AND device matchMedia 'max-width:768px,landscape:portrait'"</code>, the integration will target only vertical mobile devices.</p>
-        <p>When <code>window.wdftDebug = true;</code> is set globally, you can see console logs showing script behavior, including any errors during initialization, binding, or payment commitment.</p>
-        <p>It’s normal to adjust templates for your site. The best way to test is by using demo mode: <code>data-gvm-env="demo"</code> in the body.</p>
-        <p>Explore other strategies for integrating gvm.js scripts. Don’t forget to check the source of this file!</p>
-        <p>PS. After a successful payment, future attempts are automatically resolved. Even if you clear cookies or storage, the system records it but marks it as a duplicate during settlement for the same number.</p>
-      </div>
-    </section>
-  </main>
-</body>
+    <!-- Paid article content; a free preview is visible -->
+    <main class="container">
+      <section>
+        <header>
+          <hgroup>
+            <h1>Showcase: gvm.js - "hide" strategy</h1>
+            <h2>
+              This is the simplest strategy. No additional backend is required.
+            </h2>
+          </hgroup>
+        </header>
+        <!-- Configuration for content, price, and metadata like reference and title -->
+        <div
+          id="article"
+          class="wait-for-script"
+          data-gvm-reference="showcase-hide-strategy"
+          data-gvm-price="0.75"
+          data-gvm-template-name="payment"
+          data-gvm-metadata-title="Showcase hide strategy"
+          data-gvm-hide-template-name="paywall"
+          data-gvm-hide-strategy="hide"
+          data-gvm-hide-sections="6"
+        >
+          <p>
+            With the <kbd>gvm.js</kbd> hide strategy, you can easily wrap your
+            existing website. During page load, our scripts hide some content
+            and display a paywall. Once the user interacts with the paywall, the
+            content becomes visible after a successful payment. This is the
+            simplest way to integrate GetViaMsg—it’s not perfect, but it’s easy
+            and functional.
+          </p>
+          <p>
+            There are some security considerations—for instance, advanced users
+            could bypass this integration by disabling JavaScript or inspecting
+            network traffic. However, this approach is still valuable for
+            testing engagement and understanding how many users interact with
+            the payment solution.
+          </p>
+          <p>
+            On mobile devices, bypassing this integration is more difficult.
+            Globally, 90% of digital content traffic comes from mobile devices,
+            making this strategy practical.
+          </p>
+          <p>
+            Conditional integration is also supported. You can enable gvm.js
+            only for specific devices, traffic sources, or social media
+            campaigns.
+          </p>
+          <p>
+            The hide strategy includes additional templates for locking content
+            and the payment modal. Check the source code in this file to see how
+            everything is declared and connected.
+          </p>
+          <p>
+            The following paragraphs are paid content and will be blocked by the
+            scripts after page load.
+          </p>
+          <p>
+            This section becomes visible only after a successful payment. You
+            can also enable integration based on query parameters (e.g.,
+            utm_source), A/B testing, or device type to test the solution on a
+            subset of production traffic.
+          </p>
+          <p>
+            For example, by adding <code>data-gvm-cond="utm_source ==
+              'testing-gvm' AND device matchMedia
+              'max-width:768px,landscape:portrait'"</code>, the integration will
+            target only vertical mobile devices.
+          </p>
+          <p>
+            When <code>window.wdftDebug = true;</code> is set globally, you can
+            see console logs showing script behavior, including any errors
+            during initialization, binding, or payment commitment.
+          </p>
+          <p>
+            It’s normal to adjust templates for your site. The best way to test
+            is by using demo mode: <code>data-gvm-env="demo"</code> in the body.
+          </p>
+          <p>
+            Explore other strategies for integrating gvm.js scripts. Don’t
+            forget to check the source of this file!
+          </p>
+          <p>
+            PS. After a successful payment, future attempts are automatically
+            resolved. Even if you clear cookies or storage, the system records
+            it but marks it as a duplicate during settlement for the same
+            number.
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>
