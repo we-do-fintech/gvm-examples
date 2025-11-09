@@ -105,73 +105,75 @@
 
     <!-- Paid article content; a free preview is visible -->
     <main class="container">
-      <section>
-        <header>
-          <hgroup>
-            <h1>Showcase: gvm.js - "download" strategy</h1>
-            <h2>
-              This is the one of proxy strategy. In best scenario you should
-              always set download behind proxy server, with check status
-              middleware.
-            </h2>
-          </hgroup>
-        </header>
-        <!-- Configuration for content, price, and metadata like reference and title -->
-        <div>
-          <p>
-            With the <kbd>gvm.js</kbd> download strategy, you can easily wrap
-            your existing website. During page load, our scripts bind to all <b
-            >data-gvm-*</b> attributes and bind download items to trigger
-            paywall.
-          </p>
+      <article>
+        <section>
+          <header>
+            <hgroup>
+              <h1>Showcase: gvm.js - "download" strategy</h1>
+              <h2>
+                This is the one of proxy strategy. In best scenario you should
+                always set download behind proxy server, with check status
+                middleware.
+              </h2>
+            </hgroup>
+          </header>
+          <!-- Configuration for content, price, and metadata like reference and title -->
           <div>
-            <ul>
-              <li>
-                <!-- First item for sell -->
-                <div>
-                  <span>Unknown artist - unknown title 4:33</span>
-                  <span>&nbsp;</span>
-                  <kbd
-                    class="pointer"
-                    data-gvm-reference="showcase-download-strategy-item"
-                    data-gvm-price="1.15"
-                    data-gvm-template-name="payment"
-                    data-gvm-metadata-title="Showcase download strategy item"
-                    data-gvm-http-download="/download/item.data"
-                  >Download</kbd>
-                  <!-- When download starts, query params with payments infromation are joined to url -->
-                </div>
-              </li>
-              <li>
-                <!-- Second item for sell with other reference and price! -->
-                <div>
-                  <span>Unknown artist - unknown title - second 2:22</span>
-                  <span>&nbsp;</span>
-                  <kbd
-                    class="pointer"
-                    data-gvm-reference="showcase-download-strategy-item-2"
-                    data-gvm-price="0.88"
-                    data-gvm-template-name="payment"
-                    data-gvm-metadata-title="Showcase download strategy item 2"
-                    data-gvm-http-download="/download/item2.data"
-                  >Download</kbd>
-                  <!-- When download starts, query params with payments infromation are joined to url -->
-                </div>
-              </li>
-            </ul>
+            <p>
+              With the <kbd>gvm.js</kbd> download strategy, you can easily wrap
+              your existing website. During page load, our scripts bind to all <b
+              >data-gvm-*</b> attributes and bind download items to trigger
+              paywall.
+            </p>
+            <div>
+              <ul>
+                <li>
+                  <!-- First item for sell -->
+                  <div>
+                    <span>Unknown artist - unknown title 4:33</span>
+                    <span>&nbsp;</span>
+                    <kbd
+                      class="pointer"
+                      data-gvm-reference="showcase-download-strategy-item"
+                      data-gvm-price="1.15"
+                      data-gvm-template-name="payment"
+                      data-gvm-metadata-title="Showcase download strategy item"
+                      data-gvm-http-download="/download/item.data"
+                    >Download</kbd>
+                    <!-- When download starts, query params with payments infromation are joined to url -->
+                  </div>
+                </li>
+                <li>
+                  <!-- Second item for sell with other reference and price! -->
+                  <div>
+                    <span>Unknown artist - unknown title - second 2:22</span>
+                    <span>&nbsp;</span>
+                    <kbd
+                      class="pointer"
+                      data-gvm-reference="showcase-download-strategy-item-2"
+                      data-gvm-price="0.88"
+                      data-gvm-template-name="payment"
+                      data-gvm-metadata-title="Showcase download strategy item 2"
+                      data-gvm-http-download="/download/item2.data"
+                    >Download</kbd>
+                    <!-- When download starts, query params with payments infromation are joined to url -->
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p>
+              Explore other strategies for integrating gvm.js scripts. Don’t
+              forget to check the source of this file!
+            </p>
+            <p>
+              PS. After a successful payment, future attempts are automatically
+              resolved. Even if you clear cookies or storage, the system records
+              it but marks it as a duplicate during settlement for the same
+              number.
+            </p>
           </div>
-          <p>
-            Explore other strategies for integrating gvm.js scripts. Don’t
-            forget to check the source of this file!
-          </p>
-          <p>
-            PS. After a successful payment, future attempts are automatically
-            resolved. Even if you clear cookies or storage, the system records
-            it but marks it as a duplicate during settlement for the same
-            number.
-          </p>
-        </div>
-      </section>
+        </section>
+      </article>
     </main>
   </body>
 </html>
