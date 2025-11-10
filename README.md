@@ -28,11 +28,11 @@ The simplest, all-in-one file solution check: `./hide`. Includes only declaratio
 The `./download` directory showcase proxy strategy.
 These strategies typically require a backend server or a load balancer with middleware to handle requests before redirecting to a persistent or temporary address.
 
+There is also `./inject` and `./redirect` strategy that has same way of configuration, and logic. Check docs for available `data-gvm-*` attributes.
+
 **Note:** In these examples, the server/proxy part is not included. They demonstrate direct access to files or downloads.
 
 ---
-
-There is also `./inject` and `./redirect` strategy that has same way of configuration, and logic. Check docs for available `data-gvm-*` attributes.
 
 ## Questions?
 
