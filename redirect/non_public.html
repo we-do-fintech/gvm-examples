@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gvm.js showcase</title>
+  <link rel="stylesheet" href="/assets/pico.css">
+</head>
+<body>
+  <main class="container">
+    <section>
+      <header>
+        <hgroup>
+          <h1>Redirect success!</h1>
+          <h2>This content was shown after commitment was resolved.</h2>
+        </hgroup>
+      </header>
+      <p>In real world example this will be provided by backend, not an static file.</p>
+      <code id="query"></code>
+      <p>You can see query params that was included by <code>gvm.js</code> code before redirect.</p>
+    </section>
+  </main>
+  <script>
+    const el = document.getElementById('query');
+    el.innerText = `${location.search.toString()}`
+  </script>
+</body>
+</html>
