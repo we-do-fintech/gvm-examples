@@ -1,162 +1,186 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="light">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>gvm.js - showcase</title>
-    <link rel="stylesheet" href="/assets/pico.css">
-    <style>
-      .pointer {
-        cursor: pointer;
-      }
-      /* Some additional classess for dialog styling */
-      .flex {
-        display: flex;
-        flex-direction: column;
-      }
-      .row {
-        flex-direction: row;
-      }
-      .items-center {
-        align-items: center;
-        justify-content: center;
-      }
-      .mini {
-        width: 500px;
-      }
-    </style>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>gvm.js - showcase</title>
+        <link rel="stylesheet" href="/assets/pico.css" />
+        <style>
+            .pointer {
+                cursor: pointer;
+            }
+            /* Some additional classess for dialog styling */
+            .flex {
+                display: flex;
+                flex-direction: column;
+            }
+            .row {
+                flex-direction: row;
+            }
+            .items-center {
+                align-items: center;
+                justify-content: center;
+            }
+            .mini {
+                width: 500px;
+            }
+        </style>
 
-    <!-- Here I inject scripts gvm.js -->
-    <script
-      src="https://esm.sh/@wdft/micropayments-sdk@latest/gvm.js"
-      type="module"
-    ></script>
+        <!-- Here I inject scripts gvm.js -->
+        <script
+            src="https://esm.sh/@wdft/gvm-sdk@latest/gvm.js"
+            type="module"
+        ></script>
 
-    <!-- Customizations -->
-    <script>
-      // Enable debug logging in the console
-      window.wdftDebug = true;
-    </script>
-  </head>
+        <!-- Customizations -->
+        <script>
+            // Enable debug logging in the console
+            window.wdftDebug = true;
+        </script>
+    </head>
 
-  <!-- Declare gvm basic values on the body tag such as currency, tenant, and condition; env is optional, demo can be used to simulate -->
-  <!-- Try to add condition! then reload on small screen will work, on big not, check console logs
-  data-gvm-cond="device matchMedia 'max-width:768px,landscape:portrait'"  
+    <!-- Declare gvm basic values on the body tag such as currency, tenant, and condition; env is optional, demo can be used to simulate -->
+    <!-- Try to add condition! then reload on small screen will work, on big not, check console logs
+  data-gvm-cond="device matchMedia 'max-width:768px,landscape:portrait'"
 -->
-  <!-- You can set env as "demo" to mock behaviour -->
-  <body
-    data-gvm
-    data-gvm-tenant="wdft_showcase_qa"
-    data-gvm-env="qa"
-    data-gvm-currency="PLN"
-  >
-    <!-- Template declaration for the payment modal - this will be omited during website render -->
-    <template data-gvm-template="payment" data-gvm-template-redirect-to="body">
-      <dialog open>
-        <article class="mini">
-          <!-- Header -->
-          <header>
-            <hgroup>
-              <h3>Unlock by text msg</h3>
-              <p>Content will be unlocked after we receive your text</p>
-            </hgroup>
-          </header>
-          <!-- Main content -->
-          <section class="flex items-center">
-            <div>
-              <strong>Price:</strong>
-              <span data-gvm-bind-price></span>
-              <span data-gvm-bind-currency></span>
-            </div>
-            <div>
-              <span class="flex" data-gvm-bind-qr>
-                <span aria-busy="true"></span>
-              </span>
-              <div class="flex items-center row">
-                <span
-                  data-gvm-bind-status
-                  data-gvm-bind-status-initializing="Generating QR"
-                  data-gvm-bind-status-waiting="Waiting for SMS"
-                  data-gvm-bind-status-duplicated="Duplicated"
-                  data-gvm-bind-status-resolved="Received! Unlocking content..."
-                  data-gvm-bind-status-rejected="Issue occurred. Please try again"
-                >
-                </span> (
-                  <span data-gvm-bind-time-remaining>00:00</span>
-                )
-              </div>
-              <div class="grid">
-                <div>
-                  <button data-gvm-bind-send-sms>Scan QR or Click</button>
-                  <button data-gvm-bind-cancel class="contrast">Cancel</button>
-                </div>
-              </div>
-            </div>
-          </section>
+    <!-- You can set env as "demo" to mock behaviour -->
+    <body
+        data-gvm
+        data-gvm-tenant="wdft_showcase_qa"
+        data-gvm-env="qa"
+        data-gvm-currency="PLN"
+    >
+        <!-- Template declaration for the payment modal - this will be omited during website render -->
+        <template
+            data-gvm-template="payment"
+            data-gvm-template-redirect-to="body"
+        >
+            <dialog open>
+                <article class="mini">
+                    <!-- Header -->
+                    <header>
+                        <hgroup>
+                            <h3>Unlock by text msg</h3>
+                            <p>
+                                Content will be unlocked after we receive your
+                                text
+                            </p>
+                        </hgroup>
+                    </header>
+                    <!-- Main content -->
+                    <section class="flex items-center">
+                        <div>
+                            <strong>Price:</strong>
+                            <span data-gvm-bind-price></span>
+                            <span data-gvm-bind-currency></span>
+                        </div>
+                        <div>
+                            <span class="flex" data-gvm-bind-qr>
+                                <span aria-busy="true"></span>
+                            </span>
+                            <div class="flex items-center row">
+                                <span
+                                    data-gvm-bind-status
+                                    data-gvm-bind-status-initializing="Generating QR"
+                                    data-gvm-bind-status-waiting="Waiting for SMS"
+                                    data-gvm-bind-status-duplicated="Duplicated"
+                                    data-gvm-bind-status-resolved="Received! Unlocking content..."
+                                    data-gvm-bind-status-rejected="Issue occurred. Please try again"
+                                >
+                                </span>
+                                (
+                                <span data-gvm-bind-time-remaining>00:00</span>
+                                )
+                            </div>
+                            <div class="grid">
+                                <div>
+                                    <button data-gvm-bind-send-sms>
+                                        Scan QR or Click
+                                    </button>
+                                    <button
+                                        data-gvm-bind-cancel
+                                        class="contrast"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
 
-          <!-- Footer -->
-          <footer>
-            <small>GetViaMsg by <a href="https://getviamsg.wdft.ovh/"
-              >WDFT</a></small>
-          </footer>
-        </article>
-      </dialog>
-    </template>
+                    <!-- Footer -->
+                    <footer>
+                        <small
+                            >GetViaMsg by
+                            <a href="https://getviamsg.wdft.ovh/"
+                                >WDFT</a
+                            ></small
+                        >
+                    </footer>
+                </article>
+            </dialog>
+        </template>
 
-    <!-- Paid article content; a free preview is visible -->
-    <main class="container">
-      <article>
-        <section>
-          <header>
-            <hgroup>
-              <h1>Showcase: gvm.js - "redirect" strategy</h1>
-              <h2>
-                This is the one of proxy strategy. In best scenario you should
-                always set redirect behind proxy server, with check status
-                middleware.
-              </h2>
-            </hgroup>
-          </header>
-          <!-- Configuration for content, price, and metadata like reference and title -->
-          <div>
-            <p>
-              With the <kbd>gvm.js</kbd> redirect strategy, you can easily wrap
-              your existing website. During page load, our scripts bind to all <b
-              >data-gvm-*</b> attributes and bind redirect items to trigger
-              paywall.
-            </p>
-            <div>
-              <ul>
-                <li>
-                  <!-- Second item for sell with other reference and price! -->
-                  <div>
-                    <span>Redirect to full version of sth</span>
-                    <kbd
-                      class="pointer"
-                      data-gvm-reference="showcase-redirect-strategy-item-2"
-                      data-gvm-price="0.66"
-                      data-gvm-template-name="payment"
-                      data-gvm-metadata-title="Showcase redirect strategy item 2"
-                      data-gvm-http-redirect-to="/redirect/non_public.html"
-                    >Go to this!</kbd>
-                    <!-- When redirect starts, query params with payments infromation are joined to url -->
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <p>
-              Explore other strategies for integrating gvm.js scripts. Don’t
-              forget to check the source of this file!
-            </p>
-            <p>
-              PS. After a successful payment, future attempts are automatically
-              resolved. Even if you clear cookies or storage, the system records
-              it but marks it as a duplicate during settlement for the same
-              number.
-            </p>
-          </div>
-        </section>
-      </article>
-    </main>
-  </body>
+        <!-- Paid article content; a free preview is visible -->
+        <main class="container">
+            <article>
+                <section>
+                    <header>
+                        <hgroup>
+                            <h1>Showcase: gvm.js - "redirect" strategy</h1>
+                            <h2>
+                                This is the one of proxy strategy. In best
+                                scenario you should always set redirect behind
+                                proxy server, with check status middleware.
+                            </h2>
+                        </hgroup>
+                    </header>
+                    <!-- Configuration for content, price, and metadata like reference and title -->
+                    <div>
+                        <p>
+                            With the <kbd>gvm.js</kbd> redirect strategy, you
+                            can easily wrap your existing website. During page
+                            load, our scripts bind to all
+                            <b>data-gvm-*</b> attributes and bind redirect items
+                            to trigger paywall.
+                        </p>
+                        <div>
+                            <ul>
+                                <li>
+                                    <!-- Second item for sell with other reference and price! -->
+                                    <div>
+                                        <span
+                                            >Redirect to full version of
+                                            sth</span
+                                        >
+                                        <kbd
+                                            class="pointer"
+                                            data-gvm-reference="showcase-redirect-strategy-item-2"
+                                            data-gvm-price="0.66"
+                                            data-gvm-template-name="payment"
+                                            data-gvm-metadata-title="Showcase redirect strategy item 2"
+                                            data-gvm-http-redirect-to="/redirect/non_public.html"
+                                            >Go to this!</kbd
+                                        >
+                                        <!-- When redirect starts, query params with payments infromation are joined to url -->
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <p>
+                            Explore other strategies for integrating gvm.js
+                            scripts. Don’t forget to check the source of this
+                            file!
+                        </p>
+                        <p>
+                            PS. After a successful payment, future attempts are
+                            automatically resolved. Even if you clear cookies or
+                            storage, the system records it but marks it as a
+                            duplicate during settlement for the same number.
+                        </p>
+                    </div>
+                </section>
+            </article>
+        </main>
+    </body>
 </html>
