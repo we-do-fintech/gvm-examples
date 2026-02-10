@@ -3,8 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>gvm.js - showcase</title>
+        <title>gvm.js Redirect Strategy Example</title>
         <link rel="stylesheet" href="/assets/pico.css" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20260210" />
         <style>
             .pointer {
                 cursor: pointer;
@@ -50,91 +51,112 @@
         data-gvm-env="qa"
         data-gvm-currency="PLN"
     >
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="/">
+                    <img
+                        src="/assets/logo.png"
+                        width="100"
+                        height="20"
+                        alt="WDFT"
+                    />
+                </a>
+                <div class="small-nav">Strategy: Redirect</div>
+            </div>
+        </header>
+
         <!-- Template declaration for the payment modal - this will be omited during website render -->
         <template
             data-gvm-template="payment"
             data-gvm-template-redirect-to="body"
         >
             <dialog open>
-                <article class="mini">
-                    <!-- Header -->
-                    <header>
+                <article class="mini payment-modal">
+                    <header class="payment-header">
                         <hgroup>
-                            <h3>Unlock by text msg</h3>
-                            <p>
-                                Content will be unlocked after we receive your
-                                text
-                            </p>
+                            <h3>Unlock in seconds</h3>
+                            <p>Send text to get instant access.</p>
                         </hgroup>
                     </header>
-                    <!-- Main content -->
-                    <section class="flex items-center">
-                        <div>
-                            <strong>Price:</strong>
-                            <span data-gvm-bind-price></span>
-                            <span data-gvm-bind-currency></span>
-                        </div>
-                        <div>
-                            <span class="flex" data-gvm-bind-qr>
+
+                    <section class="payment-body">
+                        <p class="payment-price-line">
+                            <span class="payment-price-label"
+                                >One-time access</span
+                            >
+                            <strong
+                                ><span data-gvm-bind-price></span>
+                                <span data-gvm-bind-currency></span
+                            ></strong>
+                        </p>
+
+                        <div class="payment-qr-wrap">
+                            <span data-gvm-bind-qr class="payment-qr">
                                 <span aria-busy="true"></span>
                             </span>
-                            <div class="flex items-center row">
-                                <span
-                                    data-gvm-bind-status
-                                    data-gvm-bind-status-initializing="Generating QR"
-                                    data-gvm-bind-status-waiting="Waiting for SMS"
-                                    data-gvm-bind-status-duplicated="Duplicated"
-                                    data-gvm-bind-status-resolved="Received! Unlocking content..."
-                                    data-gvm-bind-status-rejected="Issue occurred. Please try again"
-                                >
-                                </span>
-                                (
-                                <span data-gvm-bind-time-remaining>00:00</span>
-                                )
-                            </div>
-                            <div class="grid">
-                                <div>
-                                    <button data-gvm-bind-send-sms>
-                                        Scan QR or Click
-                                    </button>
-                                    <button
-                                        data-gvm-bind-cancel
-                                        class="contrast"
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
+                        </div>
+
+                        <p class="payment-status-row">
+                            <span
+                                data-gvm-bind-status
+                                data-gvm-bind-status-initializing="Preparing QR code"
+                                data-gvm-bind-status-waiting="Waiting for SMS"
+                                data-gvm-bind-status-duplicated="Already unlocked on this number"
+                                data-gvm-bind-status-resolved="Payment confirmed. Unlocking now..."
+                                data-gvm-bind-status-rejected="Payment could not be verified. Please try again."
+                            >
+                            </span>
+                            <span class="payment-time">
+                                (<span data-gvm-bind-time-remaining>00:00</span
+                                >)
+                            </span>
+                        </p>
+
+                        <p class="payment-promise">
+                            Content unlocks instantly, and settled after 7 days.
+                        </p>
+
+                        <div class="payment-actions">
+                            <button data-gvm-bind-send-sms>
+                                Send SMS to unlock
+                            </button>
+                            <button data-gvm-bind-cancel class="contrast">
+                                Cancel
+                            </button>
                         </div>
                     </section>
 
-                    <!-- Footer -->
-                    <footer>
-                        <small
-                            >GetViaMsg by
-                            <a href="https://getviamsg.wdft.ovh/"
-                                >WDFT</a
-                            ></small
-                        >
+                    <footer class="payment-footer">
+                        <small>
+                            GetViaMsg by
+                            <a href="https://getviamsg.wdft.ovh/">WDFT</a>
+                        </small>
                     </footer>
                 </article>
             </dialog>
         </template>
 
         <!-- Paid article content; a free preview is visible -->
-        <main class="container">
+        <main class="container showcase-shell">
             <article>
-                <section>
+                <section class="section-card">
                     <header>
+                        <p class="eyebrow">Redirect Strategy</p>
                         <hgroup>
-                            <h1>Showcase: gvm.js - "redirect" strategy</h1>
+                            <h1>
+                                Monetized access redirect to non-public
+                                resources
+                            </h1>
                             <h2>
-                                This is the one of proxy strategy. In best
-                                scenario you should always set redirect behind
-                                proxy server, with check status middleware.
+                                Intended for controlled destinations handled by
+                                backend access checks.
                             </h2>
                         </hgroup>
                     </header>
+                    <p class="lead">
+                        A clean fit for premium pages, private dashboards, or
+                        full-content mirrors outside the public route.
+                    </p>
                     <!-- Configuration for content, price, and metadata like reference and title -->
                     <div>
                         <p>

@@ -1,28 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="light">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>gvm.js showcase</title>
-  <link rel="stylesheet" href="/assets/pico.css">
-</head>
-<body>
-  <main class="container">
-    <section>
-      <header>
-        <hgroup>
-          <h1>Redirect success!</h1>
-          <h2>This content was shown after commitment was resolved.</h2>
-        </hgroup>
-      </header>
-      <p>In real world example this will be provided by backend, not an static file.</p>
-      <code id="query"></code>
-      <p>You can see query params that was included by <code>gvm.js</code> code before redirect.</p>
-    </section>
-  </main>
-  <script>
-    const el = document.getElementById('query');
-    el.innerText = `${location.search.toString()}`
-  </script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Redirect Commitment Success</title>
+        <link rel="stylesheet" href="/assets/pico.css" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20260210" />
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="/">
+                    <img
+                        src="/assets/logo.png"
+                        width="100"
+                        height="20"
+                        alt="WDFT"
+                    />
+                </a>
+                <div class="small-nav">Redirect destination</div>
+            </div>
+        </header>
+        <main class="container showcase-shell">
+            <section class="section-card">
+                <p class="eyebrow">Access Granted</p>
+                <header>
+                    <hgroup>
+                        <h1>Commitment resolved successfully</h1>
+                        <h2>
+                            The user has been redirected after a valid payment
+                            event.
+                        </h2>
+                    </hgroup>
+                </header>
+                <p class="lead">
+                    In production, this endpoint should be protected and served
+                    by backend middleware.
+                </p>
+                <code id="query"></code>
+                <p>
+                    You can inspect query parameters appended by
+                    <code>gvm.js</code>
+                    before redirect.
+                </p>
+            </section>
+        </main>
+        <script>
+            const el = document.getElementById("query");
+            el.innerText = `${location.search.toString()}`;
+        </script>
+    </body>
 </html>
