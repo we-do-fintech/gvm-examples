@@ -239,6 +239,42 @@
                         reader conversion tests before deploying a proxy-backed
                         flow.
                     </p>
+                    <div class="dev-kit">
+                        <p class="dev-kit-title">Developer Kit</p>
+                        <p class="dev-kit-links">
+                            <a
+                                href="https://github.com/we-do-fintech/gvm-examples/blob/main/hide/index.html"
+                                >Source on GitHub</a
+                            >
+                            |
+                            <a href="https://docs.wdft.ovh/gvm-js"
+                                >gvm.js documentation</a
+                            >
+                        </p>
+                        <details class="dev-snippet">
+                            <summary>Minimal hide snippet</summary>
+                            <pre><code>&lt;!-- 1) Inject gvm.js SDK --&gt;
+&lt;script src="https://esm.sh/@wdft/gvm-sdk@latest/gvm.js" type="module"&gt;&lt;/script&gt;
+
+&lt;!-- 2) Initialize gvm on body --&gt;
+&lt;body data-gvm data-gvm-tenant="your_tenant" data-gvm-env="qa" data-gvm-currency="PLN"&gt;
+  &lt;!-- 3) Declare payment template (modal) --&gt;
+  &lt;template data-gvm-template="payment" data-gvm-template-inject-to="body"&gt;
+    &lt;dialog open&gt;&lt;button data-gvm-bind-send-sms&gt;Open SMS&lt;/button&gt;&lt;/dialog&gt;
+  &lt;/template&gt;
+
+  &lt;!-- 3b) Declare hide paywall template --&gt;
+  &lt;template data-gvm-template="paywall" data-gvm-template-inject-to="#article"&gt;
+    &lt;button data-gvm-bind-pay&gt;Unlock for &lt;span data-gvm-bind-price&gt;&lt;/span&gt; &lt;span data-gvm-bind-currency&gt;&lt;/span&gt;&lt;/button&gt;
+  &lt;/template&gt;
+
+  &lt;!-- 4) Declare payment item/content --&gt;
+  &lt;div id="article" data-gvm-reference="article-42" data-gvm-price="0.75"
+       data-gvm-template-name="payment" data-gvm-hide-template-name="paywall"
+       data-gvm-hide-strategy="hide" data-gvm-hide-sections="6"&gt;...&lt;/div&gt;
+&lt;/body&gt;</code></pre>
+                        </details>
+                    </div>
                     <!-- Configuration for content, price, and metadata like reference and title -->
                     <div
                         id="article"

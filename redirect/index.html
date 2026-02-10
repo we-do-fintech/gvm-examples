@@ -157,6 +157,34 @@
                         A clean fit for premium pages, private dashboards, or
                         full-content mirrors outside the public route.
                     </p>
+                    <div class="dev-kit">
+                        <p class="dev-kit-title">Developer Kit</p>
+                        <p class="dev-kit-links">
+                            <a
+                                href="https://github.com/we-do-fintech/gvm-examples/blob/main/redirect/index.html"
+                                >Source on GitHub</a
+                            >
+                            |
+                            <a href="https://docs.wdft.ovh/gvm-js"
+                                >gvm.js documentation</a
+                            >
+                        </p>
+                        <details class="dev-snippet">
+                            <summary>Minimal redirect snippet</summary>
+                            <pre><code>&lt;body data-gvm data-gvm-tenant="your_tenant" data-gvm-env="qa"&gt;
+  &lt;template data-gvm-template="payment" data-gvm-template-redirect-to="body"&gt;
+    &lt;dialog open&gt;
+      &lt;span data-gvm-bind-qr&gt;&lt;/span&gt;
+      &lt;button data-gvm-bind-send-sms&gt;Open SMS&lt;/button&gt;
+      &lt;button data-gvm-bind-cancel&gt;Cancel&lt;/button&gt;
+    &lt;/dialog&gt;
+  &lt;/template&gt;
+  &lt;kbd data-gvm-reference="redirect-001" data-gvm-price="0.66"
+       data-gvm-template-name="payment"
+       data-gvm-http-redirect-to="/redirect/non_public.html"&gt;Open premium page&lt;/kbd&gt;
+&lt;/body&gt;</code></pre>
+                        </details>
+                    </div>
                     <!-- Configuration for content, price, and metadata like reference and title -->
                     <div>
                         <p>

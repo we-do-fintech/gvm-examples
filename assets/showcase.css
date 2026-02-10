@@ -240,6 +240,78 @@ body::after {
     color: #ffefc4;
 }
 
+.dev-kit {
+    margin-top: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(12, 16, 29, 0.55);
+    border-radius: 12px;
+    padding: 0.8rem;
+}
+
+.dev-kit-title {
+    margin: 0;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ffdf89;
+    font-weight: 700;
+}
+
+.dev-kit-links {
+    margin: 0.35rem 0 0;
+    font-size: 0.88rem;
+    color: #d8d9dd;
+}
+
+.dev-kit-links a {
+    color: #ffefc4;
+}
+
+.dev-snippet {
+    margin-top: 0.55rem;
+}
+
+.dev-snippet summary {
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: #f0f1f3;
+}
+
+.dev-snippet pre {
+    margin-top: 0.55rem;
+    margin-bottom: 0;
+    background: rgba(10, 13, 24, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 0.85rem 0.95rem;
+    overflow-x: auto;
+    box-shadow: inset 0 0 0 1px rgba(255, 185, 3, 0.12);
+}
+
+.dev-snippet pre code {
+    display: block;
+    white-space: pre;
+    overflow-wrap: normal;
+    word-break: normal;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: #f7f0d8;
+    font-family:
+        ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Monaco,
+        Consolas,
+        "Liberation Mono",
+        "Courier New",
+        monospace;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    tab-size: 2;
+}
+
 .quick-links {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -407,6 +479,20 @@ pre code {
     background: rgba(12, 15, 26, 0.95);
     color: #fff4d8;
     border: 1px solid rgba(255, 255, 255, 0.18);
+    white-space: pre;
+    overflow-x: auto;
+    overflow-wrap: normal;
+    word-break: normal;
+    font-family:
+        ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Monaco,
+        Consolas,
+        "Liberation Mono",
+        "Courier New",
+        monospace;
+    line-height: 1.45;
 }
 
 [data-gvm-http-download],
