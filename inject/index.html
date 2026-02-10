@@ -171,7 +171,12 @@
                         </p>
                         <details class="dev-snippet">
                             <summary>Minimal inject snippet</summary>
-                            <pre><code>&lt;body data-gvm data-gvm-tenant="your_tenant" data-gvm-env="qa"&gt;
+                            <pre><code>&lt;!-- 1) Inject gvm.js SDK --&gt;
+&lt;script src="https://esm.sh/@wdft/gvm-sdk@latest/gvm.js" type="module"&gt;&lt;/script&gt;
+
+&lt;!-- 2) Initialize gvm on body --&gt;
+&lt;body data-gvm data-gvm-tenant="your_tenant" data-gvm-env="qa"&gt;
+  &lt;!-- 3) Declare payment template (modal) --&gt;
   &lt;template data-gvm-template="payment" data-gvm-template-inject-to="body"&gt;
     &lt;dialog open&gt;
       &lt;span data-gvm-bind-qr&gt;&lt;/span&gt;
@@ -179,6 +184,8 @@
       &lt;button data-gvm-bind-cancel&gt;Cancel&lt;/button&gt;
     &lt;/dialog&gt;
   &lt;/template&gt;
+
+  &lt;!-- 4) Declare payment item (inject content) --&gt;
   &lt;kbd data-gvm-reference="module-001" data-gvm-price="0.88"
        data-gvm-template-name="payment"
        data-gvm-http-inject="/inject/content.html"
