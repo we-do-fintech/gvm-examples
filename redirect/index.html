@@ -144,18 +144,18 @@
                         <p class="eyebrow">Redirect Strategy</p>
                         <hgroup>
                             <h1>
-                                Monetized access redirect to non-public
-                                resources
+                                Redirect readers to protected premium
+                                destinations
                             </h1>
                             <h2>
-                                Intended for controlled destinations handled by
-                                backend access checks.
+                                Designed for flows where access must be verified
+                                server-side before showing full content.
                             </h2>
                         </hgroup>
                     </header>
                     <p class="lead">
-                        A clean fit for premium pages, private dashboards, or
-                        full-content mirrors outside the public route.
+                        A strong fit for premium article mirrors, member-only
+                        routes, partner portals, and private dashboards.
                     </p>
                     <div class="dev-kit">
                         <p class="dev-kit-title">Developer Kit</p>
@@ -195,11 +195,10 @@
                     <!-- Configuration for content, price, and metadata like reference and title -->
                     <div>
                         <p>
-                            With the <kbd>gvm.js</kbd> redirect strategy, you
-                            can easily wrap your existing website. During page
-                            load, our scripts bind to all
-                            <b>data-gvm-*</b> attributes and bind redirect items
-                            to trigger paywall.
+                            The <kbd>gvm.js</kbd> redirect strategy lets you
+                            monetize access while keeping sensitive resources off
+                            public URLs. Payment is resolved first, then the
+                            user is sent to a protected destination.
                         </p>
                         <div>
                             <ul>
@@ -207,8 +206,8 @@
                                     <!-- Second item for sell with other reference and price! -->
                                     <div>
                                         <span
-                                            >Redirect to full version of
-                                            sth</span
+                                            >Open the full premium article
+                                            experience</span
                                         >
                                         <kbd
                                             class="pointer"
@@ -217,7 +216,7 @@
                                             data-gvm-template-name="payment"
                                             data-gvm-metadata-title="Showcase redirect strategy item 2"
                                             data-gvm-http-redirect-to="/redirect/non_public.html"
-                                            >Go to this!</kbd
+                                            >Open premium page</kbd
                                         >
                                         <!-- When redirect starts, query params with payments infromation are joined to url -->
                                     </div>
@@ -225,19 +224,38 @@
                             </ul>
                         </div>
                         <p>
-                            Explore other strategies for integrating gvm.js
-                            scripts. Don’t forget to check the source of this
-                            file!
+                            Use this when your backend already controls access
+                            logic and you want a clean paid entry point from
+                            public pages.
                         </p>
                         <p>
-                            PS. After a successful payment, future attempts are
-                            automatically resolved. Even if you clear cookies or
-                            storage, the system records it but marks it as a
-                            duplicate during settlement for the same number.
+                            Duplicate commitments are handled automatically for
+                            the same number and reference, reducing repeat
+                            payment friction for returning users.
                         </p>
                     </div>
                 </section>
             </article>
         </main>
+        <script>
+            (() => {
+                const currency =
+                    document.body.getAttribute("data-gvm-currency") || "PLN";
+                const formatPrice = (value) => {
+                    const num = Number(value);
+                    return Number.isFinite(num) ? num.toFixed(2) : value;
+                };
+
+                document
+                    .querySelectorAll("[data-gvm-http-redirect-to]")
+                    .forEach((el) => {
+                        const amount =
+                            el.getAttribute("data-gvm-amount") ||
+                            el.getAttribute("data-gvm-price");
+                        if (!amount) return;
+                        el.textContent = `Open premium page for ${formatPrice(amount)} ${currency}`;
+                    });
+            })();
+        </script>
     </body>
 </html>

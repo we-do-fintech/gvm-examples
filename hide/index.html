@@ -225,19 +225,17 @@
                         <p class="eyebrow">Hide Strategy</p>
                         <hgroup>
                             <h1>
-                                Premium article unlock with client-side section
-                                gating
+                                Launch paid article previews with minimal setup
                             </h1>
                             <h2>
-                                Frontend-first paywall flow for publisher
-                                content previews.
+                                Client-side section gating for quick conversion
+                                tests on live editorial traffic.
                             </h2>
                         </hgroup>
                     </header>
                     <p class="lead">
-                        This example demonstrates the minimum implementation for
-                        reader conversion tests before deploying a proxy-backed
-                        flow.
+                        The fastest way to validate paid content demand before
+                        moving access control to a backend or edge layer.
                     </p>
                     <div class="dev-kit">
                         <p class="dev-kit-title">Developer Kit</p>
@@ -288,80 +286,67 @@
                         data-gvm-hide-sections="6"
                     >
                         <p>
-                            With the <kbd>gvm.js</kbd> hide strategy, you can
-                            easily wrap your existing website. During page load,
-                            our scripts hide some content and display a paywall.
-                            Once the user interacts with the paywall, the
-                            content becomes visible after a successful payment.
-                            This is the simplest way to integrate GetViaMsg—it’s
-                            not perfect, but it’s easy and functional.
+                            The <kbd>gvm.js</kbd> hide strategy lets you launch
+                            paid article previews without changing your existing
+                            CMS rendering pipeline.
                         </p>
                         <p>
-                            There are some security considerations—for instance,
-                            advanced users could bypass this integration by
-                            disabling JavaScript or inspecting network traffic.
-                            However, this approach is still valuable for testing
-                            engagement and understanding how many users interact
-                            with the payment solution.
+                            On load, selected sections are hidden and replaced
+                            with a clear paywall prompt. Readers who convert get
+                            immediate access in the same reading session.
                         </p>
                         <p>
-                            On mobile devices, bypassing this integration is
-                            more difficult. Globally, 90% of digital content
-                            traffic comes from mobile devices, making this
-                            strategy practical.
+                            This approach is intentionally lightweight and
+                            conversion-focused, making it useful for pilots,
+                            campaign pages, and market validation.
                         </p>
                         <p>
-                            Conditional integration is also supported. You can
-                            enable gvm.js only for specific devices, traffic
-                            sources, or social media campaigns.
+                            You can activate it conditionally by device,
+                            campaign source, or experiment bucket to measure
+                            impact before broad rollout.
                         </p>
                         <p>
-                            The hide strategy includes additional templates for
-                            locking content and the payment modal. Check the
-                            source code in this file to see how everything is
-                            declared and connected.
+                            The strategy combines two templates: one for payment
+                            and one for the locked-content panel shown in the
+                            article body.
                         </p>
                         <p>
-                            The following paragraphs are paid content and will
-                            be blocked by the scripts after page load.
+                            The next paragraphs represent premium sections. They
+                            are visible only after a successful commitment.
                         </p>
                         <p>
-                            This section becomes visible only after a successful
-                            payment. You can also enable integration based on
-                            query parameters (e.g., utm_source), A/B testing, or
-                            device type to test the solution on a subset of
-                            production traffic.
+                            In production, many publishers start with a subset
+                            of premium stories and expand coverage based on
+                            conversion and retention performance.
                         </p>
                         <p>
-                            For example, by adding
+                            For controlled rollouts, you can add conditions like
                             <code
                                 >data-gvm-cond="utm_source == 'testing-gvm' AND
                                 device matchMedia
                                 'max-width:768px,landscape:portrait'"</code
-                            >, the integration will target only vertical mobile
-                            devices.
+                            > to target only specific audiences.
                         </p>
                         <p>
-                            When <code>window.wdftDebug = true;</code> is set
-                            globally, you can see console logs showing script
-                            behavior, including any errors during
-                            initialization, binding, or payment commitment.
+                            Keep <code>window.wdftDebug = true;</code> enabled
+                            during QA to verify initialization, bindings, and
+                            commitment state transitions.
                         </p>
                         <p>
-                            It’s normal to adjust templates for your site. The
-                            best way to test is by using demo mode:
+                            For rapid sandbox testing, use
                             <code>data-gvm-env="demo"</code> in the body.
+                            You can refine copy and layout before connecting
+                            production settlement paths.
                         </p>
                         <p>
-                            Explore other strategies for integrating gvm.js
-                            scripts. Don’t forget to check the source of this
-                            file!
+                            When you are ready for stricter access control, move
+                            to redirect or proxy-backed patterns while reusing
+                            the same payment template concepts.
                         </p>
                         <p>
-                            PS. After a successful payment, future attempts are
-                            automatically resolved. Even if you clear cookies or
-                            storage, the system records it but marks it as a
-                            duplicate during settlement for the same number.
+                            Returning users are handled automatically. Existing
+                            valid commitments for the same reference are treated
+                            as duplicates, which lowers repeat friction.
                         </p>
                     </div>
                 </section>

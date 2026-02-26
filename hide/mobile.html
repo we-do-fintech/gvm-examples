@@ -222,16 +222,17 @@
                     <header>
                         <p class="eyebrow">Hide Strategy</p>
                         <hgroup>
-                            <h1>Mobile-first premium article unlock</h1>
+                            <h1>Monetize mobile article traffic first</h1>
                             <h2>
-                                Conditional activation using `data-gvm-cond` for
-                                mobile portrait traffic.
+                                Conditional paywall activation with
+                                <code>data-gvm-cond</code> for mobile portrait
+                                sessions.
                             </h2>
                         </hgroup>
                     </header>
                     <p class="lead">
-                        Desktop visitors get the full article, while mobile
-                        sessions receive a paywall preview.
+                        Keep desktop fully open while testing paid conversion on
+                        your highest-intent mobile audience.
                     </p>
                     <div class="dev-kit">
                         <p class="dev-kit-title">Developer Kit</p>
@@ -283,81 +284,72 @@
                         data-gvm-hide-sections="6"
                     >
                         <p>
-                            With the <kbd>gvm.js</kbd> hide (mobile only)
-                            strategy, you can easily wrap your existing website.
-                            During page load, our scripts hide some content and
-                            display a paywall. Once the user interacts with the
-                            paywall, the content becomes visible after a
-                            successful payment. This is the simplest way to
-                            integrate GetViaMsg—it’s not perfect, but it’s easy
-                            and functional.
+                            This mobile-only hide strategy lets you run a focused
+                            monetization rollout without changing the desktop
+                            reading experience.
                         </p>
                         <p>
-                            There are some security considerations—for instance,
-                            advanced users could bypass this integration by
-                            disabling JavaScript or inspecting network traffic.
-                            However, this approach is still valuable for testing
-                            engagement and understanding how many users interact
-                            with the payment solution.
+                            On matching devices, selected sections are hidden
+                            and replaced with a compact paywall prompt. After
+                            commitment resolution, the article unlocks
+                            immediately.
                         </p>
                         <p>
-                            On mobile devices, bypassing this integration is
-                            more difficult. Globally, 90% of digital content
-                            traffic comes from mobile devices, making this
-                            strategy practical.
+                            This is useful when mobile drives most of your
+                            visits and you want to validate pricing quickly
+                            before wider deployment.
                         </p>
                         <p>
-                            Conditional integration is also supported. You can
-                            enable gvm.js only for specific devices, traffic
-                            sources, or social media campaigns.
+                            Conditions can include device capabilities,
+                            orientation, campaign tags, or traffic source rules
+                            for precise targeting.
                         </p>
                         <p>
-                            The hide strategy includes additional templates for
-                            locking content and the payment modal. Check the
-                            source code in this file to see how everything is
-                            declared and connected.
+                            The implementation uses a payment template plus a
+                            hide-template block that is injected where premium
+                            content starts.
                         </p>
                         <p>
-                            The following paragraphs are paid content and will
-                            be blocked by the scripts after page load.
+                            The next paragraphs represent mobile premium
+                            sections and are unlocked only after successful
+                            payment.
                         </p>
                         <p>
-                            This section becomes visible only after a successful
-                            payment. You can also enable integration based on
-                            query parameters (e.g., utm_source), A/B testing, or
-                            device type to test the solution on a subset of
-                            production traffic.
+                            Start with a limited traffic share, monitor
+                            conversion quality, and then expand the rule set as
+                            confidence grows.
                         </p>
                         <p>
-                            For example, by adding
+                            For example, this condition
                             <code
                                 >data-gvm-cond="utm_source == 'testing-gvm' AND
                                 device matchMedia
                                 'max-width:768px,landscape:portrait'"</code
-                            >, the integration will target only vertical mobile
-                            devices.
+                            > can restrict monetization to campaign traffic on
+                            vertical mobile screens.
                         </p>
                         <p>
-                            When <code>window.wdftDebug = true;</code> is set
-                            globally, you can see console logs showing script
-                            behavior, including any errors during
-                            initialization, binding, or payment commitment.
+                            During QA, use
+                            <code>window.wdftDebug = true;</code> to review
+                            initialization, bindings, and commitment updates in
+                            the console.
                         </p>
                         <p>
-                            It’s normal to adjust templates for your site. The
-                            best way to test is by using demo mode:
+                            For safe testing with no settlement dependency, run
+                            in
                             <code>data-gvm-env="demo"</code> in the body.
+                            Then adapt template wording and layout for your
+                            publication.
                         </p>
                         <p>
-                            Explore other strategies for integrating gvm.js
-                            scripts. Don’t forget to check the source of this
-                            file!
+                            Once the mobile variant performs well, you can reuse
+                            this structure for broader paywall scenarios or move
+                            high-value flows to redirect strategy.
                         </p>
                         <p>
-                            PS. After a successful payment, future attempts are
-                            automatically resolved. Even if you clear cookies or
-                            storage, the system records it but marks it as a
-                            duplicate during settlement for the same number.
+                            Returning customers are handled automatically.
+                            Existing valid commitments for the same number and
+                            reference are recognized as duplicates.
                         </p>
                     </div>
                 </section>

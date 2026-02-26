@@ -144,18 +144,19 @@
                         <p class="eyebrow">Inject Strategy</p>
                         <hgroup>
                             <h1>
-                                Paid inline content insertion for premium
-                                modules
+                                Unlock premium modules directly inside the
+                                article
                             </h1>
                             <h2>
-                                Unlocks protected fragments into existing page
-                                zones after commitment resolution.
+                                Keep readers in context while monetizing
+                                high-value fragments after commitment
+                                resolution.
                             </h2>
                         </hgroup>
                     </header>
                     <p class="lead">
-                        Useful when you want to preserve page context and only
-                        gate a specific media or analysis block.
+                        Ideal for premium charts, images, analysis sections, or
+                        bonus embeds that should appear in place.
                     </p>
                     <div class="dev-kit">
                         <p class="dev-kit-title">Developer Kit</p>
@@ -197,10 +198,10 @@
                     <!-- Configuration for content, price, and metadata like reference and title -->
                     <div>
                         <p>
-                            With the <kbd>gvm.js</kbd> inject strategy, you can
-                            easily wrap your existing website. During page load,
-                            our scripts bind to all <b>data-gvm-*</b> attributes
-                            and bind inject items to trigger paywall.
+                            The <kbd>gvm.js</kbd> inject strategy is built for
+                            selective monetization. You keep the main article
+                            public while charging only for specific high-intent
+                            content blocks.
                         </p>
                         <div>
                             <ul>
@@ -225,19 +226,39 @@
                             </ul>
                         </div>
                         <p>
-                            Explore other strategies for integrating gvm.js
-                            scripts. Don’t forget to check the source of this
-                            file!
+                            After successful payment, gvm fetches protected
+                            markup and inserts it into your target node, so your
+                            existing layout and reading flow stay intact.
                         </p>
                         <p>
-                            PS. After a successful payment, future attempts are
-                            automatically resolved. Even if you clear cookies or
-                            storage, the system records it but marks it as a
-                            duplicate during settlement for the same number.
+                            Like other strategies, duplicate commitments are
+                            resolved automatically for the same number and
+                            reference, which helps reduce friction for returning
+                            buyers.
                         </p>
                     </div>
                 </section>
             </article>
         </main>
+        <script>
+            (() => {
+                const currency =
+                    document.body.getAttribute("data-gvm-currency") || "PLN";
+                const formatPrice = (value) => {
+                    const num = Number(value);
+                    return Number.isFinite(num) ? num.toFixed(2) : value;
+                };
+
+                document
+                    .querySelectorAll("[data-gvm-http-inject]")
+                    .forEach((el) => {
+                        const amount =
+                            el.getAttribute("data-gvm-amount") ||
+                            el.getAttribute("data-gvm-price");
+                        if (!amount) return;
+                        el.textContent = `Show image for ${formatPrice(amount)} ${currency}`;
+                    });
+            })();
+        </script>
     </body>
 </html>

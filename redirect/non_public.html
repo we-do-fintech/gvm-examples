@@ -26,22 +26,22 @@
                 <p class="eyebrow">Access Granted</p>
                 <header>
                     <hgroup>
-                        <h1>Commitment resolved successfully</h1>
+                        <h1>Payment commitment confirmed</h1>
                         <h2>
-                            The user has been redirected after a valid payment
+                            This destination was unlocked after a valid payment
                             event.
                         </h2>
                     </hgroup>
                 </header>
                 <p class="lead">
-                    In production, this endpoint should be protected and served
-                    by backend middleware.
+                    In production, protect this route with backend middleware
+                    and validate all appended payment parameters.
                 </p>
                 <code id="query"></code>
                 <p>
-                    You can inspect query parameters appended by
-                    <code>gvm.js</code>
-                    before redirect.
+                    Inspect the query string appended by <code>gvm.js</code> to
+                    verify the redirect payload passed to your protected
+                    endpoint.
                 </p>
             </section>
         </main>

@@ -144,17 +144,18 @@
                         <p class="eyebrow">Download Strategy</p>
                         <hgroup>
                             <h1>
-                                Paid asset delivery with payment-gated downloads
+                                Monetize digital assets with payment-gated
+                                downloads
                             </h1>
                             <h2>
-                                Recommended for digital files served through a
-                                protected proxy endpoint.
+                                Charge per file while keeping delivery under
+                                your own controlled endpoint.
                             </h2>
                         </hgroup>
                     </header>
                     <p class="lead">
-                        Use this pattern for reports, datasets, packs, or media
-                        assets with per-item pricing and metadata.
+                        Best for reports, audio, templates, datasets, and media
+                        packs sold as one-time purchases.
                     </p>
                     <div class="dev-kit">
                         <p class="dev-kit-title">Developer Kit</p>
@@ -194,11 +195,11 @@
                     <!-- Configuration for content, price, and metadata like reference and title -->
                     <div>
                         <p>
-                            With the <kbd>gvm.js</kbd> download strategy, you
-                            can easily wrap your existing website. During page
-                            load, our scripts bind to all
-                            <b>data-gvm-*</b> attributes and bind download items
-                            to trigger paywall.
+                            The <kbd>gvm.js</kbd> download strategy turns any
+                            existing link into a paid delivery action. On page
+                            load, the SDK binds declared
+                            <b>data-gvm-*</b> attributes and opens payment only
+                            when the reader requests the file.
                         </p>
                         <div>
                             <ul>
@@ -206,8 +207,8 @@
                                     <!-- First item for sell -->
                                     <div>
                                         <span
-                                            >Unknown artist - unknown title
-                                            4:33</span
+                                            >Editorial Briefing Audio
+                                            (4m33s)</span
                                         >
                                         <span>&nbsp;</span>
                                         <kbd
@@ -226,8 +227,8 @@
                                     <!-- Second item for sell with other reference and price! -->
                                     <div>
                                         <span
-                                            >Unknown artist - unknown title -
-                                            second 2:22</span
+                                            >Subscriber Bonus Track
+                                            (2m22s)</span
                                         >
                                         <span>&nbsp;</span>
                                         <kbd
@@ -245,19 +246,39 @@
                             </ul>
                         </div>
                         <p>
-                            Explore other strategies for integrating gvm.js
-                            scripts. Don’t forget to check the source of this
-                            file!
+                            This pattern is ideal when your pricing is item
+                            based and your file URLs should stay private until
+                            payment is confirmed.
                         </p>
                         <p>
-                            PS. After a successful payment, future attempts are
-                            automatically resolved. Even if you clear cookies or
-                            storage, the system records it but marks it as a
-                            duplicate during settlement for the same number.
+                            Returning users are handled automatically. If a
+                            matching payment already exists, gvm resolves it as
+                            a duplicate commitment and allows access without
+                            charging twice.
                         </p>
                     </div>
                 </section>
             </article>
         </main>
+        <script>
+            (() => {
+                const currency =
+                    document.body.getAttribute("data-gvm-currency") || "PLN";
+                const formatPrice = (value) => {
+                    const num = Number(value);
+                    return Number.isFinite(num) ? num.toFixed(2) : value;
+                };
+
+                document
+                    .querySelectorAll("[data-gvm-http-download]")
+                    .forEach((el) => {
+                        const amount =
+                            el.getAttribute("data-gvm-amount") ||
+                            el.getAttribute("data-gvm-price");
+                        if (!amount) return;
+                        el.textContent = `Download for ${formatPrice(amount)} ${currency}`;
+                    });
+            })();
+        </script>
     </body>
 </html>
