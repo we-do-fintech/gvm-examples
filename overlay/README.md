@@ -20,16 +20,17 @@ overlay/
 
 ## Configuration model
 
-The body only declares the essentials:
+Integration is a one-liner — the `data-gvm-*` attributes go on the `<script>` tag, not the body:
 
 ```html
-<body data-gvm
-      data-gvm-tenant="wdft_showcase"
-      data-gvm-env="dev">
+<script type="module"
+        src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"
+        data-gvm-tenant="wdft_showcase"
+        data-gvm-env="dev"></script>
 ```
 
-Loading `gvm-overlay.js` is the overlay signal — no extra flag. The overlay then
-derives, by convention, from `env` + `tenant`:
+Loading `gvm-overlay.js` is the overlay signal — no extra flag. The overlay injects the root
+attributes onto `<body>` and then derives, by convention, from `env` + `tenant`:
 
 | env  | config (read)                                | admin (editor + API)                  |
 | ---- | -------------------------------------------- | ------------------------------------- |
@@ -38,7 +39,8 @@ derives, by convention, from `env` + `tenant`:
 | dev  | `https://cfg.dev.gvm.wdft.ovh/<t>.json`      | `https://overlay.dev.gvm.wdft.ovh`    |
 
 The explicit `data-gvm-config`, `data-gvm-admin-src` and `data-gvm-admin-api`
-are still supported as overrides.
+are still supported as overrides. Templates (paywall + payment) come from the config
+(`templates.paywall` / `templates.payment`) — the overlay ships no built-in markup.
 
 ## Run
 

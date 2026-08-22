@@ -10,11 +10,7 @@
             window.wdftDebug = true;
         </script>
     </head>
-    <body
-        data-gvm
-        data-gvm-tenant="wdft_showcase_qa"
-        data-gvm-env="dev"
-    >
+    <body>
         <header class="site-header">
             <div class="container">
                 <a class="brand" href="/overlay/">
@@ -81,6 +77,9 @@
             </article>
         </main>
 
-        <script type="module" src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"></script>
+        <script type="module"
+            data-gvm-tenant="wdft_showcase_qa"
+            data-gvm-env="dev"
+            src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"></script>
     </body>
 </html>
