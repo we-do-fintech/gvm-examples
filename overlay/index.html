@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>gvm-overlay.js — Demo</title>
+        <link rel="stylesheet" href="/assets/pico.css" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="/">
+                    <img src="/assets/logo-dark.png" alt="WDFT" />
+                </a>
+                <div class="small-nav">gvm-overlay.js — config-driven paywall</div>
+            </div>
+        </header>
+
+        <main class="container showcase-shell">
+            <section class="hero-card">
+                <p class="eyebrow">gvm-overlay.js</p>
+                <header>
+                    <hgroup>
+                        <h1>Config-driven paywall demo</h1>
+                        <h2>
+                            Prices and blocking rules come from a static JSON
+                            config — no <code>data-gvm-*</code> markup to write.
+                        </h2>
+                    </hgroup>
+                </header>
+                <p class="lead">
+                    Each article below only marks its content with a single
+                    <code>data-gvm-reference</code>. Loading
+                    <code>gvm-overlay.js</code> (instead of
+                    <code>gvm.js</code>) turns on overlay mode; the config URL
+                    is derived from <code>data-gvm-env="dev"</code> +
+                    <code>data-gvm-tenant</code>.
+                </p>
+
+                <div class="content-gap quick-links">
+                    <a href="/overlay/article-1.html"
+                        ><strong>Article 1</strong><br />blur · 2.99 PLN</a
+                    >
+                    <a href="/overlay/article-2.html"
+                        ><strong>Article 2</strong><br />hide · 0.75 PLN</a
+                    >
+                    <a href="/overlay/article-3.html"
+                        ><strong>Article 3</strong><br />mangle-blur · 4.99 PLN</a
+                    >
+                </div>
+
+                <div class="content-gap note-box">
+                    <strong>Admin mode:</strong> append
+                    <code>?gvm_admin=1</code> to any article URL to open the
+                    in-page editor (paste the admin JWT when prompted) and edit
+                    the config. Config + editor are served from the
+                    <code>dev</code> environment. See <code>README.md</code>.
+                </div>
+
+                <footer class="page-footer">
+                    <a href="https://github.com/we-do-fintech/gvm-examples"
+                        >github</a
+                    >
+                    |
+                    <a href="https://docs.wdft.ovh/gvm-overlay"
+                        >documentation</a
+                    >
+                    |
+                    <a href="https://getviamsg.wdft.ovh">getviamsg website</a>
+                </footer>
+            </section>
+        </main>
+    </body>
+</html>

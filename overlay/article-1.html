@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Overlay demo — Article 1 (blur)</title>
+        <link rel="stylesheet" href="/assets/pico.css" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+        <script>
+            window.wdftDebug = true;
+        </script>
+    </head>
+    <body
+        data-gvm
+        data-gvm-tenant="wdft_showcase"
+        data-gvm-env="dev"
+    >
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="/overlay/">
+                    <img
+                        src="/assets/logo-dark.png"
+                        width="100"
+                        height="20"
+                        alt="WDFT"
+                    />
+                </a>
+                <div class="small-nav">Overlay demo — Article 1 (blur)</div>
+            </div>
+        </header>
+
+        <main class="container showcase-shell">
+            <article>
+                <section class="section-card">
+                    <header>
+                        <p class="eyebrow">gvm-overlay.js</p>
+                        <hgroup>
+                            <h1>Article 1 — blurred preview</h1>
+                            <h2>
+                                Everything below is driven by
+                                <code>article-1</code> in the config.
+                            </h2>
+                        </hgroup>
+                    </header>
+                    <p class="lead">
+                        Add <code>?gvm_admin=1</code> to the URL to edit this
+                        article's price / strategy in-page.
+                    </p>
+
+                    <div data-gvm-reference="article-1">
+                        <p>
+                            This is the free, visible intro of the article.
+                            It stays readable without a payment.
+                        </p>
+                        <p>
+                            The premium body below is blurred by the
+                            <kbd>blur</kbd> strategy until the reader confirms
+                            an SMS commitment.
+                        </p>
+                        <p>
+                            Readers who complete the payment get the blurred
+                            content restored in place — no redirect, no reload.
+                        </p>
+                        <p>
+                            This demo runs in
+                            <code>data-gvm-env="dev"</code>, so the payment
+                            flow targets the dev API.
+                        </p>
+                        <p>
+                            The price (2.99 PLN) and hide percentage come
+                            straight from the tenant config
+                            (<code>cfg.dev.gvm.wdft.ovh/wdft_showcase.json</code>).
+                        </p>
+                        <p>
+                            Switch the environment to
+                            <code>qa</code> or <code>prod</code> and the overlay
+                            re-derives the config URL automatically.
+                        </p>
+                    </div>
+                </section>
+            </article>
+        </main>
+
+        <script type="module" src="./assets/gvm-overlay.js"></script>
+    </body>
+</html>

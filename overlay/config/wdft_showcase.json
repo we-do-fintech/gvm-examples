@@ -1,0 +1,48 @@
+{
+  "tenant": "wdft_showcase",
+  "version": 1,
+  "articles": {
+    "article-1": {
+      "enabled": true,
+      "price": 2.99,
+      "currency": "PLN",
+      "template": "paywall",
+      "hideStrategy": "blur",
+      "hidePercent": 40,
+      "hideSections": null,
+      "hideWords": null,
+      "metadata": {
+        "title": "Article 1 — blurred preview",
+        "url": "https://example.com/overlay/article-1.html"
+      }
+    },
+    "article-2": {
+      "enabled": true,
+      "price": 0.75,
+      "currency": "PLN",
+      "template": "paywall",
+      "hideStrategy": "hide",
+      "hidePercent": 50,
+      "hideSections": null,
+      "hideWords": null,
+      "metadata": {
+        "title": "Article 2 — hard hide",
+        "url": "https://example.com/overlay/article-2.html"
+      }
+    },
+    "article-3": {
+      "enabled": true,
+      "price": 4.99,
+      "currency": "PLN",
+      "template": "paywall",
+      "hideStrategy": "mangle-blur",
+      "hidePercent": 30,
+      "hideSections": null,
+      "hideWords": null,
+      "metadata": {
+        "title": "Article 3 — mangle-blur",
+        "url": "https://example.com/overlay/article-3.html"
+      }
+    }
+  }
+}

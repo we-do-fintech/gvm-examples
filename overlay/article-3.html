@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Overlay demo — Article 3 (mangle-blur)</title>
+        <link rel="stylesheet" href="/assets/pico.css" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+        <script>
+            window.wdftDebug = true;
+        </script>
+    </head>
+    <body
+        data-gvm
+        data-gvm-tenant="wdft_showcase"
+        data-gvm-env="dev"
+    >
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="/overlay/">
+                    <img
+                        src="/assets/logo-dark.png"
+                        width="100"
+                        height="20"
+                        alt="WDFT"
+                    />
+                </a>
+                <div class="small-nav">
+                    Overlay demo — Article 3 (mangle-blur)
+                </div>
+            </div>
+        </header>
+
+        <main class="container showcase-shell">
+            <article>
+                <section class="section-card">
+                    <header>
+                        <p class="eyebrow">gvm-overlay.js</p>
+                        <hgroup>
+                            <h1>Article 3 — mangle-blur</h1>
+                            <h2>
+                                Blur plus word shuffling for extra obfuscation.
+                            </h2>
+                        </hgroup>
+                    </header>
+                    <p class="lead">
+                        The premium tier of the demo: 4.99 PLN with the
+                        <kbd>mangle-blur</kbd> strategy.
+                    </p>
+
+                    <div data-gvm-reference="article-3">
+                        <p>
+                            The <kbd>mangle-blur</kbd> strategy blurs the hidden
+                            content and additionally shuffles the word order.
+                        </p>
+                        <p>
+                            This makes casual copying from the page harder, at
+                            the cost of a slightly more confusing preview.
+                        </p>
+                        <p>
+                            It is a good middle ground for publishers who want
+                            obfuscation without a full proxy/backend setup.
+                        </p>
+                        <p>
+                            Like the other pages, the configuration lives only
+                            in the tenant config (<code>wdft_showcase.json</code>).
+                        </p>
+                        <p>
+                            On payment, the original content is restored and the
+                            shuffled text is replaced with the real paragraphs.
+                        </p>
+                        <p>
+                            Every article in this demo shares the same page
+                            skeleton — only the <code>data-gvm-reference</code>
+                            differs.
+                        </p>
+                    </div>
+                </section>
+            </article>
+        </main>
+
+        <script type="module" src="./assets/gvm-overlay.js"></script>
+    </body>
+</html>
