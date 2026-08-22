@@ -10,11 +10,7 @@
             window.wdftDebug = true;
         </script>
     </head>
-    <body
-        data-gvm
-        data-gvm-tenant="wdft_showcase_qa"
-        data-gvm-env="dev"
-    >
+    <body>
         <header class="site-header">
             <div class="container">
                 <a class="brand" href="/overlay/">
@@ -69,7 +65,7 @@
                         <p>
                             The price (2.99 PLN) and hide percentage come
                             straight from the tenant config
-                            (<code>cfg.dev.gvm.wdft.ovh/wdft_showcase.json</code>).
+                            (<code>cfg.dev.gvm.wdft.ovh/wdft_showcase_qa.json</code>).
                         </p>
                         <p>
                             Switch the environment to
@@ -81,6 +77,10 @@
             </article>
         </main>
 
-        <script type="module" src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"></script>
+        <script type="module"
+            data-gvm
+            data-gvm-tenant="wdft_showcase_qa"
+            data-gvm-env="dev"
+            src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"></script>
     </body>
 </html>
