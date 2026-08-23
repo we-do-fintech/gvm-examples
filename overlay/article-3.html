@@ -6,12 +6,15 @@
         <title>Overlay demo — Article 3 (mangle-blur)</title>
         <link rel="stylesheet" href="/assets/pico.css" />
         <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+        <style>
+            .gvm-cloak {
+                visibility: hidden;
+            }
+        </style>
         <script>
             window.wdftDebug = true;
         </script>
-        <script
-            defer
-            type="module"
+        <script type="module"
             data-gvm-tenant="wdft_showcase_qa"
             data-gvm-env="dev"
             src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"></script>
@@ -50,7 +53,7 @@
                         <kbd>mangle-blur</kbd> strategy.
                     </p>
 
-                    <div>
+                    <div class="gvm-cloak">
                         <p>
                             The <kbd>mangle-blur</kbd> strategy blurs the hidden
                             content and additionally shuffles the word order.
