@@ -25,7 +25,7 @@ Integration is a one-liner — the `data-gvm-*` attributes go on the `<script>` 
 ```html
 <script type="module"
         src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"
-        data-gvm-tenant="wdft_showcase"
+        data-gvm-tenant="wdft_showcase_dev"
         data-gvm-env="dev"></script>
 ```
 
