@@ -6,6 +6,14 @@
         <title>Overlay demo — Article 1 (blur)</title>
         <link rel="stylesheet" href="/assets/pico.css" />
         <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+        <!-- No-flash: hide gated content until gvm-overlay.js boots gvm.js.
+             The overlay injects the same rule on load and removes the
+             .gvm-cloak class once it is done (see README.md). -->
+        <style>
+            .gvm-cloak {
+                visibility: hidden;
+            }
+        </style>
         <script>
             window.wdftDebug = true;
         </script>
@@ -43,7 +51,7 @@
                         article's price / strategy in-page.
                     </p>
 
-                    <div>
+                    <div class="gvm-cloak">
                         <p>
                             This is the free, visible intro of the article.
                             It stays readable without a payment.

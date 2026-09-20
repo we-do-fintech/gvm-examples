@@ -11,11 +11,12 @@ overlay/
   article-1.html    reference "article-1" — blur, 2.99 PLN
   article-2.html    reference "article-2" — hide, 0.75 PLN
   article-3.html    reference "article-3" — mangle-blur, 4.99 PLN
-  config/
-    wdft_showcase.json   seed config (source of truth for the dev backend)
-  assets/
-    gvm.js, gvm-overlay.js, gvm-admin.js   (copied by build.sh)
-  build.sh          copies the built scripts from the sibling repos
+
+> The demo pages reference `https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js`
+> directly — the overlay dynamically imports the sibling `gvm.js` from the same
+> CDN path. The seed config (`wdft_showcase.json`) lives in git history and is
+> bootstrapped into the `dev` backend via `gvm-sdk-admin` (see below); there is
+> no `config/` or `assets/` directory in this repo anymore.
 ```
 
 ## Configuration model
@@ -42,17 +43,53 @@ The explicit `data-gvm-config`, `data-gvm-admin-src` and `data-gvm-admin-api`
 are still supported as overrides. Templates (paywall + payment) come from the config
 (`templates.paywall` / `templates.payment`) — the overlay ships no built-in markup.
 
+## No-flash (gvm-cloak)
+
+While the overlay fetches the config and boots `gvm.js`, the gated content would
+otherwise be fully visible (flash of unpaid content). To prevent that, wrap the
+**gated content** in `.gvm-cloak` and declare the rule in `<head>` **before** the
+content renders:
+
+```html
+<head>
+    <!-- zero-flash: rule is active before the first paint -->
+    <style>
+        .gvm-cloak {
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+...
+
+<div class="gvm-cloak">
+    <p>...paywalled content...</p>
+</div>
+```
+
+How it works:
+
+- The overlay injects the same `.gvm-cloak { visibility: hidden }` rule on load
+  (so the class also works without the `<head>` rule, at the cost of a tiny
+  window before the module evaluates).
+- Once it has finished — config fetched, `data-gvm-*` applied, `gvm.js` booted
+  and the hide/blur strategy applied — the overlay **removes** the `.gvm-cloak`
+  class. The free intro becomes visible while the gated part stays blurred or
+  hidden.
+- The class is removed even when no paywall applies to the page (no config, no
+  reference match), so content is never left hidden.
+
+> Use `visibility: hidden` (not `display: none`) so layout and text length stay
+> stable while the overlay loads. Exactly one element per reference should carry
+> the class — the same element the config `selector`/`data-gvm-reference` targets.
+
 ## Run
 
+The demo loads `gvm-overlay.js` from the CDN (`@latest`), which in turn
+imports `gvm.js` from the same CDN path — no local build or copy step needed:
+
 ```sh
-# 1. Build the client scripts (from the gvm-examples repo root, i.e. ..)
-cd ../../gvm-sdk && pnpm build:overlay
-cd ../../gvm-sdk-admin && pnpm build:admin
-
-# 2. Copy them into the demo
-cd ../../gvm-examples/overlay && ./build.sh
-
-# 3. Serve (from the gvm-examples repo root, so /assets works)
+# Serve (from the gvm-examples repo root, so /assets works)
 cd .. && npx live-server .
 ```
 
@@ -61,16 +98,22 @@ Open `http://localhost:8080/overlay/`.
 > The overlay fetches the config cross-origin from
 > `https://cfg.dev.gvm.wdft.ovh/…`, so that host must allow CORS for
 > `localhost`.
+> To test a local build instead of the CDN, build the bundles in `gvm-sdk`
+> (`pnpm build:overlay`, `pnpm build:gvm`) / `gvm-sdk-admin` (`pnpm build:admin`)
+> and serve them locally via `data-gvm-config`/`data-gvm-admin-src` overrides.
 
 ## Seed the config
 
-`config/wdft_showcase.json` is the source of truth. Push it to the dev backend
-once (or edit it via the admin panel):
+The seed (`wdft_showcase.json`) is already bootstrapped into the `dev` backend
+(`bootstrap:tenant dev wdft_showcase` in `gvm-sdk-admin`). If you need to
+re-push it, extract the historical seed and use the gvm-sdk-admin script:
 
 ```sh
 cd ../../gvm-sdk-admin
-pnpm bootstrap:tenant dev wdft_showcase ../../gvm-examples/overlay/config/wdft_showcase.json
+pnpm bootstrap:tenant dev wdft_showcase <path-to-wdft_showcase.json>
 ```
+
+You can also edit the config live in `?gvm_admin=1` mode (see below).
 
 ## What to test
 
@@ -96,9 +139,8 @@ else. The overlay re-derives the config and admin URLs.
 
 ## Notes
 
-- `gvm.js` is loaded dynamically by the overlay (sibling of `gvm-overlay.js` in
-  `assets/`); the editor is loaded from the `dev` overlay host, not from
-  `assets/` (the local copy is kept as an offline fallback).
-- There is a brief flash of full content before the overlay fetches the config
-  and boots `gvm.js`. For production, gate content server-side or use the
-  redirect/download/inject strategies.
+- `gvm.js` is loaded dynamically by the overlay (sibling of `gvm-overlay.js` on
+the CDN); the editor is loaded from the `dev` overlay host, not from `assets/`.
+- All three demo articles wrap their gated body in `.gvm-cloak` (rule declared
+in `<head>`) — see **No-flash (gvm-cloak)** above for the client pattern and
+the exact sequence (text invisible → overlay applied → text visible).
