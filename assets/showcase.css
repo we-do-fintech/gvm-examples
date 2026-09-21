@@ -98,7 +98,10 @@ body::before {
     background: var(--paper-soft);
     box-shadow: none;
     padding: clamp(1.15rem, 2.5vw, 2.2rem);
-    animation: cardEnter 0.56s ease both;
+    /* backwards (not both): after the entrance the element returns to its
+       base style with transform:none, so it never becomes a containing
+       block for position:fixed descendants (paywall overlays/bars). */
+    animation: cardEnter 0.56s ease backwards;
 }
 
 .hero-card::before,
