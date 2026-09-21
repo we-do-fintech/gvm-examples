@@ -155,18 +155,23 @@
                 .wait-for-script {
                     display: block;
                 }
+                /* .section-card clips with overflow:hidden, which would
+                   neutralize position:sticky against the viewport. */
+                .section-card {
+                    overflow: visible !important;
+                }
                 .paywall {
-                    /* Floating unlock card: pinned to the bottom of the
-                       viewport, centered, and floating over the blurred
-                       premium content while the reader scrolls.
-                       (position: fixed is used because .section-card is
-                       overflow: hidden, which would disable sticky.) */
-                    position: fixed;
+                    /* Sticky unlock card: its flow position is at the end of
+                       the blurred premium container, so it sticks to the
+                       bottom of the viewport only while that (blurred) region
+                       is in view — floating over the blurred content. It stays
+                       hidden while the free preview is on screen and settles
+                       into place once the premium part scrolls past. */
+                    position: sticky;
                     bottom: 1.25rem;
-                    left: 50%;
-                    transform: translateX(-50%);
                     z-index: 40;
                     width: min(100% - 2rem, 560px) !important;
+                    margin: 1.25rem auto 0;
                     border: 1px solid rgba(141, 130, 104, 0.55) !important;
                     border-radius: 0 !important;
                     padding: 24px;
@@ -281,7 +286,10 @@
 &lt;/body&gt;</code></pre>
                         </details>
                     </div>
-                    <!-- Configuration for content, price, and metadata like reference and title -->
+                    <!-- Premium content — blurred and mangled until unlock.
+                         The paywall card is injected at the end of THIS
+                         container, so its sticky range is exactly the blurred
+                         region below. -->
                     <div
                         id="article"
                         class="wait-for-script"
@@ -292,41 +300,8 @@
                         data-gvm-category="article"
                         data-gvm-hide-template-name="paywall"
                         data-gvm-hide-strategy="mangle-blur"
-                        data-gvm-hide-sections="6"
+                        data-gvm-hide-sections="2"
                     >
-                        <p>
-                            The <kbd>gvm.js</kbd> blur-mangle strategy lets you
-                            launch paid article previews without changing your
-                            existing CMS rendering pipeline.
-                        </p>
-                        <p>
-                            On load, selected sections stay in the layout but
-                            are covered with a blur layer and their words are
-                            shuffled into gibberish — replaced by a clear
-                            paywall prompt. Readers who convert get the original
-                            text back in the same reading session.
-                        </p>
-                        <p>
-                            The extra text obfuscation discourages casual
-                            copy-paste or screenshot workarounds, which makes
-                            blur-mangle a good middle ground between pure blur
-                            and full hide.
-                        </p>
-                        <p>
-                            You can activate it conditionally by device,
-                            campaign source, or experiment bucket to measure
-                            impact before broad rollout.
-                        </p>
-                        <p>
-                            The strategy combines two templates: one for payment
-                            and one for the locked-content panel shown in the
-                            article body.
-                        </p>
-                        <p>
-                            The next paragraphs represent premium sections. They
-                            are blurred and mangled until a successful
-                            commitment.
-                        </p>
                         <p>
                             In production, many publishers start with a subset
                             of premium stories and expand coverage based on

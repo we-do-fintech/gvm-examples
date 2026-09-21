@@ -155,18 +155,23 @@
                 .wait-for-script {
                     display: block;
                 }
+                /* .section-card clips with overflow:hidden, which would
+                   neutralize position:sticky against the viewport. */
+                .section-card {
+                    overflow: visible !important;
+                }
                 .paywall {
-                    /* Floating unlock card: pinned to the bottom of the
-                       viewport, centered, and floating over the blurred
-                       premium content while the reader scrolls.
-                       (position: fixed is used because .section-card is
-                       overflow: hidden, which would disable sticky.) */
-                    position: fixed;
+                    /* Sticky unlock card: its flow position is at the end of
+                       the blurred premium container, so it sticks to the
+                       bottom of the viewport only while that (blurred) region
+                       is in view — floating over the blurred content. It stays
+                       hidden while the free preview is on screen and settles
+                       into place once the premium part scrolls past. */
+                    position: sticky;
                     bottom: 1.25rem;
-                    left: 50%;
-                    transform: translateX(-50%);
                     z-index: 40;
                     width: min(100% - 2rem, 560px) !important;
+                    margin: 1.25rem auto 0;
                     border: 1px solid rgba(141, 130, 104, 0.55) !important;
                     border-radius: 0 !important;
                     padding: 24px;
@@ -281,19 +286,16 @@
 &lt;/body&gt;</code></pre>
                         </details>
                     </div>
-                    <!-- Configuration for content, price, and metadata like reference and title -->
-                    <div
-                        id="article"
-                        class="wait-for-script"
-                        data-gvm-reference="showcase-blur-strategy"
-                        data-gvm-price="0.75"
-                        data-gvm-template-name="payment"
-                        data-gvm-metadata-title="Showcase blur strategy"
-                        data-gvm-category="article"
-                        data-gvm-hide-template-name="paywall"
-                        data-gvm-hide-strategy="blur"
-                        data-gvm-hide-sections="6"
-                    >
+                    <div class="content-gap note-box">
+                        <strong>Sticky card:</strong> the paywall panel is
+                        injected at the end of the premium container below, so
+                        it sticks to the bottom of the viewport <em>only</em>
+                        while the blurred region is in view and settles into
+                        place after it.
+                    </div>
+
+                    <!-- Free preview — always visible -->
+                    <div class="article-preview">
                         <p>
                             The <kbd>gvm.js</kbd> blur strategy lets you launch
                             paid article previews without changing your existing
@@ -326,6 +328,23 @@
                             are covered with the blur layer until a successful
                             commitment.
                         </p>
+                    </div>
+
+                    <!-- Premium content — blurred until unlock. The paywall
+                         card is injected at the end of THIS container, so its
+                         sticky range is exactly the blurred region below. -->
+                    <div
+                        id="article"
+                        class="wait-for-script"
+                        data-gvm-reference="showcase-blur-strategy"
+                        data-gvm-price="0.75"
+                        data-gvm-template-name="payment"
+                        data-gvm-metadata-title="Showcase blur strategy"
+                        data-gvm-category="article"
+                        data-gvm-hide-template-name="paywall"
+                        data-gvm-hide-strategy="blur"
+                        data-gvm-hide-sections="2"
+                    >
                         <p>
                             In production, many publishers start with a subset
                             of premium stories and expand coverage based on

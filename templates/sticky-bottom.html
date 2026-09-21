@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Paywall Template — Sticky bottom bar</title>
+        <link rel="stylesheet" href="/assets/pico.css" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-3" />
+
+        <script
+            src="https://esm.sh/@wdft/gvm-sdk@latest/gvm.js"
+            type="module"
+        ></script>
+        <!-- Customizations -->
+        <script>
+            // Enable debug logging in the console
+            window.wdftDebug = true;
+            // Remove wait-for-script flash protection once the DOM is ready
+            window.addEventListener("DOMContentLoaded", () => {
+                const elements = document.querySelectorAll(".wait-for-script");
+                for (const el of elements) {
+                    el.classList.remove("wait-for-script");
+                }
+            });
+        </script>
+        <!-- Free preview is visible immediately; premium is hidden until gvm boots -->
+        <style>
+            .wait-for-script {
+                display: none;
+            }
+            .flex {
+                display: flex;
+                flex-direction: column;
+            }
+            .row {
+                flex-direction: row;
+            }
+            .items-center {
+                align-items: center;
+                justify-content: center;
+            }
+            .mini {
+                width: 500px;
+            }
+        </style>
+    </head>
+
+    <!-- data-gvm-env="demo" simulates the whole payment flow with no real API -->
+    <body
+        data-gvm
+        data-gvm-tenant="wdft_showcase_qa"
+        data-gvm-env="demo"
+        data-gvm-currency="PLN"
+    >
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="/">
+                    <img
+                        src="/assets/logo-dark.png"
+                        width="100"
+                        height="20"
+                        alt="WDFT"
+                    />
+                </a>
+                <div class="small-nav">Paywall Template · Sticky bottom bar</div>
+            </div>
+        </header>
+
+        <!-- Payment dialog template — injected into the body on demand -->
+        <template
+            data-gvm-template="payment"
+            data-gvm-template-inject-to="body"
+        >
+            <dialog open>
+                <article class="mini payment-modal">
+                    <header class="payment-header">
+                        <hgroup>
+                            <h3>Unlock in seconds</h3>
+                            <p>Send text to get instant access.</p>
+                        </hgroup>
+                    </header>
+
+                    <section class="payment-body">
+                        <p class="payment-price-line">
+                            <span class="payment-price-label"
+                                >One-time access</span
+                            >
+                            <strong>
+                                <span data-gvm-bind-price></span>
+                                <span data-gvm-bind-currency></span>
+                            </strong>
+                        </p>
+
+                        <div class="payment-qr-wrap">
+                            <span data-gvm-bind-qr class="payment-qr">
+                                <span aria-busy="true"></span>
+                            </span>
+                        </div>
+
+                        <p class="payment-status-row">
+                            <span
+                                data-gvm-bind-status
+                                data-gvm-bind-status-initializing="Preparing QR code"
+                                data-gvm-bind-status-waiting="Waiting for SMS"
+                                data-gvm-bind-status-duplicated="Already unlocked on this number"
+                                data-gvm-bind-status-resolved="Payment confirmed. Unlocking now..."
+                                data-gvm-bind-status-rejected="Payment could not be verified. Please try again."
+                            >
+                            </span>
+                            <span class="payment-time">
+                                (<span data-gvm-bind-time-remaining>00:00</span
+                                >)
+                            </span>
+                        </p>
+
+                        <p class="payment-promise">
+                            Content unlocks instantly, and settled after 7 days.
+                        </p>
+
+                        <div class="payment-actions">
+                            <button data-gvm-bind-send-sms>
+                                Send SMS to unlock
+                            </button>
+                            <button data-gvm-bind-cancel class="contrast">
+                                Cancel
+                            </button>
+                        </div>
+                    </section>
+
+                    <footer class="payment-footer">
+                        <small>
+                            GetViaMsg by
+                            <a href="https://getviamsg.wdft.ovh/">WDFT</a>
+                        </small>
+                    </footer>
+                </article>
+            </dialog>
+        </template>
+
+        <!-- Paywall template: a full-width bar pinned to the bottom of the
+             viewport at all times. Pure HTML + CSS. -->
+        <template
+            data-gvm-template="paywall"
+            data-gvm-template-inject-to="#article"
+        >
+            <style>
+                .wait-for-script {
+                    display: block;
+                }
+                .paywall {
+                    position: fixed;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 40;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 1.1rem;
+                    flex-wrap: wrap;
+                    padding: 0.9rem 1.25rem;
+                    border-top: 1px solid rgba(141, 130, 104, 0.55);
+                    background: #f5f1e6;
+                    box-shadow: 0 -12px 36px rgba(23, 29, 27, 0.22);
+                }
+                .paywall p {
+                    margin: 0;
+                    font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+                    line-height: 1.3;
+                    color: #27302d;
+                }
+                .paywall .paywall-meta {
+                    font-size: clamp(0.85rem, 1.05vw, 0.95rem);
+                    color: #42504c;
+                }
+                .paywall .paywall-note {
+                    font-size: clamp(0.78rem, 1vw, 0.88rem);
+                    color: #6b3113;
+                    opacity: 0.95;
+                }
+                .paywall [data-gvm-bind-reading-time],
+                .paywall [data-gvm-bind-reading-words] {
+                    color: #1f4f44;
+                    font-weight: 700;
+                }
+                .paywall button {
+                    margin-top: 0;
+                    font-weight: 700;
+                    min-width: 220px;
+                    font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+                    padding: 0.55rem 1rem;
+                    border-radius: 10px;
+                }
+                body {
+                    padding-bottom: 96px;
+                }
+                @media (max-width: 640px) {
+                    .paywall {
+                        flex-direction: column;
+                        text-align: center;
+                    }
+                    .paywall button {
+                        width: 100%;
+                    }
+                }
+            </style>
+            <div class="paywall">
+                <p>
+                    <strong>Finish this story.</strong> A single tap unlocks
+                    the rest.
+                </p>
+                <p class="paywall-meta">
+                    <span data-gvm-bind-reading-time></span> min remaining
+                </p>
+                <button data-gvm-bind-pay>
+                    Unlock for <span data-gvm-bind-price></span>
+                    <span data-gvm-bind-currency></span>
+                </button>
+            </div>
+        </template>
+
+        <main class="container showcase-shell">
+            <article class="tpl-article">
+                <section class="section-card">
+                    <header>
+                        <p class="eyebrow">Sticky bottom bar · blur strategy</p>
+                        <hgroup>
+                            <h1>
+                                The newsroom that stopped guessing about price
+                            </h1>
+                            <h2 class="tpl-standfirst">
+                                A regional daily tried single-article unlocks for
+                                ninety days. The results surprised the editors —
+                                and changed how the whole paper thinks about
+                                paywalls.
+                            </h2>
+                        </hgroup>
+                        <div class="byline">
+                            <span class="byline-author">By A. Nowak</span>
+                            <span class="byline-dot">·</span>
+                            <time datetime="2026-03-01">1 Mar 2026</time>
+                            <span class="byline-dot">·</span>
+                            <span>6 min read</span>
+                        </div>
+                    </header>
+
+                    <p class="lead">
+                        When the editorial board of the Kurier Zachodni sat down
+                        in January to look at nine months of paywall data, the
+                        chart nobody expected was the price one. Not the 
+                        conversions, not the retention — the price. The paper
+                        had been selling annual subscriptions since 1998, and
+                        the idea that a single story could carry a price tag of
+                        its own had always felt, in the words of one editor,
+                        “like selling one page out of a book.”
+                    </p>
+                    <p>
+                        Then market research came back with a number that made
+                        them pause: readers who never bought a subscription
+                        were, in large numbers, willing to pay pocket change
+                        for a single well-reported story. Not a bundle, not a
+                        membership — one story, read once, paid once.
+                    </p>
+                    <p>
+                        The pilot started small, on the weekend long-reads the
+                        desk was proudest of. Three prices, three audience
+                        buckets, ninety days. The paywall itself was the
+                        simplest possible thing: blur the second half of the
+                        article, ask for a small one-time payment, unlock
+                        instantly on the same scroll position.
+                    </p>
+                    <p>
+                        This page demonstrates one of the six paywall layouts
+                        built on <kbd>gvm.js</kbd> — the classic inline card.
+                        The card sits in the article flow at the exact point
+                        where the free preview ends, so the reader meets the
+                        offer at the moment of maximum curiosity, with no
+                        redesign required.
+                    </p>
+
+                    <!-- Free preview ends here — the premium part is blurred
+                         until the reader unlocks it. -->
+                    <div
+                        id="article"
+                        class="wait-for-script"
+                        data-gvm-reference="tpl-sticky-bottom"
+                        data-gvm-price="1.99"
+                        data-gvm-template-name="payment"
+                        data-gvm-metadata-title="The newsroom that stopped guessing about price"
+                        data-gvm-category="article"
+                        data-gvm-hide-template-name="paywall"
+                        data-gvm-hide-strategy="blur"
+                        data-gvm-hide-sections="2"
+                        data-gvm-demo-status="success"
+                        data-gvm-demo-payment-status="resolved"
+                        data-gvm-demo-payment-status-time="3000"
+                    >
+                        <p>
+                            The first surprise came in week two. On the pilot
+                            articles, the average reader reached the paywall,
+                            hesitated for less than a second, and paid. The
+                            friction was so low that the editors initially
+                            suspected the analytics were broken — the whole
+                            checkout was a single button, a single SMS, a
+                            single tap, and the article simply un-blurred in
+                            place.
+                        </p>
+                        <p>
+                            The second surprise was about the readers who paid.
+                            They were not the heaviest users of the site. Many
+                            were occasional visitors who landed from social
+                            media, read the free half of one exceptional story,
+                            and decided that the asking price — less than a
+                            bus ticket — was fair. They were the readers the
+                            paper had spent years trying to convert to
+                            subscribers, now paying voluntarily, story by
+                            story.
+                        </p>
+                        <p>
+                            The third surprise was the quietest and, for the
+                            business desk, the most interesting: the price
+                            itself could move. When the paper tested 0.99 PLN
+                            against 2.99 PLN on the same tier of stories, the
+                            lower price converted roughly twice as well — and
+                            the revenue difference was smaller than the
+                            subscription team had predicted, because volume
+                            made up for the lower ticket.
+                        </p>
+                        <p>
+                            None of this made the annual subscription obsolete.
+                            What it did was reveal that the demand curve under
+                            a price of five złoty was a curve — not a cliff.
+                            There were readers at 0.99, more at 1.99, still
+                            substantial numbers at 2.99 and 4.99. The paper
+                            simply had never given them anything to buy at
+                            those points.
+                        </p>
+                        <p>
+                            The editorial conclusion, written up in the
+                            internal review, was deliberately unglamorous:
+                            “Readers do not hate paywalls. Readers hate
+                            subscriptions they forget they have. A single,
+                            honest, small payment resets the relationship with
+                            every article.”
+                        </p>
+                        <p>
+                            The commercial conclusion followed a week later.
+                            The pilot multiplied into a permanent fixture, and
+                            the paper began marking its strongest stories for
+                            single-article unlocks at a flat 1.99 PLN — the
+                            price point that had performed best across every
+                            bucket in the study.
+                        </p>
+                        <p>
+                            For the technical team, the lesson was broader. The
+                            deployment took an afternoon: a template, a blur
+                            strategy, and a data attribute. No checkout
+                            backend, no redirect flow, no app store
+                            dependency. The same infrastructure now drives
+                            every paywall layout in this showcase — including
+                            this inline card.
+                        </p>
+                        <p>
+                            When the ninety days were up, the board asked for
+                            one number. The paper reported: average unlock
+                            time, from click to article, under four seconds.
+                            It stopped apologizing for the paywall after that.
+                        </p>
+                    </div>
+
+                    <div class="content-gap note-box">
+                        <strong>Demo note:</strong> the bottom bar stays pinned
+                        to the viewport while you scroll the blurred premium
+                        part. Runs in <code>data-gvm-env="demo"</code> — the
+                        payment resolves automatically after 3 seconds.
+                    </div>
+
+                    <footer class="article-foot">
+                        <p class="article-disclaimer">
+                            Demo disclosure: part of the gvm.js paywall
+                            template showcase. Sticky bottom bar concept with
+                            the <kbd>blur</kbd> strategy at 1.99 PLN. Open the
+                            browser console to see the
+                            <code>gvm_*</code> events as you pay.
+                        </p>
+                    </footer>
+                </section>
+            </article>
+        </main>
+    </body>
+</html>

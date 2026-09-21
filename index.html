@@ -6,6 +6,19 @@
         <title>gvm.js Developer Examples</title>
         <link rel="stylesheet" href="/assets/pico.css" />
         <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+        <style>
+            .concept-tag {
+                font-family: "IBM Plex Mono", ui-monospace, monospace;
+                font-size: 0.7rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #6b3113;
+                background: #ece8dc;
+                padding: 0.18rem 0.5rem;
+                display: inline-block;
+                margin-bottom: 0.4rem;
+            }
+        </style>
     </head>
     <body>
         <header class="site-header">
@@ -51,6 +64,11 @@
                         ><strong>Blur-mangle</strong><br />Blur layer plus
                         shuffled text for extra obfuscation</a
                     >
+                    <a href="/blur-sticky/"
+                        ><strong>Blur-mangle + sticky bar</strong
+                        ><br />Bottom bar pinned to the viewport all the
+                        time</a
+                    >
                     <a href="/hide/mobile.html"
                         ><strong>Hide (Mobile only)</strong><br />Conditional
                         paywall activation for mobile audiences</a
@@ -77,6 +95,72 @@
             </section>
 
             <section class="section-card">
+                <p class="eyebrow">Paywall Templates · 6 concepts</p>
+                <header>
+                    <hgroup>
+                        <h1>Six paywall layouts, one data-gvm API</h1>
+                        <h2>
+                            The same blur/hide strategy, six different
+                            <code>data-gvm-template="paywall"</code> concepts —
+                            all pure HTML + CSS. Every demo runs in
+                            <code>data-gvm-env="demo"</code>, so you can click
+                            through the full payment flow without any real
+                            charge.
+                        </h2>
+                    </hgroup>
+                </header>
+                <p class="lead">
+                    Pick a layout, open the page, try the unlock. Each demo
+                    locks the same premium article copy with the
+                    <kbd>blur</kbd> strategy — only the paywall template
+                    differs.
+                </p>
+
+                <div class="content-gap quick-links">
+                    <a href="/templates/inline.html"
+                        ><span class="concept-tag">inline</span
+                        ><strong>Inline card</strong><br />Paywall panel sits in
+                        the article flow where the premium part begins</a
+                    >
+                    <a href="/templates/overlay.html"
+                        ><span class="concept-tag">overlay</span
+                        ><strong>Centered overlay</strong><br />Modal card with
+                        dimmed backdrop over the blurred content</a
+                    >
+                    <a href="/templates/sticky-bottom.html"
+                        ><span class="concept-tag">sticky bottom</span
+                        ><strong>Sticky bottom bar</strong><br />Full-width bar
+                        pinned to the viewport bottom at all times</a
+                    >
+                    <a href="/templates/sticky-right.html"
+                        ><span class="concept-tag">sticky right</span
+                        ><strong>Sticky side card</strong><br />Floating card
+                        docked to the right edge while scrolling</a
+                    >
+                    <a href="/templates/widget.html"
+                        ><span class="concept-tag">widget + dialog</span
+                        ><strong>Corner widget</strong><br />Compact floating
+                        widget that expands into a payment dialog</a
+                    >
+                    <a href="/templates/banner.html"
+                        ><span class="concept-tag">top banner</span
+                        ><strong>Sticky top banner</strong><br />Slim banner
+                        fixed to the top, collapses to a pill after scroll</a
+                    >
+                </div>
+
+                <div class="content-gap note-box">
+                    <strong>How it works:</strong> every concept page declares a
+                    <code>paywall</code> template (injected into
+                    <code>#article</code>) and a <code>payment</code> template
+                    (dialog). The premium part is wrapped with
+                    <code>data-gvm-hide-strategy="blur"</code> — the same across
+                    all six. Switching layouts is a pure template/CSS change,
+                    no strategy or backend tweaks.
+                </div>
+            </section>
+
+            <section class="section-card">
                 <p class="eyebrow">Overlay · gvm-overlay.js</p>
                 <header>
                     <hgroup>
@@ -98,10 +182,6 @@
                 </p>
 
                 <div class="content-gap quick-links">
-                    <a href="/overlay/"
-                        ><strong>Overlay hub</strong><br />All three paywall demos
-                        and the admin-mode workflow</a
-                    >
                     <a href="/overlay/article-1.html"
                         ><strong>The invisible checkout</strong
                         ><br />blur · 2.99 PLN · the phone bill as a wallet</a
