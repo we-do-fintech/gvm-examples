@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Paywall Template — Sticky side card</title>
+        <title>Paywall Template — Unlock drawer</title>
         <link rel="stylesheet" href="/assets/pico.css" />
         <link rel="stylesheet" href="/assets/showcase.css?v=20260226-3" />
 
@@ -62,7 +62,7 @@
                         alt="WDFT"
                     />
                 </a>
-                <div class="small-nav">Paywall Template · Sticky side card</div>
+                <div class="small-nav">Paywall Template · Unlock drawer</div>
             </div>
         </header>
 
@@ -137,8 +137,10 @@
             </dialog>
         </template>
 
-        <!-- Paywall template: a compact card docked to the right edge of the
-             viewport, following the reader as they scroll. Pure HTML + CSS. -->
+        <!-- Paywall template: an informative drawer docked to the right of
+             the viewport. It explains the unlock flow, why SMS, why this is
+             not premium SMS, and when the charge is settled — then unlocks in
+             place. Pure HTML + CSS. -->
         <template
             data-gvm-template="paywall"
             data-gvm-template-inject-to="body"
@@ -147,80 +149,293 @@
                 .wait-for-script {
                     display: block;
                 }
-                .paywall {
+
+                .gvm-drawer {
                     position: fixed;
-                    right: 1.25rem;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    z-index: 40;
-                    width: min(320px, calc(100vw - 2rem));
-                    border: 1px solid rgba(141, 130, 104, 0.55);
-                    padding: 22px 20px;
-                    text-align: center;
-                    align-items: center;
-                    gap: 0.7rem;
+                    top: 0;
+                    right: 0;
+                    z-index: 45;
+                    display: flex;
+                    flex-direction: column;
+                    width: 380px;
+                    max-width: 94vw;
+                    height: 100vh;
                     background: #f9f6ee;
-                    box-shadow: 0 18px 44px rgba(23, 29, 27, 0.28);
-                }
-                .paywall p {
-                    margin: 0;
-                    font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-                    line-height: 1.32;
+                    border-left: 1px solid rgba(141, 130, 104, 0.55);
+                    box-shadow: -18px 0 48px rgba(23, 29, 27, 0.18);
                     color: #27302d;
+                    transition: transform 0.28s ease;
                 }
-                .paywall .paywall-meta {
-                    font-size: clamp(0.82rem, 1vw, 0.9rem);
+                .gvm-drawer__chk {
+                    position: absolute;
+                    opacity: 0;
+                    pointer-events: none;
+                }
+                .gvm-drawer:has(.gvm-drawer__chk:checked) {
+                    transform: translateX(100%);
+                }
+                .gvm-drawer__toggle {
+                    position: absolute;
+                    top: 50%;
+                    left: -42px;
+                    transform: translateY(-50%);
+                    writing-mode: vertical-rl;
+                    padding: 16px 9px;
+                    background: #f9f6ee;
+                    border: 1px solid rgba(141, 130, 104, 0.55);
+                    border-right: 0;
+                    cursor: pointer;
+                    font-family: "IBM Plex Mono", ui-monospace, monospace;
+                    font-size: 0.68rem;
+                    letter-spacing: 0.14em;
+                    text-transform: uppercase;
+                    color: #6b3113;
+                }
+                .gvm-drawer__head {
+                    padding: 22px 24px 14px;
+                    border-bottom: 1px solid rgba(141, 130, 104, 0.32);
+                }
+                .gvm-drawer__eyebrow {
+                    margin: 0 0 6px;
+                    font-family: "IBM Plex Mono", ui-monospace, monospace;
+                    font-size: 0.68rem;
+                    letter-spacing: 0.12em;
+                    text-transform: uppercase;
+                    color: #6b3113;
+                }
+                .gvm-drawer__title {
+                    margin: 0;
+                    font-family: "Newsreader", Georgia, serif;
+                    font-size: 1.4rem;
+                    line-height: 1.2;
+                    color: #171d1b;
+                }
+                .gvm-drawer__scroll {
+                    flex: 1 1 auto;
+                    overflow-y: auto;
+                    padding: 16px 24px 20px;
+                }
+                .gvm-drawer__steps {
+                    list-style: none;
+                    margin: 0 0 18px;
+                    padding: 0;
+                    display: grid;
+                    gap: 12px;
+                }
+                .gvm-drawer__steps li {
+                    display: grid;
+                    grid-template-columns: 26px 1fr;
+                    gap: 11px;
+                    align-items: start;
+                }
+                .gvm-drawer__num {
+                    display: grid;
+                    place-items: center;
+                    width: 26px;
+                    height: 26px;
+                    border: 1px solid rgba(141, 130, 104, 0.6);
+                    font-family: "IBM Plex Mono", ui-monospace, monospace;
+                    font-size: 0.78rem;
+                    font-weight: 700;
+                    color: #6b3113;
+                }
+                .gvm-drawer__steps p {
+                    margin: 0;
+                    font-size: 0.94rem;
+                    line-height: 1.45;
+                    color: #33403c;
+                }
+                .gvm-drawer details {
+                    border-top: 1px solid rgba(141, 130, 104, 0.32);
+                    padding: 11px 0;
+                }
+                .gvm-drawer summary {
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    color: #1f2926;
+                }
+                .gvm-drawer details p {
+                    margin: 9px 0 0;
+                    font-size: 0.9rem;
+                    line-height: 1.5;
                     color: #42504c;
                 }
-                .paywall .paywall-note {
-                    font-size: clamp(0.76rem, 0.95vw, 0.85rem);
-                    color: #6b3113;
-                    opacity: 0.95;
+                .gvm-drawer details p + p {
+                    margin-top: 7px;
                 }
-                .paywall [data-gvm-bind-reading-time],
-                .paywall [data-gvm-bind-reading-words] {
-                    color: #1f4f44;
-                    font-weight: 700;
+                .gvm-drawer__foot {
+                    border-top: 1px solid rgba(141, 130, 104, 0.32);
+                    padding: 16px 24px 20px;
+                    background: #f5f1e6;
                 }
-                .paywall button {
-                    margin-top: 4px;
-                    font-weight: 700;
+                .gvm-drawer__price {
+                    display: flex;
+                    align-items: baseline;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                    font-size: 0.9rem;
+                    color: #42504c;
+                }
+                .gvm-drawer__price strong {
+                    font-size: 1.35rem;
+                    color: #171d1b;
+                }
+                .gvm-drawer__foot button {
                     width: 100%;
-                    padding: 0.58rem 0.9rem;
+                    font-weight: 700;
+                    padding: 0.7rem 1rem;
                     border-radius: 10px;
-                    font-size: 0.95rem;
                 }
-                @media (max-width: 860px) {
-                    .paywall {
-                        right: 0.9rem;
-                        bottom: 1rem;
+                .gvm-drawer__trust {
+                    margin: 10px 0 0;
+                    text-align: center;
+                    font-size: 0.76rem;
+                    letter-spacing: 0.02em;
+                    color: #6b3113;
+                }
+                @media (min-width: 1000px) {
+                    body {
+                        padding-right: 380px;
+                    }
+                }
+                @media (max-width: 999px) {
+                    .gvm-drawer {
                         top: auto;
-                        transform: none;
-                        width: min(280px, calc(100vw - 1.8rem));
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                        width: auto;
+                        max-width: none;
+                        height: auto;
+                        max-height: 82vh;
+                        border-left: 0;
+                        border-top: 1px solid rgba(141, 130, 104, 0.55);
+                        box-shadow: 0 -18px 48px rgba(23, 29, 27, 0.22);
+                    }
+                    .gvm-drawer__toggle {
+                        display: none;
                     }
                 }
             </style>
-            <div class="paywall flex">
-                <p><strong>Keep reading.</strong></p>
-                <p class="paywall-meta">
-                    <span data-gvm-bind-reading-time></span> min left ·
-                    <span data-gvm-bind-reading-words></span> words
-                </p>
-                <p class="paywall-note">
-                    Demo environment — resolves automatically.
-                </p>
-                <button data-gvm-bind-pay>
-                    Unlock for <span data-gvm-bind-price></span>
-                    <span data-gvm-bind-currency></span>
-                </button>
-            </div>
+            <aside
+                class="gvm-drawer"
+                aria-label="How to unlock this article"
+            >
+                <input
+                    type="checkbox"
+                    id="gvm-drawer-chk"
+                    class="gvm-drawer__chk"
+                />
+                <label class="gvm-drawer__toggle" for="gvm-drawer-chk"
+                    >How to unlock</label
+                >
+
+                <header class="gvm-drawer__head">
+                    <p class="gvm-drawer__eyebrow">
+                        Unlock · one-time payment
+                    </p>
+                    <h2 class="gvm-drawer__title">How unlocking works</h2>
+                </header>
+
+                <div class="gvm-drawer__scroll">
+                    <ol class="gvm-drawer__steps">
+                        <li>
+                            <span class="gvm-drawer__num">1</span>
+                            <p>
+                                Tap <strong>Unlock</strong> below — no account,
+                                no card, no app to install.
+                            </p>
+                        </li>
+                        <li>
+                            <span class="gvm-drawer__num">2</span>
+                            <p>
+                                Send the SMS your phone prepares for you. It is
+                                just the confirmation — you can cancel it.
+                            </p>
+                        </li>
+                        <li>
+                            <span class="gvm-drawer__num">3</span>
+                            <p>
+                                The article unlocks in place, on the same scroll
+                                position. Once unlocked, it stays unlocked.
+                            </p>
+                        </li>
+                    </ol>
+
+                    <details open>
+                        <summary>Why SMS?</summary>
+                        <p>
+                            It is the one payment rail that works on every
+                            phone. There is no card form to fill, no wallet to
+                            open, no password to remember — just a single tap
+                            and a confirmation. It takes about ten seconds.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>Is this premium SMS?</summary>
+                        <p>
+                            No. This is <strong>not</strong> a premium-rate
+                            service and <strong>not</strong> a subscription.
+                            There are no hidden weekly charges, no renewals and
+                            no recurring texts. You pay once, for one article.
+                        </p>
+                        <p>
+                            You always see the exact amount before you confirm,
+                            and the confirmation is an ordinary message you
+                            send from your own phone.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>When do I actually pay?</summary>
+                        <p>
+                            Access is immediate. The amount is settled by your
+                            mobile operator: it appears on your phone bill and
+                            is collected when your carrier reaches its billing
+                            limit (<strong>50&nbsp;PLN</strong> by default) or
+                            after <strong>14 days</strong> — whichever comes
+                            first.
+                        </p>
+                        <p>
+                            This is the normal way carrier billing settles; it
+                            does not delay your access in any way.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>What if something goes wrong?</summary>
+                        <p>
+                            You are only charged once the unlock is confirmed.
+                            If the payment fails or is rejected, nothing is
+                            taken and you can try again — there is no risk in
+                            tapping unlock.
+                        </p>
+                    </details>
+                </div>
+
+                <div class="gvm-drawer__foot">
+                    <div class="gvm-drawer__price">
+                        <span>This article</span>
+                        <strong>
+                            <span data-gvm-bind-price></span>
+                            <span data-gvm-bind-currency></span>
+                        </strong>
+                    </div>
+                    <button data-gvm-bind-pay>Unlock this article</button>
+                    <p class="gvm-drawer__trust">
+                        No card · No account · No renewal
+                    </p>
+                </div>
+            </aside>
         </template>
 
         <main class="container showcase-shell">
             <article class="tpl-article">
                 <section class="section-card">
                     <header>
-                        <p class="eyebrow">Sticky side card · blur strategy</p>
+                        <p class="eyebrow">Unlock drawer · blur strategy</p>
                         <hgroup>
                             <h1>
                                 The newsroom that stopped guessing about price
@@ -268,10 +483,11 @@
                     </p>
                     <p>
                         This page demonstrates one of the seven paywall
-                        layouts built on <kbd>gvm.js</kbd> — the sticky side
-                        card. The unlock card is docked to the right edge of
-                        the viewport and follows the reader through the blurred
-                        premium part without covering the reading column.
+                        layouts built on <kbd>gvm.js</kbd> — the unlock drawer.
+                        A side panel docked to the right of the viewport
+                        explains exactly how unlocking works — why SMS, why it
+                        is not premium SMS, and when the charge settles — right
+                        beside the article.
                     </p>
 
                     <!-- Free preview ends here — the premium part is blurred
@@ -279,7 +495,7 @@
                     <div
                         id="article"
                         class="wait-for-script"
-                        data-gvm-reference="tpl-sticky-right"
+                        data-gvm-reference="tpl-drawer"
                         data-gvm-price="1.99"
                         data-gvm-template-name="payment"
                         data-gvm-metadata-title="The newsroom that stopped guessing about price"
@@ -365,18 +581,20 @@
                     </div>
 
                     <div class="content-gap note-box">
-                        <strong>Demo note:</strong> the side card is docked to
-                        the right edge of the viewport and follows the reader
-                        while scrolling. Runs in
-                        <code>data-gvm-env="demo"</code> — the payment
-                        resolves automatically after 3 seconds.
+                        <strong>Drawer concept:</strong> the panel is docked to
+                        the right of the viewport and explains the whole
+                        process — how you unlock, why SMS, why this is
+                        <em>not</em> premium SMS, and when the charge settles
+                        (carrier billing limit of 50&nbsp;PLN or 14 days,
+                        whichever comes first). Collapse it with the side tab.
+                        Runs in <code>data-gvm-env="demo"</code>.
                     </div>
 
                     <footer class="article-foot">
                         <p class="article-disclaimer">
                             Demo disclosure: part of the gvm.js paywall
-                            template showcase. Sticky side card concept with
-                            the <kbd>blur</kbd> strategy at 1.99 PLN. Open the
+                            template showcase. Unlock drawer concept with the
+                            <kbd>blur</kbd> strategy at 1.99 PLN. Open the
                             browser console to see the
                             <code>gvm_*</code> events as you pay.
                         </p>
