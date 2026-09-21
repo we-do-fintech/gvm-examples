@@ -100,8 +100,8 @@
                     <hgroup>
                         <h1>Six paywall layouts, one data-gvm API</h1>
                         <h2>
-                            The same blur/hide strategy, six different
-                            <code>data-gvm-template="paywall"</code> concepts —
+                            Six different
+                            <code>data-gvm-template="paywall"</code> concepts,
                             all pure HTML + CSS. Every demo runs in
                             <code>data-gvm-env="demo"</code>, so you can click
                             through the full payment flow without any real
@@ -111,9 +111,9 @@
                 </header>
                 <p class="lead">
                     Pick a layout, open the page, try the unlock. Each demo
-                    locks the same premium article copy with the
-                    <kbd>blur</kbd> strategy — only the paywall template
-                    differs.
+                    locks the same premium article copy — five with the
+                    <kbd>blur</kbd> strategy, the inline card with
+                    <kbd>hide</kbd> — only the paywall template differs.
                 </p>
 
                 <div class="content-gap quick-links">
@@ -152,11 +152,12 @@
                 <div class="content-gap note-box">
                     <strong>How it works:</strong> every concept page declares a
                     <code>paywall</code> template (injected into
-                    <code>#article</code>) and a <code>payment</code> template
-                    (dialog). The premium part is wrapped with
-                    <code>data-gvm-hide-strategy="blur"</code> — the same across
-                    all six. Switching layouts is a pure template/CSS change,
-                    no strategy or backend tweaks.
+                    <code>body</code> or <code>#article</code>) and a
+                    <code>payment</code> template (dialog). The premium part is
+                    gated with <code>data-gvm-hide-strategy</code> —
+                    <code>blur</code> for the fixed layouts, <code>hide</code>
+                    for the inline card. Switching layouts is a pure
+                    template/CSS change, no strategy or backend tweaks.
                 </div>
             </section>
 
