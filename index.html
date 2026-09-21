@@ -66,17 +66,66 @@
                     body-level gvm bootstrap and highlights only the
                     strategy-specific <code>data-gvm-*</code> attributes.
                 </div>
-
-                <footer class="page-footer">
-                    <a href="https://github.com/we-do-fintech/gvm-examples"
-                        >github</a
-                    >
-                    | <a href="https://docs.wdft.ovh/gvm-js">documentation</a>
-                    |
-                    <a href="https://getviamsg.wdft.ovh">getviamsg website</a>
-                    | <a href="https://wdft.ovh">wdft website</a>
-                </footer>
             </section>
+
+            <section class="section-card">
+                <p class="eyebrow">Overlay · gvm-overlay.js</p>
+                <header>
+                    <hgroup>
+                        <h1>Config-driven paywall demo</h1>
+                        <h2>
+                            Prices and blocking rules come from a static JSON
+                            config — the article only marks its content with a
+                            single <code>data-gvm-reference</code>.
+                        </h2>
+                    </hgroup>
+                </header>
+                <p class="lead">
+                    Loading <code>gvm-overlay.js</code> (instead of
+                    <code>gvm.js</code>) turns on overlay mode; the config URL
+                    is derived from <code>data-gvm-env</code> +
+                    <code>data-gvm-tenant</code>. Long-form editorial demo
+                    articles with inline SVG image placeholders, editable
+                    in-page via <code>?gvm_admin=1</code>.
+                </p>
+
+                <div class="content-gap quick-links">
+                    <a href="/overlay/"
+                        ><strong>Overlay hub</strong><br />All three paywall demos
+                        and the admin-mode workflow</a
+                    >
+                    <a href="/overlay/article-1.html"
+                        ><strong>The invisible checkout</strong
+                        ><br />blur · 2.99 PLN · the phone bill as a wallet</a
+                    >
+                    <a href="/overlay/article-2.html"
+                        ><strong>The town that read the fine print</strong
+                        ><br />hide · 0.75 PLN · a ledger against the archive</a
+                    >
+                    <a href="/overlay/article-3.html"
+                        ><strong>The last hand-made page</strong
+                        ><br />mangle-blur · 4.99 PLN · scissors, wax,
+                        deadlines</a
+                    >
+                </div>
+
+                <div class="content-gap note-box">
+                    <strong>No-flash pattern:</strong> each article wraps its
+                    gated body in <code>.gvm-cloak</code> (rule declared in
+                    <code>&lt;head&gt;</code>) so the paywalled content stays
+                    invisible until the overlay has booted <code>gvm.js</code>.
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                <a href="https://github.com/we-do-fintech/gvm-examples"
+                    >github</a
+                >
+                | <a href="https://docs.wdft.ovh/gvm-js">documentation</a>
+                |
+                <a href="https://getviamsg.wdft.ovh">getviamsg website</a>
+                | <a href="https://wdft.ovh">wdft website</a>
+            </footer>
         </main>
     </body>
 </html>

@@ -68,8 +68,10 @@
                         </div>
                     </header>
 
-                    <!-- Free intro — visible to every reader -->
-                    <div class="article-body col">
+                    <!-- Whole article body — free intro + premium body in one
+                         element; this single container is the selector the
+                         overlay locks (see README.md). -->
+                    <div class="gvm-cloak article-body col">
                         <p class="lead">
                             In the back room of a 112-year-old weekly in
                             Silesia, Halina Bednarek cuts a headline out of a
@@ -191,10 +193,7 @@
                                 whiteboard behind. <strong>Photo: K. Zielińska / The Ledger</strong>
                             </figcaption>
                         </figure>
-                    </div>
 
-                    <!-- Gated content — premium body (mangle-blur strategy) -->
-                    <div class="gvm-cloak article-body col">
                         <h2>Sixty-four pages by hand</h2>
                         <p>
                             The workflow has not changed since the 1990s:

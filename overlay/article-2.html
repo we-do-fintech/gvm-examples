@@ -66,8 +66,10 @@
                         </div>
                     </header>
 
-                    <!-- Free intro — visible to every reader -->
-                    <div class="article-body col">
+                    <!-- Whole article body — free intro + premium body in one
+                         element; this single container is the selector the
+                         overlay locks (see README.md). -->
+                    <div class="gvm-cloak article-body col">
                         <p class="lead">
                             The first thing Barbara Wiśniewska noticed was the
                             obituaries. For seventy years she had read the
@@ -190,10 +192,7 @@
                                 <strong>Photo: J. Nowicki / The Ledger</strong>
                             </figcaption>
                         </figure>
-                    </div>
 
-                    <!-- Gated content — premium body (hide strategy) -->
-                    <div class="gvm-cloak article-body col">
                         <h2>Eight cardboard boxes</h2>
                         <p>
                             The paper had gone digital the way most local papers

@@ -64,8 +64,10 @@
                         </div>
                     </header>
 
-                    <!-- Free intro — visible to every reader -->
-                    <div class="article-body col">
+                    <!-- Whole article body — free intro + premium body in one
+                         element; this single container is the selector the
+                         overlay locks (see README.md). -->
+                    <div class="gvm-cloak article-body col">
                         <p class="lead">
                             On a grey Thursday morning in Katowice, a woman in a
                             red coat stops at a street kiosk, types five
@@ -188,10 +190,7 @@
                                 takes under a minute. <strong>Photo: T. Novák / The Ledger</strong>
                             </figcaption>
                         </figure>
-                    </div>
 
-                    <!-- Gated content — premium body (blur strategy) -->
-                    <div class="gvm-cloak article-body col">
                         <h2>The ringtone hangover</h2>
                         <p>
                             To understand why that single bit is worth writing
