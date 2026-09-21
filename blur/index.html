@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>gvm.js Blur Strategy Example</title>
+        <link rel="stylesheet" href="/assets/pico.css" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+
+        <!-- Here I inject scripts gvm.js -->
+        <script
+            src="https://esm.sh/@wdft/gvm-sdk@latest/gvm.js"
+            type="module"
+        ></script>
+
+        <!-- Customizations -->
+        <script>
+            // Enable debug logging in the console
+            window.wdftDebug = true;
+            // When the page loads, remove the wait-for-script class from all elements
+            // This prevents content from flashing before GetViaMsg scripts are fully loaded
+            window.addEventListener("DOMContentLoaded", () => {
+                const elements = document.querySelectorAll(".wait-for-script");
+                for (const el of elements) {
+                    el.classList.remove("wait-for-script");
+                }
+            });
+        </script>
+        <!-- Hide article initially, wait for wdft scripts -->
+        <style>
+            .wait-for-script {
+                display: none;
+            }
+            /* Some additional classess for dialog styling */
+            .flex {
+                display: flex;
+                flex-direction: column;
+            }
+            .row {
+                flex-direction: row;
+            }
+            .items-center {
+                align-items: center;
+                justify-content: center;
+            }
+            .mini {
+                width: 500px;
+            }
+        </style>
+    </head>
+
+    <!-- Declare gvm basic values on the body tag such as currency, tenant, and condition; env is optional, demo can be used to simulate -->
+    <!-- Try to add condition! then reload on small screen will work, on big not, check console logs
+  data-gvm-cond="device matchMedia 'max-width:768px,landscape:portrait'"
+-->
+    <!-- You can set env as "demo" to mock behaviour -->
+    <body
+        data-gvm
+        data-gvm-tenant="wdft_showcase_qa"
+        data-gvm-env="qa"
+        data-gvm-currency="PLN"
+    >
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="/">
+                    <img
+                        src="/assets/logo-dark.png"
+                        width="100"
+                        height="20"
+                        alt="WDFT"
+                    />
+                </a>
+                <div class="small-nav">Strategy: Blur</div>
+            </div>
+        </header>
+
+        <!-- Template declaration for the payment modal - this will be omited during website render -->
+        <!-- Template declaration for the payment modal - this will be omited during website render -->
+        <template
+            data-gvm-template="payment"
+            data-gvm-template-inject-to="body"
+        >
+            <dialog open>
+                <article class="mini payment-modal">
+                    <header class="payment-header">
+                        <hgroup>
+                            <h3>Unlock in seconds</h3>
+                            <p>Send text to get instant access.</p>
+                        </hgroup>
+                    </header>
+
+                    <section class="payment-body">
+                        <p class="payment-price-line">
+                            <span class="payment-price-label"
+                                >One-time access</span
+                            >
+                            <strong>
+                                <span data-gvm-bind-price></span>
+                                <span data-gvm-bind-currency></span>
+                            </strong>
+                        </p>
+
+                        <div class="payment-qr-wrap">
+                            <span data-gvm-bind-qr class="payment-qr">
+                                <span aria-busy="true"></span>
+                            </span>
+                        </div>
+
+                        <p class="payment-status-row">
+                            <span
+                                data-gvm-bind-status
+                                data-gvm-bind-status-initializing="Preparing QR code"
+                                data-gvm-bind-status-waiting="Waiting for SMS"
+                                data-gvm-bind-status-duplicated="Already unlocked on this number"
+                                data-gvm-bind-status-resolved="Payment confirmed. Unlocking now..."
+                                data-gvm-bind-status-rejected="Payment could not be verified. Please try again."
+                            >
+                            </span>
+                            <span class="payment-time">
+                                (<span data-gvm-bind-time-remaining>00:00</span
+                                >)
+                            </span>
+                        </p>
+
+                        <p class="payment-promise">
+                            Content unlocks instantly, and settled after 7 days.
+                        </p>
+
+                        <div class="payment-actions">
+                            <button data-gvm-bind-send-sms>
+                                Send SMS to unlock
+                            </button>
+                            <button data-gvm-bind-cancel class="contrast">
+                                Cancel
+                            </button>
+                        </div>
+                    </section>
+
+                    <footer class="payment-footer">
+                        <small>
+                            GetViaMsg by
+                            <a href="https://getviamsg.wdft.ovh/">WDFT</a>
+                        </small>
+                    </footer>
+                </article>
+            </dialog>
+        </template>
+
+        <!-- Template will be injected into the hidden article section - this will be omited during render website-->
+        <template
+            data-gvm-template="paywall"
+            data-gvm-template-inject-to="#article"
+        >
+            <style>
+                .wait-for-script {
+                    display: block;
+                }
+                .paywall {
+                    border: 1px solid rgba(255, 185, 3, 0.45);
+                    border-radius: 14px;
+                    padding: 24px;
+                    max-width: 940px;
+                    margin: 0 auto;
+                    text-align: center;
+                    align-items: center;
+                    gap: 0.8rem;
+                    background: linear-gradient(
+                        135deg,
+                        rgba(255, 185, 3, 0.12) 0%,
+                        rgba(123, 44, 255, 0.08) 100%
+                    );
+                }
+                .paywall p {
+                    margin: 0;
+                    font-size: clamp(1.02rem, 1.55vw, 1.45rem);
+                    line-height: 1.32;
+                    color: #f0f1f3;
+                }
+                .paywall .paywall-meta {
+                    font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+                    color: #d7d9de;
+                }
+                .paywall .paywall-note {
+                    font-size: clamp(0.82rem, 1.05vw, 0.95rem);
+                    color: #ffdf89;
+                    opacity: 0.95;
+                }
+                .paywall [data-gvm-bind-reading-time],
+                .paywall [data-gvm-bind-reading-words] {
+                    color: #ffdf89;
+                    font-weight: 700;
+                }
+                .paywall button {
+                    margin-top: 2px;
+                    font-weight: 700;
+                    width: min(100%, 560px);
+                    font-size: clamp(1rem, 1.3vw, 1.25rem);
+                    padding: 0.68rem 1rem;
+                    border-radius: 10px;
+                }
+            </style>
+            <div class="paywall flex">
+                <p>Unlock this article in about 10 seconds with GetViaMsg.</p>
+                <p class="paywall-meta">
+                    Session size:
+                    <span data-gvm-bind-reading-time></span> minutes or
+                    <span data-gvm-bind-reading-words></span> words.
+                </p>
+                <p class="paywall-note">
+                    No redirects or payment gateways. Access now, settlement
+                    after 7 days.
+                </p>
+                <button data-gvm-bind-pay>
+                    Unlock now for <span data-gvm-bind-price></span>
+                    <span data-gvm-bind-currency></span>
+                </button>
+            </div>
+        </template>
+
+        <!-- Paid article content; a free preview is visible -->
+        <main class="container showcase-shell">
+            <article>
+                <section class="section-card">
+                    <header>
+                        <p class="eyebrow">Blur Strategy</p>
+                        <hgroup>
+                            <h1>
+                                Blur the premium part — keep the layout intact
+                            </h1>
+                            <h2>
+                                Client-side section gating with a blur layer
+                                for quick conversion tests on live editorial
+                                traffic.
+                            </h2>
+                        </hgroup>
+                    </header>
+                    <p class="lead">
+                        The fastest way to validate paid content demand before
+                        moving access control to a backend or edge layer —
+                        without removing anything from the page.
+                    </p>
+                    <div class="dev-kit">
+                        <p class="dev-kit-title">Developer Kit</p>
+                        <p class="dev-kit-links">
+                            <a
+                                href="https://github.com/we-do-fintech/gvm-examples/blob/main/blur/index.html"
+                                >Source on GitHub</a
+                            >
+                            |
+                            <a href="https://docs.wdft.ovh/gvm-js"
+                                >gvm.js documentation</a
+                            >
+                        </p>
+                        <details class="dev-snippet">
+                            <summary>Minimal blur snippet</summary>
+                            <pre><code>&lt;!-- 1) Inject gvm.js SDK --&gt;
+&lt;script src="https://esm.sh/@wdft/gvm-sdk@latest/gvm.js" type="module"&gt;&lt;/script&gt;
+
+&lt;!-- 2) Initialize gvm on body --&gt;
+&lt;body data-gvm data-gvm-tenant="your_tenant" data-gvm-env="qa" data-gvm-currency="PLN"&gt;
+  &lt;!-- 3) Declare payment template (modal) --&gt;
+  &lt;template data-gvm-template="payment" data-gvm-template-inject-to="body"&gt;
+    &lt;dialog open&gt;&lt;button data-gvm-bind-send-sms&gt;Open SMS&lt;/button&gt;&lt;/dialog&gt;
+  &lt;/template&gt;
+
+  &lt;!-- 3b) Declare blur paywall template --&gt;
+  &lt;template data-gvm-template="paywall" data-gvm-template-inject-to="#article"&gt;
+    &lt;button data-gvm-bind-pay&gt;Unlock for &lt;span data-gvm-bind-price&gt;&lt;/span&gt; &lt;span data-gvm-bind-currency&gt;&lt;/span&gt;&lt;/button&gt;
+  &lt;/template&gt;
+
+  &lt;!-- 4) Declare payment item/content --&gt;
+  &lt;div id="article" data-gvm-reference="article-42" data-gvm-price="0.75"
+       data-gvm-template-name="payment" data-gvm-hide-template-name="paywall"
+       data-gvm-hide-strategy="blur" data-gvm-hide-sections="6"&gt;...&lt;/div&gt;
+&lt;/body&gt;</code></pre>
+                        </details>
+                    </div>
+                    <!-- Configuration for content, price, and metadata like reference and title -->
+                    <div
+                        id="article"
+                        class="wait-for-script"
+                        data-gvm-reference="showcase-blur-strategy"
+                        data-gvm-price="0.75"
+                        data-gvm-template-name="payment"
+                        data-gvm-metadata-title="Showcase blur strategy"
+                        data-gvm-category="article"
+                        data-gvm-hide-template-name="paywall"
+                        data-gvm-hide-strategy="blur"
+                        data-gvm-hide-sections="6"
+                    >
+                        <p>
+                            The <kbd>gvm.js</kbd> blur strategy lets you launch
+                            paid article previews without changing your existing
+                            CMS rendering pipeline.
+                        </p>
+                        <p>
+                            On load, selected sections stay in the layout but
+                            get covered with a soft blur layer and replaced
+                            with a clear paywall prompt. Readers who convert get
+                            immediate access in the same reading session.
+                        </p>
+                        <p>
+                            Because nothing is removed from the DOM, the blur
+                            strategy keeps article height, scroll position and
+                            pagination stable — ideal for publishers who want
+                            the preview to look like the final article.
+                        </p>
+                        <p>
+                            You can activate it conditionally by device,
+                            campaign source, or experiment bucket to measure
+                            impact before broad rollout.
+                        </p>
+                        <p>
+                            The strategy combines two templates: one for payment
+                            and one for the locked-content panel shown in the
+                            article body.
+                        </p>
+                        <p>
+                            The next paragraphs represent premium sections. They
+                            are covered with the blur layer until a successful
+                            commitment.
+                        </p>
+                        <p>
+                            In production, many publishers start with a subset
+                            of premium stories and expand coverage based on
+                            conversion and retention performance.
+                        </p>
+                        <p>
+                            For controlled rollouts, you can add conditions like
+                            <code
+                                >data-gvm-cond="utm_source == 'testing-gvm' AND
+                                device matchMedia
+                                'max-width:768px,landscape:portrait'"</code
+                            > to target only specific audiences.
+                        </p>
+                        <p>
+                            Keep <code>window.wdftDebug = true;</code> enabled
+                            during QA to verify initialization, bindings, and
+                            commitment state transitions.
+                        </p>
+                        <p>
+                            For rapid sandbox testing, use
+                            <code>data-gvm-env="demo"</code> in the body.
+                            You can refine copy and layout before connecting
+                            production settlement paths.
+                        </p>
+                        <p>
+                            When you are ready for stricter access control, move
+                            to redirect or proxy-backed patterns while reusing
+                            the same payment template concepts.
+                        </p>
+                        <p>
+                            Returning users are handled automatically. Existing
+                            valid commitments for the same reference are treated
+                            as duplicates, which lowers repeat friction.
+                        </p>
+                    </div>
+                </section>
+            </article>
+        </main>
+    </body>
+</html>
