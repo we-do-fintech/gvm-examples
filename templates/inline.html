@@ -209,7 +209,7 @@
             <article class="tpl-article">
                 <section class="section-card">
                     <header>
-                        <p class="eyebrow">Inline card · blur strategy</p>
+                        <p class="eyebrow">Inline card · hide strategy</p>
                         <hgroup>
                             <h1>
                                 The newsroom that stopped guessing about price
@@ -259,9 +259,10 @@
                         This page demonstrates one of the six paywall layouts
                         built on <kbd>gvm.js</kbd> — the classic inline card.
                         The card sits in the article flow at the exact point
-                        where the free preview ends, so the reader meets the
-                        offer at the moment of maximum curiosity, with no
-                        redesign required.
+                        where the free preview ends: the hidden premium sections
+                        are cut away and the panel takes their place, so the
+                        reader meets the offer at the moment of maximum
+                        curiosity, with no redesign required.
                     </p>
 
                     <!-- Free preview ends here — the premium part is blurred
@@ -275,7 +276,7 @@
                         data-gvm-metadata-title="The newsroom that stopped guessing about price"
                         data-gvm-category="article"
                         data-gvm-hide-template-name="paywall"
-                        data-gvm-hide-strategy="blur"
+                        data-gvm-hide-strategy="hide"
                         data-gvm-hide-sections="2"
                         data-gvm-demo-status="success"
                         data-gvm-demo-payment-status="resolved"
@@ -365,7 +366,7 @@
                         <p class="article-disclaimer">
                             Demo disclosure: part of the gvm.js paywall
                             template showcase. Inline card concept with the
-                            <kbd>blur</kbd> strategy at 1.99 PLN. Open the
+                            <kbd>hide</kbd> strategy at 1.99 PLN. Open the
                             browser console to see the
                             <code>gvm_*</code> events as you pay.
                         </p>
