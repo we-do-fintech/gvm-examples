@@ -8,9 +8,15 @@ is derived from `data-gvm-env` + `data-gvm-tenant`.
 ```
 overlay/
   index.html        hub with links to the 3 articles
-  article-1.html    reference "article-1" — blur, 2.99 PLN
-  article-2.html    reference "article-2" — hide, 0.75 PLN
-  article-3.html    reference "article-3" — mangle-blur, 4.99 PLN
+  article-1.html    "The invisible checkout" — blur, 2.99 PLN
+  article-2.html    "The town that read the fine print" — hide, 0.75 PLN
+  article-3.html    "The last hand-made page" — mangle-blur, 4.99 PLN
+
+Each article is written as a realistic long-form editorial piece — headline,
+standfirst, byline, lead, inline SVG image placeholders, section heads, pull
+quotes, tags and an author box — with well over two A4 pages of body copy.
+The free intro (headline → first paragraphs → first image) stays visible;
+the premium half sits inside `.gvm-cloak` and is gated by the overlay.
 
 > The demo pages reference `https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js`
 > directly — the overlay dynamically imports the sibling `gvm.js` from the same
@@ -119,10 +125,15 @@ You can also edit the config live in `?gvm_admin=1` mode (see below).
 
 ### Reader view
 
-- Open `/overlay/article-1.html` → intro visible, premium body blurred
-  (`blur`), paywall box injected into the article with the 2.99 PLN price.
-- `/overlay/article-2.html` → hidden content removed (`hide`), 0.75 PLN.
-- `/overlay/article-3.html` → blurred + shuffled words (`mangle-blur`), 4.99 PLN.
+- Open `/overlay/article-1.html` (“The invisible checkout”) → intro visible,
+  premium body blurred (`blur`), paywall box injected into the article at
+  2.99 PLN. The gated half starts at “The ringtone hangover”.
+- `/overlay/article-2.html` (“The town that read the fine print”) → hidden
+  content removed (`hide`), 0.75 PLN. The body disappears from the DOM below
+  the first figure.
+- `/overlay/article-3.html` (“The last hand-made page”) → blurred + shuffled
+  words (`mangle-blur`), 4.99 PLN. Try selecting the blurred text to see the
+  mangle in action.
 - Click **unlock** → payment flow against the `dev` API.
 
 ### Admin mode
@@ -144,3 +155,7 @@ the CDN); the editor is loaded from the `dev` overlay host, not from `assets/`.
 - All three demo articles wrap their gated body in `.gvm-cloak` (rule declared
 in `<head>`) — see **No-flash (gvm-cloak)** above for the client pattern and
 the exact sequence (text invisible → overlay applied → text visible).
+- The article layout styles (`.col`, `.byline`, `.demo-strip`, `.article-body`,
+`.article-figure`, `.img-placeholder`, `.pull-quote`, `.author-box`, …) live in
+`assets/showcase.css`. Image placeholders are inline SVGs (photo / chart
+variants), so the pages are fully self-contained — no external image files.

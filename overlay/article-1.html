@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Overlay demo — Article 1 (blur)</title>
+        <title>Overlay demo — “The invisible checkout” (blur)</title>
         <link rel="stylesheet" href="/assets/pico.css" />
-        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-3" />
         <!-- No-flash: hide gated content until gvm-overlay.js boots gvm.js.
              The overlay injects the same rule on load and removes the
              .gvm-cloak class once it is done (see README.md). -->
@@ -34,53 +34,579 @@
         </header>
 
         <main class="container showcase-shell">
-            <article>
+            <article class="news-article">
                 <section class="section-card">
-                    <header>
-                        <p class="eyebrow">gvm-overlay.js</p>
+                    <header class="article-head col">
+                        <p class="eyebrow">gvm-overlay.js · fintech · payments</p>
                         <hgroup>
-                            <h1>Article 1 — blurred preview</h1>
-                            <h2>
-                                Everything below is driven by
-                                <code>article-1</code> in the config.
+                            <h1>The invisible checkout</h1>
+                            <h2 class="article-standfirst">
+                                How the phone bill became a wallet — and why
+                                publishers are quietly rediscovering SMS
+                                payments, two decades after the ringtone crash.
                             </h2>
                         </hgroup>
+                        <div class="byline">
+                            <span class="byline-author">By Marta Kowalczyk</span>
+                            <span class="byline-dot">·</span>
+                            <time datetime="2026-02-12">12 Feb 2026</time>
+                            <span class="byline-dot">·</span>
+                            <span>8 min read</span>
+                        </div>
+                        <div class="demo-strip">
+                            <strong>Demo · blur · 2.99 PLN</strong>
+                            <span
+                                >the premium body below is blurred until the
+                                reader unlocks it. Append
+                                <code>?gvm_admin=1</code> to edit the price /
+                                strategy in-page.</span
+                            >
+                        </div>
                     </header>
-                    <p class="lead">
-                        Add <code>?gvm_admin=1</code> to the URL to edit this
-                        article's price / strategy in-page.
-                    </p>
 
-                    <div class="gvm-cloak">
-                        <p>
-                            This is the free, visible intro of the article.
-                            It stays readable without a payment.
+                    <!-- Free intro — visible to every reader -->
+                    <div class="article-body col">
+                        <p class="lead">
+                            On a grey Thursday morning in Katowice, a woman in a
+                            red coat stops at a street kiosk, types five
+                            characters into her phone and walks away with an
+                            article that, a minute earlier, had been locked
+                            behind a paywall. No card, no app, no account. The
+                            unlock lands on her monthly phone bill, and
+                            somewhere in a server room in Warsaw a publishing
+                            platform flips the bit that had been keeping the
+                            text encrypted.
                         </p>
                         <p>
-                            The premium body below is blurred by the
-                            <kbd>blur</kbd> strategy until the reader confirms
-                            an SMS commitment.
+                            The scene could have been lifted from 2004, when
+                            premium SMS powered everything from ringtones to
+                            celebrity horoscopes and small fortunes changed
+                            hands fifteen characters at a time. It is not. The
+                            woman is buying journalism at a price roughly equal
+                            to a single bus ticket, and she does it in the
+                            thirty seconds between two trams, without ever
+                            seeing a checkout screen.
+                        </p>
+                        <figure class="article-figure">
+                            <div
+                                class="img-placeholder"
+                                role="img"
+                                aria-label="Photograph: a commuter unlocks an article at a street kiosk before boarding a tram"
+                            >
+                                <svg
+                                    viewBox="0 0 1200 675"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    preserveAspectRatio="xMidYMid slice"
+                                >
+                                    <defs>
+                                        <linearGradient
+                                            id="ph-a1-1"
+                                            x1="0"
+                                            y1="0"
+                                            x2="1"
+                                            y2="1"
+                                        >
+                                            <stop
+                                                offset="0"
+                                                stop-color="#eae5d5"
+                                            />
+                                            <stop
+                                                offset="1"
+                                                stop-color="#d8d0b8"
+                                            />
+                                        </linearGradient>
+                                        <pattern
+                                            id="phgrid-a1-1"
+                                            width="26"
+                                            height="26"
+                                            patternUnits="userSpaceOnUse"
+                                        >
+                                            <path
+                                                d="M26 0H0V26"
+                                                fill="none"
+                                                stroke="#c6bda1"
+                                                stroke-width="1"
+                                                opacity="0.55"
+                                            />
+                                        </pattern>
+                                    </defs>
+                                    <rect
+                                        width="1200"
+                                        height="675"
+                                        fill="url(#ph-a1-1)"
+                                    />
+                                    <rect
+                                        width="1200"
+                                        height="675"
+                                        fill="url(#phgrid-a1-1)"
+                                    />
+                                    <g
+                                        transform="translate(600 302)"
+                                        fill="none"
+                                        stroke="#8a8066"
+                                        stroke-width="5"
+                                        opacity="0.95"
+                                        stroke-linejoin="round"
+                                        stroke-linecap="round"
+                                    >
+                                        <rect
+                                            x="-56"
+                                            y="-32"
+                                            width="112"
+                                            height="72"
+                                            rx="9"
+                                        />
+                                        <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
+                                        <circle cx="0" cy="6" r="22" />
+                                    </g>
+                                    <text
+                                        x="600"
+                                        y="452"
+                                        text-anchor="middle"
+                                        font-family="'IBM Plex Mono', monospace"
+                                        font-size="24"
+                                        letter-spacing="7"
+                                        fill="#776d53"
+                                    >
+                                        IMAGE PLACEHOLDER
+                                    </text>
+                                    <text
+                                        x="600"
+                                        y="496"
+                                        text-anchor="middle"
+                                        font-family="'Source Sans 3', sans-serif"
+                                        font-size="18"
+                                        fill="#887d61"
+                                    >
+                                        1200 × 675 — replace with editorial photo
+                                    </text>
+                                </svg>
+                            </div>
+                            <figcaption>
+                                A commuter unlocks an article at a street kiosk
+                                before boarding the tram. The whole transaction
+                                takes under a minute. <strong>Photo: T. Novák / The Ledger</strong>
+                            </figcaption>
+                        </figure>
+                    </div>
+
+                    <!-- Gated content — premium body (blur strategy) -->
+                    <div class="gvm-cloak article-body col">
+                        <h2>The ringtone hangover</h2>
+                        <p>
+                            To understand why that single bit is worth writing
+                            about, you have to start with the crash. Between
+                            2000 and 2006, premium-rate SMS was the closest
+                            thing Europe had to a universal app store. Operators
+                            ran the platform, aggregators ran the plumbing, and
+                            content providers sold ringtones, logos, jokes and
+                            horoscopes to an audience that never once typed a
+                            card number. By some estimates the industry moved
+                            hundreds of millions of euros a year across borders
+                            that, politically, had still not quite decided they
+                            were borders.
                         </p>
                         <p>
-                            Readers who complete the payment get the blurred
-                            content restored in place — no redirect, no reload.
+                            Then it collapsed in public. Regulators in Germany,
+                            Britain, Poland and the Nordics published consumer
+                            complaints like guidance documents; newspapers ran
+                            exposés of invisible “weekly subscription” ticks;
+                            and the same operators who had cashed the cheques
+                            imposed the kind of opt-in double-confirmation rules
+                            that made single-purchase fun impossible. By 2009
+                            the ringtone economy was a punchline. The
+                            infrastructure, however, never went away — it simply
+                            went quiet.
                         </p>
                         <p>
-                            This demo runs in
-                            <code>data-gvm-env="dev"</code>, so the payment
-                            flow targets the dev API.
+                            The commerce that survived was the stuff nobody
+                            celebrated: parking in half a dozen European
+                            capitals, anonymous giving to charities, ticket
+                            add-ons for festivals, small online games that could
+                            not justify a card flow. Aggregators diversified,
+                            operators rebranded their platforms as “carrier
+                            billing”, and the technology settled into the role
+                            of a well-behaved utility — present, cheap, and
+                            almost completely invisible.
+                        </p>
+
+                        <h2>A thirty-second decision</h2>
+                        <p>
+                            Invisibility turned out to be precisely its selling
+                            point. When a reader hits an unlock button, the
+                            psychological ledger changes compared with a card
+                            form. There is no wallet to fetch, no number to
+                            type, no 3-D Secure dance, no “is this a
+                            subscription?” checkbox. The price appears, the
+                            reader confirms with one tap, and the charge arrives
+                            muddled into a bill they will look at in three
+                            weeks, among dozens of other line items.
                         </p>
                         <p>
-                            The price (2.99 PLN) and hide percentage come
-                            straight from the tenant config
-                            (<code>cfg.dev.gvm.wdft.ovh/wdft_showcase_qa.json</code>).
+                            Payment researchers call this “friction asymmetry”:
+                            a ten-second difference at checkout changes
+                            conversion more than a ten-percent difference in
+                            price. Publishers rediscovering premium content
+                            found that SMS unlocks converted two to three times
+                            better than card forms for the same article at the
+                            same price — at the cost of a slightly higher fee
+                            per transaction. For a local paper selling a single
+                            story for the price of a bus ticket, that trade is
+                            not just acceptable. It is the entire business
+                            model.
+                        </p>
+                        <blockquote class="pull-quote">
+                            The best payment method is the one the customer no
+                            longer has to think about.
+                            <cite>Anna Lisiecka, head of product at GVM</cite>
+                        </blockquote>
+                        <p>
+                            The operator also solved a trust problem. Because
+                            the charge is mediated by the mobile operator — a
+                            brand the customer already pays monthly — the
+                            confirmation feels like an extension of an existing
+                            relationship, not a new one. There is no account to
+                            create, no password to remember, no marketing
+                            checkbox to untick. The reader performs one gesture
+                            and the article unlocks in place, on the same scroll
+                            position, as if the paywall had never existed.
+                        </p>
+
+                        <h2>Where the money actually goes</h2>
+                        <p>
+                            The fee structure explains a lot about the price
+                            points publishers choose. For a standard
+                            premium-rate transaction, the operator takes a
+                            share, the aggregator takes a thin margin, and the
+                            publisher keeps the remainder — often between fifty
+                            and seventy percent of the sticker price. On a
+                            2.99 PLN unlock, that leaves roughly enough to cover
+                            the article’s hosting, a small contribution to the
+                            author, and still turn a margin at volumes a local
+                            weekly can realistically reach.
                         </p>
                         <p>
-                            Switch the environment to
-                            <code>qa</code> or <code>prod</code> and the overlay
-                            re-derives the config URL automatically.
+                            That arithmetic is why the price tags in this
+                            showcase look so odd next to modern streaming
+                            subscriptions. 0.75 PLN, 2.99 PLN, 4.99 PLN — these
+                            are deliberately small numbers, sized to fit the
+                            mental budget of “a coffee”, “a newspaper”, “a bus
+                            ticket”. The unit economics do not need to support a
+                            platform; they need to support a single article,
+                            sold to a single reader, in under a minute.
+                        </p>
+                        <p>What 2.99 PLN actually buys, if you break it down:</p>
+                        <ul>
+                            <li>
+                                the reader’s one-tap confirmation and a receipt,
+                                remembered so they never pay twice for the same
+                                article;
+                            </li>
+                            <li>
+                                the operator’s billing, fraud and settlement
+                                infrastructure, behind the scenes;
+                            </li>
+                            <li>
+                                the publisher’s margin, after the aggregator’s
+                                fee;
+                            </li>
+                            <li>
+                                a guarantee that the article stays unlocked on
+                                every device for that reader.
+                            </li>
+                        </ul>
+
+                        <h2>The publisher’s quiet comeback</h2>
+                        <p>
+                            The current wave started, as these things usually
+                            do, with small publishers who had nothing to lose.
+                            Regional papers and niche magazines in Central
+                            Europe began testing single-article unlocks in 2024,
+                            at prices that would have made their commercial
+                            directors laugh a decade earlier. What they found
+                            was that a small, honest price outperformed a grand
+                            strategy. Readers who would never buy a 149 PLN
+                            annual subscription would happily pay 2.99 PLN for
+                            one story about their own town.
+                        </p>
+                        <figure class="article-figure">
+                            <div
+                                class="img-placeholder"
+                                role="img"
+                                aria-label="Chart: share of SMS-settled digital purchases in Poland, 2025 — parking 34%, media and content 27%, charity 18%, tickets 12%, other 9%"
+                            >
+                                <svg
+                                    viewBox="0 0 1200 520"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    preserveAspectRatio="xMidYMid slice"
+                                >
+                                    <defs>
+                                        <linearGradient
+                                            id="ph-a1-2"
+                                            x1="0"
+                                            y1="0"
+                                            x2="1"
+                                            y2="1"
+                                        >
+                                            <stop
+                                                offset="0"
+                                                stop-color="#eae5d5"
+                                            />
+                                            <stop
+                                                offset="1"
+                                                stop-color="#d8d0b8"
+                                            />
+                                        </linearGradient>
+                                        <pattern
+                                            id="phgrid-a1-2"
+                                            width="26"
+                                            height="26"
+                                            patternUnits="userSpaceOnUse"
+                                        >
+                                            <path
+                                                d="M26 0H0V26"
+                                                fill="none"
+                                                stroke="#c6bda1"
+                                                stroke-width="1"
+                                                opacity="0.55"
+                                            />
+                                        </pattern>
+                                    </defs>
+                                    <rect
+                                        width="1200"
+                                        height="520"
+                                        fill="url(#ph-a1-2)"
+                                    />
+                                    <rect
+                                        width="1200"
+                                        height="520"
+                                        fill="url(#phgrid-a1-2)"
+                                    />
+                                    <text
+                                        x="600"
+                                        y="36"
+                                        text-anchor="middle"
+                                        font-family="'IBM Plex Mono', monospace"
+                                        font-size="22"
+                                        letter-spacing="5"
+                                        fill="#776d53"
+                                    >
+                                        CHART PLACEHOLDER
+                                    </text>
+                                    <g
+                                        font-family="'IBM Plex Mono', monospace"
+                                        font-size="17"
+                                        fill="#5c5340"
+                                    >
+                                        <line
+                                            x1="130"
+                                            y1="400"
+                                            x2="1120"
+                                            y2="400"
+                                            stroke="#8a8066"
+                                            stroke-width="2"
+                                        />
+                                        <line
+                                            x1="130"
+                                            y1="70"
+                                            x2="130"
+                                            y2="400"
+                                            stroke="#8a8066"
+                                            stroke-width="2"
+                                        />
+                                        <rect
+                                            x="180"
+                                            y="178"
+                                            width="130"
+                                            height="222"
+                                            fill="#6e654c"
+                                            opacity="0.85"
+                                        />
+                                        <text
+                                            x="245"
+                                            y="165"
+                                            text-anchor="middle"
+                                        >
+                                            34%
+                                        </text>
+                                        <text
+                                            x="245"
+                                            y="448"
+                                            text-anchor="middle"
+                                        >
+                                            Parking
+                                        </text>
+                                        <rect
+                                            x="420"
+                                            y="228"
+                                            width="130"
+                                            height="172"
+                                            fill="#8a7f63"
+                                        />
+                                        <text
+                                            x="485"
+                                            y="215"
+                                            text-anchor="middle"
+                                        >
+                                            27%
+                                        </text>
+                                        <text
+                                            x="485"
+                                            y="448"
+                                            text-anchor="middle"
+                                        >
+                                            Media
+                                        </text>
+                                        <rect
+                                            x="660"
+                                            y="294"
+                                            width="130"
+                                            height="106"
+                                            fill="#8a7f63"
+                                        />
+                                        <text
+                                            x="725"
+                                            y="281"
+                                            text-anchor="middle"
+                                        >
+                                            18%
+                                        </text>
+                                        <text
+                                            x="725"
+                                            y="448"
+                                            text-anchor="middle"
+                                        >
+                                            Charity
+                                        </text>
+                                        <rect
+                                            x="900"
+                                            y="338"
+                                            width="130"
+                                            height="62"
+                                            fill="#6e654c"
+                                            opacity="0.7"
+                                        />
+                                        <text
+                                            x="965"
+                                            y="325"
+                                            text-anchor="middle"
+                                        >
+                                            12%
+                                        </text>
+                                        <text
+                                            x="965"
+                                            y="448"
+                                            text-anchor="middle"
+                                        >
+                                            Tickets
+                                        </text>
+                                    </g>
+                                </svg>
+                            </div>
+                            <figcaption>
+                                Share of SMS-settled digital purchases by
+                                category, Poland 2025. Media &amp; content is
+                                the fastest-growing segment. <strong>Source: industry data, compiled by The Ledger</strong>
+                            </figcaption>
+                        </figure>
+                        <p>
+                            Publishers also discovered something about reader
+                            goodwill. Because the payment is a single, bounded
+                            gesture with a clear receipt, the resentment that
+                            builds around subscriptions — the forgotten
+                            renewals, the “just cancel it” emails — never
+                            appears. The relationship resets with every article.
+                            That is unusual in media, where most monetisation
+                            models are designed to make the reader stay; this
+                            one is designed to make the reader come back.
+                        </p>
+                        <p>
+                            None of this is a prediction of a grand comeback. It
+                            is an observation about how unglamorous the
+                            technological backbone of media has become. The
+                            checkout has been shrinking for a decade — fewer
+                            clicks, fewer fields, fewer decisions — and SMS
+                            billing turned out to be one of the more honest
+                            endpoints of that trajectory.
+                        </p>
+
+                        <h2>The last thirty seconds</h2>
+                        <p>
+                            The woman in the red coat is on the tram now,
+                            reading an article she had intended to skip. The
+                            kiosk transaction took longer than the decision.
+                            Somewhere in the config that governs the page, a
+                            number shifted from “locked” to “unlocked”, a
+                            receipt was written to a ledger, and the phone
+                            company will quietly add 2.99 PLN to her bill at the
+                            end of the month.
+                        </p>
+                        <p>
+                            It is easy to miss these moments because nothing
+                            about them is designed to be visible. That is rather
+                            the point. The best payment infrastructure, like the
+                            best editing, disappears into the experience it
+                            serves. The article is good, the price is honest,
+                            and the reader does not think about any of it — she
+                            is already on the next paragraph.
                         </p>
                     </div>
+
+                    <footer class="article-foot col">
+                        <ul class="article-tags">
+                            <li>Payments</li>
+                            <li>Digital media</li>
+                            <li>Europe</li>
+                            <li>SMS billing</li>
+                        </ul>
+                        <div class="author-box">
+                            <div
+                                class="avatar"
+                                role="img"
+                                aria-label="Avatar of Marta Kowalczyk"
+                            >
+                                <svg viewBox="0 0 56 56">
+                                    <rect
+                                        width="56"
+                                        height="56"
+                                        fill="#dcd4bd"
+                                    />
+                                    <text
+                                        x="28"
+                                        y="35"
+                                        text-anchor="middle"
+                                        font-family="'Newsreader', Georgia, serif"
+                                        font-size="22"
+                                        fill="#5c5340"
+                                    >
+                                        MK
+                                    </text>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>Marta Kowalczyk</h4>
+                                <span class="author-role"
+                                    >Staff writer, payments &amp; infrastructure</span
+                                >
+                                <p>
+                                    Covers the plumbing of modern commerce.
+                                    Previously at a fintech trade weekly in
+                                    Warsaw, where she once paid for a coffee
+                                    with her phone bill — by accident.
+                                </p>
+                            </div>
+                        </div>
+                        <p class="article-disclaimer">
+                            Demo disclosure: this page is part of a technical
+                            showcase. The paywall is driven by a static config
+                            (<code>wdft_showcase_dev</code>, env
+                            <code>dev</code>); the premium body is protected
+                            with the <kbd>blur</kbd> strategy at 2.99 PLN.
+                            Nothing is actually charged in this environment, and
+                            the config can be edited in-page with
+                            <code>?gvm_admin=1</code>.
+                        </p>
+                    </footer>
                 </section>
             </article>
         </main>

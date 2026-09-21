@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Overlay demo — Article 2 (hide)</title>
+        <title>Overlay demo — “The town that read the fine print” (hide)</title>
         <link rel="stylesheet" href="/assets/pico.css" />
-        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-3" />
         <!-- No-flash: hide gated content until gvm-overlay.js boots gvm.js.
              The overlay injects the same rule on load and removes the
              .gvm-cloak class once it is done (see README.md). -->
@@ -34,53 +34,463 @@
         </header>
 
         <main class="container showcase-shell">
-            <article>
+            <article class="news-article">
                 <section class="section-card">
-                    <header>
-                        <p class="eyebrow">gvm-overlay.js</p>
+                    <header class="article-head col">
+                        <p class="eyebrow">gvm-overlay.js · media · archives</p>
                         <hgroup>
-                            <h1>Article 2 — hard hide</h1>
-                            <h2>
-                                The <kbd>hide</kbd> strategy removes content
-                                instead of blurring it.
+                            <h1>The town that read the fine print</h1>
+                            <h2 class="article-standfirst">
+                                When a local paper moved a century of archives
+                                behind a paywall, a retired teacher kept a
+                                carbon-copy diary of every story that vanished.
+                                For nineteen months, she was the town’s memory —
+                                and nobody asked her to be.
                             </h2>
                         </hgroup>
+                        <div class="byline">
+                            <span class="byline-author">By Jan Nowicki</span>
+                            <span class="byline-dot">·</span>
+                            <time datetime="2026-02-19">19 Feb 2026</time>
+                            <span class="byline-dot">·</span>
+                            <span>7 min read</span>
+                        </div>
+                        <div class="demo-strip">
+                            <strong>Demo · hide · 0.75 PLN</strong>
+                            <span
+                                >the hidden sections below are removed from the
+                                page until the reader unlocks them. Append
+                                <code>?gvm_admin=1</code> to edit the price /
+                                strategy in-page.</span
+                            >
+                        </div>
                     </header>
-                    <p class="lead">
-                        Cheaper price (0.75 PLN), different strategy — the only
-                        difference is a config entry.
-                    </p>
 
-                    <div class="gvm-cloak">
-                        <p>
-                            Here the intro stays visible, but everything after
-                            the threshold is removed and replaced by the
-                            paywall template.
+                    <!-- Free intro — visible to every reader -->
+                    <div class="article-body col">
+                        <p class="lead">
+                            The first thing Barbara Wiśniewska noticed was the
+                            obituaries. For seventy years she had read the
+                            weekly Nadodrze from the front page to the
+                            classifieds, and on the second Thursday of March the
+                            obituaries were simply no longer there. Not gone in
+                            the sense of being delayed — gone in the sense of
+                            having been removed, twelve years back, from the
+                            paper’s online archive, along with nineteen other
+                            issues from a single summer.
                         </p>
                         <p>
-                            This article uses the <kbd>hide</kbd> strategy:
-                            hidden sections are removed from the DOM until
-                            payment succeeds.
+                            Barbara is retired, seventy-nine years old, and
+                            patient in the way of people who have spent
+                            forty-one years in front of a blackboard. She did
+                            not complain to the editor. She bought a ledger, the
+                            kind with numbered pages and a cloth spine, and
+                            started writing down everything the paper removed:
+                            the issue, the page, the headline, and a one-line
+                            summary of what the story had been.
+                        </p>
+                        <figure class="article-figure">
+                            <div
+                                class="img-placeholder"
+                                role="img"
+                                aria-label="Photograph: an open cloth-bound ledger with handwritten annotations, on a wooden table"
+                            >
+                                <svg
+                                    viewBox="0 0 1200 675"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    preserveAspectRatio="xMidYMid slice"
+                                >
+                                    <defs>
+                                        <linearGradient
+                                            id="ph-a2-1"
+                                            x1="0"
+                                            y1="0"
+                                            x2="1"
+                                            y2="1"
+                                        >
+                                            <stop
+                                                offset="0"
+                                                stop-color="#eae5d5"
+                                            />
+                                            <stop
+                                                offset="1"
+                                                stop-color="#d8d0b8"
+                                            />
+                                        </linearGradient>
+                                        <pattern
+                                            id="phgrid-a2-1"
+                                            width="26"
+                                            height="26"
+                                            patternUnits="userSpaceOnUse"
+                                        >
+                                            <path
+                                                d="M26 0H0V26"
+                                                fill="none"
+                                                stroke="#c6bda1"
+                                                stroke-width="1"
+                                                opacity="0.55"
+                                            />
+                                        </pattern>
+                                    </defs>
+                                    <rect
+                                        width="1200"
+                                        height="675"
+                                        fill="url(#ph-a2-1)"
+                                    />
+                                    <rect
+                                        width="1200"
+                                        height="675"
+                                        fill="url(#phgrid-a2-1)"
+                                    />
+                                    <g
+                                        transform="translate(600 302)"
+                                        fill="none"
+                                        stroke="#8a8066"
+                                        stroke-width="5"
+                                        opacity="0.95"
+                                        stroke-linejoin="round"
+                                        stroke-linecap="round"
+                                    >
+                                        <rect
+                                            x="-56"
+                                            y="-32"
+                                            width="112"
+                                            height="72"
+                                            rx="9"
+                                        />
+                                        <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
+                                        <circle cx="0" cy="6" r="22" />
+                                    </g>
+                                    <text
+                                        x="600"
+                                        y="452"
+                                        text-anchor="middle"
+                                        font-family="'IBM Plex Mono', monospace"
+                                        font-size="24"
+                                        letter-spacing="7"
+                                        fill="#776d53"
+                                    >
+                                        IMAGE PLACEHOLDER
+                                    </text>
+                                    <text
+                                        x="600"
+                                        y="496"
+                                        text-anchor="middle"
+                                        font-family="'Source Sans 3', sans-serif"
+                                        font-size="18"
+                                        fill="#887d61"
+                                    >
+                                        1200 × 675 — replace with editorial photo
+                                    </text>
+                                </svg>
+                            </div>
+                            <figcaption>
+                                Barbara’s first ledger, open at the summer of
+                                1988. Roughly a page a week, in her own hand.
+                                <strong>Photo: J. Nowicki / The Ledger</strong>
+                            </figcaption>
+                        </figure>
+                    </div>
+
+                    <!-- Gated content — premium body (hide strategy) -->
+                    <div class="gvm-cloak article-body col">
+                        <h2>Eight cardboard boxes</h2>
+                        <p>
+                            The paper had gone digital the way most local papers
+                            did: the typographer scanned the bound annuals of
+                            the 1950s, the archive vendor OCR’d everything with
+                            a cheerful optimism about optical character
+                            recognition, and somebody — nobody remembers who —
+                            decided that the first twelve years of the website
+                            would live behind a paywall, one archive article at
+                            a time.
                         </p>
                         <p>
-                            It is the simplest strategy and the easiest to
-                            reason about, though also the easiest to bypass
-                            with dev tools.
+                            What the editorial team did not anticipate was how
+                            the town treated that archive. Nadodrze is a
+                            district of 27,000 people, and its century-old
+                            weekly is the only place where a family’s public
+                            history exists in one continuous run: births,
+                            marriages, deaths, the licensing of a butcher’s
+                            shop, the opening of a bridge, the names of the
+                            children who won the spelling contest in 1987. When
+                            the archive moved behind a paywall, the town noticed
+                            mostly because Barbara told it to.
                         </p>
                         <p>
-                            The price is set to 0.75 PLN purely to show that
-                            each article can carry its own value.
+                            She started with the obituaries because they were
+                            the hardest loss. A death notice is not really a
+                            document of death; it is a document of a life,
+                            compressed, and for many families it is the only
+                            printed record that survives. When the paywall took
+                            those, it took the town’s memory at its most tender
+                            point.
+                        </p>
+
+                        <h2>The paywall, politely</h2>
+                        <p>
+                            Barbara’s method was meticulous and conspicuously
+                            fair. She never copied the articles. She summarised
+                            them in her own words, keyed to issue and page, and
+                            she checked her summaries against the free previews
+                            that the site still served. When the editors, at
+                            first confused and then amused, asked her about the
+                            ledger, she explained that she was not against
+                            payment — she paid, in fact, for a subscription. She
+                            simply believed a town archive should have an index,
+                            and the paper’s index now stopped at the paywall.
                         </p>
                         <p>
-                            After a successful payment the removed sections are
-                            restored exactly where they were.
+                            She was not, she insists, working against the paper.
+                            Her subscription pays for the issue every week, and
+                            she reads the paywalled archive herself when the
+                            library computer lets her; the ledger is referenced
+                            the same way the paper references its own issues,
+                            down to the page numbers. In her own eyes she is
+                            doing the job the site’s search box used to do,
+                            before the paywall taught it to forget.
+                        </p>
+                        <blockquote class="pull-quote">
+                            An archive behind a paywall is still an archive. But
+                            a town that cannot find its own past is something
+                            else.
+                            <cite>Barbara Wiśniewska, retired teacher</cite>
+                        </blockquote>
+                        <p>
+                            The editor of Nadodrze, a man in his fifties who had
+                            once written a column about freedom of information,
+                            later told me this was the most polite political
+                            argument in the town’s recent history. Barbara did
+                            not write letters to the council. She did not
+                            organise a petition. She wrote down, issue by issue,
+                            everything that was disappearing, and she shared her
+                            summaries — on paper, of course — with the local
+                            library.
+                        </p>
+
+                        <h2>What the archive knows about us</h2>
+                        <p>
+                            What Barbara’s ledger revealed, once it grew to
+                            eight hundred entries, was that the paywall’s
+                            removals were not random. The paper’s online archive
+                            had been assembled in three batches, by three
+                            different vendors, and the oldest batch had the
+                            worst OCR. Articles from the 1960s and 1970s —
+                            including an entire summer of the town’s history —
+                            had been judged “unreadable” and pulled from the
+                            search index rather than fixed.
                         </p>
                         <p>
-                            Try <code>?gvm_admin=1</code> to switch this article
-                            to <kbd>blur</kbd> and save — reload and see it
-                            change.
+                            This is the quiet tragedy of digital archives:
+                            deletion is rarely malicious and almost always
+                            administrative. A licensing agreement lapses, a
+                            database migration drops a field, an OCR confidence
+                            score falls below a threshold, and a decade of local
+                            history stops existing from the reader’s point of
+                            view. Nobody deleted the data; it simply became
+                            uneconomical to keep it findable.
+                        </p>
+                        <p>
+                            The town council, embarrassed into action, voted a
+                            small grant to restore the summer of 1988. Barbara
+                            attended the vote, sat in the second row, and said
+                            nothing. The ledger had done its work.
+                        </p>
+
+                        <h2>A civic ledger</h2>
+                        <p>
+                            The wider lesson is not that paywalls are bad.
+                            Nadodrze’s paywall is, by local standards, a
+                            success: it keeps the weekly solvent, and its
+                            archives now fund the paper’s digital editor. The
+                            lesson is about adjacency — the fact that an archive
+                            is not a product but a public good, and that a
+                            paywall drawn across it draws a line through the
+                            town itself.
+                        </p>
+                        <p>
+                            Barbara finished the first ledger in November,
+                            nineteen months after she started. The editors of
+                            Nadodrze, having been gently shamed and then
+                            genuinely moved, did two things: they restored the
+                            orphaned summer of 1988, and they printed the first
+                            page of her ledger on the letters page, exactly as
+                            it looked, with the note: “Indexing the town, one
+                            issue at a time.”
+                        </p>
+                        <p>
+                            She has started a second ledger. There is talk that
+                            the library will digitise it, which she views with
+                            the deep suspicion of someone who has watched three
+                            OCR vendors fail. She will probably be right about
+                            that too.
+                        </p>
+                        <figure class="article-figure">
+                            <div
+                                class="img-placeholder"
+                                role="img"
+                                aria-label="Photograph: a reference copy of a handwritten index on the open shelf of a small library"
+                            >
+                                <svg
+                                    viewBox="0 0 1200 675"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    preserveAspectRatio="xMidYMid slice"
+                                >
+                                    <defs>
+                                        <linearGradient
+                                            id="ph-a2-2"
+                                            x1="0"
+                                            y1="0"
+                                            x2="1"
+                                            y2="1"
+                                        >
+                                            <stop
+                                                offset="0"
+                                                stop-color="#eae5d5"
+                                            />
+                                            <stop
+                                                offset="1"
+                                                stop-color="#d8d0b8"
+                                            />
+                                        </linearGradient>
+                                        <pattern
+                                            id="phgrid-a2-2"
+                                            width="26"
+                                            height="26"
+                                            patternUnits="userSpaceOnUse"
+                                        >
+                                            <path
+                                                d="M26 0H0V26"
+                                                fill="none"
+                                                stroke="#c6bda1"
+                                                stroke-width="1"
+                                                opacity="0.55"
+                                            />
+                                        </pattern>
+                                    </defs>
+                                    <rect
+                                        width="1200"
+                                        height="675"
+                                        fill="url(#ph-a2-2)"
+                                    />
+                                    <rect
+                                        width="1200"
+                                        height="675"
+                                        fill="url(#phgrid-a2-2)"
+                                    />
+                                    <g
+                                        transform="translate(600 302)"
+                                        fill="none"
+                                        stroke="#8a8066"
+                                        stroke-width="5"
+                                        opacity="0.95"
+                                        stroke-linejoin="round"
+                                        stroke-linecap="round"
+                                    >
+                                        <rect
+                                            x="-56"
+                                            y="-32"
+                                            width="112"
+                                            height="72"
+                                            rx="9"
+                                        />
+                                        <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
+                                        <circle cx="0" cy="6" r="22" />
+                                    </g>
+                                    <text
+                                        x="600"
+                                        y="452"
+                                        text-anchor="middle"
+                                        font-family="'IBM Plex Mono', monospace"
+                                        font-size="24"
+                                        letter-spacing="7"
+                                        fill="#776d53"
+                                    >
+                                        IMAGE PLACEHOLDER
+                                    </text>
+                                    <text
+                                        x="600"
+                                        y="496"
+                                        text-anchor="middle"
+                                        font-family="'Source Sans 3', sans-serif"
+                                        font-size="18"
+                                        fill="#887d61"
+                                    >
+                                        1200 × 675 — replace with editorial photo
+                                    </text>
+                                </svg>
+                            </div>
+                            <figcaption>
+                                The library’s reference copy of the index. The
+                                paper agreed to keep it on the open shelf,
+                                beside the bound annuals. <strong>Photo: J. Nowicki / The Ledger</strong>
+                            </figcaption>
+                        </figure>
+                        <p>
+                            Before we left, Barbara showed me the drawer where
+                            she keeps the receipts — every subscription
+                            confirmation, neatly dated. “The paper needs its
+                            money,” she said, closing the drawer. “It also needs
+                            to remember what the money is for.” The editor, who
+                            had come to say goodbye, said nothing at all.
                         </p>
                     </div>
+
+                    <footer class="article-foot col">
+                        <ul class="article-tags">
+                            <li>Archives</li>
+                            <li>Local press</li>
+                            <li>Paywalls</li>
+                            <li>Privacy</li>
+                        </ul>
+                        <div class="author-box">
+                            <div
+                                class="avatar"
+                                role="img"
+                                aria-label="Avatar of Jan Nowicki"
+                            >
+                                <svg viewBox="0 0 56 56">
+                                    <rect
+                                        width="56"
+                                        height="56"
+                                        fill="#dcd4bd"
+                                    />
+                                    <text
+                                        x="28"
+                                        y="35"
+                                        text-anchor="middle"
+                                        font-family="'Newsreader', Georgia, serif"
+                                        font-size="22"
+                                        fill="#5c5340"
+                                    >
+                                        JN
+                                    </text>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>Jan Nowicki</h4>
+                                <span class="author-role"
+                                    >Reporter, media &amp; digital culture</span
+                                >
+                                <p>
+                                    Writes about newspapers, archives and what
+                                    they choose to remember. Keeps his own
+                                    index of every story he has filed since
+                                    2009, on paper.
+                                </p>
+                            </div>
+                        </div>
+                        <p class="article-disclaimer">
+                            Demo disclosure: this page is part of a technical
+                            showcase. The paywall is driven by a static config
+                            (<code>wdft_showcase_dev</code>, env
+                            <code>dev</code>); the premium body is protected
+                            with the <kbd>hide</kbd> strategy at 0.75 PLN.
+                            Nothing is actually charged in this environment, and
+                            the config can be edited in-page with
+                            <code>?gvm_admin=1</code>.
+                        </p>
+                    </footer>
                 </section>
             </article>
         </main>

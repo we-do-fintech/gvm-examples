@@ -3,9 +3,12 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Overlay demo — Article 3 (mangle-blur)</title>
+        <title>Overlay demo — “The last hand-made page” (mangle-blur)</title>
         <link rel="stylesheet" href="/assets/pico.css" />
-        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-3" />
+        <!-- No-flash: hide gated content until gvm-overlay.js boots gvm.js.
+             The overlay injects the same rule on load and removes the
+             .gvm-cloak class once it is done (see README.md). -->
         <style>
             .gvm-cloak {
                 visibility: hidden;
@@ -14,10 +17,6 @@
         <script>
             window.wdftDebug = true;
         </script>
-        <script type="module"
-            data-gvm-tenant="wdft_showcase_dev"
-            data-gvm-env="dev"
-            src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"></script>
     </head>
     <body>
         <header class="site-header">
@@ -37,51 +36,464 @@
         </header>
 
         <main class="container showcase-shell">
-            <article>
+            <article class="news-article">
                 <section class="section-card">
-                    <header>
-                        <p class="eyebrow">gvm-overlay.js</p>
+                    <header class="article-head col">
+                        <p class="eyebrow">gvm-overlay.js · culture · long read</p>
                         <hgroup>
-                            <h1>Article 3 — mangle-blur</h1>
-                            <h2>
-                                Blur plus word shuffling for extra obfuscation.
+                            <h1>The last hand-made page</h1>
+                            <h2 class="article-standfirst">
+                                In a back office of a 112-year-old Silesian
+                                weekly, a subeditor still cuts headlines from a
+                                laser printer with scissors and fixes them to
+                                the page with wax. She is not nostalgic. She
+                                simply believes a headline is a physical thing.
                             </h2>
                         </hgroup>
+                        <div class="byline">
+                            <span class="byline-author">By Kasia Zielińska</span>
+                            <span class="byline-dot">·</span>
+                            <time datetime="2026-02-26">26 Feb 2026</time>
+                            <span class="byline-dot">·</span>
+                            <span>12 min read</span>
+                        </div>
+                        <div class="demo-strip">
+                            <strong>Demo · mangle-blur · 4.99 PLN</strong>
+                            <span
+                                >the premium body below is blurred and its words
+                                shuffled until the reader unlocks it. Append
+                                <code>?gvm_admin=1</code> to edit the price /
+                                strategy in-page.</span
+                            >
+                        </div>
                     </header>
-                    <p class="lead">
-                        The premium tier of the demo: 4.99 PLN with the
-                        <kbd>mangle-blur</kbd> strategy.
-                    </p>
 
-                    <div class="gvm-cloak">
-                        <p>
-                            The <kbd>mangle-blur</kbd> strategy blurs the hidden
-                            content and additionally shuffles the word order.
+                    <!-- Free intro — visible to every reader -->
+                    <div class="article-body col">
+                        <p class="lead">
+                            In the back room of a 112-year-old weekly in
+                            Silesia, Halina Bednarek cuts a headline out of a
+                            sheet of laser-printed paper with a pair of
+                            scissors, trims the left margin with a knife, and
+                            fixes the strip of paper to a physical page with a
+                            block of warm wax. The page lies flat on a drafting
+                            table, part of a sixty-four-page issue that has been
+                            assembled by hand, in order, every Wednesday for the
+                            last thirty-one years.
                         </p>
                         <p>
-                            This makes casual copying from the page harder, at
-                            the cost of a slightly more confusing preview.
+                            Asked whether she has considered layout software,
+                            Halina — who is sixty-four and has the calm of a
+                            woman who has never missed a deadline — looks at the
+                            question the way one might look at a proposal to
+                            reorganise the kitchen. “The computer,” she says,
+                            “makes headlines that look like they were typed by a
+                            computer.”
+                        </p>
+                        <figure class="article-figure">
+                            <div
+                                class="img-placeholder"
+                                role="img"
+                                aria-label="Photograph: a drafting table with printed page proofs, scissors and a block of wax"
+                            >
+                                <svg
+                                    viewBox="0 0 1200 675"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    preserveAspectRatio="xMidYMid slice"
+                                >
+                                    <defs>
+                                        <linearGradient
+                                            id="ph-a3-1"
+                                            x1="0"
+                                            y1="0"
+                                            x2="1"
+                                            y2="1"
+                                        >
+                                            <stop
+                                                offset="0"
+                                                stop-color="#eae5d5"
+                                            />
+                                            <stop
+                                                offset="1"
+                                                stop-color="#d8d0b8"
+                                            />
+                                        </linearGradient>
+                                        <pattern
+                                            id="phgrid-a3-1"
+                                            width="26"
+                                            height="26"
+                                            patternUnits="userSpaceOnUse"
+                                        >
+                                            <path
+                                                d="M26 0H0V26"
+                                                fill="none"
+                                                stroke="#c6bda1"
+                                                stroke-width="1"
+                                                opacity="0.55"
+                                            />
+                                        </pattern>
+                                    </defs>
+                                    <rect
+                                        width="1200"
+                                        height="675"
+                                        fill="url(#ph-a3-1)"
+                                    />
+                                    <rect
+                                        width="1200"
+                                        height="675"
+                                        fill="url(#phgrid-a3-1)"
+                                    />
+                                    <g
+                                        transform="translate(600 302)"
+                                        fill="none"
+                                        stroke="#8a8066"
+                                        stroke-width="5"
+                                        opacity="0.95"
+                                        stroke-linejoin="round"
+                                        stroke-linecap="round"
+                                    >
+                                        <rect
+                                            x="-56"
+                                            y="-32"
+                                            width="112"
+                                            height="72"
+                                            rx="9"
+                                        />
+                                        <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
+                                        <circle cx="0" cy="6" r="22" />
+                                    </g>
+                                    <text
+                                        x="600"
+                                        y="452"
+                                        text-anchor="middle"
+                                        font-family="'IBM Plex Mono', monospace"
+                                        font-size="24"
+                                        letter-spacing="7"
+                                        fill="#776d53"
+                                    >
+                                        IMAGE PLACEHOLDER
+                                    </text>
+                                    <text
+                                        x="600"
+                                        y="496"
+                                        text-anchor="middle"
+                                        font-family="'Source Sans 3', sans-serif"
+                                        font-size="18"
+                                        fill="#887d61"
+                                    >
+                                        1200 × 675 — replace with editorial photo
+                                    </text>
+                                </svg>
+                            </div>
+                            <figcaption>
+                                The composing table on a closed Wednesday. Wax
+                                block right, scissors left, the tally
+                                whiteboard behind. <strong>Photo: K. Zielińska / The Ledger</strong>
+                            </figcaption>
+                        </figure>
+                    </div>
+
+                    <!-- Gated content — premium body (mangle-blur strategy) -->
+                    <div class="gvm-cloak article-body col">
+                        <h2>Sixty-four pages by hand</h2>
+                        <p>
+                            The workflow has not changed since the 1990s:
+                            journalists write in a plain text editor, a layout
+                            team sets the pages in an old program that runs on a
+                            single, carefully labelled computer, and the pages
+                            are printed at full size on a laser printer, one
+                            per sheet. Every headline is then cut out, kerned
+                            by hand where the spacing is wrong, and pressed onto
+                            the page with wax — because wax, unlike glue, lets
+                            you lift a headline and move it six millimetres to
+                            the left without ruining everything.
                         </p>
                         <p>
-                            It is a good middle ground for publishers who want
-                            obfuscation without a full proxy/backend setup.
+                            A full issue is sixty-four pages. The design desk
+                            predicts, at the start of each week, how many
+                            cut-and-paste headlines will be needed; the record,
+                            set during a municipal elections special in 2021, is
+                            214. The subeditors keep a tally on a whiteboard, in
+                            pen, next to the kettle.
+                        </p>
+
+                        <h2>The machine in the corner</h2>
+                        <p>
+                            In the corner of the room stands the paper’s failed
+                            pagination system — a desktop computer bought in
+                            2010, connected to a monitor that still displays the
+                            setup screen of the layout suite the editors tried
+                            for six months. Everyone in the building calls it
+                            “the automation”. It has not been turned on since
+                            2011. Its power cable is wrapped around its base in
+                            a neat loop, which is the closest thing the newsroom
+                            has to a eulogy.
                         </p>
                         <p>
-                            Like the other pages, the configuration lives only
-                            in the tenant config (<code>wdft_showcase.json</code>).
+                            The decision to go back to paper-and-wax was not
+                            romantic; it was economic. The layout suite produced
+                            pages that required a designer with a diploma, a
+                            licence fee that grew every year and, crucially, it
+                            made the pages look like every other page in Poland.
+                            The hand-made pages took longer, but they cost
+                            nothing, needed no licence, and — the editors claim —
+                            the readers could tell the difference. Circulation
+                            in the district has declined, they admit, but slower
+                            than the regional average.
+                        </p>
+                        <blockquote class="pull-quote">
+                            A headline is a physical thing. You should be able
+                            to pick it up, turn it over, and put it back where
+                            it belongs.
+                            <cite>Halina Bednarek, chief subeditor</cite>
+                        </blockquote>
+
+                        <h2>What automation saves (and takes)</h2>
+                        <p>
+                            The standard argument for moving to modern tools is
+                            time. The hand-made page takes forty-five minutes;
+                            the automated page takes four. What the automation
+                            debate rarely puts on the table is where that saved
+                            time goes. Here, it mostly goes nowhere: the weekly
+                            has a fixed number of staff, a fixed number of
+                            advertisers, and a fixed number of pages to fill.
+                            The layout software did not make the paper better;
+                            it made the paper faster at being the same.
                         </p>
                         <p>
-                            On payment, the original content is restored and the
-                            shuffled text is replaced with the real paragraphs.
+                            The editors reached a working compromise that would
+                            horrify management consultants. Journalists type
+                            their copy on phones and laptops. The copy is set
+                            and paginated on the machine. Then it is printed,
+                            cut, and re-assembled by hand — not to change the
+                            text, but to change the rhythm: to give a headline
+                            breathing room, to pull a paragraph back from the
+                            edge, to make a page feel like it was made for a
+                            reader rather than for a template.
                         </p>
                         <p>
-                            Every article in this demo shares the same page
-                            skeleton — only the <code>data-gvm-reference</code>
-                            differs.
+                            Halina admits the system is absurd. She says it in
+                            the tone of someone describing a beloved,
+                            inefficient house. “It is absurd,” she agrees, “and
+                            it works.”
+                        </p>
+
+                        <h2>The economics of refusal</h2>
+                        <p>
+                            The paper’s finances argue, quietly, that the
+                            absurdity is subsidised by smallness. A weekly with
+                            a circulation of a few thousand can afford to
+                            underinvest in technology because its readers are
+                            not choosing between it and a website; they are
+                            choosing between it and nothing. The paper’s paywall
+                            — a small, stubborn implementation that charges
+                            readers for single archival articles — brings in
+                            enough to pay for the laser printer and the wax, and
+                            the editors treat precisely that as the point: the
+                            revenue exists to keep the craft, not to replace it.
+                        </p>
+                        <p>
+                            It would be easy to present the wax table as a
+                            monument to nostalgia, and the editors would be the
+                            first to object. The craft, they argue, is not the
+                            method; the craft is the judgement. Cutting a
+                            headline by hand forces you to look at the headline,
+                            to feel its weight, to notice that “The Council
+                            Votes” and “The Council Decides” are not
+                            interchangeable. Automation did not remove that
+                            judgement. It just got very good at hiding it.
+                        </p>
+                        <figure class="article-figure">
+                            <div
+                                class="img-placeholder"
+                                role="img"
+                                aria-label="Photograph: pages of an election special laid out on a table, with a pencil tally in the corner"
+                            >
+                                <svg
+                                    viewBox="0 0 1200 675"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    preserveAspectRatio="xMidYMid slice"
+                                >
+                                    <defs>
+                                        <linearGradient
+                                            id="ph-a3-2"
+                                            x1="0"
+                                            y1="0"
+                                            x2="1"
+                                            y2="1"
+                                        >
+                                            <stop
+                                                offset="0"
+                                                stop-color="#eae5d5"
+                                            />
+                                            <stop
+                                                offset="1"
+                                                stop-color="#d8d0b8"
+                                            />
+                                        </linearGradient>
+                                        <pattern
+                                            id="phgrid-a3-2"
+                                            width="26"
+                                            height="26"
+                                            patternUnits="userSpaceOnUse"
+                                        >
+                                            <path
+                                                d="M26 0H0V26"
+                                                fill="none"
+                                                stroke="#c6bda1"
+                                                stroke-width="1"
+                                                opacity="0.55"
+                                            />
+                                        </pattern>
+                                    </defs>
+                                    <rect
+                                        width="1200"
+                                        height="675"
+                                        fill="url(#ph-a3-2)"
+                                    />
+                                    <rect
+                                        width="1200"
+                                        height="675"
+                                        fill="url(#phgrid-a3-2)"
+                                    />
+                                    <g
+                                        transform="translate(600 302)"
+                                        fill="none"
+                                        stroke="#8a8066"
+                                        stroke-width="5"
+                                        opacity="0.95"
+                                        stroke-linejoin="round"
+                                        stroke-linecap="round"
+                                    >
+                                        <rect
+                                            x="-56"
+                                            y="-32"
+                                            width="112"
+                                            height="72"
+                                            rx="9"
+                                        />
+                                        <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
+                                        <circle cx="0" cy="6" r="22" />
+                                    </g>
+                                    <text
+                                        x="600"
+                                        y="452"
+                                        text-anchor="middle"
+                                        font-family="'IBM Plex Mono', monospace"
+                                        font-size="24"
+                                        letter-spacing="7"
+                                        fill="#776d53"
+                                    >
+                                        IMAGE PLACEHOLDER
+                                    </text>
+                                    <text
+                                        x="600"
+                                        y="496"
+                                        text-anchor="middle"
+                                        font-family="'Source Sans 3', sans-serif"
+                                        font-size="18"
+                                        fill="#887d61"
+                                    >
+                                        1200 × 675 — replace with editorial photo
+                                    </text>
+                                </svg>
+                            </div>
+                            <figcaption>
+                                Proofs from the 2021 elections special — 214
+                                cut-and-pasted headlines, counted in pencil at
+                                the top of the page. <strong>Photo: K. Zielińska / The Ledger</strong>
+                            </figcaption>
+                        </figure>
+
+                        <h2>Wax and deadlines</h2>
+                        <p>
+                            On Wednesday afternoon the issue is closed the way
+                            it has been closed for decades: the last page is
+                            printed, cut, and pressed; the subeditors sign their
+                            initials on the top sheet in pencil; and the pages
+                            are carried to the back-shop in a stack, where they
+                            will be scanned, paginated, and sent to the printer
+                            — a process that, in a final irony, is entirely
+                            digital.
+                        </p>
+                        <p>
+                            Halina cleans her scissors, locks the wax block in
+                            the drawer, and writes the next week’s headline
+                            tally at the top of a fresh whiteboard. Sixty-four
+                            pages. Somewhere behind her, the automation
+                            continues to gather dust in its corner, its cable
+                            wrapped neatly, waiting for a decision that is not
+                            coming.
+                        </p>
+                        <p>
+                            “Some things,” Halina says, “are made better by
+                            hand. A headline is one of them. A decision is
+                            another.” She says this without looking up, which is
+                            how she says everything.
                         </p>
                     </div>
+
+                    <footer class="article-foot col">
+                        <ul class="article-tags">
+                            <li>Culture</li>
+                            <li>Print</li>
+                            <li>Work</li>
+                            <li>Silesia</li>
+                        </ul>
+                        <div class="author-box">
+                            <div
+                                class="avatar"
+                                role="img"
+                                aria-label="Avatar of Kasia Zielińska"
+                            >
+                                <svg viewBox="0 0 56 56">
+                                    <rect
+                                        width="56"
+                                        height="56"
+                                        fill="#dcd4bd"
+                                    />
+                                    <text
+                                        x="28"
+                                        y="35"
+                                        text-anchor="middle"
+                                        font-family="'Newsreader', Georgia, serif"
+                                        font-size="22"
+                                        fill="#5c5340"
+                                    >
+                                        KZ
+                                    </text>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>Kasia Zielińska</h4>
+                                <span class="author-role"
+                                    >Senior writer, media &amp; work</span
+                                >
+                                <p>
+                                    Covers the people behind the machines.
+                                    Former subeditor — she leaves the wax at the
+                                    office, but keeps the scissors.
+                                </p>
+                            </div>
+                        </div>
+                        <p class="article-disclaimer">
+                            Demo disclosure: this page is part of a technical
+                            showcase. The paywall is driven by a static config
+                            (<code>wdft_showcase_dev</code>, env
+                            <code>dev</code>); the premium body is protected
+                            with the <kbd>mangle-blur</kbd> strategy at
+                            4.99 PLN. Nothing is actually charged in this
+                            environment, and the config can be edited in-page
+                            with <code>?gvm_admin=1</code>.
+                        </p>
+                    </footer>
                 </section>
             </article>
         </main>
+
+        <script type="module"
+            data-gvm-tenant="wdft_showcase_dev"
+            data-gvm-env="dev"
+            src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"></script>
     </body>
 </html>
