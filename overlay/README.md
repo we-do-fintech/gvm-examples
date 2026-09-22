@@ -21,8 +21,9 @@ the premium half sits inside `.gvm-cloak` and is gated by the overlay.
 > The demo pages reference `https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js`
 > directly — the overlay dynamically imports the sibling `gvm.js` from the same
 > CDN path. The seed config (`wdft_showcase.json`) lives in git history and is
-> bootstrapped into the `dev` backend via `gvm-sdk-admin` (see below); there is
-> no `config/` or `assets/` directory in this repo anymore.
+> bootstrapped into the `qa` backend as tenant `wdft_showcase_qa` via
+> `gvm-sdk-admin` (see below); there is no `config/` or `assets/` directory in
+> this repo anymore.
 ```
 
 ## Configuration model
@@ -32,8 +33,8 @@ Integration is a one-liner — the `data-gvm-*` attributes go on the `<script>` 
 ```html
 <script type="module"
         src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"
-        data-gvm-tenant="wdft_showcase_dev"
-        data-gvm-env="dev"></script>
+        data-gvm-tenant="wdft_showcase_qa"
+        data-gvm-env="qa"></script>
 ```
 
 Loading `gvm-overlay.js` is the overlay signal — no extra flag. The overlay injects the root
@@ -102,7 +103,7 @@ cd .. && npx live-server .
 Open `http://localhost:8080/overlay/`.
 
 > The overlay fetches the config cross-origin from
-> `https://cfg.dev.gvm.wdft.ovh/…`, so that host must allow CORS for
+> `https://cfg.qa.gvm.wdft.ovh/…`, so that host must allow CORS for
 > `localhost`.
 > To test a local build instead of the CDN, build the bundles in `gvm-sdk`
 > (`pnpm build:overlay`, `pnpm build:gvm`) / `gvm-sdk-admin` (`pnpm build:admin`)
@@ -110,13 +111,14 @@ Open `http://localhost:8080/overlay/`.
 
 ## Seed the config
 
-The seed (`wdft_showcase.json`) is already bootstrapped into the `dev` backend
-(`bootstrap:tenant dev wdft_showcase` in `gvm-sdk-admin`). If you need to
+The seed (`wdft_showcase.json`) is already bootstrapped into the `qa` backend
+as tenant `wdft_showcase_qa` (`bootstrap:tenant qa wdft_showcase_qa` in
+`gvm-sdk-admin`). If you need to
 re-push it, extract the historical seed and use the gvm-sdk-admin script:
 
 ```sh
 cd ../../gvm-sdk-admin
-pnpm bootstrap:tenant dev wdft_showcase <path-to-wdft_showcase.json>
+pnpm bootstrap:tenant qa wdft_showcase_qa <path-to-wdft_showcase.json>
 ```
 
 You can also edit the config live in `?gvm_admin=1` mode (see below).
@@ -134,14 +136,14 @@ You can also edit the config live in `?gvm_admin=1` mode (see below).
 - `/overlay/article-3.html` (“The last hand-made page”) → blurred + shuffled
   words (`mangle-blur`), 4.99 PLN. Try selecting the blurred text to see the
   mangle in action.
-- Click **unlock** → payment flow against the `dev` API.
+- Click **unlock** → payment flow against the `qa` API.
 
 ### Admin mode
 
 Append `?gvm_admin=1` to an article URL. The overlay lazy-loads the editor from
-`https://overlay.dev.gvm.wdft.ovh/gvm-admin.js`, passes it the resolved
+`https://overlay.qa.gvm.wdft.ovh/gvm-admin.js`, passes it the resolved
 config/API via `window.__GVM_ADMIN__`, and prompts for the admin JWT. Edits are
-saved via `PUT https://overlay.dev.gvm.wdft.ovh/config/wdft_showcase`.
+saved via `PUT https://overlay.qa.gvm.wdft.ovh/config/wdft_showcase_qa`.
 
 ## Switching environments later
 
@@ -151,7 +153,7 @@ else. The overlay re-derives the config and admin URLs.
 ## Notes
 
 - `gvm.js` is loaded dynamically by the overlay (sibling of `gvm-overlay.js` on
-the CDN); the editor is loaded from the `dev` overlay host, not from `assets/`.
+the CDN); the editor is loaded from the `qa` overlay host, not from `assets/`.
 - All three demo articles wrap their gated body in `.gvm-cloak` (rule declared
 in `<head>`) — see **No-flash (gvm-cloak)** above for the client pattern and
 the exact sequence (text invisible → overlay applied → text visible).
