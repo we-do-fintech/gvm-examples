@@ -13,7 +13,7 @@ live-server .  # Then open your browser to view the examples
 ```
 
 See this repo live at:
-[gvm.showcase.getviamsg.wdft.ovh](https://gvm.showcase.getviamsg.wdft.ovh)
+[showcase.getviamsg.com](https://showcase.getviamsg.com)
 
 ---
 
