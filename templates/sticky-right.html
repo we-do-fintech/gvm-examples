@@ -43,11 +43,20 @@
                 width: 500px;
             }
         </style>
+        <!-- agg analytics (self-hosted, agg.tfdw.ovh) -->
+        <script
+            async
+            src="https://agg.tfdw.ovh/agg.js"
+            data-site="pk_tkajj6iaq6xz4vyuhop4"
+        ></script>
+        <!-- forward gvm.js funnel events to agg (assets/agg-gvm-bridge.js) -->
+        <script defer src="/assets/agg-gvm-bridge.js"></script>
     </head>
 
     <!-- data-gvm-env="demo" simulates the whole payment flow with no real API -->
     <body
         data-gvm
+        data-gvm-analytics="custom"
         data-gvm-tenant="wdft_showcase_qa"
         data-gvm-env="demo"
         data-gvm-currency="PLN"

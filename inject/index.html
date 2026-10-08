@@ -38,6 +38,14 @@
             // Enable debug logging in the console
             window.wdftDebug = true;
         </script>
+        <!-- agg analytics (self-hosted, agg.tfdw.ovh) -->
+        <script
+            async
+            src="https://agg.tfdw.ovh/agg.js"
+            data-site="pk_tkajj6iaq6xz4vyuhop4"
+        ></script>
+        <!-- forward gvm.js funnel events to agg (assets/agg-gvm-bridge.js) -->
+        <script defer src="/assets/agg-gvm-bridge.js"></script>
     </head>
 
     <!-- Declare gvm basic values on the body tag such as currency, tenant, and condition; env is optional, demo can be used to simulate -->
@@ -47,6 +55,7 @@
     <!-- You can set env as "demo" to mock behaviour -->
     <body
         data-gvm
+        data-gvm-analytics="custom"
         data-gvm-tenant="wdft_showcase_qa"
         data-gvm-env="qa"
         data-gvm-currency="PLN"

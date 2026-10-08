@@ -17,6 +17,14 @@
         <script>
             window.wdftDebug = true;
         </script>
+        <!-- agg analytics (self-hosted, agg.tfdw.ovh) -->
+        <script
+            async
+            src="https://agg.tfdw.ovh/agg.js"
+            data-site="pk_tkajj6iaq6xz4vyuhop4"
+        ></script>
+        <!-- forward gvm.js funnel events to agg (assets/agg-gvm-bridge.js) -->
+        <script defer src="/assets/agg-gvm-bridge.js"></script>
     </head>
     <body>
         <header class="site-header">
@@ -493,6 +501,7 @@
         <script type="module"
             data-gvm-tenant="wdft_showcase_qa"
             data-gvm-env="qa"
+            data-gvm-analytics="custom"
             src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"></script>
     </body>
 </html>
