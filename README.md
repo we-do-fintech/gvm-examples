@@ -17,6 +17,17 @@ See this repo live at:
 
 ---
 
+## PWA unlock (experimental)
+
+`./blur-pwa` is a copy of the blur example that additionally offers an
+**“Unlock in the app”** button (`data-gvm-bind-unlock`) next to the SMS flow.
+The button opens the portal claim link (`unlock_url`) returned by backends with
+`GVM_PWA_ENABLED`; it binds **only** when that URL is present, so the legacy SMS
+path (`data-gvm-bind-qr` / `data-gvm-bind-send-sms`) is unchanged. Requires
+`@wdft/gvm-sdk >= 0.2.1` (button is inert on older builds / without the flag).
+
+---
+
 ## Hide Strategy
 
 The simplest, all-in-one file solution check: `./hide`. Includes only

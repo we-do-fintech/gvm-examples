@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>gvm.js Blur + PWA Strategy Example</title>
+        <link rel="stylesheet" href="/assets/pico.css" />
+        <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+
+        <!-- Here I inject scripts gvm.js -->
+        <script
+            src="https://esm.sh/@wdft/gvm-sdk@latest/gvm.js"
+            type="module"
+        ></script>
+
+        <!-- Customizations -->
+        <script>
+            // Enable debug logging in the console
+            window.wdftDebug = true;
+            // When the page loads, remove the wait-for-script class from all elements
+            // This prevents content from flashing before GetViaMsg scripts are fully loaded
+            window.addEventListener("DOMContentLoaded", () => {
+                const elements = document.querySelectorAll(".wait-for-script");
+                for (const el of elements) {
+                    el.classList.remove("wait-for-script");
+                }
+            });
+        </script>
+        <!-- Hide article initially, wait for wdft scripts -->
+        <style>
+            .wait-for-script {
+                display: none;
+            }
+            /* Some additional classess for dialog styling */
+            .flex {
+                display: flex;
+                flex-direction: column;
+            }
+            /* Experimental PWA action, shown next to "Send SMS". Binds only
+               when the backend returns `unlock_url` (GVM_PWA_ENABLED). */
+            .payment-actions [data-gvm-bind-unlock] {
+                min-width: 176px;
+            }
+            @media (max-width: 720px) {
+                .payment-actions [data-gvm-bind-unlock] {
+                    width: 100%;
+                    min-width: 0;
+                }
+            }
+            .row {
+                flex-direction: row;
+            }
+            .items-center {
+                align-items: center;
+                justify-content: center;
+            }
+            .mini {
+                width: 500px;
+            }
+        </style>
+        <!-- agg analytics (self-hosted, agg.tfdw.ovh) -->
+        <script
+            async
+            src="https://agg.tfdw.ovh/agg.js"
+            data-site="pk_tkajj6iaq6xz4vyuhop4"
+        ></script>
+        <!-- forward gvm.js funnel events to agg (assets/agg-gvm-bridge.js) -->
+        <script defer src="/assets/agg-gvm-bridge.js"></script>
+    </head>
+
+    <!-- Declare gvm basic values on the body tag such as currency, tenant, and condition; env is optional, demo can be used to simulate -->
+    <!-- Try to add condition! then reload on small screen will work, on big not, check console logs
+  data-gvm-cond="device matchMedia 'max-width:768px,landscape:portrait'"
+-->
+    <!-- You can set env as "demo" to mock behaviour -->
+    <body
+        data-gvm
+        data-gvm-analytics="custom"
+        data-gvm-tenant="wdft_showcase_qa"
+        data-gvm-env="qa"
+        data-gvm-currency="PLN"
+    >
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="/">
+                    <img
+                        src="/assets/getviamsg-logo-dark-t-logo-wdft.png"
+                        width="100"
+                        height="20"
+                        alt="GetViaMsg"
+                    />
+                </a>
+                <div class="small-nav">Strategy: Blur + PWA</div>
+            </div>
+        </header>
+
+        <!-- Template declaration for the payment modal - this will be omited during website render -->
+        <!-- Template declaration for the payment modal - this will be omited during website render -->
+        <template
+            data-gvm-template="payment"
+            data-gvm-template-inject-to="body"
+        >
+            <dialog open>
+                <article class="mini payment-modal">
+                    <header class="payment-header">
+                        <hgroup>
+                            <h3>Unlock in seconds</h3>
+                            <p>Send a text, or open it in the GetViaMsg app.</p>
+                        </hgroup>
+                    </header>
+
+                    <section class="payment-body">
+                        <p class="payment-price-line">
+                            <span class="payment-price-label"
+                                >One-time access</span
+                            >
+                            <strong>
+                                <span data-gvm-bind-price></span>
+                                <span data-gvm-bind-currency></span>
+                            </strong>
+                        </p>
+
+                        <div class="payment-qr-wrap">
+                            <span data-gvm-bind-qr class="payment-qr">
+                                <span aria-busy="true"></span>
+                            </span>
+                        </div>
+
+                        <p class="payment-status-row">
+                            <span
+                                data-gvm-bind-status
+                                data-gvm-bind-status-initializing="Preparing QR code"
+                                data-gvm-bind-status-waiting="Waiting for SMS"
+                                data-gvm-bind-status-duplicated="Already unlocked on this number"
+                                data-gvm-bind-status-resolved="Payment confirmed. Unlocking now..."
+                                data-gvm-bind-status-rejected="Payment could not be verified. Please try again."
+                            >
+                            </span>
+                            <span class="payment-time">
+                                (<span data-gvm-bind-time-remaining>00:00</span
+                                >)
+                            </span>
+                        </p>
+
+                        <p class="payment-promise">
+                            Content unlocks instantly — via SMS or the GetViaMsg
+                            app. Charged on your mobile bill (50 PLN limit or
+                            14 days).
+                        </p>
+
+                        <div class="payment-actions">
+                            <button data-gvm-bind-send-sms>
+                                Send SMS to unlock
+                            </button>
+                            <button data-gvm-bind-unlock class="secondary">
+                                Unlock in the app
+                            </button>
+                            <button data-gvm-bind-cancel class="contrast">
+                                Cancel
+                            </button>
+                        </div>
+
+                    </section>
+
+                    <footer class="payment-footer">
+                        <small>
+                            GetViaMsg by
+                            <a href="https://getviamsg.com/">WDFT</a>
+                        </small>
+                    </footer>
+                </article>
+            </dialog>
+        </template>
+
+        <!-- Template will be injected into the hidden article section - this will be omited during render website-->
+        <template
+            data-gvm-template="paywall"
+            data-gvm-template-inject-to="#article"
+        >
+            <style>
+                .wait-for-script {
+                    display: block;
+                }
+                /* .section-card clips with overflow:hidden, which would
+                   neutralize position:sticky against the viewport. */
+                .section-card {
+                    overflow: visible !important;
+                }
+                .paywall {
+                    /* Sticky unlock card: its flow position is at the end of
+                       the blurred premium container, so it sticks to the
+                       bottom of the viewport only while that (blurred) region
+                       is in view — floating over the blurred content. It stays
+                       hidden while the free preview is on screen and settles
+                       into place once the premium part scrolls past. */
+                    position: sticky;
+                    bottom: 1.25rem;
+                    z-index: 40;
+                    width: min(100% - 2rem, 560px) !important;
+                    margin: 1.25rem auto 0;
+                    border: 1px solid rgba(141, 130, 104, 0.55) !important;
+                    border-radius: 0 !important;
+                    padding: 24px;
+                    text-align: center;
+                    align-items: center;
+                    gap: 0.8rem;
+                    background: #f5f1e6 !important;
+                    box-shadow: 0 18px 44px rgba(23, 29, 27, 0.36) !important;
+                }
+                .paywall p {
+                    margin: 0;
+                    font-size: clamp(1.02rem, 1.55vw, 1.45rem);
+                    line-height: 1.32;
+                    color: #f0f1f3;
+                }
+                .paywall .paywall-meta {
+                    font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+                    color: #d7d9de;
+                }
+                .paywall .paywall-note {
+                    font-size: clamp(0.82rem, 1.05vw, 0.95rem);
+                    color: #ffdf89;
+                    opacity: 0.95;
+                }
+                .paywall [data-gvm-bind-reading-time],
+                .paywall [data-gvm-bind-reading-words] {
+                    color: #ffdf89;
+                    font-weight: 700;
+                }
+                .paywall button {
+                    margin-top: 2px;
+                    font-weight: 700;
+                    width: min(100%, 560px);
+                    font-size: clamp(1rem, 1.3vw, 1.25rem);
+                    padding: 0.68rem 1rem;
+                    border-radius: 10px;
+                }
+            </style>
+            <div class="paywall flex">
+                <p>Unlock this article in about 10 seconds with GetViaMsg.</p>
+                <p class="paywall-meta">
+                    Session size:
+                    <span data-gvm-bind-reading-time></span> minutes or
+                    <span data-gvm-bind-reading-words></span> words.
+                </p>
+                <p class="paywall-note">
+                    No redirects or payment gateways. Access now — the charge
+                    settles on your mobile bill (50 PLN limit or 14 days).
+                </p>
+                <button data-gvm-bind-pay>
+                    Unlock now for <span data-gvm-bind-price></span>
+                    <span data-gvm-bind-currency></span>
+                </button>
+            </div>
+        </template>
+
+        <!-- Paid article content; a free preview is visible -->
+        <main class="container showcase-shell">
+            <article>
+                <section class="section-card">
+                    <header>
+                        <p class="eyebrow">Blur + PWA Strategy</p>
+                        <hgroup>
+                            <h1>
+                                Blur the premium part — offer SMS or the app
+                            </h1>
+                            <h2>
+                                The same client-side blur gating, with an
+                                additional “Unlock in the app” action next to
+                                the SMS flow.
+                            </h2>
+                        </hgroup>
+                    </header>
+                    <p class="lead">
+                        The fastest way to validate paid content demand before
+                        moving access control to a backend or edge layer —
+                        without removing anything from the page.
+                    </p>
+                    <div class="dev-kit">
+                        <p class="dev-kit-title">Developer Kit</p>
+                        <p class="dev-kit-links">
+                            <a
+                                href="https://github.com/we-do-fintech/gvm-examples/blob/main/blur-pwa/index.html"
+                                >Source on GitHub</a
+                            >
+                            |
+                            <a href="https://docs.wdft.ovh/gvm-js"
+                                >gvm.js documentation</a
+                            >
+                        </p>
+                        <details class="dev-snippet">
+                            <summary>Minimal blur snippet</summary>
+                            <pre><code>&lt;!-- 1) Inject gvm.js SDK --&gt;
+&lt;script src="https://esm.sh/@wdft/gvm-sdk@latest/gvm.js" type="module"&gt;&lt;/script&gt;
+
+&lt;!-- 2) Initialize gvm on body --&gt;
+&lt;body data-gvm data-gvm-tenant="your_tenant" data-gvm-env="qa" data-gvm-currency="PLN"&gt;
+  &lt;!-- 3) Declare payment template (modal) --&gt;
+  &lt;template data-gvm-template="payment" data-gvm-template-inject-to="body"&gt;
+    &lt;dialog open&gt;
+      &lt;button data-gvm-bind-send-sms&gt;Open SMS&lt;/button&gt;
+      &lt;!-- PWA: opens unlock_url (only when the backend exposes it) --&gt;
+      &lt;button data-gvm-bind-unlock&gt;Unlock in the app&lt;/button&gt;
+    &lt;/dialog&gt;
+  &lt;/template&gt;
+
+  &lt;!-- 3b) Declare blur paywall template --&gt;
+  &lt;template data-gvm-template="paywall" data-gvm-template-inject-to="#article"&gt;
+    &lt;button data-gvm-bind-pay&gt;Unlock for &lt;span data-gvm-bind-price&gt;&lt;/span&gt; &lt;span data-gvm-bind-currency&gt;&lt;/span&gt;&lt;/button&gt;
+  &lt;/template&gt;
+
+  &lt;!-- 4) Declare payment item/content --&gt;
+  &lt;div id="article" data-gvm-reference="article-42" data-gvm-price="0.75"
+       data-gvm-template-name="payment" data-gvm-hide-template-name="paywall"
+       data-gvm-hide-strategy="blur" data-gvm-hide-sections="6"&gt;...&lt;/div&gt;
+&lt;/body&gt;</code></pre>
+                        </details>
+                    </div>
+                    <div class="content-gap note-box">
+                        <strong>Sticky card:</strong> the paywall panel is
+                        injected at the end of the premium container below, so
+                        it sticks to the bottom of the viewport <em>only</em>
+                        while the blurred region is in view and settles into
+                        place after it.
+                    </div>
+
+                    <!-- Free preview — always visible -->
+                    <div class="article-preview">
+<p>
+                            The ledger lived in a drawer under the cash box, and
+                            for forty years that was the entire system. When the
+                            printer's bill arrived, the editor drew a line and
+                            counted out the year; when a reader wrote asking
+                            about an old story, one of the three journalists
+                            walked down to the cellar and found the bound volume
+                            by hand.
+                        </p>
+                        <p>
+                            Then the cellar became a server, and the server got
+                            an invoice of its own. By 2024 the digital archive —
+                            38,000 articles, every issue since 1976 — cost more
+                            to host each month than the paper earned from its
+                            entire online presence. The numbers were small
+                            enough to hurt: a few hundred złoty in ad revenue
+                            against a hosting bill three times that size.
+                        </p>
+                        <p>
+                            The obvious answers were the ones the paper had
+                            already tried and rejected. A full annual
+                            subscription had stalled at a few hundred members.
+                            A newsstand-only model ignored the readers who no
+                            longer lived in town — the diaspora of people who
+                            had grown up with the Kurier and wanted the town's
+                            news, once a week, without buying a bundle they
+                            would never finish.
+                        </p>
+                        <p>
+                            In December, over coffee, the editor and the two
+                            remaining reporters made a list of what the archive
+                            held that nobody else did: the 1987 river flood, the
+                            school strike, the mill closure, the result of every
+                            local football season since 1979. “People don't want
+                            all of it,” the editor said. “They want their piece
+                            of it.”
+                        </p>
+                        <p>
+                            So they ran the smallest possible experiment. The
+                            most-requested stories went behind a single-article
+                            paywall: price, one złoty ninety-nine; term,
+                            forever — once bought, always readable. The checkout
+                            was one button and a phone number.
+                        </p>
+                        <p>
+                            The second week, the local radio called. The third
+                            week, a reader in London bought the 1987 flood story
+                            twice — once for herself, once, by mistake, for her
+                            brother. The numbers were not yet a business. But
+                            for the first time in years, someone was paying for
+                            the past.
+                        </p>
+                        </div>
+
+                    <!-- Premium content — blurred until unlock. The paywall
+                         card is injected at the end of THIS container, so its
+                         sticky range is exactly the blurred region below. -->
+                    <div
+                        id="article"
+                        class="wait-for-script"
+                        data-gvm-reference="showcase-blur-strategy"
+                        data-gvm-price="0.75"
+                        data-gvm-template-name="payment"
+                        data-gvm-metadata-title="Showcase blur strategy"
+                        data-gvm-category="article"
+                        data-gvm-hide-template-name="paywall"
+                        data-gvm-hide-strategy="blur"
+                        data-gvm-hide-sections="2"
+                    >
+<p>
+                            The purchase records turned out to be the real
+                            discovery. Readers were not buying the front pages —
+                            the things the paper still published every week.
+                            They were buying the gaps: the issues missing from
+                            the bound volumes, the stories that had later been
+                            corrected, the five weeks during the mill strike
+                            when the paper had almost gone under and stopped
+                            printing altogether.
+                        </p>
+                        <p>
+                            That was the archive doing work the paper had never
+                            understood it was doing. It was not a library of old
+                            news; it was the town's only complete record of
+                            itself. A woman in Hamburg found her father's
+                            obituary and paid for it before she had finished
+                            reading the preview. A schoolteacher bought the 1984
+                            spelling contest three times, for three former
+                            pupils.
+                        </p>
+                        <p>
+                            The economics were unglamorous and, for once,
+                            stable. Within six months the archive averaged
+                            eleven purchases a day, spread across 340 different
+                            articles. A third of buyers came back within the
+                            month for a second story. The hosting invoice
+                            stopped being a crisis and became a line item the
+                            paper could plan around.
+                        </p>
+                        <p>
+                            The harder question was workflow. Nobody wanted to
+                            build a subscriptions desk for a staff of three, so
+                            they did nothing of the kind. The archive ran
+                            itself: a story was marked for single-article access
+                            the day it was published, and the same price point
+                            applied to everything, old or new. The editor kept a
+                            single rule taped above the desk — “one honest
+                            price, no renewals.”
+                        </p>
+                        <p>
+                            They also started marking new stories that they
+                            suspected would age well — the history pieces, the
+                            investigations, the long profiles — because the data
+                            showed readers were far more willing to pay for a
+                            story with a second life than for yesterday's news.
+                            The present was free. The past had a price.
+                        </p>
+                        <p>
+                            A year later the archive was paying for itself, and
+                            a little more. The editor framed the first quarterly
+                            report and hung it beside the bound volumes in the
+                            cellar. Under the numbers, in a hand that had set
+                            headlines for four decades, she had written a single
+                            line: “The town has started buying its own memory
+                            back.”
+                        </p>
+                        
+                    </div>
+                </section>
+            </article>
+        </main>
+    </body>
+</html>
