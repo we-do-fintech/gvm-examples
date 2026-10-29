@@ -17,6 +17,28 @@ See this repo live at:
 
 ---
 
+## Consent checkbox + terms link (mandatory)
+
+Since the terms of 23.10.2026 (regulamin):
+
+- **Payment dialog** — every `<template>` with `data-gvm-bind-qr`,
+  `data-gvm-bind-send-sms` or `data-gvm-bind-unlock` **must** contain, above
+  the call-to-action, the price/terms info line with a link to
+  [getviamsg.com/terms](https://getviamsg.com/terms) and an **unchecked**
+  `<input type="checkbox" data-gvm-accept-terms="…"
+  data-gvm-accept-terms-version="pl-2026-10-23">` whose `<label>` contains
+  only the § 11 ust. 2 consent text. Without it the SDK does not create a
+  commitment (no QR, no SMS link, no unlock). The QR is gated with
+  `.payment-qr-gate` (blurred until consent).
+- **Paywall** (the `data-gvm-bind-pay` button that only opens the dialog) —
+  no checkbox; it shows the same price info line with the terms link.
+
+The Polish wording is the legal text bound to the consent version, so copy
+it verbatim from any example here (e.g. `./blur/index.html`). Styles live in
+`assets/showcase.css` (`.consent`, `.consent-info`, `.consent-terms`).
+
+---
+
 ## PWA unlock (experimental)
 
 `./blur-pwa` is a copy of the blur example that additionally offers an

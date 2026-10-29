@@ -597,6 +597,135 @@ dialog article.mini footer a {
     color: #1f4f44 !important;
 }
 
+/*
+ * Consent gate (regulamin 23.10.2026). Payment dialogs (QR, send-sms,
+ * unlock) carry the info line + an unchecked consent box; the SDK keeps the
+ * gated elements in `.gvm-terms-blocked` until it is ticked and marks the box
+ * `.gvm-terms-invalid` on a blocked click. Paywalls show only the info line
+ * with the terms link (no checkbox).
+ * Selectors are scoped under `.consent` so they win over the templates'
+ * own `.paywall p` / `.gvm-banner p` rules.
+ */
+.consent {
+    width: 100%;
+    max-width: 34rem;
+    margin: 0.2rem auto 0.7rem;
+    text-align: left;
+    font-family: "Source Sans 3", system-ui, sans-serif;
+}
+
+.consent .consent-info {
+    margin: 0 0 0.5rem;
+    color: var(--ink-muted) !important;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    opacity: 1;
+}
+
+.consent .consent-info:last-child {
+    margin-bottom: 0;
+}
+
+.consent .consent-info strong {
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+.consent a {
+    color: var(--ink);
+    text-decoration: underline;
+}
+
+.consent .consent-terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    width: auto;
+    margin: 0;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid var(--line);
+    background: var(--paper-soft);
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 400;
+    line-height: 1.45;
+    text-align: left;
+    cursor: pointer;
+}
+
+.consent .consent-terms input[type="checkbox"] {
+    flex: 0 0 auto;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin: 0.1rem 0 0;
+    border-radius: 0;
+    border-color: var(--line-strong);
+    accent-color: var(--cta);
+}
+
+.consent .consent-terms input[type="checkbox"]:checked {
+    border-color: var(--cta);
+    background-color: var(--cta);
+}
+
+.consent .consent-terms input.gvm-terms-invalid {
+    outline: 2px solid #b3261e;
+    outline-offset: 2px;
+}
+
+button[data-gvm-bind-send-sms].gvm-terms-blocked,
+button[data-gvm-bind-unlock].gvm-terms-blocked {
+    border-color: var(--line-strong);
+    background: var(--line-strong);
+    color: var(--cta-ink);
+    cursor: not-allowed;
+}
+
+button[data-gvm-bind-send-sms].gvm-terms-blocked:hover,
+button[data-gvm-bind-unlock].gvm-terms-blocked:hover {
+    background: var(--line-strong);
+}
+
+/* QR gate: blurred with a cover until consent is given */
+.payment-qr-gate {
+    position: relative;
+    margin: 0.35rem auto 0.56rem;
+}
+
+dialog article.mini .payment-qr-gate [data-gvm-bind-qr] {
+    margin: 0;
+    transition: filter 0.2s ease;
+}
+
+dialog article.mini .payment-qr-gate.gvm-terms-blocked [data-gvm-bind-qr] {
+    filter: blur(8px);
+}
+
+.payment-qr-cover {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(250, 248, 241, 0.86);
+    color: var(--ink);
+    font-family: "Source Sans 3", system-ui, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.payment-qr-gate.gvm-terms-blocked .payment-qr-cover {
+    display: flex;
+}
+
+.payment-body .payment-promise {
+    max-width: 34rem;
+}
+
 @media (max-width: 860px) {
     .site-header .container {
         padding-top: 0.76rem;
@@ -643,6 +772,10 @@ dialog article.mini footer a {
     .section-card,
     .quick-links a {
         animation: none;
+        transition: none;
+    }
+
+    dialog article.mini .payment-qr-gate [data-gvm-bind-qr] {
         transition: none;
     }
 }
