@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="/assets/pico.css" />
         <link rel="icon" href="/assets/favicon.ico" sizes="any" />
         <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-        <link rel="stylesheet" href="/assets/showcase.css?v=20260226-2" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20261029-1" />
 
         <!-- Here I inject scripts gvm.js -->
         <script
@@ -112,9 +112,17 @@
                         </p>
 
                         <div class="payment-qr-wrap">
-                            <span data-gvm-bind-qr class="payment-qr">
-                                <span aria-busy="true"></span>
-                            </span>
+                            <div
+                                class="payment-qr-gate gvm-terms-blocked"
+                                data-gvm-terms-container
+                            >
+                                <span data-gvm-bind-qr class="payment-qr">
+                                    <span aria-busy="true"></span>
+                                </span>
+                                <div class="payment-qr-cover">
+                                    Tick the consent box below to show the QR code.
+                                </div>
+                            </div>
                         </div>
 
                         <p class="payment-status-row">
@@ -123,8 +131,8 @@
                                 data-gvm-bind-status-initializing="Preparing QR code"
                                 data-gvm-bind-status-waiting="Waiting for SMS"
                                 data-gvm-bind-status-duplicated="Already unlocked on this number"
-                                data-gvm-bind-status-resolved="Payment confirmed. Unlocking now..."
-                                data-gvm-bind-status-rejected="Payment could not be verified. Please try again."
+                                data-gvm-bind-status-resolved="Confirmed. Unlocking now..."
+                                data-gvm-bind-status-rejected="Confirmation could not be verified. Please try again."
                             >
                             </span>
                             <span class="payment-time">
@@ -133,9 +141,28 @@
                             </span>
                         </p>
 
-                        <p class="payment-promise">
-                            Content unlocks instantly. Charged on your mobile bill (50 PLN limit or 14 days).
+                        <p class="payment-promise" lang="pl">
+                            Link do płatności otrzymasz SMS-em lub e-mailem po zakończeniu zbierania — po 14 dniach, po przekroczeniu 50 zł albo wcześniej, gdy zakończysz je w Portalu klienta.
                         </p>
+
+                        <div class="consent" lang="pl">
+                            <p class="consent-info">
+                                Dostęp do tej Treści jest odpłatny:
+                                <strong><span data-gvm-bind-price></span>&nbsp;<span data-gvm-bind-currency></span></strong>
+                                zostanie doliczone do zbiorczego rozliczenia Twojej Sesji.
+                                Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w
+                                <a href="https://getviamsg.com/terms" target="_blank" rel="noopener">Regulaminie</a>.
+                            </p>
+                            <label class="consent-terms">
+                                <input
+                                    type="checkbox"
+                                    data-gvm-accept-terms=".payment-qr-gate, [data-gvm-bind-send-sms]"
+                                    data-gvm-accept-terms-version="pl-2026-10-23"
+                                    data-gvm-accept-terms-label="Tick the consent box to continue"
+                                />
+                                <span>Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.</span>
+                            </label>
+                        </div>
 
                         <div class="payment-actions">
                             <button data-gvm-bind-send-sms>
@@ -228,10 +255,18 @@
                     <span data-gvm-bind-reading-time></span> minutes or
                     <span data-gvm-bind-reading-words></span> words.
                 </p>
-                <p class="paywall-note">
-                    No redirects or payment gateways. Access now — the charge
-                    settles on your mobile bill (50 PLN limit or 14 days).
+                <p class="paywall-note" lang="pl">
+                    Link do płatności otrzymasz SMS-em lub e-mailem po zakończeniu zbierania — po 14 dniach, po przekroczeniu 50 zł albo wcześniej, gdy zakończysz je w Portalu klienta.
                 </p>
+                <div class="consent" lang="pl">
+                    <p class="consent-info">
+                        Dostęp do tej Treści jest odpłatny:
+                        <strong><span data-gvm-bind-price></span>&nbsp;<span data-gvm-bind-currency></span></strong>
+                        zostanie doliczone do zbiorczego rozliczenia Twojej Sesji.
+                        Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w
+                        <a href="https://getviamsg.com/terms" target="_blank" rel="noopener">Regulaminie</a>.
+                    </p>
+                </div>
                 <button data-gvm-bind-pay>
                     Unlock now for <span data-gvm-bind-price></span>
                     <span data-gvm-bind-currency></span>
@@ -282,11 +317,26 @@
 &lt;body data-gvm data-gvm-tenant="your_tenant" data-gvm-env="qa" data-gvm-currency="PLN"&gt;
   &lt;!-- 3) Declare payment template (modal) --&gt;
   &lt;template data-gvm-template="payment" data-gvm-template-inject-to="body"&gt;
-    &lt;dialog open&gt;&lt;button data-gvm-bind-send-sms&gt;Open SMS&lt;/button&gt;&lt;/dialog&gt;
+    &lt;dialog open&gt;
+      &lt;!-- Mandatory (regulamin 23.10.2026): price/terms info + UNCHECKED consent checkbox --&gt;
+      &lt;p&gt;Dostęp do tej Treści jest odpłatny: &lt;strong&gt;&lt;span data-gvm-bind-price&gt;&lt;/span&gt;&amp;nbsp;&lt;span data-gvm-bind-currency&gt;&lt;/span&gt;&lt;/strong&gt;
+        zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Sublicencja do Treści wygasa z chwilą Płatności.
+        Szczegóły w &lt;a href="https://getviamsg.com/terms" target="_blank" rel="noopener"&gt;Regulaminie&lt;/a&gt;.&lt;/p&gt;
+      &lt;label&gt;
+        &lt;input type="checkbox" data-gvm-accept-terms="[data-gvm-bind-send-sms]"
+               data-gvm-accept-terms-version="pl-2026-10-23" /&gt;
+        &lt;span&gt;Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.&lt;/span&gt;
+      &lt;/label&gt;
+      &lt;button data-gvm-bind-send-sms&gt;Open SMS&lt;/button&gt;
+    &lt;/dialog&gt;
   &lt;/template&gt;
 
   &lt;!-- 3b) Declare blur paywall template --&gt;
   &lt;template data-gvm-template="paywall" data-gvm-template-inject-to="#article"&gt;
+    &lt;!-- Mandatory (regulamin 23.10.2026): price info + terms link (consent checkbox lives in the payment dialog) --&gt;
+    &lt;p&gt;Dostęp do tej Treści jest odpłatny: &lt;strong&gt;&lt;span data-gvm-bind-price&gt;&lt;/span&gt;&amp;nbsp;&lt;span data-gvm-bind-currency&gt;&lt;/span&gt;&lt;/strong&gt;
+      zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Sublicencja do Treści wygasa z chwilą Płatności.
+      Szczegóły w &lt;a href="https://getviamsg.com/terms" target="_blank" rel="noopener"&gt;Regulaminie&lt;/a&gt;.&lt;/p&gt;
     &lt;button data-gvm-bind-pay&gt;Unlock for &lt;span data-gvm-bind-price&gt;&lt;/span&gt; &lt;span data-gvm-bind-currency&gt;&lt;/span&gt;&lt;/button&gt;
   &lt;/template&gt;
 
