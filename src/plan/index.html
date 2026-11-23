@@ -55,26 +55,23 @@
                 <article class="mini payment-modal plan-payment">
                     <header class="payment-header">
                         <p class="plan-dialog__eyebrow">Activate your plan</p>
-                        <h3
-                            class="plan-dialog__name"
-                            data-gvm-bind-metadata-title
-                        >
-                            Your plan
+                        <h3 class="plan-dialog__name">
+                            <span data-gvm-bind-metadata-title>Your plan</span>
+                            <span class="plan-dialog__price">
+                                <span data-gvm-bind-price></span>
+                                <span data-gvm-bind-currency></span>
+                                <span class="plan-dialog__period">/ month</span>
+                            </span>
                         </h3>
-                        <p class="plan-dialog__price">
-                            <span data-gvm-bind-price></span>
-                            <span data-gvm-bind-currency></span>
-                            <span class="plan-dialog__period">/ month</span>
-                        </p>
                         <p class="plan-dialog__sub">
-                            Confirm with one text message. You pay for the period
-                            later, on a single bill.
+                            Confirm with one SMS. You pay for the period later,
+                            on a single bill.
                         </p>
                     </header>
 
                     <section class="payment-body">
-
-                        <div class="payment-qr-wrap">
+                        <div class="plan-pay-col plan-pay-col--qr">
+                            <div class="payment-qr-wrap">
                             <div
                                 class="payment-qr-gate gvm-terms-blocked"
                                 data-gvm-terms-container
@@ -124,15 +121,9 @@
                                 · <span data-gvm-bind-time-remaining>00:00</span>
                             </span>
                         </p>
+                        </div>
 
-                        <!--<p class="payment-promise" lang="pl">
-                            Link do płatności otrzymasz SMS-em lub e-mailem po
-                            zakończeniu zbierania — po 14 dniach, po przekroczeniu
-                            50 zł albo wcześniej, gdy zakończysz je w Portalu
-                            klienta.
-                        </p>-->
-
-
+                        <div class="plan-pay-col plan-pay-col--form">
                         <div class="consent" lang="pl">
                             <p class="consent-info">
                                 Dostęp do wybranego Planu jest odpłatny:
@@ -141,9 +132,8 @@
                                         data-gvm-bind-currency
                                     ></span></strong
                                 >
-                                zostanie doliczone do zbiorczego rozliczenia
-                                Twojej Sesji. Plan obowiązuje przez opłacony
-                                okres. Szczegóły w
+                                — kwota trafi na zbiorcze rozliczenie Twojej
+                                Sesji. Szczegóły w
                                 <a
                                     href="https://getviamsg.com/terms"
                                     target="_blank"
@@ -175,6 +165,7 @@
                                 Open in the app
                             </button>
                             <button data-gvm-bind-cancel>Cancel</button>
+                        </div>
                         </div>
                     </section>
 
