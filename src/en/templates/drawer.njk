@@ -1,0 +1,37 @@
+---
+lang: en
+title: Template — Drawer
+description: A payment panel sliding in from the right.
+crumb: Templates · Drawer
+altUrl: /templates/drawer/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Drawer</h1>
+        <p class="lead">A payment panel sliding in from the right — the default template in GetViaMsg.</p>
+    </div>
+
+    <div id="demo" class="wait-for-script"
+         data-gvm-reference="template-drawer"
+         data-gvm-price="1.99"
+         data-gvm-template-name="payment"
+         data-gvm-hide-template-name="paywall"
+         data-gvm-hide-strategy="hide"
+         data-gvm-hide-words="30"
+         data-gvm-metadata-title="Drawer template"
+         data-gvm-category="article">
+        <p>This is sample content. After payment the content is revealed and the form appears exactly as we design it.</p>
+        <p>Click the button below to see the panel.</p>
+    </div>
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

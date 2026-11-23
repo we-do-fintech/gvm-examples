@@ -32,8 +32,26 @@
       `/digital-ecommerce/{download-ebook,download-music-file,pay-per-view,audiobook}/`
       (+ wersje EN z angielskim UI).
 - [x] Partial `gvm/download-trigger.njk` dla strategii download.
+- [x] Strona główna w trzech sekcjach: **Use cases** (karty), **No-code**
+      (overlay), **Templates** (warianty formularza płatności).
+- [x] **Drawer jako główny formularz płatności**: `gvm/payment-drawer.njk`
+      + `assets/gvm-drawer.css` (panel z prawej / bottom sheet na mobile).
+      Dialog modalny zostaje wyłącznie w sekcji Templates jako pokaz wariantu.
+- [x] Sekcja **No-code**: `/no-code/` + trzy artykuły overlay
+      (`article-1..3`, strategie blur / hide / mangle-blur) na `gvm-overlay.js`,
+      z `.gvm-cloak` (brak flasha), `legacyCss: true` i selektorami z remote config.
+- [x] Sekcja **Templates**: `/templates/{drawer,modal,simple,circle}/` — cztery
+      warianty tego samego procesu płatności.
+- [x] Kolejne use case'y: `/publisher/remove-ads/` (sloty reklamowe + sticky
+      `adbar`, stan `html.ads-free`), `/digital-ecommerce/download-report/`,
+      `/saas-licenses/` (plany, rozliczenie zbiorcze),
+      `/add-ons/` (konfigurator, basket).
+- [x] Pay-per-view przez `data-gvm-http-inject`: przycisk wstrzykuje odtwarzacz
+      do `#player` (`/ppv/player.html`).
 
-**Następne:** remove-ads, /saas-licenses/, /add-ons/, warianty paywalla (overlay, sticky, widget, banner, drawer), potem domknięcie CSS.
+**Następne:** treści EN dla artykułów overlay (dziś EN jest tylko chrome i karty),
+warianty paywalla poza drawer/modal/simple/circle, końcowy przegląd wizualny
+(kontrast, mobile, QA pełnego flow).
 
 ---
 

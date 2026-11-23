@@ -9,36 +9,52 @@ gvm: true
 
 {% extends "layouts/base.njk" %}
 {% from "gvm/payment-drawer.njk" import paymentDrawer %}
-{% from "gvm/paywall-inline.njk" import paywallInline %}
 {% set poster = catalog[lang].posters | last %}
 
 {% block content %}
 <div class="container">
     <div class="page-head">
         <h1>Pay-per-view</h1>
+        <p class="lead">
+            One recording, one viewing. After payment a player is injected in
+            place of the thumbnail.
+        </p>
     </div>
 
-    <div id="video" class="wait-for-script"
-         data-gvm-reference="vod"
-         data-gvm-price="4.99"
-         data-gvm-template-name="payment"
-         data-gvm-hide-template-name="paywall"
-         data-gvm-hide-strategy="hide"
-         data-gvm-hide-percent="40"
-         data-gvm-metadata-title="Nagranie wideo"
-         data-gvm-category="video">
-        <p class="lead">
-            Unlock the recording with a single micropayment.
-        </p>
-        <a class="video-card" href="{{ catalog[lang].vod.url }}" rel="noopener">
-            {% if poster and poster.preview %}
-            <img src="{{ poster.preview.href }}" alt="" width="{{ poster.preview.width }}" height="{{ poster.preview.height }}" loading="lazy" />
-            {% endif %}
-            <span class="video-card__play">Play the recording</span>
-        </a>
+    <div class="ppv">
+        <div id="player" class="player-slot">
+            <div class="video-card">
+                {% if poster and poster.preview %}
+                <img
+                    src="{{ poster.preview.href }}"
+                    alt="Video thumbnail"
+                    width="{{ poster.preview.width }}"
+                    height="{{ poster.preview.height }}"
+                    loading="lazy"
+                />
+                {% endif %}
+                <span class="video-card__play">The player unlocks after payment</span>
+            </div>
+        </div>
+
+        <div class="ppv__bar">
+            <p class="track__meta">Video recording · 4.99 PLN</p>
+            <button
+                type="button"
+                class="btn btn--accent"
+                data-gvm-reference="vod"
+                data-gvm-price="4.99"
+                data-gvm-template-name="payment"
+                data-gvm-metadata-title="Video recording"
+                data-gvm-category="video"
+                data-gvm-http-inject="/ppv/player.html"
+                data-gvm-http-inject-to="#player"
+            >
+                Watch for 4.99 PLN
+            </button>
+        </div>
     </div>
 </div>
 
 {{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
-{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
 {% endblock %}

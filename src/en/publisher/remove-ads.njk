@@ -1,0 +1,84 @@
+---
+lang: en
+title: Ad-free
+description: A one-day ad-free pass after a micropayment.
+crumb: Publishers · Ad-free
+altUrl: /publisher/remove-ads/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% set article = catalog[lang].article %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Ad-free</h1>
+        <p class="lead">
+            The same article, but with ads. Pay for an ad-free day and every
+            slot disappears for 24 hours.
+        </p>
+    </div>
+
+    <div class="ad ad--leaderboard" role="complementary" aria-label="Advertisement">
+        Ad space · leaderboard
+    </div>
+
+    <article class="article">
+        <header class="article-head">
+            <p class="kicker">Publishers · article</p>
+            <h1 lang="{{ article.contentLang }}">{{ article.title }}</h1>
+            <p class="byline">{{ article.minutes }} min read</p>
+        </header>
+
+        <div class="article-body" lang="{{ article.contentLang }}">
+            {{ article.html | safe }}
+        </div>
+    </article>
+
+    <div class="ad ad--inline" role="complementary" aria-label="Advertisement">
+        Ad space · in-article
+    </div>
+
+    <div class="adbar">
+        <span>Ad · sticky bottom</span>
+        <button
+            type="button"
+            class="btn btn--accent"
+            data-gvm-reference="noads-day"
+            data-gvm-price="2.00"
+            data-gvm-template-name="payment"
+            data-gvm-metadata-title="Ad-free day"
+            data-gvm-category="ad_free"
+            data-gvm-http-redirect-to="/en/publisher/remove-ads/?noads=1"
+        >
+            Ad-free day for 2.00 PLN
+        </button>
+    </div>
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        var KEY = "gvm_ads_free_until";
+        var params = new URLSearchParams(window.location.search);
+        if (params.get("noads") === "1" && (params.get("gvm-status") || params.get("gvm-reference"))) {
+            localStorage.setItem(KEY, String(Date.now() + 24 * 60 * 60 * 1000));
+            params.delete("noads");
+            params.delete("gvm-status");
+            params.delete("gvm-commitment-id");
+            params.delete("gvm-reference");
+            params.delete("gvm-tenant");
+            params.delete("gvm-signature");
+            var q = params.toString();
+            history.replaceState(null, "", window.location.pathname + (q ? "?" + q : ""));
+        }
+        var until = Number(localStorage.getItem(KEY) || 0);
+        if (until > Date.now()) document.documentElement.classList.add("ads-free");
+    })();
+</script>
+{% endblock %}

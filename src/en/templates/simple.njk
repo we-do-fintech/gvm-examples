@@ -1,0 +1,35 @@
+---
+lang: en
+title: Template — Simple
+description: A minimal payment form.
+crumb: Templates · Simple
+altUrl: /templates/simple/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Simple</h1>
+        <p class="lead">A minimal form: price, QR code and SMS button.</p>
+    </div>
+
+    <div id="demo" class="wait-for-script"
+         data-gvm-reference="template-simple"
+         data-gvm-price="1.99"
+         data-gvm-template-name="payment"
+         data-gvm-hide-template-name="paywall"
+         data-gvm-hide-strategy="hide"
+         data-gvm-hide-words="30"
+         data-gvm-metadata-title="Simple template"
+         data-gvm-category="article">
+        <p>This is sample content. After payment the content is revealed and the form appears exactly as we design it.</p>
+        <p>Click the button below to see the form.</p>
+    </div>
+</div>
+
+{% include "gvm/raw-payment-simple.njk" %}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

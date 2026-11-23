@@ -1,0 +1,44 @@
+---
+lang: en
+title: PDF report
+description: An analytics report in PDF and EPUB to download.
+crumb: Digital commerce · PDF report
+altUrl: /digital-ecommerce/download-report/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/download-trigger.njk" import downloadTrigger %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>PDF report</h1>
+        <p class="lead">An analytics report and its EPUB version — available to download after a micropayment.</p>
+    </div>
+
+    <ul class="track-list">
+        {% for pdf in catalog[lang].pdfs %}
+        <li class="track">
+            <div>
+                <p class="track__name">{{ pdf.name }}</p>
+                <p class="track__meta">PDF · {{ pdf.bytes | filesize }}</p>
+            </div>
+            {{ downloadTrigger({ reference: "report-" ~ loop.index, price: "12.00", href: pdf.href, title: pdf.name, category: "report", label: "Download for 12.00 PLN" }) }}
+        </li>
+        {% endfor %}
+        {% if catalog[lang].ebook %}
+        <li class="track">
+            <div>
+                <p class="track__name">{{ catalog[lang].ebook.name }}</p>
+                <p class="track__meta">EPUB · {{ catalog[lang].ebook.bytes | filesize }}</p>
+            </div>
+            {{ downloadTrigger({ reference: "report-epub", price: "8.00", href: catalog[lang].ebook.href, title: catalog[lang].ebook.name, category: "report", label: "Download for 8.00 PLN" }) }}
+        </li>
+        {% endif %}
+    </ul>
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{% endblock %}

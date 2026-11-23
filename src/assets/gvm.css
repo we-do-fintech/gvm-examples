@@ -4,9 +4,11 @@
    Written from scratch, no framework. Palette and type mirror getviamsg.com:
    charcoal #232526, white ink, amber #ffba00, Inter.
 
-   Still to come (etap 4): the rest of the showcase UI. For now this file
-   covers the chrome (bar, footer), editorial content, paywall and payment
-   dialog, i.e. everything the first use case needs.
+   Covers the chrome (bar, footer), editorial content, cards, ad slots, PPV,
+   the no-code paywall chrome and the legacy modal payment dialog. The default
+   payment form (drawer) ships its own stylesheet, assets/gvm-drawer.css — do
+   not style it from here. The no-code overlay pages additionally pull in
+   assets/legacy.css via the `legacyCss` front-matter flag.
    ========================================================================== */
 
 /* --- Tokens -------------------------------------------------------------- */
@@ -706,6 +708,16 @@ a.card:focus-visible {
     color: var(--muted);
 }
 
+.card .btn {
+    margin-top: 0.6rem;
+}
+
+/* Plan cards (/saas-licenses/): the price is the card heading, so digits must
+   not shuffle sideways when a plan changes. */
+.card h2 {
+    font-variant-numeric: tabular-nums;
+}
+
 .card--soon {
     border-style: dashed;
     background: transparent;
@@ -731,6 +743,63 @@ a.card:focus-visible {
 .badge--muted {
     border-color: var(--line-2);
     color: var(--muted);
+}
+
+/* --- Ad slots (/publisher/remove-ads/) ---------------------------------- */
+.ad {
+    display: grid;
+    place-items: center;
+    min-height: 90px;
+    margin: 1.25rem 0;
+    padding: 0.75rem 1rem;
+    border: 1px dashed var(--line-2);
+    border-radius: var(--radius-sm);
+    background: var(--bg-1);
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.ad--leaderboard {
+    width: 100%;
+    min-height: 90px;
+}
+
+.ad--inline {
+    min-height: 250px;
+    margin-inline: auto;
+    max-width: var(--measure);
+}
+
+.adbar {
+    /* Sticky inside the container, so it parks on the viewport edge once the
+       article scrolls past. z-index 20 keeps it under the payment drawer
+       (1000001 in gvm-drawer.css) and the skip link. */
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 0.7rem 1rem;
+    border-top: 1px solid var(--line);
+    background: var(--bg-1);
+    color: var(--muted);
+    font-size: var(--fs-sm);
+}
+
+.adbar .btn {
+    flex: 0 0 auto;
+}
+
+/* remove-ads.njk flips this class for 24h after a successful payment. */
+html.ads-free .ad,
+html.ads-free .adbar {
+    display: none;
 }
 
 /* --- Markdown prose inside the gated body -------------------------------- */
@@ -904,6 +973,52 @@ a.card:focus-visible {
     color: var(--muted);
 }
 
+/* --- Pay-per-view (/digital-ecommerce/pay-per-view/) -------------------- */
+.ppv {
+    display: grid;
+    gap: 1rem;
+    max-width: 760px;
+}
+
+.player-slot {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-1);
+}
+
+/* The poster already sits in a rounded card; inside the slot it is flush. */
+.player-slot > .video-card {
+    border: 0;
+    border-radius: 0;
+}
+
+/* gvm injects the player into #player, so the poster has to step aside. */
+.player-slot:has(.player) > .video-card {
+    display: none;
+}
+
+.player {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    background: #000;
+}
+
+.ppv__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.ppv__bar p {
+    margin: 0;
+}
+
 /* --- Motion ------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -934,9 +1049,56 @@ a.card:focus-visible {
     .article-head h1 {
         font-size: var(--fs-2xl);
     }
-}
 
-.ppv{display:grid;gap:1rem;max-width:760px}
-.player-slot{border-radius:var(--radius);overflow:hidden;background:var(--bg-1);border:1px solid var(--line)}
-.player{display:block;width:100%;aspect-ratio:16/9;border:0}
-.ppv__bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+    /* Grids: keep cards from forcing horizontal scroll. */
+    .card-grid,
+    .media-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .card-grid > *,
+    .media-grid > * {
+        min-width: 0;
+    }
+
+    /* One trigger per track: the button drops under the name. */
+    .track {
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .track .btn {
+        flex: 1 1 100%;
+    }
+
+    /* Pay-per-view: bar stacks, thumbnails and player stay inside the viewport. */
+    .ppv__bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+    }
+
+    .ppv__bar .btn {
+        width: 100%;
+    }
+
+    .player-slot {
+        max-width: 100%;
+    }
+
+    /* Ad slots shrink; the bar wraps instead of squeezing the CTA. */
+    .ad--inline {
+        min-height: 180px;
+    }
+
+    .adbar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.6rem;
+        text-align: center;
+    }
+
+    .adbar .btn {
+        flex: 1 1 100%;
+    }
+}

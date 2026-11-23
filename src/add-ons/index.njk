@@ -1,0 +1,81 @@
+---
+lang: pl
+title: Dodatki
+description: Pojedyncze funkcje aplikacji potwierdzane SMS-em i rozliczane zbiorczo.
+altUrl: /en/add-ons/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Dodatki</h1>
+        <p class="lead">Dokup pojedyncze funkcje do aplikacji. Potwierdzenie SMS-em, rozliczenie zbiorczo z resztą sesji.</p>
+    </div>
+
+    <div id="activation" class="notice" hidden>
+        Dodatek <strong id="addon-name"></strong> aktywny. Kod aktywacyjny: <code id="code"></code>
+    </div>
+
+    <div class="card-grid">
+        <div class="card">
+            <span class="badge">Eksport</span>
+            <h2>Eksport 4K</h2>
+            <p>Renderowanie i eksport nagrań w jakości 4K.</p>
+            <p class="file-meta">9,00 zł</p>
+            <button type="button" class="btn btn--accent" data-gvm-reference="addon-eksport-4k" data-gvm-price="9.00" data-gvm-template-name="payment" data-gvm-metadata-title="Eksport 4K" data-gvm-category="add_on" data-gvm-http-redirect-to="/add-ons/?addon=eksport-4k">Dodaj za 9,00 zł</button>
+        </div>
+        <div class="card">
+            <span class="badge">Raport</span>
+            <h2>Raport PDF</h2>
+            <p>Zbiorczy raport projektu w PDF do wysłania dalej.</p>
+            <p class="file-meta">6,00 zł</p>
+            <button type="button" class="btn btn--accent" data-gvm-reference="addon-raport-pdf" data-gvm-price="6.00" data-gvm-template-name="payment" data-gvm-metadata-title="Raport PDF" data-gvm-category="add_on" data-gvm-http-redirect-to="/add-ons/?addon=raport-pdf">Dodaj za 6,00 zł</button>
+        </div>
+        <div class="card">
+            <span class="badge">API</span>
+            <h2>Dodatkowy limit API</h2>
+            <p>Zwiększenie miesięcznego limitu wywołań API o 100 tys.</p>
+            <p class="file-meta">12,00 zł</p>
+            <button type="button" class="btn btn--accent" data-gvm-reference="addon-limit-api" data-gvm-price="12.00" data-gvm-template-name="payment" data-gvm-metadata-title="Dodatkowy limit API" data-gvm-category="add_on" data-gvm-http-redirect-to="/add-ons/?addon=limit-api">Dodaj za 12,00 zł</button>
+        </div>
+        <div class="card">
+            <span class="badge">Filtry</span>
+            <h2>Filtr Pro</h2>
+            <p>Zaawansowane filtry z zapisanymi presetami i regułami.</p>
+            <p class="file-meta">15,00 zł</p>
+            <button type="button" class="btn btn--accent" data-gvm-reference="addon-filtr-pro" data-gvm-price="15.00" data-gvm-template-name="payment" data-gvm-metadata-title="Filtr Pro" data-gvm-category="add_on" data-gvm-http-redirect-to="/add-ons/?addon=filtr-pro">Dodaj za 15,00 zł</button>
+        </div>
+    </div>
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        var params = new URLSearchParams(window.location.search);
+        var slug = params.get("addon");
+        if (!slug) return;
+        if (!params.get("gvm-status") && !params.get("gvm-reference")) return;
+
+        var box = document.getElementById("activation");
+        var nameEl = document.getElementById("addon-name");
+        var codeEl = document.getElementById("code");
+        if (!box || !nameEl || !codeEl) return;
+
+        var trigger = document.querySelector('[data-gvm-reference="addon-' + slug + '"]');
+        nameEl.textContent = trigger
+            ? trigger.getAttribute("data-gvm-metadata-title") || slug
+            : slug;
+
+        codeEl.textContent =
+            "GVM-" + slug.toUpperCase() + "-" + (1000 + Math.floor(Math.random() * 9000));
+        box.hidden = false;
+    })();
+</script>
+{% endblock %}

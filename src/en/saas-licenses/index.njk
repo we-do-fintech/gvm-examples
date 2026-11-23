@@ -1,0 +1,62 @@
+---
+lang: en
+title: SaaS licences
+description: App plans confirmed by SMS and settled together.
+altUrl: /saas-licenses/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>SaaS licences</h1>
+        <p class="lead">Choose a plan. SMS confirmation, settled together with the rest of the session.</p>
+    </div>
+
+    <div id="activation" class="notice" hidden>
+        Plan <strong id="plan-name"></strong> is active. Activation code: <code id="code"></code>
+    </div>
+
+    <div class="card-grid">
+        <div class="card">
+            <span class="badge">Basic</span>
+            <h2>9.99 PLN / month</h2>
+            <p>1 seat, CSV export.</p>
+            <button type="button" class="btn btn--accent" data-gvm-reference="plan-basic" data-gvm-price="9.99" data-gvm-template-name="payment" data-gvm-metadata-title="Plan Basic" data-gvm-category="plan" data-gvm-http-redirect-to="/en/saas-licenses/?plan=basic">Choose Basic</button>
+        </div>
+        <div class="card">
+            <span class="badge">Plus</span>
+            <h2>19.99 PLN / month</h2>
+            <p>3 seats, CSV and PDF export.</p>
+            <button type="button" class="btn btn--accent" data-gvm-reference="plan-plus" data-gvm-price="19.99" data-gvm-template-name="payment" data-gvm-metadata-title="Plan Plus" data-gvm-category="plan" data-gvm-http-redirect-to="/en/saas-licenses/?plan=plus">Choose Plus</button>
+        </div>
+        <div class="card">
+            <span class="badge">Pro</span>
+            <h2>29.99 PLN / month</h2>
+            <p>10 seats, API and priority support.</p>
+            <button type="button" class="btn btn--accent" data-gvm-reference="plan-pro" data-gvm-price="29.99" data-gvm-template-name="payment" data-gvm-metadata-title="Plan Pro" data-gvm-category="plan" data-gvm-http-redirect-to="/en/saas-licenses/?plan=pro">Choose Pro</button>
+        </div>
+    </div>
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        var params = new URLSearchParams(window.location.search);
+        var plan = params.get("plan");
+        if (!plan) return;
+        if (!params.get("gvm-status") && !params.get("gvm-reference")) return;
+        var box = document.getElementById("activation");
+        document.getElementById("plan-name").textContent = plan.toUpperCase();
+        document.getElementById("code").textContent =
+            "GVM-" + plan.toUpperCase() + "-" + (1000 + Math.floor(Math.random() * 9000));
+        box.hidden = false;
+    })();
+</script>
+{% endblock %}

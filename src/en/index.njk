@@ -1,7 +1,7 @@
 ---
 lang: en
-title: Showcase
-description: Przykłady integracji GetViaMsg w środowisku testowym.
+title: Showcases
+description: Use cases, no-code solutions and payment form templates.
 altUrl: /
 ---
 
@@ -10,7 +10,7 @@ altUrl: /
 {% block content %}
 <div class="container">
     <div class="page-head">
-        <h1>Showcase</h1>
+        <h1>Showcases</h1>
         <p class="lead">
             See our service in a test environment: feel free to send text
             messages, payments are simulated, and later settlement notices can
@@ -19,7 +19,7 @@ altUrl: /
         </p>
     </div>
 
-    <h2 class="section-title">Publishers</h2>
+    <h2 class="section-title" id="usecases">Use cases</h2>
     <div class="card-grid">
         <a class="card" href="/en/publisher/unlock-article/">
             <span class="badge">Live · hide</span>
@@ -31,15 +31,11 @@ altUrl: /
             <h3>High-resolution photo</h3>
             <p>A free preview and a paid poster download.</p>
         </a>
-        <div class="card card--soon">
-            <span class="badge badge--muted">Coming soon</span>
+        <a class="card" href="/en/publisher/remove-ads/">
+            <span class="badge">Live · redirect</span>
             <h3>Ad-free</h3>
             <p>A one-day ad-free pass.</p>
-        </div>
-    </div>
-
-    <h2 class="section-title">Digital commerce</h2>
-    <div class="card-grid">
+        </a>
         <a class="card" href="/en/digital-ecommerce/download-ebook/">
             <span class="badge">Live · download</span>
             <h3>E-book</h3>
@@ -60,20 +56,73 @@ altUrl: /
             <h3>Audiobook</h3>
             <p>An audio recording to download.</p>
         </a>
+        <a class="card" href="/en/digital-ecommerce/download-report/">
+            <span class="badge">Live · download</span>
+            <h3>PDF report</h3>
+            <p>An analytics report to download.</p>
+        </a>
+        <a class="card" href="/en/saas-licenses/">
+            <span class="badge">Live · plan</span>
+            <h3>SaaS licences</h3>
+            <p>App plans confirmed by text message.</p>
+        </a>
+        <a class="card" href="/en/add-ons/">
+            <span class="badge">Live · basket</span>
+            <h3>Add-ons</h3>
+            <p>An add-on configurator settled together.</p>
+        </a>
     </div>
 
-    <h2 class="section-title">SaaS licences and add-ons</h2>
+    <h2 class="section-title" id="no-code">No-code</h2>
+    <p class="lead">
+        No time in IT? No problem — for static pages we have ready-made
+        solutions. Our overlay service covers all your needs: you paste one
+        script and the configuration handles the rest.
+    </p>
     <div class="card-grid">
-        <div class="card card--soon">
-            <span class="badge badge--muted">Coming soon</span>
-            <h3>App plans</h3>
-            <p>A monthly plan confirmed by text message.</p>
-        </div>
-        <div class="card card--soon">
-            <span class="badge badge--muted">Coming soon</span>
-            <h3>In-app micropayments</h3>
-            <p>Single features and add-ons inside a product.</p>
-        </div>
+        <a class="card" href="/no-code/article-1/">
+            <span class="badge">blur · 1.45 PLN</span>
+            <h3>The invisible checkout</h3>
+            <p>A long article, content blurred behind a paywall.</p>
+        </a>
+        <a class="card" href="/no-code/article-2/">
+            <span class="badge">hide · 2.50 PLN</span>
+            <h3>The town that read the fine print</h3>
+            <p>Content hidden, the overlay removes it from the DOM.</p>
+        </a>
+        <a class="card" href="/no-code/article-3/">
+            <span class="badge">mangle-blur · 2.00 PLN</span>
+            <h3>The last hand-made page</h3>
+            <p>Blur plus mangled words.</p>
+        </a>
+    </div>
+
+    <h2 class="section-title" id="templates">Templates</h2>
+    <p class="lead">
+        See what your payment form could look like. These are examples from the
+        GetViaMsg library — we will design the final form together with you.
+    </p>
+    <div class="card-grid">
+        <a class="card" href="/en/templates/drawer/">
+            <span class="badge">drawer · default</span>
+            <h3>Drawer</h3>
+            <p>A payment panel sliding in from the right.</p>
+        </a>
+        <a class="card" href="/en/templates/modal/">
+            <span class="badge">modal</span>
+            <h3>Modal</h3>
+            <p>A classic dialog in the centre of the screen.</p>
+        </a>
+        <a class="card" href="/en/templates/simple/">
+            <span class="badge">simple</span>
+            <h3>Simple</h3>
+            <p>A minimal form: price, QR code and SMS button.</p>
+        </a>
+        <a class="card" href="/en/templates/circle/">
+            <span class="badge">circle</span>
+            <h3>Circle</h3>
+            <p>A large button and a QR code revealed by consent.</p>
+        </a>
     </div>
 </div>
 {% endblock %}

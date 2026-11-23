@@ -1,0 +1,35 @@
+---
+lang: en
+title: Template — Circle
+description: A large button and a QR code revealed by consent.
+crumb: Templates · Circle
+altUrl: /templates/circle/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Circle</h1>
+        <p class="lead">A large call-to-action button and a QR code revealed once consent is ticked.</p>
+    </div>
+
+    <div id="demo" class="wait-for-script"
+         data-gvm-reference="template-circle"
+         data-gvm-price="1.99"
+         data-gvm-template-name="payment"
+         data-gvm-hide-template-name="paywall"
+         data-gvm-hide-strategy="hide"
+         data-gvm-hide-words="30"
+         data-gvm-metadata-title="Circle template"
+         data-gvm-category="article">
+        <p>This is sample content. After payment the content is revealed and the form appears exactly as we design it.</p>
+        <p>Click the button below to see the form.</p>
+    </div>
+</div>
+
+{% include "gvm/raw-payment-circle.njk" %}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}
