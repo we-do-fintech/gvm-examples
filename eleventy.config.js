@@ -1,23 +1,20 @@
 /**
  * Eleventy config for the gvm.js showcase.
  *
- * Source lives in `src/`, the site is built into `dist/`.
- * Everything that is not a Nunjucks template (JS, data files, images,
- * the injectable `swan.html` fragment) is copied through untouched.
+ * Source lives in `src/`, the built site goes to `dist/`.
+ *
+ * - Nunjucks pages (`*.njk`) are rendered with the layouts in `src/_includes`.
+ * - `src/archive/` is intentionally NOT built: it is a reference library of the
+ *   previous flat examples, kept so layouts and use cases can be reused when
+ *   the new pages are rewritten. Nothing in the archive is served.
+ * - Everything that is not a template (CSS, JS, images) is copied untouched.
  */
 module.exports = function (eleventyConfig) {
-    // Static assets: CSS, logos, favicon.
+    // Reference only, never part of the build.
+    eleventyConfig.ignores.add("src/archive/**");
+
+    // Static assets: CSS, logos, favicon, the agg bridge.
     eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
-
-    // Scripts and binary payloads referenced by the examples.
-    eleventyConfig.addPassthroughCopy("src/**/*.js");
-    eleventyConfig.addPassthroughCopy("src/**/*.data");
-    eleventyConfig.addPassthroughCopy("src/**/*.png");
-
-    // The inject strategy fetches this fragment at runtime.
-    eleventyConfig.addPassthroughCopy({
-        "src/inject/swan.html": "inject/swan.html",
-    });
 
     eleventyConfig.addWatchTarget("src/assets/");
 
@@ -28,7 +25,7 @@ module.exports = function (eleventyConfig) {
             includes: "_includes",
             data: "_data",
         },
-        templateFormats: ["njk"],
+        templateFormats: ["njk", "11ty.js"],
         htmlTemplateEngine: "njk",
         markdownTemplateEngine: "njk",
     };

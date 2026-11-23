@@ -1,0 +1,34 @@
+---
+lang: pl
+title: Wydawcy
+description: Przykłady GetViaMsg dla wydawców.
+altUrl: /en/publisher/
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Wydawcy</h1>
+    </div>
+
+    <div class="card-grid">
+        <a class="card" href="/publisher/unlock-article/">
+            <span class="badge">Live · hide</span>
+            <h2>Odblokowanie artykułu</h2>
+            <p>Bezpłatny początek tekstu, dalsza część po mikropłatności.</p>
+        </a>
+        <div class="card card--soon">
+            <span class="badge badge--muted">Wkrótce</span>
+            <h2>Bez reklam</h2>
+            <p>Strona wydawcy z reklamami i jednodniowy dostęp bez reklam.</p>
+        </div>
+        <div class="card card--soon">
+            <span class="badge badge--muted">Wkrótce</span>
+            <h2>Zdjęcie w wysokiej rozdzielczości</h2>
+            <p>Darmowy podgląd i płatny plik do pobrania.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

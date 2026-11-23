@@ -1,0 +1,16 @@
+<header class="site-bar">
+    <div class="container site-bar__inner">
+        <a class="brand" href="{{ homeUrl }}" aria-label="GetViaMsg — {{ l.nav.home }}">
+            <img
+                src="/assets/getviamsg-logo-white-alpha.png"
+                alt="GetViaMsg"
+                width="116"
+                height="35"
+            />
+        </a>
+        <nav class="site-nav" aria-label="{{ l.nav.label }}">
+            <a href="{{ site.docs }}" rel="noopener">{{ l.nav.docs }}</a>
+        </nav>
+        {% include "partials/lang-switch.njk" %}
+    </div>
+</header>

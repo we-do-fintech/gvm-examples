@@ -1,0 +1,41 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
+<meta name="description" content="{{ description or site.description }}" />
+<link rel="icon" href="/assets/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+<link rel="stylesheet" href="/assets/gvm.css" />
+
+{#
+  gvm.js bootstrap.
+  The SDK is a module, so it runs before DOMContentLoaded; the inline script then
+  removes `.wait-for-script`, which keeps gated content out of the first paint
+  (and out of the accessibility tree) until the SDK has hidden the premium part.
+#}
+{% if gvm %}
+<script type="module" src="{{ site.sdk }}"></script>
+<script>
+    // Verbose gvm.js logs, handy while editing an example.
+    window.wdftDebug = true;
+    window.addEventListener("DOMContentLoaded", function () {
+        document
+            .querySelectorAll(".wait-for-script")
+            .forEach(function (el) {
+                el.classList.remove("wait-for-script");
+            });
+    });
+</script>
+<noscript>
+    <style>
+        .wait-for-script {
+            display: block !important;
+        }
+    </style>
+</noscript>
+{% endif %}
+
+<!-- agg (self-hosted analytics) -->
+<script async src="{{ site.aggScript }}" data-site="{{ site.aggSite }}"></script>
+{% if gvm %}
+<script defer src="{{ site.aggBridge }}"></script>
+{% endif %}

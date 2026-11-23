@@ -1,0 +1,40 @@
+{#
+  Inline paywall card (hide strategy).
+
+  Injected into `#article` where the premium part would start. The paid button
+  only opens the payment dialog — the consent checkbox lives there, which is why
+  the paywall shows the price/terms info line without a checkbox.
+
+    {% from "gvm/paywall-inline.njk" import paywallInline %}
+    {{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+
+  Other layouts (overlay, sticky bottom/right, widget, banner, drawer) are
+  separate partials on purpose: they differ in markup and in the element they
+  are injected into, so one shared template would fight itself.
+#}
+{% from "gvm/consent.njk" import consentInfo %}
+
+{% macro paywallInline(opts) %}
+{% set t = opts.t %}
+<template
+    data-gvm-template="paywall"
+    data-gvm-template-inject-to="{{ opts.injectTo or '#article' }}"
+>
+    <aside class="paywall-card" aria-label="{{ t.paywall.ariaLabel }}">
+        <p class="paywall-lead">{{ t.paywall.lead }}</p>
+        <p class="paywall-meta">
+            <span>{{ t.paywall.meta }}</span>
+            <span data-gvm-bind-reading-time></span> {{ t.paywall.minutes }}
+            <span class="paywall-sep" aria-hidden="true">·</span>
+            <span data-gvm-bind-reading-words></span> {{ t.paywall.words }}
+        </p>
+        {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: "consent-info--compact" }) }}
+        <button type="button" class="btn btn--accent paywall-cta" data-gvm-bind-pay>
+            {{ t.paywall.unlock }}
+            <span data-gvm-bind-price></span>
+            <span data-gvm-bind-currency></span>
+        </button>
+        <p class="paywall-note">{{ t.paywall.permanent }}</p>
+    </aside>
+</template>
+{% endmacro %}

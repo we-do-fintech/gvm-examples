@@ -1,160 +1,151 @@
-# `gvm.js` Examples
+# GetViaMsg showcase (`gvm-examples`)
 
-Explore examples of `gvm.js` integration. Each strategy is contained in its own
-directory. Full documentation is available at
-[docs.wdft.ovh](https://docs.wdft.ovh/gvm-js).
+A bilingual (PL/EN) showcase of GetViaMsg — micropayments for single pieces of
+content. Every example is a working page: you can click through the whole
+payment flow (QA tenant, no real charge).
 
-You can either browse the source code or test it using **live-server**:
+Live: [showcase.getviamsg.com](https://showcase.getviamsg.com) · Docs:
+[docs.wdft.ovh/gvm-js](https://docs.wdft.ovh/gvm-js)
+
+---
+
+## Quick start
 
 ```sh
-# Install live-server if you don't have it
-# npm install -g live-server
-live-server .  # Then open your browser to view the examples
+pnpm install        # or npm install
+pnpm build          # Eleventy -> dist/
+pnpm serve          # dev server with live reload
 ```
 
-See this repo live at:
-[showcase.getviamsg.com](https://showcase.getviamsg.com)
+`build` wipes `dist/` first, so stale pages never survive a rebuild. Nothing
+outside `dist/` is served — deploy that directory.
 
----
+## Structure
 
-## Consent checkbox + terms link (mandatory)
+```
+src/
+  index.njk                 showcase index (PL) -> /
+  en/index.njk              showcase index (EN) -> /en/
+  publisher/                category: publishers
+    unlock-article.njk      the first, simplest use case
+  en/                       English mirrors of the pages above
+  archive/                  previous flat examples (reference only, NOT built)
+  assets/                   css, logos, favicon, agg bridge
+  _includes/
+    layouts/base.njk        html, head, skip link, header, main, footer
+    partials/               head, header, footer, lang-switch, example-bar
+    gvm/                    payment dialog, consent, paywall, dialog a11y
+  _data/
+    site.js                 tenant, env, currency, SDK + outbound URLs
+    i18n/pl.json, en.json   shared chrome + payment/paywall strings
+    texts/latarnik.json     public-domain source text (PL + EN)
+```
 
-Since the terms of 23.10.2026 (regulamin):
+## URL map
 
-- **Payment dialog** — every `<template>` with `data-gvm-bind-qr`,
-  `data-gvm-bind-send-sms` or `data-gvm-bind-unlock` **must** contain, above
-  the call-to-action, the price/terms info line with a link to
-  [getviamsg.com/terms](https://getviamsg.com/terms) and an **unchecked**
-  `<input type="checkbox" data-gvm-accept-terms="…"
-  data-gvm-accept-terms-version="pl-2026-10-23">` whose `<label>` contains
-  only the § 11 ust. 2 consent text. Without it the SDK does not create a
-  commitment (no QR, no SMS link, no unlock). The QR is gated with
-  `.payment-qr-gate` (blurred until consent).
-- **Paywall** (the `data-gvm-bind-pay` button that only opens the dialog) —
-  no checkbox; it shows the same price info line with the terms link.
+| PL | EN |
+| --- | --- |
+| `/` | `/en/` |
+| `/publisher/` | `/en/publisher/` |
+| `/publisher/unlock-article/` | `/en/publisher/unlock-article/` |
 
-The Polish wording is the legal text bound to the consent version, so copy
-it verbatim from any example here (e.g. `./blur/index.html`). Styles live in
-`assets/showcase.css` (`.consent`, `.consent-info`, `.consent-terms`).
+Planned next: `/publisher/remove-ads/`, `/publisher/download-hi-res-pic/`,
+`/digital-ecommerce/download-ebook/`, `/digital-ecommerce/download-music-file/`,
+`/saas-licenses/`, `/add-ons/`. Hyphens in URLs, one language per page.
 
----
+## How examples are built
 
-## PWA unlock (experimental)
+Pages set `lang` (and optionally `crumb`, `altUrl`, `gvm: true`) in front
+matter and then compose shared pieces:
 
-`./blur-pwa` is a copy of the blur example that additionally offers an
-**“Unlock in the app”** button (`data-gvm-bind-unlock`) next to the SMS flow.
-The button opens the portal claim link (`unlock_url`) returned by backends with
-`GVM_PWA_ENABLED`; it binds **only** when that URL is present, so the legacy SMS
-path (`data-gvm-bind-qr` / `data-gvm-bind-send-sms`) is unchanged. Requires
-`@wdft/gvm-sdk >= 0.2.1` (button is inert on older builds / without the flag).
+```njk
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-dialog.njk" import paymentDialog %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
 
----
+{% block content %}
+  <div id="article" data-gvm-price="1.99" data-gvm-reference="…"
+       data-gvm-hide-strategy="hide" data-gvm-hide-sections="6"
+       data-gvm-template-name="payment" data-gvm-hide-template-name="paywall">
+    …content…
+  </div>
+  {{ paymentDialog({ t: i18n[lang], termsUrl: site.termsUrl,
+                     termsVersion: site.termsVersion }) }}
+  {{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}
+```
 
-## Hide Strategy
+Rules of thumb:
 
-The simplest, all-in-one file solution check: `./hide`. Includes only
-declarations and script injection.
+- **One `payment` dialog**, shared by every example. It reads the amount and
+  the content reference from the gated element, so the markup never changes.
+- **One partial per paywall layout** (inline, overlay, sticky bottom/right,
+  widget, banner, drawer). They differ in markup and in where they are
+  injected, so sharing a single template would fight itself.
+- Examples that compute the price at runtime (basket, plans) keep the SDK out
+  of `<head>` and import `gvm.js` after writing `data-gvm-price`.
 
-**Note:** This has commented `data-gvm-cond` for mobile and portrait mode -
-check it in source, and turn on!
+## Consent and terms (mandatory)
 
----
+Since the terms of 23.10.2026 every payment dialog that binds QR / SMS / unlock
+must contain, above the call to action:
 
-## Proxy Strategies
+- the price + terms line linking to <https://getviamsg.com/terms>, and
+- an **unchecked** `<input type="checkbox" data-gvm-accept-terms="…"
+  data-gvm-accept-terms-version="pl-2026-10-23">` whose label carries the
+  § 11 ust. 2 consent wording (Polish, always `lang="pl"`).
 
-The `./download` directory showcase proxy strategy. These strategies typically
-require a backend server or a load balancer with middleware to handle requests
-before redirecting to a persistent or temporary address.
+Both live in `_includes/gvm/consent.njk`; `paymentDialog` pulls them in.
+The paywall itself (the button that only opens the dialog) shows the price
+line without a checkbox.
 
-There is also `./inject` and `./redirect` strategy that has same way of
-configuration, and logic. Check docs for available `data-gvm-*` attributes.
+## gvm.js flow in the article example
 
-**Note:** In these examples, the server/proxy part is not included. They
-demonstrate direct access to files or downloads.
+1. The full text is in the DOM inside `#article` with `.wait-for-script`.
+2. `gvm.js` (module, runs before `DOMContentLoaded`) hides the content after
+   `data-gvm-hide-sections` and injects the `paywall` template into `#article`.
+3. The page reveals `.wait-for-script` on `DOMContentLoaded`; `<noscript>` lets
+   the text show without JS.
+4. `data-gvm-bind-pay` opens the shared `payment` dialog, the consent checkbox
+   unlocks the QR, and the SMS resolves the commitment.
+5. `_includes/gvm/dialog-a11y.njk` makes the non-modal `<dialog>` behave: the
+   page behind it becomes `inert`, focus moves inside and returns to the pay
+   button, Escape maps to gvm’s cancel button.
 
----
+## Styling
 
-## Ads (publisher page + ad-free day pass)
+`src/assets/gvm.css` is written from scratch (no pico.css). Tokens follow
+getviamsg.com: `#232526` background, white ink, `#909090` muted, `#ffba00`
+accent, Inter.
 
-`./ads` is a newspaper-style publisher front page monetized with display ad
-placeholders (leaderboard, in-article, native, rail, sticky bottom). The paid
-button uses the **redirect** strategy (`data-gvm-http-redirect-to="/ads/?noads=1"`):
-after a resolved payment gvm.js sends the reader back with signed query params,
-the page stores a 24-hour pass in `localStorage` and `html.ads-free` hides every
-ad slot before the first paint. Runs in `data-gvm-env="qa"` with tenant
-`wdft_showcase_qa`, so the payment flow talks to the QA API without a real
-charge. See `./ads/README.md`.
+The legacy examples and their stylesheets (`pico.css`, `showcase.css`) live in
+`src/archive/` and are not part of the build.
 
----
+## Analytics
 
-## App plans & activation (`/plan`)
-
-`./plan` is a pricing page for the **“GetViaMsg for apps”** use case: three
-monthly plans (9.99 / 19.99 / 29.99 PLN), a `data-gvm-env="qa"` SMS/QR checkout,
-and a mock activation-code step.
-
-The interesting bit is the e-mail → reference link: gvm.js reads
-`data-gvm-reference` once at boot, so the page collects the e-mail used in the
-app *first*, writes `plan_<tier>_<email-hash>` onto every plan card, and only
-then imports `gvm.js` (so the module is not in `<head>`). A resolved commitment
-shows an activation code derived from the e-mail; the code can be entered in the
-“Activate a code” panel. All of that is front-end mock — production would mint a
-price token, verify the commitment signature and issue the code server-side. See
-[`./plan/README.md`](./plan/README.md).
-
----
-
-## App basket (`/app-basket`)
-
-`./app-basket` is an **in-app configurator** mockup (“LogoKit”): the customer
-names a brand, picks a type style and a palette, and toggles up to 10 priced
-deliverables (0.99–5.99 PLN). The basket total — at most 29.90 PLN for all
-options — becomes the GetViaMsg amount. It reuses the `qa` tenant from the
-other examples (`wdft_showcase_qa`).
-
-The interesting bit is the **dynamic amount**: gvm.js reads `data-gvm-price` /
-`data-gvm-reference` once at boot, so the page keeps the SDK out of `<head>`,
-computes the total, writes it on `#basket-trigger` and only then imports the
-module. The trigger uses the `hide` strategy with no split config (nothing is
-hidden — gvm.js only injects the bound CTA) and the page clicks that CTA to open
-the dialog. If the basket changes after boot, the reference is reloaded with
-`?checkout=1` and a fresh trigger is bound, so the charged amount is never
-stale. A resolved commitment renders a mock delivery panel in the browser. See
-[`./app-basket/README.md`](./app-basket/README.md).
-
----
-
-## Analytics (agg)
-
-Traffic and paywall funnels are collected by a self-hosted
-[agg](https://agg.worotyns.ovh) instance. Every full page loads the 3 KB SDK
-before `</head>`:
+Traffic and the paywall funnel go to a self-hosted agg instance:
 
 ```html
-<script
-    async
-    src="https://agg.tfdw.ovh/agg.js"
-    data-site="pk_tkajj6iaq6xz4vyuhop4"
-></script>
+<script async src="https://agg.tfdw.ovh/agg.js" data-site="pk_tkajj6iaq6xz4vyuhop4"></script>
 ```
 
-Page views are automatic (site `showcase_getviamsg_com`). On pages that boot
-`gvm.js`, the markup also opts into gvm's custom tracker
-(`data-gvm-analytics="custom"`) and `assets/agg-gvm-bridge.js` forwards gvm's
-lifecycle events (`gvm_render`, `gvm_pay_click`, `gvm_qr`, `gvm_resolved`,
-`gvm_rejected`, …) to agg together with their `reference`, `value` and
-`currency`. The matching aggregates and formulas are `paywall_views`,
-`paywall_clicks`, `payments`, `paywall_ctr` and `paywall_conversion`.
+Pages that boot gvm also load `/assets/agg-gvm-bridge.js`, which forwards
+`gvm_render`, `gvm_pay_click`, `gvm_qr`, `gvm_resolved`, `gvm_rejected` with
+`reference`, `value` and `currency`.
 
-To disable only the funnel bridge, drop `data-gvm-analytics="custom"` and the
-`/assets/agg-gvm-bridge.js` script tag — page views keep working. The
-`inject/swan.html` fragment is intentionally not tracked; it is injected into
-an already-tracked page.
+## Content sources
 
----
+The article example uses public-domain text so the page keeps real context
+without shipping lorem ipsum:
 
-## Questions?
+- PL: Henryk Sienkiewicz, *Latarnik* (1881), [wolnelektury.pl](https://wolnelektury.pl/katalog/lektura/latarnik.html)
+- EN: *The Light-House Keeper of Aspinwall*, transl. Jeremiah Curtin (1893), [Wikisource](https://en.wikisource.org/wiki/Stories_by_Foreign_Authors_(Polish-Greek-Belgian-Hungarian)/The_Light-House_of_Aspinall)
 
-These examples are intended as simple showcases for developers. For more complex
-use cases or custom examples, post new issue on github or contact our
-[dev team](mailto:mateusz@wdft.ovh).
+Both are in the public domain and are used unchanged.
+
+## Archive
+
+`src/archive/` holds the previous flat examples (hide, blur, overlay, templates,
+plan, ads, app-basket, …) and their legacy CSS (`pico.css`, `showcase.css`).
+Eleventy ignores the whole directory: it is a reference library to mine layouts
+and use cases from, not part of the build.

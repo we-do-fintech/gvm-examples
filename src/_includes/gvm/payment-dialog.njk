@@ -1,0 +1,102 @@
+{#
+  Single payment dialog for every example.
+
+  Before this partial existed the same ~4.9 kB dialog was copy-pasted into
+  17 pages. Examples now call the macro and only vary the data:
+
+    {% from "gvm/payment-dialog.njk" import paymentDialog %}
+    {{ paymentDialog({ t: i18n[lang], termsUrl: site.termsUrl,
+                       termsVersion: site.termsVersion }) }}
+
+  gvm.js reads the price / currency / reference from the gated element, so the
+  dialog itself stays static and can be shared.
+#}
+{% from "gvm/consent.njk" import consentBox %}
+
+{% macro paymentDialog(opts) %}
+{% set t = opts.t %}
+<template data-gvm-template="payment" data-gvm-template-inject-to="body">
+    <dialog class="gvm-dialog" open aria-labelledby="gvm-payment-title">
+        <article class="payment-modal">
+            <header class="payment-header">
+                <h2 class="payment-title" id="gvm-payment-title">
+                    {{ t.payment.heading }}
+                </h2>
+                <p class="payment-sub">{{ t.payment.sub }}</p>
+            </header>
+
+            <section class="payment-body">
+                <p class="payment-price-line">
+                    <span class="payment-price-label"
+                        >{{ t.payment.priceLabel }}</span
+                    >
+                    <strong class="payment-price"
+                        ><span data-gvm-bind-price></span>
+                        <span data-gvm-bind-currency></span
+                    ></strong>
+                </p>
+
+                <div class="payment-qr-wrap">
+                    <div
+                        class="payment-qr-gate gvm-terms-blocked"
+                        data-gvm-terms-container
+                        role="img"
+                        aria-label="{{ t.payment.qrLabel }}"
+                    >
+                        <span data-gvm-bind-qr class="payment-qr">
+                            <span aria-busy="true"></span>
+                        </span>
+                        <div class="payment-qr-cover">
+                            {{ t.payment.qrHint }}
+                        </div>
+                    </div>
+                </div>
+
+                <p class="payment-status-row">
+                    <span
+                        class="payment-status"
+                        role="status"
+                        aria-live="polite"
+                        data-gvm-bind-status
+                        data-gvm-bind-status-initializing="{{ t.payment.statusInitializing }}"
+                        data-gvm-bind-status-consent="{{ t.payment.statusConsent }}"
+                        data-gvm-bind-status-waiting="{{ t.payment.statusWaiting }}"
+                        data-gvm-bind-status-duplicated="{{ t.payment.statusDuplicated }}"
+                        data-gvm-bind-status-resolved="{{ t.payment.statusResolved }}"
+                        data-gvm-bind-status-rejected="{{ t.payment.statusRejected }}"
+                    ></span>
+                    <span class="payment-time"
+                        >(<span data-gvm-bind-time-remaining>00:00</span>)</span
+                    >
+                </p>
+
+                {{ consentBox({ t: t, termsUrl: opts.termsUrl, termsVersion: opts.termsVersion, targets: ".payment-qr-gate, [data-gvm-bind-send-sms]" }) }}
+
+                <div class="payment-actions">
+                    <button
+                        type="button"
+                        class="btn btn--accent"
+                        data-gvm-bind-send-sms
+                    >
+                        {{ t.payment.sendSms }}
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn--ghost"
+                        data-gvm-bind-cancel
+                    >
+                        {{ t.payment.cancel }}
+                    </button>
+                </div>
+            </section>
+
+            <footer class="payment-footer">
+                <small>
+                    GetViaMsg ·
+                    <a href="https://getviamsg.com/" rel="noopener">WDFT</a>
+                </small>
+            </footer>
+        </article>
+    </dialog>
+</template>
+{% endmacro %}

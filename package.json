@@ -2,10 +2,10 @@
     "name": "gvm-showcase",
     "version": "1.0.0",
     "private": true,
-    "description": "gvm.js developer examples — Eleventy + Nunjucks, built to dist/",
+    "description": "GetViaMsg showcase - micropayments examples, Eleventy -> dist/",
     "scripts": {
         "clean": "rm -rf dist",
-        "build": "eleventy",
+        "build": "rm -rf dist && eleventy",
         "serve": "eleventy --serve",
         "dev": "eleventy --serve --port=8080"
     },

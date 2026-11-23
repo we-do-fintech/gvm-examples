@@ -1,0 +1,766 @@
+/* ==========================================================================
+   gvm.js Developer Showcase — foundation stylesheet
+   --------------------------------------------------------------------------
+   Written from scratch, no framework. Palette and type mirror getviamsg.com:
+   charcoal #232526, white ink, amber #ffba00, Inter.
+
+   Still to come (etap 4): the rest of the showcase UI. For now this file
+   covers the chrome (bar, footer), editorial content, paywall and payment
+   dialog, i.e. everything the first use case needs.
+   ========================================================================== */
+
+/* --- Tokens -------------------------------------------------------------- */
+:root {
+    color-scheme: dark;
+
+    --bg: #232526;
+    --bg-1: #292b2c;
+    --bg-2: #2f3132;
+    --ink: #ffffff;
+    --ink-2: #c9ccce;
+    --muted: #909090;
+    --line: #3c3f40;
+    --line-2: #565a5c;
+
+    --accent: #ffba00;
+    --accent-hover: #ffcd4d;
+    --accent-ink: #232526;
+
+    --ok: #7fd6a8;
+    --danger: #ff6b5e;
+
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-pill: 999px;
+
+    --maxw: 1060px;
+    --measure: 68ch;
+
+    --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    /* Deliberately tight: the previous showcase used very large steps. */
+    --fs-xs: 0.78rem;
+    --fs-sm: 0.875rem;
+    --fs-base: 1rem;
+    --fs-lg: 1.125rem;
+    --fs-xl: 1.35rem;
+    --fs-2xl: 1.75rem;
+    --fs-3xl: 2.25rem;
+}
+
+/* --- Reset -------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--ink-2);
+    font-family: var(--font);
+    font-size: var(--fs-base);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg,
+video {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+a:hover {
+    color: var(--accent-hover);
+}
+
+h1,
+h2,
+h3 {
+    color: var(--ink);
+    line-height: 1.2;
+    margin: 0 0 0.4em;
+    text-wrap: balance;
+}
+
+p {
+    margin: 0 0 1em;
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* --- Skip link ---------------------------------------------------------- */
+.skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    padding: 0.6rem 1rem;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    transition: top 0.15s ease-in;
+}
+
+.skip-link:focus {
+    top: 1rem;
+}
+
+/* --- Layout ------------------------------------------------------------- */
+.container {
+    width: min(100% - 2rem, var(--maxw));
+    margin-inline: auto;
+}
+
+.main {
+    flex: 1 0 auto;
+    padding: 2rem 0 3rem;
+}
+
+/* --- Site bar (small, on purpose) --------------------------------------- */
+.site-bar {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-1);
+}
+
+.site-bar__inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 56px;
+    flex-wrap: wrap;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--ink);
+}
+
+.brand img {
+    width: 116px;
+    height: auto;
+}
+
+.site-nav {
+    display: flex;
+    gap: 1rem;
+    margin-left: auto;
+    font-size: var(--fs-sm);
+}
+
+.site-nav a {
+    color: var(--ink-2);
+    text-decoration: none;
+}
+
+.site-nav a:hover {
+    color: var(--accent);
+}
+
+.lang-switch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.6rem;
+    padding: 0.25rem 0.55rem;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--ink-2);
+    text-decoration: none;
+}
+
+.lang-switch:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* --- Example bar -------------------------------------------------------- */
+.example-bar {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+    font-size: var(--fs-sm);
+}
+
+.example-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    flex-wrap: wrap;
+}
+
+.example-bar__crumb {
+    margin: 0;
+    color: var(--muted);
+}
+
+.example-bar__back {
+    color: var(--ink-2);
+    text-decoration: none;
+}
+
+.example-bar__back:hover {
+    color: var(--accent);
+}
+
+/* --- Buttons ------------------------------------------------------------ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn--accent {
+    background: var(--accent);
+    color: var(--accent-ink);
+}
+
+.btn--accent:hover {
+    background: var(--accent-hover);
+    color: var(--accent-ink);
+}
+
+.btn--ghost {
+    background: transparent;
+    border-color: var(--line-2);
+    color: var(--ink-2);
+}
+
+.btn--ghost:hover {
+    border-color: var(--ink-2);
+    color: var(--ink);
+}
+
+.btn[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* --- Editorial article -------------------------------------------------- */
+.article {
+    max-width: var(--measure);
+    margin-inline: auto;
+}
+
+.article-head {
+    margin-bottom: 1.6rem;
+}
+
+.kicker {
+    margin: 0 0 0.35rem;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.article-head h1 {
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.35rem;
+}
+
+.byline {
+    margin: 0;
+    font-size: var(--fs-sm);
+    color: var(--muted);
+}
+
+.lead {
+    margin-top: 1rem;
+    font-size: var(--fs-lg);
+    color: var(--ink-2);
+}
+
+.article-body p {
+    margin: 0 0 1.1em;
+}
+
+.article-source {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    font-size: var(--fs-sm);
+    color: var(--muted);
+}
+
+/* gvm gating: content is hidden until the SDK has booted. */
+.wait-for-script {
+    display: none;
+}
+
+/* --- Paywall card (inline) --------------------------------------------- */
+.paywall-card {
+    margin: 1.5rem 0;
+    padding: 1.25rem 1.25rem 1.1rem;
+    border: 1px solid rgba(255, 186, 0, 0.45);
+    border-radius: var(--radius);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 186, 0, 0.1),
+        rgba(255, 186, 0, 0.02)
+    );
+}
+
+.paywall-lead {
+    margin: 0 0 0.35rem;
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.paywall-meta {
+    margin: 0 0 0.9rem;
+    font-size: var(--fs-sm);
+    color: var(--muted);
+}
+
+.paywall-meta [data-gvm-bind-reading-time],
+.paywall-meta [data-gvm-bind-reading-words] {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.paywall-sep {
+    padding-inline: 0.35rem;
+}
+
+.paywall-cta {
+    width: 100%;
+    margin-top: 0.4rem;
+}
+
+.paywall-note {
+    margin: 0.7rem 0 0;
+    font-size: var(--fs-xs);
+    color: var(--muted);
+}
+
+/* --- Consent ------------------------------------------------------------ */
+.consent {
+    margin: 1rem 0;
+}
+
+.consent-info {
+    margin: 0 0 0.6rem;
+    font-size: var(--fs-sm);
+    color: var(--ink-2);
+}
+
+.consent-info--compact {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+}
+
+.consent-info strong {
+    color: var(--ink);
+}
+
+.consent-note {
+    margin: 0 0 0.6rem;
+    font-size: var(--fs-xs);
+    color: var(--muted);
+}
+
+.consent-terms {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    font-size: var(--fs-xs);
+    line-height: 1.45;
+    color: var(--ink-2);
+    cursor: pointer;
+}
+
+.consent-terms input {
+    flex: 0 0 auto;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin: 0.1rem 0 0;
+    accent-color: var(--accent);
+}
+
+/* --- Payment dialog ----------------------------------------------------- */
+.gvm-dialog {
+    /* gvm.js injects the dialog with a plain `open` attribute (no showModal),
+       so the centering and the scrim are ours to do. */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+    width: min(100% - 2rem, 420px);
+    height: auto;
+    max-height: min(90vh, 720px);
+    margin: 0;
+    overflow: auto;
+    padding: 0;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    background: var(--bg-1);
+    color: var(--ink-2);
+}
+
+html:has(dialog.gvm-dialog[open])::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(15, 16, 17, 0.72);
+}
+
+html:has(dialog.gvm-dialog[open]) {
+    overflow: hidden;
+}
+
+.payment-modal {
+    margin: 0;
+    padding: 1.25rem;
+}
+
+.payment-title {
+    margin: 0 0 0.2rem;
+    font-size: var(--fs-xl);
+}
+
+.payment-sub {
+    margin: 0;
+    font-size: var(--fs-sm);
+    color: var(--muted);
+}
+
+.payment-body {
+    margin-top: 1rem;
+}
+
+.payment-price-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 0.9rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--fs-sm);
+    color: var(--muted);
+}
+
+.payment-price {
+    color: var(--ink);
+    font-size: var(--fs-lg);
+}
+
+.payment-qr-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.payment-qr-gate {
+    position: relative;
+    width: 190px;
+    height: 190px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    overflow: hidden;
+}
+
+.payment-qr {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.payment-qr img,
+.payment-qr canvas,
+.payment-qr svg {
+    width: 100%;
+    height: 100%;
+}
+
+.payment-qr-cover {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    text-align: center;
+    font-size: var(--fs-xs);
+    color: #5c5c5c;
+    background: rgba(255, 255, 255, 0.92);
+}
+
+.gvm-terms-blocked .payment-qr {
+    filter: blur(6px);
+}
+
+/* Once consent is ticked gvm drops `.gvm-terms-blocked`; the hint must go with it. */
+.payment-qr-gate:not(.gvm-terms-blocked) .payment-qr-cover {
+    display: none;
+}
+
+.payment-status-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    min-height: 1.4em;
+    margin: 0.85rem 0 0;
+    font-size: var(--fs-sm);
+    color: var(--ink-2);
+}
+
+.payment-time {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.payment-actions {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.payment-footer {
+    margin-top: 1rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+}
+
+.payment-footer a {
+    color: var(--ink-2);
+}
+
+/* --- Footer ------------------------------------------------------------- */
+.site-footer {
+    border-top: 1px solid var(--line);
+    background: var(--bg-1);
+    font-size: var(--fs-sm);
+}
+
+.site-footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    flex-wrap: wrap;
+}
+
+.site-footer__brand {
+    margin: 0;
+    color: var(--muted);
+}
+
+.site-footer__brand strong {
+    color: var(--ink);
+}
+
+.site-footer__nav {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.site-footer__nav a {
+    color: var(--ink-2);
+    text-decoration: none;
+}
+
+.site-footer__nav a:hover {
+    color: var(--accent);
+}
+
+/* --- Inline code & disclosures ------------------------------------------ */
+code,
+kbd {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    background: var(--bg-2);
+    color: var(--ink);
+}
+
+details {
+    margin-top: 0.7rem;
+}
+
+summary {
+    cursor: pointer;
+    color: var(--ink-2);
+    font-weight: 600;
+}
+
+summary:hover {
+    color: var(--accent);
+}
+
+details p {
+    margin: 0.5rem 0 0;
+    color: var(--muted);
+}
+
+/* --- Page heads & cards ------------------------------------------------- */
+.page-head {
+    max-width: var(--measure);
+    margin-bottom: 1.8rem;
+}
+
+.page-head h1 {
+    font-size: var(--fs-3xl);
+    letter-spacing: -0.01em;
+}
+
+.page-head .lead {
+    color: var(--ink-2);
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    margin: 2rem 0 0.9rem;
+    font-size: var(--fs-xl);
+}
+
+.card-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.card {
+    display: block;
+    padding: 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-1);
+    color: inherit;
+    text-decoration: none;
+}
+
+a.card:hover,
+a.card:focus-visible {
+    border-color: var(--accent);
+}
+
+.card h2,
+.card h3 {
+    margin: 0 0 0.3rem;
+    font-size: var(--fs-lg);
+}
+
+.card p {
+    margin: 0;
+    font-size: var(--fs-sm);
+    color: var(--muted);
+}
+
+.card--soon {
+    border-style: dashed;
+    background: transparent;
+}
+
+.card--soon h2,
+.card--soon h3 {
+    color: var(--ink-2);
+}
+
+.badge {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    padding: 0.1rem 0.5rem;
+    border: 1px solid rgba(255, 186, 0, 0.4);
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.badge--muted {
+    border-color: var(--line-2);
+    color: var(--muted);
+}
+
+/* --- Motion ------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@media (max-width: 640px) {
+    /* The docs link also lives in the footer; on small screens a one-row bar
+       is calmer and keeps the language switch next to the logo. */
+    .site-nav {
+        display: none;
+    }
+
+    .site-bar__inner {
+        justify-content: space-between;
+    }
+
+    .lang-switch {
+        margin-left: auto;
+    }
+
+    .article-head h1 {
+        font-size: var(--fs-2xl);
+    }
+}

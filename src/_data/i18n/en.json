@@ -1,0 +1,58 @@
+{
+  "skipToContent": "Skip to content",
+  "nav": {
+    "label": "Main navigation",
+    "home": "Home",
+    "docs": "Documentation",
+    "github": "GitHub"
+  },
+  "langSwitch": {
+    "label": "Page language",
+    "other": "Polski"
+  },
+  "footer": {
+    "label": "Footer",
+    "terms": "Terms",
+    "contact": "Contact"
+  },
+  "exampleBar": {
+    "label": "Example navigation",
+    "back": "Showcases"
+  },
+  "payment": {
+    "heading": "Unlock in seconds",
+    "sub": "Send a regular text message to get access. You pay later — once, for the whole session.",
+    "priceLabel": "One-time access",
+    "qrHint": "Tick the consent box below to show the QR code.",
+    "statusInitializing": "Preparing the QR code",
+    "statusWaiting": "Waiting for the text message",
+    "statusDuplicated": "This number already has access",
+    "statusResolved": "Confirmed. Unlocking now…",
+    "statusRejected": "We could not verify the confirmation. Please try again.",
+    "sendSms": "Send the text message",
+    "cancel": "Cancel",
+    "consentLabel": "Tick the consent box to continue",
+    "statusConsent": "Tick the consent box to continue",
+    "qrLabel": "QR code with the payment link"
+  },
+  "consent": {
+    "infoBefore": "Dostęp do tej Treści jest odpłatny:",
+    "infoAfter": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w",
+    "terms": "Regulaminie",
+    "legal": "Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.",
+    "note": "The binding wording of the consent is the Polish text above (§ 11 (2) of the GetViaMsg terms)."
+  },
+  "paywall": {
+    "ariaLabel": "Paid access to this content",
+    "lead": "The rest of this article is available after unlocking.",
+    "meta": "Added to your session:",
+    "minutes": "minutes of reading",
+    "words": "words",
+    "unlock": "Unlock for",
+    "permanent": "You pay once, with no subscription. The article stays with you."
+  },
+  "a11y": {
+    "newWindow": "opens in a new tab",
+    "publisher": "publisher"
+  }
+}

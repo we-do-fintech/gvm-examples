@@ -1,0 +1,94 @@
+{#
+  Accessibility glue for the gvm payment dialog.
+
+  gvm.js injects the `payment` template on demand and just relies on the
+  plain `open` attribute of <dialog>, i.e. the dialog is NOT modal. That means
+  no focus trap, no Escape handling and a fully interactive page behind it.
+  This little script fixes that without touching the SDK contract:
+
+  - everything except the dialog becomes inert while it is open,
+  - focus moves into the dialog and returns to the pay button on close,
+  - Escape is routed to gvm's own cancel button.
+#}
+<script>
+    (function () {
+        "use strict";
+
+        var pageChrome = document.querySelectorAll(
+            ".site-bar, .example-bar, .main, .site-footer"
+        );
+        var lastTrigger = null;
+
+        document.addEventListener(
+            "click",
+            function (event) {
+                if (!event.target.closest) return;
+                var trigger = event.target.closest(
+                    "[data-gvm-bind-pay], [data-gvm-bind-send-sms]"
+                );
+                if (trigger) lastTrigger = trigger;
+            },
+            true
+        );
+
+        function focusFirst(dialog) {
+            var next =
+                dialog.querySelector("[data-gvm-accept-terms]") ||
+                dialog.querySelector("[data-gvm-bind-send-sms]") ||
+                dialog.querySelector(
+                    "input:not([disabled]), button:not([disabled]), a[href]"
+                );
+            if (next) next.focus();
+        }
+
+        function setLocked(locked) {
+            pageChrome.forEach(function (el) {
+                el.inert = locked;
+            });
+        }
+
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                mutation.addedNodes.forEach(function (node) {
+                    if (!(node instanceof Element)) return;
+                    var dialog = node.matches("dialog.gvm-dialog")
+                        ? node
+                        : node.querySelector("dialog.gvm-dialog");
+                    if (!dialog) return;
+                    setLocked(true);
+                    focusFirst(dialog);
+                });
+                mutation.removedNodes.forEach(function (node) {
+                    if (!(node instanceof Element)) return;
+                    var dialog = node.matches("dialog.gvm-dialog")
+                        ? node
+                        : node.querySelector("dialog.gvm-dialog");
+                    if (!dialog) return;
+                    setLocked(false);
+                    if (lastTrigger && document.contains(lastTrigger)) {
+                        lastTrigger.focus();
+                    }
+                    lastTrigger = null;
+                });
+            });
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key !== "Escape") return;
+            var dialog = document.querySelector("dialog.gvm-dialog");
+            if (!dialog) return;
+            var cancel = dialog.querySelector("[data-gvm-bind-cancel]");
+            if (!cancel) return;
+            event.preventDefault();
+            cancel.click();
+        });
+
+        document.addEventListener("focusin", function (event) {
+            var dialog = document.querySelector("dialog.gvm-dialog");
+            if (!dialog || dialog.contains(event.target)) return;
+            focusFirst(dialog);
+        });
+    })();
+</script>

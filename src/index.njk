@@ -1,0 +1,70 @@
+---
+lang: pl
+title: Showcase
+description: Przykłady integracji GetViaMsg w środowisku testowym.
+altUrl: /en/
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Showcase</h1>
+        <p class="lead">
+            Zobacz naszą usługę w środowisku testowym: możesz śmiało wysyłać
+            SMS-y, płatności są symulowane, a późniejsze rozliczenia opłacisz
+            mockami kart. Warto przejść cały proces zakupu i rozliczenia.
+        </p>
+    </div>
+
+    <h2 class="section-title">Wydawcy</h2>
+    <div class="card-grid">
+        <a class="card" href="/publisher/unlock-article/">
+            <span class="badge">Live · hide</span>
+            <h3>Odblokowanie artykułu</h3>
+            <p>
+                Artykuł z bezpłatnym początkiem i mikropłatnością za resztę.
+            </p>
+        </a>
+        <div class="card card--soon">
+            <span class="badge badge--muted">Wkrótce</span>
+            <h3>Bez reklam</h3>
+            <p>Jednodniowy dostęp bez reklam, rozliczany jednym SMS-em.</p>
+        </div>
+        <div class="card card--soon">
+            <span class="badge badge--muted">Wkrótce</span>
+            <h3>Zdjęcie w wysokiej rozdzielczości</h3>
+            <p>Bezpłatny podgląd, płatny plik do pobrania.</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">E-commerce cyfrowy</h2>
+    <div class="card-grid">
+        <div class="card card--soon">
+            <span class="badge badge--muted">Wkrótce</span>
+            <h3>E-book</h3>
+            <p>Pobranie e-booka po mikropłatności.</p>
+        </div>
+        <div class="card card--soon">
+            <span class="badge badge--muted">Wkrótce</span>
+            <h3>Plik muzyczny</h3>
+            <p>Sprzedaż pojedynczego utworu.</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Licencje SaaS i dodatki</h2>
+    <div class="card-grid">
+        <div class="card card--soon">
+            <span class="badge badge--muted">Wkrótce</span>
+            <h3>Plany aplikacji</h3>
+            <p>Miesięczny plan potwierdzany SMS-em.</p>
+        </div>
+        <div class="card card--soon">
+            <span class="badge badge--muted">Wkrótce</span>
+            <h3>Mikropłatności w aplikacji</h3>
+            <p>Pojedyncze funkcje i dodatki w środku produktu.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

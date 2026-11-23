@@ -1,0 +1,58 @@
+{
+  "skipToContent": "Przejdź do treści",
+  "nav": {
+    "label": "Nawigacja główna",
+    "home": "Start",
+    "docs": "Dokumentacja",
+    "github": "GitHub"
+  },
+  "langSwitch": {
+    "label": "Język strony",
+    "other": "English"
+  },
+  "footer": {
+    "label": "Stopka",
+    "terms": "Regulamin",
+    "contact": "Kontakt"
+  },
+  "exampleBar": {
+    "label": "Nawigacja przykładu",
+    "back": "Showcase"
+  },
+  "payment": {
+    "heading": "Odblokuj w kilka sekund",
+    "sub": "Wyślij zwykłego SMS-a, żeby uzyskać dostęp. Płacisz później, raz za całą sesję.",
+    "priceLabel": "Dostęp jednorazowy",
+    "qrHint": "Zaznacz zgodę poniżej, aby wyświetlić kod QR.",
+    "statusInitializing": "Przygotowujemy kod QR",
+    "statusWaiting": "Czekamy na SMS",
+    "statusDuplicated": "Ten numer ma już dostęp",
+    "statusResolved": "Potwierdzone. Odblokowujemy…",
+    "statusRejected": "Nie udało się potwierdzić. Spróbuj ponownie.",
+    "sendSms": "Wyślij SMS i odblokuj",
+    "cancel": "Anuluj",
+    "consentLabel": "Zaznacz zgodę, aby kontynuować",
+    "statusConsent": "Zaznacz zgodę, aby kontynuować",
+    "qrLabel": "Kod QR z linkiem do płatności"
+  },
+  "consent": {
+    "infoBefore": "Dostęp do tej Treści jest odpłatny:",
+    "infoAfter": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w",
+    "terms": "Regulaminie",
+    "legal": "Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.",
+    "note": ""
+  },
+  "paywall": {
+    "ariaLabel": "Płatny dostęp do treści",
+    "lead": "Dalsza część jest dostępna po odblokowaniu.",
+    "meta": "Do Twojej sesji dojdzie:",
+    "minutes": "minut czytania",
+    "words": "słów",
+    "unlock": "Odblokuj za",
+    "permanent": "Płacisz raz, bez abonamentu. Kupiony artykuł zostaje z Tobą."
+  },
+  "a11y": {
+    "newWindow": "otwiera się w nowej karcie",
+    "publisher": "wydawca"
+  }
+}

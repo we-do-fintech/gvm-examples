@@ -1,0 +1,81 @@
+---
+lang: en
+title: Unlock an article — “The Light-House Keeper of Aspinwall”
+description: A free opening and a micropayment for the rest. The simplest GetViaMsg use case for publishers.
+crumb: Publishers · Unlock an article
+altUrl: /publisher/unlock-article/
+gvm: true
+permalink: /en/publisher/unlock-article/
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-dialog.njk" import paymentDialog %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+
+{% block content %}
+<div class="container">
+    <article class="article">
+        <header class="article-head">
+            <p class="kicker">Literary archive</p>
+            <h1>{{ texts.latarnik.title.en }}</h1>
+            <p class="byline">
+                {{ texts.latarnik.author }} · {{ texts.latarnik.year }} · short
+                story
+            </p>
+            <p class="lead">
+                “The Light-House Keeper of Aspinwall” is one of Henryk
+                Sienkiewicz’s best-known short stories — an old soldier takes a
+                lighthouse keeper’s post after years of wandering. The opening
+                paragraphs below are free; the rest unlocks with a single
+                micropayment.
+            </p>
+        </header>
+
+        {#
+          The gated element. gvm.js reads `data-gvm-price` / `-reference` from
+          here and hides everything after `data-gvm-hide-sections` sections,
+          then injects the `paywall` template into `#article`.
+        #}
+        <div
+            id="article"
+            class="article-body wait-for-script"
+            data-gvm-reference="latarnik-en"
+            data-gvm-price="1.99"
+            data-gvm-template-name="payment"
+            data-gvm-hide-template-name="paywall"
+            data-gvm-hide-strategy="hide"
+            data-gvm-hide-sections="6"
+            data-gvm-metadata-title="{{ texts.latarnik.title.en }}"
+            data-gvm-category="article"
+        >
+            {% for paragraph in texts.latarnik.paras.en %}
+            <p>{{ paragraph }}</p>
+            {% endfor %}
+        </div>
+
+        <footer class="article-source">
+            <p>
+                Text: {{ texts.latarnik.author }}, “{{ texts.latarnik.title.en
+                }}” ({{ texts.latarnik.year }}), translated by Jeremiah Curtin
+                (1893) — public domain, source: {{ texts.latarnik.source.en }}.
+                This is a GetViaMsg showcase of single-article sales; the text
+                itself is unchanged.
+            </p>
+            <details>
+                <summary>How it works (for developers)</summary>
+                <p>
+                    The full text is in the DOM, but gvm.js hides everything
+                    after the sixth paragraph and injects the
+                    <code>paywall</code> template where
+                    <code>#article</code> is. Payment is handled by one shared
+                    <code>payment</code> template that reads the amount and the
+                    content reference from <code>data-gvm-*</code> attributes.
+                </p>
+            </details>
+        </footer>
+    </article>
+</div>
+
+{{ paymentDialog({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

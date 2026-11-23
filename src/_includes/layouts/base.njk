@@ -1,0 +1,23 @@
+{% set l = i18n[lang] %}
+{% set isEn = lang == "en" %}
+{% set langPrefix = "/en" if isEn else "" %}
+{% set homeUrl = langPrefix + "/" %}
+{% set otherLang = "pl" if isEn else "en" %}
+{% set otherHref = altUrl if altUrl else ("/" if isEn else "/en/") %}
+<!doctype html>
+<html lang="{{ lang }}">
+    <head>
+        {% include "partials/head.njk" %}
+    </head>
+    <body{% if gvm %} data-gvm data-gvm-analytics="custom" data-gvm-tenant="{{ site.tenant }}" data-gvm-env="{{ env or site.env }}" data-gvm-currency="{{ site.currency }}"{% endif %}>
+        <a class="skip-link" href="#main">{{ l.skipToContent }}</a>
+        {% include "partials/header.njk" %}
+        {% if crumb %}{% include "partials/example-bar.njk" %}{% endif %}
+        <main id="main" class="main">
+            {% block content %}{{ content | safe }}{% endblock %}
+        </main>
+        {% include "partials/footer.njk" %}
+        {% if gvm %}{% include "gvm/dialog-a11y.njk" %}{% endif %}
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

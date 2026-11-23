@@ -1,0 +1,70 @@
+---
+lang: en
+title: Showcase
+description: GetViaMsg integration examples in the test environment.
+altUrl: /
+permalink: /en/
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Showcase</h1>
+        <p class="lead">
+            See our service in a test environment: feel free to send text
+            messages, payments are simulated, and later settlement notices can
+            be paid with card mocks. It is worth going through the whole
+            purchase and settlement flow.
+        </p>
+    </div>
+
+    <h2 class="section-title">Publishers</h2>
+    <div class="card-grid">
+        <a class="card" href="/en/publisher/unlock-article/">
+            <span class="badge">Live · hide</span>
+            <h3>Unlock an article</h3>
+            <p>An article with a free opening and a micropayment for the rest.</p>
+        </a>
+        <div class="card card--soon">
+            <span class="badge badge--muted">Coming soon</span>
+            <h3>Ad-free</h3>
+            <p>A one-day ad-free pass settled with a single text message.</p>
+        </div>
+        <div class="card card--soon">
+            <span class="badge badge--muted">Coming soon</span>
+            <h3>High-resolution photo</h3>
+            <p>A free preview in front of a paid download.</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Digital commerce</h2>
+    <div class="card-grid">
+        <div class="card card--soon">
+            <span class="badge badge--muted">Coming soon</span>
+            <h3>E-book</h3>
+            <p>An e-book download after a micropayment.</p>
+        </div>
+        <div class="card card--soon">
+            <span class="badge badge--muted">Coming soon</span>
+            <h3>Music file</h3>
+            <p>Selling a single track.</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">SaaS licences and add-ons</h2>
+    <div class="card-grid">
+        <div class="card card--soon">
+            <span class="badge badge--muted">Coming soon</span>
+            <h3>App plans</h3>
+            <p>A monthly plan confirmed by text message.</p>
+        </div>
+        <div class="card card--soon">
+            <span class="badge badge--muted">Coming soon</span>
+            <h3>In-app micropayments</h3>
+            <p>Single features and add-ons inside a product.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

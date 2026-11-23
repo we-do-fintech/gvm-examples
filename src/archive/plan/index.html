@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Plans &amp; Activation — gvm.js App Monetization</title>
+        <meta
+            name="description"
+            content="Sell app plans and single features with GetViaMsg: confirm with one SMS, pay once on a single bill per period. Demo pricing page with an activation-code flow."
+        />
+        <link rel="stylesheet" href="/assets/pico.css" />
+        <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+        <link rel="stylesheet" href="/assets/showcase.css?v=20261105-plan" />
+
+        <!--
+            NOTE: gvm.js is NOT loaded in <head> here. The payment reference has
+            to embed the e-mail the customer uses in the app, and gvm.js reads
+            `data-gvm-reference` once, at boot. plan.js therefore collects the
+            e-mail first, writes `plan_<tier>_<email-hash>` onto every plan card,
+            and only then loads the module (see /plan/plan.js).
+        -->
+        <script defer src="/archive/plan/plan.js"></script>
+
+        <!-- agg analytics (self-hosted, agg.tfdw.ovh) -->
+        <script
+            async
+            src="https://agg.tfdw.ovh/agg.js"
+            data-site="pk_tkajj6iaq6xz4vyuhop4"
+        ></script>
+        <!-- forward gvm.js funnel events to agg (assets/agg-gvm-bridge.js) -->
+        <script defer src="/assets/agg-gvm-bridge.js"></script>
+    </head>
+
+    <!--
+        env=qa + tenant wdft_showcase_qa: the payment flow talks to the QA API
+        (no real charge). Everything around it is mocked on the front end:
+        the e-mail → reference hash and the activation code.
+    -->
+    <body
+        data-gvm
+        data-gvm-analytics="custom"
+        data-gvm-tenant="wdft_showcase_qa"
+        data-gvm-env="qa"
+        data-gvm-currency="PLN"
+        data-gvm-category="plan"
+        data-gvm-callback="planPaymentCallback"
+    >
+        <!-- Payment dialog — shared by all three plan cards -->
+        <template
+            data-gvm-template="payment"
+            data-gvm-template-inject-to="body"
+        >
+            <dialog open>
+                <article class="mini payment-modal plan-payment">
+                    <header class="payment-header">
+                        <p class="plan-dialog__eyebrow">Activate your plan</p>
+                        <h3 class="plan-dialog__name">
+                            <span data-gvm-bind-metadata-title>Your plan</span>
+                            <span class="plan-dialog__price">
+                                <span data-gvm-bind-price></span>
+                                <span data-gvm-bind-currency></span>
+                                <span class="plan-dialog__period">/ month</span>
+                            </span>
+                        </h3>
+                        <p class="plan-dialog__sub">
+                            Confirm with one SMS. You pay for the period later,
+                            on a single bill.
+                        </p>
+                    </header>
+
+                    <section class="payment-body">
+                        <div class="plan-pay-col plan-pay-col--qr">
+                            <div class="payment-qr-wrap">
+                            <div
+                                class="payment-qr-gate gvm-terms-blocked"
+                                data-gvm-terms-container
+                            >
+                                <span data-gvm-bind-qr class="payment-qr">
+                                    <span aria-busy="true"></span>
+                                </span>
+                                <div class="payment-qr-cover">
+                                    <svg
+                                        class="payment-qr-lock"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.6"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <rect
+                                            x="4.5"
+                                            y="10.5"
+                                            width="15"
+                                            height="9"
+                                        />
+                                        <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" />
+                                    </svg>
+                                    <span
+                                        >Tick the consent box below to show the QR
+                                        code.</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="payment-status-row">
+                            <span
+                                data-gvm-bind-status
+                                data-gvm-bind-status-consent="Tick the consent box to continue"
+                                data-gvm-bind-status-initializing="Preparing the QR code"
+                                data-gvm-bind-status-waiting="Waiting for your SMS"
+                                data-gvm-bind-status-duplicated="Already activated on this number"
+                                data-gvm-bind-status-resolved="Confirmed. Activating your plan..."
+                                data-gvm-bind-status-rejected="Confirmation could not be verified. Please try again."
+                            >
+                            </span>
+                            <span class="payment-time">
+                                · <span data-gvm-bind-time-remaining>00:00</span>
+                            </span>
+                        </p>
+                        </div>
+
+                        <div class="plan-pay-col plan-pay-col--form">
+                        <div class="consent" lang="pl">
+                            <p class="consent-info">
+                                Dostęp do wybranego Planu jest odpłatny:
+                                <strong
+                                    ><span data-gvm-bind-price></span>&nbsp;<span
+                                        data-gvm-bind-currency
+                                    ></span></strong
+                                >
+                                — kwota trafi na zbiorcze rozliczenie Twojej
+                                Sesji. Szczegóły w
+                                <a
+                                    href="https://getviamsg.com/terms"
+                                    target="_blank"
+                                    rel="noopener"
+                                    >Regulaminie</a
+                                >.
+                            </p>
+                            <label class="consent-terms">
+                                <input
+                                    type="checkbox"
+                                    data-gvm-accept-terms=".payment-qr-gate, [data-gvm-bind-send-sms], [data-gvm-bind-unlock]"
+                                    data-gvm-accept-terms-version="pl-2026-10-23"
+                                    data-gvm-accept-terms-label="Tick the consent box to continue"
+                                />
+                                <span
+                                    >Żądam rozpoczęcia świadczenia przed upływem
+                                    terminu do odstąpienia od umowy i przyjmuję do
+                                    wiadomości, że z chwilą udostępnienia Treści
+                                    tracę prawo odstąpienia od umowy.</span
+                                >
+                            </label>
+                        </div>
+
+                        <div class="payment-actions">
+                            <button data-gvm-bind-send-sms>
+                                Send SMS to activate
+                            </button>
+                            <button data-gvm-bind-unlock>
+                                Open in the app
+                            </button>
+                            <button data-gvm-bind-cancel>Cancel</button>
+                        </div>
+                        </div>
+                    </section>
+
+                    <footer class="payment-footer">
+                        <small>
+                            GetViaMsg by
+                            <a href="https://getviamsg.com/">WDFT</a>
+                        </small>
+                    </footer>
+                </article>
+            </dialog>
+        </template>
+
+        <!--
+            "Paywall" templates for the plan cards. There is no gated content
+            here: the hide strategy is declared with no split config, so nothing
+            is hidden — gvm.js only injects a bound pay button into each slot.
+        -->
+        <template
+            data-gvm-template="cta-basic"
+            data-gvm-template-inject-to="#plan-cta-basic"
+        >
+            <div class="plan-buy-wrap">
+                <button data-gvm-bind-pay class="plan-buy" type="button">
+                    Choose Basic ·
+                    <span data-gvm-bind-price></span>
+                    <span data-gvm-bind-currency></span>
+                </button>
+            </div>
+        </template>
+        <template
+            data-gvm-template="cta-plus"
+            data-gvm-template-inject-to="#plan-cta-plus"
+        >
+            <div class="plan-buy-wrap">
+                <button data-gvm-bind-pay class="plan-buy" type="button">
+                    Choose Plus ·
+                    <span data-gvm-bind-price></span>
+                    <span data-gvm-bind-currency></span>
+                </button>
+            </div>
+        </template>
+        <template
+            data-gvm-template="cta-pro"
+            data-gvm-template-inject-to="#plan-cta-pro"
+        >
+            <div class="plan-buy-wrap">
+                <button data-gvm-bind-pay class="plan-buy" type="button">
+                    Choose Pro ·
+                    <span data-gvm-bind-price></span>
+                    <span data-gvm-bind-currency></span>
+                </button>
+            </div>
+        </template>
+
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="/">
+                    <img
+                        src="/assets/getviamsg-logo-dark-t-logo-wdft.png"
+                        alt="GetViaMsg"
+                    />
+                </a>
+                <div class="small-nav">App plans · gvm.js</div>
+            </div>
+        </header>
+
+        <main class="container showcase-shell">
+            <section class="hero-card">
+                <p class="eyebrow">App monetization · gvm.js</p>
+                <header>
+                    <hgroup>
+                        <h1>Activate or buy your app plan</h1>
+                        <h2>
+                            Sell plans and single features inside your app — your
+                            customer confirms with one SMS and pays once, on a
+                            single bill per period.
+                        </h2>
+                    </hgroup>
+                </header>
+                <p class="lead">
+                    Pick a plan, link it to the e-mail you use in your app, and
+                    confirm with a text message. The plan lands on the account
+                    you already have: no card, no redirects, no app-store fee.
+                </p>
+                <div class="plan-switch">
+                    <a href="#get">Buy a plan</a>
+                    <a href="#activate">Activate a code</a>
+                </div>
+            </section>
+
+            <section class="section-card content-gap" id="get">
+                <p class="eyebrow">Plans</p>
+                <header>
+                    <h2>Three plans, one integration</h2>
+                </header>
+                <p class="lead">
+                    Prices are per month and settled through GetViaMsg on the
+                    customer's session bill. First, enter the e-mail you use in
+                    the app — it becomes the payment reference, so the plan is
+                    attached to the right account.
+                </p>
+
+                <form id="plan-email-form" class="plan-email" novalidate>
+                    <label for="plan-email">E-mail you use in the app</label>
+                    <div class="plan-email__row">
+                        <input
+                            id="plan-email"
+                            name="email"
+                            type="email"
+                            placeholder="you@app.com"
+                            autocomplete="email"
+                            required
+                        />
+                        <button type="submit" class="plan-email__submit">
+                            Continue
+                        </button>
+                    </div>
+                    <p class="plan-email__hint" id="plan-email-hint">
+                        We use this e-mail in the payment reference, so the plan
+                        lands on the right app account.
+                    </p>
+                </form>
+
+                <div class="plan-grid" id="plan-grid">
+                    <div
+                        class="plan-card"
+                        data-plan-id="basic"
+                        data-gvm-price="9.99"
+                        data-gvm-reference="plan_basic"
+                        data-gvm-template-name="payment"
+                        data-gvm-hide-template-name="cta-basic"
+                        data-gvm-hide-strategy="hide"
+                        data-gvm-metadata-title="Basic plan"
+                    >
+                        <p class="plan-card__name">Basic</p>
+                        <p class="plan-card__price">
+                            <span class="plan-card__amount">9.99</span>
+                            <span class="plan-card__period">PLN / month</span>
+                        </p>
+                        <p class="plan-card__note">
+                            For a single app finding its first paying users.
+                        </p>
+                        <ul class="plan-card__features">
+                            <li>1 app, 1 tenant</li>
+                            <li>1,000 unlocked sessions / month</li>
+                            <li>SMS + QR checkout</li>
+                            <li>Session billing, one bill per period</li>
+                            <li>E-mail support</li>
+                        </ul>
+                        <div class="plan-card__cta">
+                            <div id="plan-cta-basic" class="plan-cta-slot">
+                                <p class="plan-cta-placeholder">
+                                    Add your e-mail to continue
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="plan-card plan-card--featured"
+                        data-plan-id="plus"
+                        data-gvm-price="19.99"
+                        data-gvm-reference="plan_plus"
+                        data-gvm-template-name="payment"
+                        data-gvm-hide-template-name="cta-plus"
+                        data-gvm-hide-strategy="hide"
+                        data-gvm-metadata-title="Plus plan"
+                    >
+                        <span class="plan-card__badge">Most popular</span>
+                        <p class="plan-card__name">Plus</p>
+                        <p class="plan-card__price">
+                            <span class="plan-card__amount">19.99</span>
+                            <span class="plan-card__period">PLN / month</span>
+                        </p>
+                        <p class="plan-card__note">
+                            For teams shipping paid features every month.
+                        </p>
+                        <ul class="plan-card__features">
+                            <li>Everything in Basic</li>
+                            <li>3 apps, 3 tenants</li>
+                            <li>10,000 unlocked sessions / month</li>
+                            <li>Custom plan &amp; add-on pricing</li>
+                            <li>Activation codes for app accounts</li>
+                            <li>Priority e-mail support</li>
+                        </ul>
+                        <div class="plan-card__cta">
+                            <div id="plan-cta-plus" class="plan-cta-slot">
+                                <p class="plan-cta-placeholder">
+                                    Add your e-mail to continue
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="plan-card"
+                        data-plan-id="pro"
+                        data-gvm-price="29.99"
+                        data-gvm-reference="plan_pro"
+                        data-gvm-template-name="payment"
+                        data-gvm-hide-template-name="cta-pro"
+                        data-gvm-hide-strategy="hide"
+                        data-gvm-metadata-title="Pro plan"
+                    >
+                        <p class="plan-card__name">Pro</p>
+                        <p class="plan-card__price">
+                            <span class="plan-card__amount">29.99</span>
+                            <span class="plan-card__period">PLN / month</span>
+                        </p>
+                        <p class="plan-card__note">
+                            For apps that need verified prices and reporting.
+                        </p>
+                        <ul class="plan-card__features">
+                            <li>Everything in Plus</li>
+                            <li>Unlimited apps and sessions</li>
+                            <li>Server-side price tokens (HMAC)</li>
+                            <li>Webhooks, exports &amp; monthly reports</li>
+                            <li>Dedicated onboarding call</li>
+                        </ul>
+                        <div class="plan-card__cta">
+                            <div id="plan-cta-pro" class="plan-cta-slot">
+                                <p class="plan-cta-placeholder">
+                                    Add your e-mail to continue
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    id="plan-success"
+                    class="plan-success"
+                    hidden
+                    aria-live="polite"
+                >
+                    <p class="eyebrow">Order received</p>
+                    <h2>Your plan is active</h2>
+                    <p>
+                        We linked
+                        <strong id="plan-success-email">your e-mail</strong> to
+                        the <strong id="plan-success-plan">plan</strong> plan.
+                    </p>
+                    <p>
+                        Activation code — enter it in the app, or open the app
+                        straight from here:
+                    </p>
+                    <div class="plan-code-row">
+                        <code id="plan-success-code" class="plan-code"
+                            >XXXX-XXXX-XXXX</code
+                        >
+                        <button
+                            type="button"
+                            id="plan-copy-code"
+                            class="plan-copy"
+                        >
+                            Copy
+                        </button>
+                    </div>
+                    <a
+                        id="plan-success-unlock"
+                        class="plan-unlock"
+                        href="#"
+                        target="_blank"
+                        rel="noopener"
+                        hidden
+                        >Open in the app →</a
+                    >
+                    <p class="plan-success__note">
+                        Mock note: this code is derived from the e-mail on the
+                        front end. In production your backend issues it after it
+                        verifies the commitment signature for the e-mail you
+                        provided, and/or sends it to you by e-mail.
+                    </p>
+                    <p>
+                        <a href="#activate">Have the code? Activate it below ↓</a>
+                    </p>
+                </div>
+
+                <div class="content-gap note-box">
+                    <strong>Demo:</strong> the page uses
+                    <code>data-gvm-env="qa"</code> with tenant
+                    <code>wdft_showcase_qa</code>, so the SMS/QR flow runs
+                    against the QA API without a real charge. References look
+                    like <code>plan_plus_1a2b3c4d5e</code> — the last 10 chars are
+                    a mock hash of the e-mail you typed.
+                </div>
+            </section>
+
+            <section class="section-card content-gap">
+                <p class="eyebrow">Compare</p>
+                <header>
+                    <h2>Compare plans</h2>
+                </header>
+                <div class="plan-compare">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Feature</th>
+                                <th scope="col">Basic</th>
+                                <th scope="col">Plus</th>
+                                <th scope="col">Pro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Apps</th>
+                                <td>1</td>
+                                <td>3</td>
+                                <td>Unlimited</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Unlocked sessions / month</th>
+                                <td>1,000</td>
+                                <td>10,000</td>
+                                <td>Unlimited</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">SMS + QR checkout</th>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Session billing</th>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Custom pricing rules</th>
+                                <td><span class="plan-compare__no">—</span></td>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Activation codes</th>
+                                <td><span class="plan-compare__no">—</span></td>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Price tokens (HMAC-SHA256)</th>
+                                <td><span class="plan-compare__no">—</span></td>
+                                <td><span class="plan-compare__no">—</span></td>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Webhooks &amp; reports</th>
+                                <td><span class="plan-compare__no">—</span></td>
+                                <td><span class="plan-compare__no">—</span></td>
+                                <td><span class="plan-compare__yes">Yes</span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Support</th>
+                                <td>E-mail</td>
+                                <td>Priority</td>
+                                <td>Dedicated</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="plan-compare__hint">
+                    Scroll the table sideways on a small screen ›
+                </p>
+            </section>
+
+            <section class="section-card content-gap" id="activate">
+                <p class="eyebrow">Activation</p>
+                <header>
+                    <h2>Have an activation code?</h2>
+                </header>
+                <p class="lead">
+                    Bought a plan and got a code? Enter the e-mail you use in the
+                    app together with the 12-character code to unlock the plan on
+                    that account.
+                </p>
+
+                <form id="plan-activate-form" class="plan-activate" novalidate>
+                    <div class="plan-field">
+                        <label for="plan-activate-email"
+                            >E-mail you use in the app</label
+                        >
+                        <input
+                            id="plan-activate-email"
+                            name="email"
+                            type="email"
+                            placeholder="you@app.com"
+                            autocomplete="email"
+                            required
+                        />
+                    </div>
+                    <div class="plan-activate__row">
+                        <div class="plan-field">
+                            <label for="plan-activate-code"
+                                >Activation code</label
+                            >
+                            <input
+                                id="plan-activate-code"
+                                name="code"
+                                type="text"
+                                placeholder="XXXX-XXXX-XXXX"
+                                autocomplete="off"
+                                spellcheck="false"
+                                required
+                            />
+                        </div>
+                        <button type="button" id="plan-demo-code" class="plan-demo-code">
+                            Show demo code
+                        </button>
+                    </div>
+                    <button type="submit">Activate plan</button>
+                    <p
+                        id="plan-activate-message"
+                        class="plan-activate__message"
+                        role="status"
+                        aria-live="polite"
+                    ></p>
+                </form>
+
+                <div class="content-gap note-box">
+                    <strong>Mock activation:</strong> in this showcase the code
+                    is a deterministic 12-character hash of the e-mail
+                    (<code>XXXX-XXXX-XXXX</code>), so the whole loop works without
+                    a backend. Type an e-mail and press
+                    <em>Show demo code</em>, or buy a plan above to see the code
+                    the app would receive.
+                </div>
+            </section>
+
+            <section class="section-card content-gap">
+                <p class="eyebrow">FAQ</p>
+                <header>
+                    <h2>Questions about app plans</h2>
+                </header>
+                <div class="plan-faq">
+                    <details open>
+                        <summary>How does the customer pay?</summary>
+                        <p>
+                            The customer confirms the plan with one SMS (a QR code
+                            on desktop). Nothing is charged at that moment — all
+                            purchases in the period are collected onto a single
+                            bill that is settled later.
+                        </p>
+                    </details>
+                    <details>
+                        <summary>Which e-mail should be used?</summary>
+                        <p>
+                            The one the customer uses in your app. It becomes part
+                            of the payment reference
+                            (<code>plan_&lt;tier&gt;_&lt;hash&gt;</code>), so your
+                            backend can match a resolved commitment to the right
+                            app account.
+                        </p>
+                    </details>
+                    <details>
+                        <summary>What is an activation code?</summary>
+                        <p>
+                            A short code linked to the e-mail. It is the fallback
+                            when the purchase happened on the web but the app is
+                            installed separately: the customer enters the code in
+                            the app to switch the plan on. In production the code
+                            is issued by your backend, not derived in the browser.
+                        </p>
+                    </details>
+                    <details>
+                        <summary>Can I sell a single feature instead of a plan?</summary>
+                        <p>
+                            Yes. The same <code>data-gvm-*</code> flow sells
+                            one-off features and add-ons; every purchase in a
+                            period lands on the same bill. This page just shows
+                            the plan variant.
+                        </p>
+                    </details>
+                    <details>
+                        <summary>Is this a real charge?</summary>
+                        <p>
+                            No. The demo runs on the QA environment
+                            (<code>data-gvm-env="qa"</code>, tenant
+                            <code>wdft_showcase_qa</code>) and the activation code
+                            is generated in the browser.
+                        </p>
+                    </details>
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                <a href="https://github.com/we-do-fintech/gvm-examples"
+                    >github</a
+                >
+                | <a href="https://docs.wdft.ovh/gvm-js">documentation</a> |
+                <a href="https://getviamsg.com/for-apps/">GetViaMsg for apps</a>
+                | <a href="https://getviamsg.com">getviamsg website</a>
+            </footer>
+        </main>
+    </body>
+</html>

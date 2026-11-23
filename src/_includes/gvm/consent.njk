@@ -1,0 +1,49 @@
+{#
+  Consent + terms markup required by the GetViaMsg terms (regulamin, 23.10.2026).
+
+  Every payment dialog that binds QR / SMS / unlock must contain:
+    - the price + terms info line (consentInfo), and
+    - an UNCHECKED checkbox with `data-gvm-accept-terms` and the consent version.
+
+  The binding consent wording is the Polish § 11 ust. 2 text, so it always keeps
+  `lang="pl"` — even on the English pages of this showcase.
+
+  The macros take everything through `opts` on purpose: Nunjucks imports are
+  isolated from the Eleventy render context, so `t` (i18n strings) and the terms
+  URL have to be passed in explicitly.
+#}
+
+{% macro consentInfo(opts) %}
+{% set t = opts.t %}
+<p class="consent-info {{ opts.classes or '' }}" lang="pl">
+    {{ t.consent.infoBefore }}
+    <strong
+        ><span data-gvm-bind-price></span>&nbsp;<span
+            data-gvm-bind-currency
+        ></span></strong
+    >
+    {{ t.consent.infoAfter }}
+    <a href="{{ opts.termsUrl }}" target="_blank" rel="noopener"
+        >{{ t.consent.terms }}</a
+    >.
+</p>
+{% endmacro %}
+
+{% macro consentBox(opts) %}
+{% set t = opts.t %}
+<div class="consent">
+    {{ consentInfo({ t: t, termsUrl: opts.termsUrl }) }}
+    {% if t.consent.note %}
+    <p class="consent-note">{{ t.consent.note }}</p>
+    {% endif %}
+    <label class="consent-terms">
+        <input
+            type="checkbox"
+            data-gvm-accept-terms="{{ opts.targets }}"
+            data-gvm-accept-terms-version="{{ opts.termsVersion }}"
+            data-gvm-accept-terms-label="{{ t.payment.consentLabel }}"
+        />
+        <span lang="pl">{{ t.consent.legal }}</span>
+    </label>
+</div>
+{% endmacro %}
