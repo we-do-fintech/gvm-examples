@@ -935,3 +935,8 @@ a.card:focus-visible {
         font-size: var(--fs-2xl);
     }
 }
+
+.ppv{display:grid;gap:1rem;max-width:760px}
+.player-slot{border-radius:var(--radius);overflow:hidden;background:var(--bg-1);border:1px solid var(--line)}
+.player{display:block;width:100%;aspect-ratio:16/9;border:0}
+.ppv__bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}

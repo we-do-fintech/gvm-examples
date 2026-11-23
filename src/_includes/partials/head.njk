@@ -4,7 +4,9 @@
 <meta name="description" content="{{ description or site.description }}" />
 <link rel="icon" href="/assets/favicon.ico" sizes="any" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+{% if legacyCss %}<link rel="stylesheet" href="/assets/legacy.css" />{% endif %}
 <link rel="stylesheet" href="/assets/gvm.css" />
+{% if gvm %}<link rel="stylesheet" href="/assets/gvm-drawer.css" />{% endif %}
 
 {#
   gvm.js bootstrap.

@@ -1,0 +1,132 @@
+{% macro paymentDrawer(opts) %}
+{% set t = opts.t %}
+<template data-gvm-template="payment" data-gvm-template-inject-to="body">
+
+
+    <dialog
+        open
+        class="gvm-payment-drawer-overlay"
+        aria-label="{{ t.payment.drawerAria }}"
+    >
+        <div class="gvm-payment-drawer">
+            <span class="gvm-payment-drawer__handle" aria-hidden="true"></span>
+
+            <header class="gvm-payment-drawer__header">
+                <p class="gvm-payment-drawer__eyebrow">
+                    {{ t.payment.drawerEyebrow }}
+                </p>
+
+                <h2 class="gvm-payment-drawer__title">{{ t.payment.drawerTitle }}</h2>
+
+                <p class="gvm-payment-drawer__subtitle">{{ t.payment.drawerSubtitle }} <span class="gvm-payment-drawer__qr-hint">{{ t.payment.drawerQrHint }}</span></p>
+            </header>
+
+            <section class="gvm-payment-drawer__body">
+                <div class="gvm-payment-drawer__price">
+                    <span class="gvm-payment-drawer__price-label">{{ t.payment.priceLabel }}</span>
+
+                    <strong class="gvm-payment-drawer__price-value">
+                        <span data-gvm-bind-price></span>
+                        <span data-gvm-bind-currency></span>
+                    </strong>
+                </div>
+
+                <div
+                    class="gvm-payment-drawer__qr-gate gvm-terms-blocked"
+                    data-gvm-terms-container
+                >
+                    <div
+                        data-gvm-bind-qr
+                        class="gvm-payment-drawer__qr"
+                    >
+                        <span aria-busy="true"></span>
+                    </div>
+
+                    <div class="gvm-payment-drawer__qr-cover">{{ t.payment.qrHint }}</div>
+                </div>
+
+                <p class="gvm-payment-drawer__status">
+                    <span
+                        data-gvm-bind-status
+                        data-gvm-bind-status-consent="{{ t.payment.statusConsent }}"
+                        data-gvm-bind-status-initializing="{{ t.payment.statusInitializing }}"
+                        data-gvm-bind-status-waiting="{{ t.payment.statusWaiting }}"
+                        data-gvm-bind-status-duplicated="{{ t.payment.statusDuplicated }}"
+                        data-gvm-bind-status-resolved="{{ t.payment.statusResolved }}"
+                        data-gvm-bind-status-rejected="{{ t.payment.statusRejected }}"
+                    ></span>
+
+                    <span class="gvm-payment-drawer__time">
+                        (
+                        <span data-gvm-bind-time-remaining>
+                            03:00
+                        </span>
+                        )
+                    </span>
+                </p>
+
+                <p class="gvm-payment-drawer__promise">{{ t.payment.promise }}</p>
+
+                <p class="gvm-payment-drawer__info">
+                    {{ t.consent.infoBefore }}
+                    <strong><span data-gvm-bind-price></span>&nbsp;<span data-gvm-bind-currency></span></strong>
+                    {{ t.consent.infoAfter }}
+                    <a href="{{ opts.termsUrl }}" target="_blank" rel="noopener">{{ t.consent.terms }}</a>.
+                </p>
+
+                <label class="gvm-payment-drawer__terms">
+                    <input
+                        type="checkbox"
+                        data-gvm-accept-terms=".gvm-payment-drawer__qr-gate, [data-gvm-bind-send-sms]"
+                        data-gvm-accept-terms-version="{{ opts.termsVersion }}"
+                        data-gvm-accept-terms-label="{{ t.payment.consentLabel }}"
+                    />
+                    <span>{{ t.consent.legal }}</span>
+                </label>
+
+                <div class="gvm-payment-drawer__actions">
+                    <button
+                        type="button"
+                        class="gvm-payment-drawer__send"
+                        data-gvm-bind-send-sms
+                    >
+                        {{ t.payment.sendSms }}</button>
+
+                    <button
+                        type="button"
+                        class="gvm-payment-drawer__cancel"
+                        data-gvm-bind-cancel
+                    >
+                        {{ t.payment.cancel }}</button>
+                </div>
+            </section>
+
+            <footer class="gvm-payment-drawer__footer">
+                <small>
+                    {{ t.payment.drawerFooter }}
+                    <a class="gvm-brand" href="https://getviamsg.com/">
+                        <svg
+                            class="gvm-brand__mark"
+                            viewBox="44 48 424 424"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <path
+                                class="gvm-brand__mark-bubble"
+                                d="M146 388l14-68a96 96 0 0 1 0-192h192a96 96 0 0 1 0 192H240Z"
+                            />
+                            <circle
+                                class="gvm-brand__mark-dot"
+                                cx="352"
+                                cy="224"
+                                r="56"
+                            />
+                        </svg>
+                        <span>GetViaMsg</span>
+                    </a>
+                </small>
+            </footer>
+        </div>
+    </dialog>
+</template>
+{% endmacro %}

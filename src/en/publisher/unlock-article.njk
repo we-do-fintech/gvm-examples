@@ -8,12 +8,12 @@ gvm: true
 ---
 
 {% extends "layouts/base.njk" %}
-{% from "gvm/payment-dialog.njk" import paymentDialog %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
 {% from "gvm/paywall-inline.njk" import paywallInline %}
 {% set article = catalog[lang].article %}
 
 {% extends "layouts/base.njk" %}
-{% from "gvm/payment-dialog.njk" import paymentDialog %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
 {% from "gvm/paywall-inline.njk" import paywallInline %}
 {% set article = catalog[lang].article %}
 
@@ -42,21 +42,10 @@ gvm: true
             {{ article.html | safe }}
         </div>
 
-        <footer class="article-source">
-            <details>
-                <summary>Jak to działa (dla deweloperów)</summary>
-                <p>
-                    Cały tekst jest w DOM, ale gvm.js ukrywa wszystko po
-                    bezpłatnym wstępie ({{ article.previewWords }} słów) i
-                    wstrzykuje szablon <code>paywall</code> w miejsce
-                    <code>#article</code>. Płatność obsługuje wspólny szablon
-                    <code>payment</code>.
-                </p>
-            </details>
-        </footer>
+        
     </article>
 </div>
 
-{{ paymentDialog({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
 {{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
 {% endblock %}

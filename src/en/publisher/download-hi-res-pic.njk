@@ -8,7 +8,7 @@ gvm: true
 ---
 
 {% extends "layouts/base.njk" %}
-{% from "gvm/payment-dialog.njk" import paymentDialog %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
 {% from "gvm/download-trigger.njk" import downloadTrigger %}
 
 {% block content %}
@@ -52,5 +52,5 @@ gvm: true
     </div>
 </div>
 
-{{ paymentDialog({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
 {% endblock %}

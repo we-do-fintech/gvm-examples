@@ -42,6 +42,12 @@ module.exports = function (eleventyConfig) {
         return `${min}:${String(sec).padStart(2, "0")}`;
     });
 
+    eleventyConfig.addFilter("ytEmbed", (url) => {
+        const match = /[?&]v=([^&]+)/.exec(url || "");
+        return match
+            ? "https://www.youtube.com/embed/" + match[1] + "?autoplay=1"
+            : url;
+    });
     return {
         dir: {
             input: "src",

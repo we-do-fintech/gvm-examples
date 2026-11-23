@@ -1,0 +1,37 @@
+---
+lang: pl
+title: Szablon — Drawer
+description: Panel płatności wysuwany z prawej strony.
+crumb: Templates · Drawer
+altUrl: /en/templates/drawer/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Drawer</h1>
+        <p class="lead">Panel płatności wysuwany z prawej strony — domyślny szablon w GetViaMsg.</p>
+    </div>
+
+    <div id="demo" class="wait-for-script"
+         data-gvm-reference="template-drawer"
+         data-gvm-price="1.99"
+         data-gvm-template-name="payment"
+         data-gvm-hide-template-name="paywall"
+         data-gvm-hide-strategy="hide"
+         data-gvm-hide-words="30"
+         data-gvm-metadata-title="Szablon Drawer"
+         data-gvm-category="article">
+        <p>To przykładowa treść. Po płatności treść zostaje odsłonięta, a formularz pokazuje się dokładnie tak, jak go zaprojektujemy.</p>
+        <p>Kliknij przycisk poniżej, aby zobaczyć panel.</p>
+    </div>
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

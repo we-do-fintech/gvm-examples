@@ -1,0 +1,35 @@
+---
+lang: pl
+title: Szablon — Circle
+description: Duży przycisk i kod QR odsłaniany zgodą.
+crumb: Templates · Circle
+altUrl: /en/templates/circle/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Circle</h1>
+        <p class="lead">Duży przycisk akcji, a kod QR odsłaniany po zaznaczeniu zgody.</p>
+    </div>
+
+    <div id="demo" class="wait-for-script"
+         data-gvm-reference="template-circle"
+         data-gvm-price="1.99"
+         data-gvm-template-name="payment"
+         data-gvm-hide-template-name="paywall"
+         data-gvm-hide-strategy="hide"
+         data-gvm-hide-words="30"
+         data-gvm-metadata-title="Szablon Circle"
+         data-gvm-category="article">
+        <p>To przykładowa treść. Po płatności treść zostaje odsłonięta, a formularz pokazuje się dokładnie tak, jak go zaprojektujemy.</p>
+        <p>Kliknij przycisk poniżej, aby zobaczyć formularz.</p>
+    </div>
+</div>
+
+{% include "gvm/raw-payment-circle.njk" %}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

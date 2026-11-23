@@ -1,0 +1,36 @@
+---
+lang: pl
+title: Szablon — Simple
+description: Minimalny formularz płatności.
+crumb: Templates · Simple
+altUrl: /en/templates/simple/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Simple</h1>
+        <p class="lead">Minimalny formularz: cena, kod QR i przycisk SMS.</p>
+    </div>
+
+    <div id="demo" class="wait-for-script"
+         data-gvm-reference="template-simple"
+         data-gvm-price="1.99"
+         data-gvm-template-name="payment"
+         data-gvm-hide-template-name="paywall"
+         data-gvm-hide-strategy="hide"
+         data-gvm-hide-words="30"
+         data-gvm-metadata-title="Szablon Simple"
+         data-gvm-category="article">
+        <p>To przykładowa treść. Po płatności treść zostaje odsłonięta, a formularz pokazuje się dokładnie tak, jak go zaprojektujemy.</p>
+        <p>Kliknij przycisk poniżej, aby zobaczyć formularz.</p>
+    </div>
+</div>
+
+{% include "gvm/raw-payment-simple.njk" %}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

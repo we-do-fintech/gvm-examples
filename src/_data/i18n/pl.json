@@ -33,7 +33,14 @@
     "cancel": "Anuluj",
     "consentLabel": "Zaznacz zgodę, aby kontynuować",
     "statusConsent": "Zaznacz zgodę, aby kontynuować",
-    "qrLabel": "Kod QR z linkiem do płatności"
+    "qrLabel": "Kod QR z linkiem do płatności",
+    "drawerAria": "Płatność za dostęp do materiału",
+    "drawerEyebrow": "Potwierdzenie SMS",
+    "drawerTitle": "Odblokuj materiał",
+    "drawerSubtitle": "Wyślij SMS, aby odblokować dostęp. To zwykła wiadomość, zwykle bezpłatna (zgodnie z cennikiem operatora).",
+    "drawerQrHint": "Możesz też zeskanować kod telefonem.",
+    "drawerFooter": "Potwierdzenie SMS · system obsługuje",
+    "promise": "Płacisz tylko za odblokowane treści. Link do płatności otrzymasz SMS-em lub e-mailem po zakończeniu zbierania — po 14 dniach, po przekroczeniu 50 zł albo wcześniej, gdy zakończysz je w Portalu klienta."
   },
   "consent": {
     "infoBefore": "Dostęp do tej Treści jest odpłatny:",

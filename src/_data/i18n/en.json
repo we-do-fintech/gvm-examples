@@ -33,7 +33,14 @@
     "cancel": "Cancel",
     "consentLabel": "Tick the consent box to continue",
     "statusConsent": "Tick the consent box to continue",
-    "qrLabel": "QR code with the payment link"
+    "qrLabel": "QR code with the payment link",
+    "drawerAria": "Payment for access to the content",
+    "drawerEyebrow": "SMS confirmation",
+    "drawerTitle": "Unlock the content",
+    "drawerSubtitle": "Send a text message to unlock access. It is a regular message, usually free (per your operator price list).",
+    "drawerQrHint": "You can also scan the code with your phone.",
+    "drawerFooter": "SMS confirmation · powered by",
+    "promise": "You pay only for what you unlock. The payment link arrives by text message or e-mail when the session closes — after 14 days, above 50 PLN, or earlier if you close it in the customer portal."
   },
   "consent": {
     "infoBefore": "Dostęp do tej Treści jest odpłatny:",

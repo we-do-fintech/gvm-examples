@@ -1,0 +1,39 @@
+---
+lang: en
+title: No-code
+description: Gotowe rozwiązania overlay dla stron statycznych.
+altUrl: /no-code/
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>No-code</h1>
+        <p class="lead">
+            Brak czasu w IT? Nie ma problemu — dla stron statycznych mamy gotowe
+            rozwiązania. Usługa overlay pokryje wszystkie Twoje potrzeby:
+            wklejasz jeden skrypt, a resztą zajmuje się konfiguracja.
+        </p>
+    </div>
+
+    <div class="card-grid">
+        <a class="card" href="/no-code/article-1/">
+            <span class="badge">blur · 1.45 PLN</span>
+            <h2>The invisible checkout</h2>
+            <p>Długi artykuł, treść rozmyta za paywallem.</p>
+        </a>
+        <a class="card" href="/no-code/article-2/">
+            <span class="badge">hide · 2.50 PLN</span>
+            <h2>The town that read the fine print</h2>
+            <p>Treść ukryta, overlay usuwa ją z DOM.</p>
+        </a>
+        <a class="card" href="/no-code/article-3/">
+            <span class="badge">mangle-blur · 2.00 PLN</span>
+            <h2>The last hand-made page</h2>
+            <p>Rozmycie plus pomieszane słowa.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+---
+lang: pl
+title: Szablon — Modal
+description: Klasyczny dialog płatności na środku ekranu.
+crumb: Templates · Modal
+altUrl: /en/templates/modal/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-dialog.njk" import paymentDialog %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Modal</h1>
+        <p class="lead">Klasyczny dialog na środku ekranu — dobry, gdy formularz ma być krótki.</p>
+    </div>
+
+    <div id="demo" class="wait-for-script"
+         data-gvm-reference="template-modal"
+         data-gvm-price="1.99"
+         data-gvm-template-name="payment"
+         data-gvm-hide-template-name="paywall"
+         data-gvm-hide-strategy="hide"
+         data-gvm-hide-words="30"
+         data-gvm-metadata-title="Szablon Modal"
+         data-gvm-category="article">
+        <p>To przykładowa treść. Po płatności treść zostaje odsłonięta, a formularz pokazuje się dokładnie tak, jak go zaprojektujemy.</p>
+        <p>Kliknij przycisk poniżej, aby zobaczyć dialog.</p>
+    </div>
+</div>
+
+{{ paymentDialog({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

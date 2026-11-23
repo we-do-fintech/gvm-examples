@@ -8,37 +8,53 @@ gvm: true
 ---
 
 {% extends "layouts/base.njk" %}
-{% from "gvm/payment-dialog.njk" import paymentDialog %}
-{% from "gvm/paywall-inline.njk" import paywallInline %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
 {% set poster = catalog[lang].posters | last %}
 
 {% block content %}
 <div class="container">
     <div class="page-head">
         <h1>Pay-per-view</h1>
+        <p class="lead">
+            Jedno nagranie, jeden seans. Po opłaceniu w miejsce miniaturki
+            wstrzykuje się odtwarzacz.
+        </p>
     </div>
 
-    <div id="video" class="wait-for-script"
-         data-gvm-reference="vod"
-         data-gvm-price="4.99"
-         data-gvm-template-name="payment"
-         data-gvm-hide-template-name="paywall"
-         data-gvm-hide-strategy="hide"
-         data-gvm-hide-percent="40"
-         data-gvm-metadata-title="Nagranie wideo"
-         data-gvm-category="video">
-        <p class="lead">
-            Nagranie odblokowujesz jedną mikropłatnością.
-        </p>
-        <a class="video-card" href="{{ catalog[lang].vod.url }}" rel="noopener">
-            {% if poster and poster.preview %}
-            <img src="{{ poster.preview.href }}" alt="" width="{{ poster.preview.width }}" height="{{ poster.preview.height }}" loading="lazy" />
-            {% endif %}
-            <span class="video-card__play">Odtwórz nagranie</span>
-        </a>
+    <div class="ppv">
+        <div id="player" class="player-slot">
+            <div class="video-card">
+                {% if poster and poster.preview %}
+                <img
+                    src="{{ poster.preview.href }}"
+                    alt="Miniaturka nagrania"
+                    width="{{ poster.preview.width }}"
+                    height="{{ poster.preview.height }}"
+                    loading="lazy"
+                />
+                {% endif %}
+                <span class="video-card__play">Odtwarzacz odblokuje się po opłaceniu</span>
+            </div>
+        </div>
+
+        <div class="ppv__bar">
+            <p class="track__meta">Nagranie wideo · 4,99 zł</p>
+            <button
+                type="button"
+                class="btn btn--accent"
+                data-gvm-reference="vod"
+                data-gvm-price="4.99"
+                data-gvm-template-name="payment"
+                data-gvm-metadata-title="Nagranie wideo"
+                data-gvm-category="video"
+                data-gvm-http-inject="/ppv/player.html"
+                data-gvm-http-inject-to="#player"
+            >
+                Obejrzyj za 4,99 zł
+            </button>
+        </div>
     </div>
 </div>
 
-{{ paymentDialog({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
-{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
 {% endblock %}

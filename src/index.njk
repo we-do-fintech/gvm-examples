@@ -1,7 +1,7 @@
 ---
 lang: pl
-title: Showcase
-description: Przykłady integracji GetViaMsg w środowisku testowym.
+title: Showcases
+description: Use case'y, rozwiązania no-code i szablony formularza płatności.
 altUrl: /en/
 ---
 
@@ -10,7 +10,7 @@ altUrl: /en/
 {% block content %}
 <div class="container">
     <div class="page-head">
-        <h1>Showcase</h1>
+        <h1>Showcases</h1>
         <p class="lead">
             Zobacz naszą usługę w środowisku testowym: możesz śmiało wysyłać
             SMS-y, płatności są symulowane, a późniejsze rozliczenia opłacisz
@@ -18,7 +18,7 @@ altUrl: /en/
         </p>
     </div>
 
-    <h2 class="section-title">Wydawcy</h2>
+    <h2 class="section-title" id="usecases">Use cases</h2>
     <div class="card-grid">
         <a class="card" href="/publisher/unlock-article/">
             <span class="badge">Live · hide</span>
@@ -30,15 +30,11 @@ altUrl: /en/
             <h3>Zdjęcie w wysokiej rozdzielczości</h3>
             <p>Bezpłatny podgląd i płatne pobranie plakatu.</p>
         </a>
-        <div class="card card--soon">
-            <span class="badge badge--muted">Wkrótce</span>
+        <a class="card" href="/publisher/remove-ads/">
+            <span class="badge">Live · redirect</span>
             <h3>Bez reklam</h3>
             <p>Jednodniowy dostęp bez reklam.</p>
-        </div>
-    </div>
-
-    <h2 class="section-title">E-commerce cyfrowy</h2>
-    <div class="card-grid">
+        </a>
         <a class="card" href="/digital-ecommerce/download-ebook/">
             <span class="badge">Live · download</span>
             <h3>E-book</h3>
@@ -59,20 +55,73 @@ altUrl: /en/
             <h3>Audiobook</h3>
             <p>Pobranie nagrania audio.</p>
         </a>
+        <a class="card" href="/digital-ecommerce/download-report/">
+            <span class="badge">Live · download</span>
+            <h3>Raport PDF</h3>
+            <p>Raport analityczny do pobrania.</p>
+        </a>
+        <a class="card" href="/saas-licenses/">
+            <span class="badge">Live · plan</span>
+            <h3>Licencje SaaS</h3>
+            <p>Plany aplikacji potwierdzane SMS-em.</p>
+        </a>
+        <a class="card" href="/add-ons/">
+            <span class="badge">Live · basket</span>
+            <h3>Dodatki</h3>
+            <p>Konfigurator dodatków rozliczany zbiorczo.</p>
+        </a>
     </div>
 
-    <h2 class="section-title">Licencje SaaS i dodatki</h2>
+    <h2 class="section-title" id="no-code">No-code</h2>
+    <p class="lead">
+        Brak czasu w IT? Nie ma problemu — dla stron statycznych mamy gotowe
+        rozwiązania. Usługa overlay pokryje wszystkie Twoje potrzeby: wklejasz
+        jeden skrypt, a resztą zajmuje się konfiguracja.
+    </p>
     <div class="card-grid">
-        <div class="card card--soon">
-            <span class="badge badge--muted">Wkrótce</span>
-            <h3>Plany aplikacji</h3>
-            <p>Miesięczny plan potwierdzany SMS-em.</p>
-        </div>
-        <div class="card card--soon">
-            <span class="badge badge--muted">Wkrótce</span>
-            <h3>Mikropłatności w aplikacji</h3>
-            <p>Pojedyncze funkcje i dodatki w środku produktu.</p>
-        </div>
+        <a class="card" href="/no-code/article-1/">
+            <span class="badge">blur · 1.45 PLN</span>
+            <h3>The invisible checkout</h3>
+            <p>Długi artykuł, treść rozmyta za paywallem.</p>
+        </a>
+        <a class="card" href="/no-code/article-2/">
+            <span class="badge">hide · 2.50 PLN</span>
+            <h3>The town that read the fine print</h3>
+            <p>Treść ukryta, overlay usuwa ją z DOM.</p>
+        </a>
+        <a class="card" href="/no-code/article-3/">
+            <span class="badge">mangle-blur · 2.00 PLN</span>
+            <h3>The last hand-made page</h3>
+            <p>Rozmycie plus pomieszane słowa.</p>
+        </a>
+    </div>
+
+    <h2 class="section-title" id="templates">Templates</h2>
+    <p class="lead">
+        Zobacz, jak może wyglądać Twój formularz płatności. To przykłady z
+        biblioteki GetViaMsg — docelowy formularz zaprojektujemy razem z Tobą.
+    </p>
+    <div class="card-grid">
+        <a class="card" href="/templates/drawer/">
+            <span class="badge">drawer · główny</span>
+            <h3>Drawer</h3>
+            <p>Panel płatności wysuwany z prawej strony.</p>
+        </a>
+        <a class="card" href="/templates/modal/">
+            <span class="badge">modal</span>
+            <h3>Modal</h3>
+            <p>Klasyczny dialog na środku ekranu.</p>
+        </a>
+        <a class="card" href="/templates/simple/">
+            <span class="badge">simple</span>
+            <h3>Simple</h3>
+            <p>Minimalny formularz: cena, QR i SMS.</p>
+        </a>
+        <a class="card" href="/templates/circle/">
+            <span class="badge">circle</span>
+            <h3>Circle</h3>
+            <p>Duży przycisk, QR odsłaniany zgodą.</p>
+        </a>
     </div>
 </div>
 {% endblock %}

@@ -8,7 +8,7 @@ gvm: true
 ---
 
 {% extends "layouts/base.njk" %}
-{% from "gvm/payment-dialog.njk" import paymentDialog %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
 {% from "gvm/paywall-inline.njk" import paywallInline %}
 {% set poster = catalog[lang].posters | last %}
 
@@ -39,6 +39,6 @@ gvm: true
     </div>
 </div>
 
-{{ paymentDialog({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
 {{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
 {% endblock %}
