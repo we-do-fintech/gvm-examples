@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LogoKit — App Basket · gvm.js</title>
+        <meta
+            name="description"
+            content="In-app configurator mockup: build a brand kit, watch the basket total, and pay the final amount with one SMS through GetViaMsg."
+        />
+        <link rel="stylesheet" href="/assets/pico.css" />
+        <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+        <link
+            rel="stylesheet"
+            href="/assets/showcase.css?v=20261123-appbasket"
+        />
+
+        <!--
+            gvm.js is NOT loaded in <head>: it reads `data-gvm-price` /
+            `data-gvm-reference` once at boot, and the basket total only exists
+            after the customer configures something. app-basket.js sets the
+            attributes on #basket-trigger and then imports the module. If the
+            basket changes later, the page reloads with ?checkout=1 and binds a
+            fresh trigger.
+        -->
+        <script defer src="/app-basket/app-basket.js"></script>
+
+        <!-- agg analytics (self-hosted, agg.tfdw.ovh) -->
+        <script
+            async
+            src="https://agg.tfdw.ovh/agg.js"
+            data-site="pk_tkajj6iaq6xz4vyuhop4"
+        ></script>
+        <!-- forward gvm.js funnel events to agg (assets/agg-gvm-bridge.js) -->
+        <script defer src="/assets/agg-gvm-bridge.js"></script>
+    </head>
+
+    <!--
+        env=qa + tenant wdft_showcase_qa: the SMS/QR flow talks to the QA API
+        (no real charge), the same tenant the other examples use. Switch
+        data-gvm-env to "demo" to make the dialog resolve by itself.
+    -->
+    <body
+        data-gvm
+        data-gvm-analytics="custom"
+        data-gvm-tenant="wdft_showcase_qa"
+        data-gvm-env="qa"
+        data-gvm-currency="PLN"
+        data-gvm-category="logo-kit"
+        data-gvm-callback="basketPaymentCallback"
+    >
+        <!-- Payment dialog — standard QR + SMS flow with the mandatory consent
+             checkbox (regulamin 23.10.2026). -->
+        <template
+            data-gvm-template="payment"
+            data-gvm-template-inject-to="body"
+        >
+            <dialog open>
+                <article class="mini payment-modal">
+                    <header class="payment-header">
+                        <hgroup>
+                            <h3>Pay for your brand kit</h3>
+                            <p>
+                                Confirm with one text message. You pay for the
+                                whole basket later, on a single bill.
+                            </p>
+                        </hgroup>
+                    </header>
+
+                    <section class="payment-body">
+                        <p class="payment-price-line">
+                            <span
+                                class="payment-price-label"
+                                data-gvm-bind-metadata-title
+                                >Logo kit</span
+                            >
+                            <strong>
+                                <span data-gvm-bind-price></span>
+                                <span data-gvm-bind-currency></span>
+                            </strong>
+                        </p>
+
+                        <div class="payment-qr-wrap">
+                            <div
+                                class="payment-qr-gate gvm-terms-blocked"
+                                data-gvm-terms-container
+                            >
+                                <span data-gvm-bind-qr class="payment-qr">
+                                    <span aria-busy="true"></span>
+                                </span>
+                                <div class="payment-qr-cover">
+                                    Tick the consent box below to show the QR
+                                    code.
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="payment-status-row">
+                            <span
+                                data-gvm-bind-status
+                                data-gvm-bind-status-consent="Tick the consent box to continue"
+                                data-gvm-bind-status-initializing="Preparing the QR code"
+                                data-gvm-bind-status-waiting="Waiting for your SMS"
+                                data-gvm-bind-status-duplicated="Already paid on this number"
+                                data-gvm-bind-status-resolved="Confirmed. Generating your kit..."
+                                data-gvm-bind-status-rejected="Confirmation could not be verified. Please try again."
+                            >
+                            </span>
+                            <span class="payment-time">
+                                (<span data-gvm-bind-time-remaining>00:00</span
+                                >)
+                            </span>
+                        </p>
+
+                        <!--<p class="payment-promise" lang="pl">
+                            Link do płatności otrzymasz SMS-em lub e-mailem po
+                            zakończeniu zbierania — po 14 dniach, po przekroczeniu
+                            50 zł albo wcześniej, gdy zakończysz je w Portalu
+                            klienta.
+                        </p>-->
+
+                        <div class="consent" lang="pl">
+                            <p class="consent-info">
+                                Dostęp do tej Treści jest odpłatny:
+                                <strong
+                                    ><span data-gvm-bind-price></span>&nbsp;<span
+                                        data-gvm-bind-currency
+                                    ></span></strong
+                                >
+                                zostanie doliczone do zbiorczego rozliczenia
+                                Twojej Sesji. Sublicencja do Treści wygasa z chwilą
+                                Płatności. Szczegóły w
+                                <a
+                                    href="https://getviamsg.com/terms"
+                                    target="_blank"
+                                    rel="noopener"
+                                    >Regulaminie</a
+                                >.
+                            </p>
+                            <label class="consent-terms">
+                                <input
+                                    type="checkbox"
+                                    data-gvm-accept-terms=".payment-qr-gate, [data-gvm-bind-send-sms]"
+                                    data-gvm-accept-terms-version="pl-2026-10-23"
+                                    data-gvm-accept-terms-label="Tick the consent box to continue"
+                                />
+                                <span
+                                    >Żądam rozpoczęcia świadczenia przed upływem
+                                    terminu do odstąpienia od umowy i przyjmuję do
+                                    wiadomości, że z chwilą udostępnienia Treści
+                                    tracę prawo odstąpienia od umowy.</span
+                                >
+                            </label>
+                        </div>
+
+                        <div class="payment-actions">
+                            <button data-gvm-bind-send-sms>
+                                Send SMS to pay
+                            </button>
+                            <button data-gvm-bind-cancel class="contrast">
+                                Cancel
+                            </button>
+                        </div>
+                    </section>
+
+                    <footer class="payment-footer">
+                        <small>
+                            GetViaMsg by
+                            <a href="https://getviamsg.com/">WDFT</a>
+                        </small>
+                    </footer>
+                </article>
+            </dialog>
+        </template>
+
+        <!--
+            "Paywall" template for the basket CTA. The hide strategy is declared
+            with no split config, so nothing is hidden — gvm.js only injects this
+            bound pay button into #basket-cta-slot. It repeats the price info
+            line with the terms link; the consent checkbox lives in the payment
+            dialog above.
+        -->
+        <template
+            data-gvm-template="basket-cta"
+            data-gvm-template-inject-to="#basket-cta-slot"
+        >
+            <div class="lk-cta">
+                <p class="consent-info" lang="pl">
+                    Dostęp do tej Treści jest odpłatny:
+                    <strong
+                        ><span data-gvm-bind-price></span>&nbsp;<span
+                            data-gvm-bind-currency
+                        ></span></strong
+                    >
+                    zostanie doliczone do zbiorczego rozliczenia Twojej Sesji.
+                    Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w
+                    <a
+                        href="https://getviamsg.com/terms"
+                        target="_blank"
+                        rel="noopener"
+                        >Regulaminie</a
+                    >.
+                </p>
+                <button data-gvm-bind-pay class="lk-pay" type="button">
+                    Pay <span data-gvm-bind-price></span>
+                    <span data-gvm-bind-currency></span> securely
+                </button>
+            </div>
+        </template>
+
+        <!--
+            Hidden payment trigger. app-basket.js writes data-gvm-price,
+            data-gvm-reference and data-gvm-metadata-title here right before it
+            imports gvm.js, then clicks the injected CTA programmatically.
+        -->
+        <div
+            id="basket-trigger"
+            hidden
+            data-gvm-template-name="payment"
+            data-gvm-hide-template-name="basket-cta"
+            data-gvm-hide-strategy="hide"
+        ></div>
+
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="/">
+                    <img
+                        src="/assets/getviamsg-logo-dark-t-logo-wdft.png"
+                        width="100"
+                        height="20"
+                        alt="GetViaMsg"
+                    />
+                </a>
+                <div class="small-nav">App basket · gvm.js</div>
+            </div>
+        </header>
+
+        <main class="container showcase-shell">
+            <section class="hero-card">
+                <p class="eyebrow">App monetization · gvm.js</p>
+                <header>
+                    <hgroup>
+                        <h1>Build a brand kit, pay the basket</h1>
+                        <h2>
+                            A mock in-app configurator: the customer picks
+                            deliverables, the basket total becomes the payment
+                            amount, and one SMS settles it on a single bill.
+                        </h2>
+                    </hgroup>
+                </header>
+                <p class="lead">
+                    LogoKit generates a logo, a color palette, stationery and a
+                    presentation from a short brief. Every add-on is priced
+                    between 0.99 and 5.99 PLN — all ten options together stay
+                    under 30 PLN, and whatever is in the basket is exactly what
+                    GetViaMsg charges when the customer checks out.
+                </p>
+                <div class="lk-hero-facts">
+                    <span><strong>10</strong> deliverables</span>
+                    <span><strong>0.99–5.99</strong> PLN each</span>
+                    <span><strong>≤ 29.90</strong> PLN all options</span>
+                    <span><strong>1 SMS</strong> to pay</span>
+                </div>
+            </section>
+
+            <!-- Two-column app screen: brief + catalog on the left, live
+                 preview + basket on the right. -->
+            <section class="lk-app content-gap">
+                <div class="lk-config section-card">
+                    <p class="eyebrow">Step 1 · Brief</p>
+                    <header>
+                        <h2>Tell LogoKit about the brand</h2>
+                    </header>
+                    <form id="lk-brief" class="lk-brief" novalidate>
+                        <div class="lk-field">
+                            <label for="lk-company">Company name</label>
+                            <input
+                                id="lk-company"
+                                name="company"
+                                type="text"
+                                maxlength="40"
+                                placeholder="Northwind Studio"
+                                autocomplete="organization"
+                                spellcheck="false"
+                            />
+                        </div>
+                        <div class="lk-field">
+                            <label for="lk-tagline"
+                                >Tagline
+                                <span class="lk-optional">optional</span></label
+                            >
+                            <input
+                                id="lk-tagline"
+                                name="tagline"
+                                type="text"
+                                maxlength="48"
+                                placeholder="design &amp; print"
+                                spellcheck="false"
+                            />
+                        </div>
+                        <div class="lk-field-row">
+                            <div class="lk-field">
+                                <label for="lk-industry">Industry</label>
+                                <select id="lk-industry"></select>
+                            </div>
+                            <div class="lk-field">
+                                <label for="lk-mood">Type style</label>
+                                <select id="lk-mood"></select>
+                            </div>
+                        </div>
+                        <div class="lk-field">
+                            <label for="lk-palette">Color palette</label>
+                            <select id="lk-palette"></select>
+                        </div>
+                    </form>
+
+                    <p class="eyebrow lk-step">Step 2 · Deliverables</p>
+                    <header>
+                        <h2>Choose what to generate</h2>
+                    </header>
+                    <p class="lk-hint">
+                        Every item is a separate price. Add or remove items — the
+                        basket total updates live and becomes the GetViaMsg
+                        amount.
+                    </p>
+                    <div id="lk-catalog" class="lk-catalog"></div>
+                </div>
+
+                <aside class="lk-side">
+                    <!-- Live preview: updates from the brief and the palette -->
+                    <div class="lk-preview section-card" id="lk-preview">
+                        <p class="eyebrow">Live preview</p>
+                        <div class="lk-logo" id="lk-logo" data-mood="editorial">
+                            <span class="lk-logo__mark" id="lk-mark">YC</span>
+                            <span class="lk-logo__type">
+                                <span class="lk-logo__name" id="lk-name"
+                                    >Your Company</span
+                                >
+                                <span
+                                    class="lk-logo__tagline"
+                                    id="lk-tagline-preview"
+                                    >brand &amp; identity</span
+                                >
+                            </span>
+                        </div>
+                        <div
+                            class="lk-swatches"
+                            id="lk-swatches"
+                            aria-hidden="true"
+                        ></div>
+                        <div class="lk-assets" id="lk-assets"></div>
+                    </div>
+
+                    <!-- Basket summary + the lazy gvm.js checkout -->
+                    <div class="lk-basket section-card" id="lk-basket">
+                        <p class="eyebrow">Your basket</p>
+                        <ul class="lk-basket__list" id="lk-basket-list"></ul>
+                        <div class="lk-total">
+                            <span>Total</span>
+                            <strong
+                                ><span id="lk-total">0.00</span> PLN</strong
+                            >
+                        </div>
+
+                        <p class="consent-info lk-basket__terms" lang="pl">
+                            Dostęp do tej Treści jest odpłatny:
+                            <strong
+                                ><span id="lk-total-terms">0.00</span>
+                                PLN</strong
+                            >
+                            zostanie doliczone do zbiorczego rozliczenia Twojej
+                            Sesji. Sublicencja do Treści wygasa z chwilą
+                            Płatności. Szczegóły w
+                            <a
+                                href="https://getviamsg.com/terms"
+                                target="_blank"
+                                rel="noopener"
+                                >Regulaminie</a
+                            >.
+                        </p>
+
+                        <button
+                            id="lk-checkout"
+                            class="lk-pay"
+                            type="button"
+                            aria-busy="false"
+                        >
+                            <span id="lk-checkout-label">Pay</span>
+                            <span id="lk-checkout-total">0.00</span> PLN
+                        </button>
+                        <p
+                            id="lk-checkout-note"
+                            class="lk-checkout-note"
+                            role="status"
+                            aria-live="polite"
+                            hidden
+                        ></p>
+
+                        <!-- gvm.js injects the bound CTA here and the page
+                             clicks it programmatically to open the dialog. -->
+                        <div id="basket-cta-slot" class="lk-cta-slot"></div>
+
+                        <p class="lk-basket__note">
+                            <strong>Showcase:</strong> the basket runs on
+                            <code>data-gvm-env="qa"</code> with tenant
+                            <code>wdft_showcase_qa</code> — no real charge. The
+                            amount sent to GetViaMsg is exactly the total above.
+                        </p>
+                    </div>
+                </aside>
+            </section>
+
+            <!-- Post-payment mock delivery -->
+            <section class="section-card content-gap lk-success" id="lk-success" hidden>
+                <p class="eyebrow">Payment confirmed</p>
+                <header>
+                    <hgroup>
+                        <h2>Your brand kit is ready</h2>
+                        <p>
+                            GetViaMsg confirmed the payment for
+                            <strong id="lk-success-company">your brand</strong>.
+                            This is the in-app delivery step.
+                        </p>
+                    </hgroup>
+                </header>
+
+                <div class="lk-success__grid">
+                    <div class="lk-success__logo" id="lk-success-logo"></div>
+                    <div class="lk-success__meta">
+                        <p>
+                            <span id="lk-success-count">0 deliverables</span>
+                            ·
+                            <strong id="lk-success-total">0.00 PLN</strong>
+                        </p>
+                        <ul id="lk-success-list" class="lk-success__list"></ul>
+                        <p class="lk-success__ref">
+                            Payment reference:
+                            <code id="lk-success-reference">logokit_…</code>
+                        </p>
+                        <div class="lk-success__actions">
+                            <button
+                                type="button"
+                                id="lk-download-logo"
+                                class="lk-download"
+                            >
+                                Download logo (SVG)
+                            </button>
+                            <button
+                                type="button"
+                                id="lk-download-spec"
+                                class="lk-download lk-download--ghost"
+                            >
+                                Download brand spec (JSON)
+                            </button>
+                        </div>
+                        <p class="lk-success__note">
+                            Mock delivery: the “files” are generated in the
+                            browser. In production your backend verifies the
+                            commitment signature, renders the assets and hands
+                            over the real files (or an
+                            <code>unlock_url</code> back into the app).
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How it works -->
+            <section class="section-card content-gap">
+                <p class="eyebrow">Developer Kit</p>
+                <header>
+                    <hgroup>
+                        <h2>The basket is the payment amount</h2>
+                        <h3>
+                            gvm.js reads <code>data-gvm-price</code> once, at
+                            boot — so the page keeps it out of
+                            <code>&lt;head&gt;</code>, computes the total, sets
+                            the attribute and only then imports the module.
+                        </h3>
+                    </hgroup>
+                </header>
+                <ol class="lk-steps">
+                    <li>
+                        <strong>Configure.</strong> The customer edits the brief
+                        and toggles deliverables. The total is computed in
+                        minor units on the client.
+                    </li>
+                    <li>
+                        <strong>Bind.</strong> On checkout the page writes
+                        <code>data-gvm-price</code>,
+                        <code>data-gvm-reference</code> and
+                        <code>data-gvm-metadata-title</code> on
+                        <code>#basket-trigger</code> and appends the gvm.js
+                        module.
+                    </li>
+                    <li>
+                        <strong>Pay.</strong> The <code>hide</code> strategy with
+                        no split config injects only the bound CTA; clicking it
+                        opens the standard QR + SMS dialog and creates the
+                        commitment for the basket amount.
+                    </li>
+                    <li>
+                        <strong>Change.</strong> If the basket changes after
+                        boot, the reference is reloaded with
+                        <code>?checkout=1</code> so the amount is never stale.
+                    </li>
+                </ol>
+                <div class="dev-kit">
+                    <p class="dev-kit-title">Minimal dynamic-amount snippet</p>
+                    <p class="dev-kit-links">
+                        <a
+                            href="https://github.com/we-do-fintech/gvm-examples/blob/main/app-basket/index.html"
+                            >Source on GitHub</a
+                        >
+                        |
+                        <a href="https://docs.wdft.ovh/gvm-js"
+                            >gvm.js documentation</a
+                        >
+                    </p>
+                    <details class="dev-snippet">
+                        <summary>Set the price, then load gvm.js</summary>
+                        <pre><code>&lt;!-- 1) Initialize gvm on body (no SDK in &lt;head&gt;) --&gt;
+&lt;body data-gvm data-gvm-tenant="your_tenant" data-gvm-env="qa"
+      data-gvm-currency="PLN" data-gvm-callback="basketPaymentCallback"&gt;
+
+  &lt;!-- 2) Hidden trigger + pay CTA injected by the hide strategy --&gt;
+  &lt;div id="basket-trigger" hidden
+       data-gvm-template-name="payment"
+       data-gvm-hide-template-name="basket-cta"
+       data-gvm-hide-strategy="hide"&gt;&lt;/div&gt;
+
+  &lt;template data-gvm-template="basket-cta" data-gvm-template-inject-to="#basket-cta-slot"&gt;
+    &lt;p&gt;Dostęp do tej Treści jest odpłatny: &lt;strong&gt;&lt;span data-gvm-bind-price&gt;&lt;/span&gt;&amp;nbsp;&lt;span data-gvm-bind-currency&gt;&lt;/span&gt;&lt;/strong&gt; …&lt;/p&gt;
+    &lt;button data-gvm-bind-pay&gt;Pay &lt;span data-gvm-bind-price&gt;&lt;/span&gt; &lt;span data-gvm-bind-currency&gt;&lt;/span&gt;&lt;/button&gt;
+  &lt;/template&gt;
+
+&lt;script&gt;
+  // 3) The basket total exists only after the customer configures it:
+  const total = 12.95;                 // e.g. 2.99 + 3.99 + 5.99
+  const trigger = document.getElementById('basket-trigger');
+  trigger.setAttribute('data-gvm-price', total.toFixed(2));
+  trigger.setAttribute('data-gvm-reference', 'logokit_northwind_1a2b3c4d');
+  // 4) Only now import the module — it binds price/reference at boot
+  const s = document.createElement('script');
+  s.type = 'module';
+  s.src = 'https://esm.sh/@wdft/gvm-sdk@latest/gvm.js';
+  document.head.appendChild(s);
+&lt;/script&gt;</code></pre>
+                    </details>
+                </div>
+                <div class="note-box">
+                    <strong>Production note:</strong> the browser computes the
+                    total, so a customer could tamper with it. A real app should
+                    compute the basket server-side and mint a signed
+                    <code>data-gvm-price-token</code> for the amount, then verify
+                    the commitment signature before delivering the assets. See
+                    the gvm.js docs → <em>Price token</em>.
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                <a href="https://github.com/we-do-fintech/gvm-examples"
+                    >github</a
+                >
+                | <a href="https://docs.wdft.ovh/gvm-js">documentation</a> |
+                <a href="https://getviamsg.com/for-apps/">GetViaMsg for apps</a>
+                | <a href="https://getviamsg.com">getviamsg website</a>
+            </footer>
+        </main>
+    </body>
+</html>

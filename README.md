@@ -74,6 +74,56 @@ demonstrate direct access to files or downloads.
 
 ---
 
+## Ads (publisher page + ad-free day pass)
+
+`./ads` is a newspaper-style publisher front page monetized with display ad
+placeholders (leaderboard, in-article, native, rail, sticky bottom). The paid
+button uses the **redirect** strategy (`data-gvm-http-redirect-to="/ads/?noads=1"`):
+after a resolved payment gvm.js sends the reader back with signed query params,
+the page stores a 24-hour pass in `localStorage` and `html.ads-free` hides every
+ad slot before the first paint. Runs in `data-gvm-env="qa"` with tenant
+`wdft_showcase_qa`, so the payment flow talks to the QA API without a real
+charge. See `./ads/README.md`.
+
+---
+
+## App plans & activation (`/plan`)
+
+`./plan` is a pricing page for the **“GetViaMsg for apps”** use case: three
+monthly plans (9.99 / 19.99 / 29.99 PLN), a `data-gvm-env="qa"` SMS/QR checkout,
+and a mock activation-code step.
+
+The interesting bit is the e-mail → reference link: gvm.js reads
+`data-gvm-reference` once at boot, so the page collects the e-mail used in the
+app *first*, writes `plan_<tier>_<email-hash>` onto every plan card, and only
+then imports `gvm.js` (so the module is not in `<head>`). A resolved commitment
+shows an activation code derived from the e-mail; the code can be entered in the
+“Activate a code” panel. All of that is front-end mock — production would mint a
+price token, verify the commitment signature and issue the code server-side. See
+[`./plan/README.md`](./plan/README.md).
+
+---
+
+## App basket (`/app-basket`)
+
+`./app-basket` is an **in-app configurator** mockup (“LogoKit”): the customer
+names a brand, picks a type style and a palette, and toggles up to 10 priced
+deliverables (0.99–5.99 PLN). The basket total — at most 29.90 PLN for all
+options — becomes the GetViaMsg amount. It reuses the `qa` tenant from the
+other examples (`wdft_showcase_qa`).
+
+The interesting bit is the **dynamic amount**: gvm.js reads `data-gvm-price` /
+`data-gvm-reference` once at boot, so the page keeps the SDK out of `<head>`,
+computes the total, writes it on `#basket-trigger` and only then imports the
+module. The trigger uses the `hide` strategy with no split config (nothing is
+hidden — gvm.js only injects the bound CTA) and the page clicks that CTA to open
+the dialog. If the basket changes after boot, the reference is reloaded with
+`?checkout=1` and a fresh trigger is bound, so the charged amount is never
+stale. A resolved commitment renders a mock delivery panel in the browser. See
+[`./app-basket/README.md`](./app-basket/README.md).
+
+---
+
 ## Analytics (agg)
 
 Traffic and paywall funnels are collected by a self-hosted
