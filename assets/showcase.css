@@ -1502,6 +1502,177 @@ button {
     color: #42504c;
 }
 
+/* --- Payment dialog, scoped to /plan --------------------------------- */
+dialog article.plan-payment {
+    width: min(93vw, 404px);
+    max-width: 404px;
+}
+
+.plan-payment .payment-header {
+    padding: 1.15rem 1.15rem 0.95rem;
+}
+
+.plan-dialog__eyebrow {
+    margin: 0 0 0.3rem;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+.plan-payment h3.plan-dialog__name {
+    margin: 0;
+    font-size: 1.6rem;
+    line-height: 1.08;
+}
+
+.plan-payment .plan-dialog__price {
+    margin: 0.35rem 0 0.6rem;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #6b3113;
+}
+
+.plan-payment .plan-dialog__period {
+    color: var(--ink-muted);
+}
+
+.plan-payment .payment-header p.plan-dialog__sub {
+    margin: 0 auto;
+    max-width: 34ch;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: #4f5955;
+}
+
+.plan-payment .payment-body {
+    padding: 1rem 1.15rem 1.15rem;
+}
+
+.plan-payment .payment-qr-wrap {
+    margin: 0 0 0.2rem;
+}
+
+.plan-payment .payment-qr-gate {
+    margin: 0 auto 0.2rem;
+}
+
+dialog article.plan-payment [data-gvm-bind-qr] {
+    width: 204px;
+    height: 204px;
+    min-width: 204px;
+    min-height: 204px;
+    margin: 0 auto;
+    padding: 0.5rem;
+    border: 1px solid var(--line);
+    background: #fff;
+}
+
+.plan-payment .payment-qr-cover {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 1.2rem;
+    border: 1px dashed var(--line-strong);
+    background: var(--paper-soft);
+    color: var(--ink-muted);
+    font-family: "Source Sans 3", system-ui, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.plan-payment .gvm-terms-blocked .payment-qr-cover {
+    display: flex;
+}
+
+.plan-payment .payment-qr-lock {
+    width: 26px;
+    height: 26px;
+    color: var(--ink);
+}
+
+.plan-payment .payment-status-row {
+    margin: 0.75rem 0 0;
+    font-size: 0.84rem;
+}
+
+.plan-payment .payment-status-row [data-gvm-bind-status] {
+    font-weight: 700;
+    color: #1f2724;
+}
+
+.plan-payment .payment-time {
+    color: var(--ink-muted);
+    font-size: 0.82rem;
+}
+
+.plan-payment .consent {
+    margin: 0.85rem auto 0.15rem;
+    max-width: 100%;
+}
+
+.plan-payment .consent .consent-info,
+.plan-payment .consent .consent-terms {
+    font-size: 0.74rem;
+}
+
+.plan-payment .payment-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    margin-top: 0.95rem;
+}
+
+.plan-payment .payment-actions [data-gvm-bind-send-sms],
+.plan-payment .payment-actions [data-gvm-bind-unlock] {
+    width: 100%;
+    min-width: 0;
+}
+
+.plan-payment .payment-actions [data-gvm-bind-unlock] {
+    border: 1px solid var(--line-strong);
+    background: var(--paper-soft);
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.plan-payment .payment-actions [data-gvm-bind-unlock]:hover {
+    border-color: var(--ink);
+    background: var(--accent-soft);
+}
+
+.plan-payment .payment-actions [data-gvm-bind-cancel] {
+    order: 3;
+    min-width: 0;
+    min-height: 0;
+    padding: 0.35rem;
+    border: 0;
+    background: transparent;
+    color: var(--ink-muted);
+    text-decoration: underline;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.plan-payment .payment-actions [data-gvm-bind-cancel]:hover {
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+}
+
+.plan-payment .payment-footer {
+    padding: 0.7rem 1rem;
+}
+
 /* PWA unlock action inside the payment dialog: hidden until gvm binds it
    (i.e. until the backend returns `unlock_url`). */
 .payment-actions [data-gvm-bind-unlock]:not([data-gvm-bound]) {

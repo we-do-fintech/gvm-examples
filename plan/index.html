@@ -52,29 +52,27 @@
             data-gvm-template-inject-to="body"
         >
             <dialog open>
-                <article class="mini payment-modal">
+                <article class="mini payment-modal plan-payment">
                     <header class="payment-header">
-                        <hgroup>
-                            <h3>Activate your plan</h3>
-                            <p>
-                                Confirm with one text message. You pay for the
-                                period later, on a single bill.
-                            </p>
-                        </hgroup>
+                        <p class="plan-dialog__eyebrow">Activate your plan</p>
+                        <h3
+                            class="plan-dialog__name"
+                            data-gvm-bind-metadata-title
+                        >
+                            Your plan
+                        </h3>
+                        <p class="plan-dialog__price">
+                            <span data-gvm-bind-price></span>
+                            <span data-gvm-bind-currency></span>
+                            <span class="plan-dialog__period">/ month</span>
+                        </p>
+                        <p class="plan-dialog__sub">
+                            Confirm with one text message. You pay for the period
+                            later, on a single bill.
+                        </p>
                     </header>
 
                     <section class="payment-body">
-                        <p class="payment-price-line">
-                            <span
-                                class="payment-price-label"
-                                data-gvm-bind-metadata-title
-                                >Plan</span
-                            >
-                            <strong>
-                                <span data-gvm-bind-price></span>
-                                <span data-gvm-bind-currency></span>
-                            </strong>
-                        </p>
 
                         <div class="payment-qr-wrap">
                             <div
@@ -85,8 +83,28 @@
                                     <span aria-busy="true"></span>
                                 </span>
                                 <div class="payment-qr-cover">
-                                    Tick the consent box below to show the QR
-                                    code.
+                                    <svg
+                                        class="payment-qr-lock"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.6"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <rect
+                                            x="4.5"
+                                            y="10.5"
+                                            width="15"
+                                            height="9"
+                                        />
+                                        <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" />
+                                    </svg>
+                                    <span
+                                        >Tick the consent box below to show the QR
+                                        code.</span
+                                    >
                                 </div>
                             </div>
                         </div>
@@ -103,8 +121,7 @@
                             >
                             </span>
                             <span class="payment-time">
-                                (<span data-gvm-bind-time-remaining>00:00</span
-                                >)
+                                · <span data-gvm-bind-time-remaining>00:00</span>
                             </span>
                         </p>
 
@@ -114,6 +131,7 @@
                             50 zł albo wcześniej, gdy zakończysz je w Portalu
                             klienta.
                         </p>-->
+
 
                         <div class="consent" lang="pl">
                             <p class="consent-info">
@@ -153,12 +171,10 @@
                             <button data-gvm-bind-send-sms>
                                 Send SMS to activate
                             </button>
-                            <button data-gvm-bind-unlock class="secondary">
+                            <button data-gvm-bind-unlock>
                                 Open in the app
                             </button>
-                            <button data-gvm-bind-cancel class="contrast">
-                                Cancel
-                            </button>
+                            <button data-gvm-bind-cancel>Cancel</button>
                         </div>
                     </section>
 

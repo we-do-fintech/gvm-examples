@@ -235,7 +235,7 @@
             card.setAttribute("data-gvm-price", plan.price);
             card.setAttribute(
                 "data-gvm-metadata-title",
-                plan.name + " plan"
+                plan.name
             );
             var slot = document.getElementById("plan-cta-" + plan.id);
             if (slot) slot.innerHTML = "";
