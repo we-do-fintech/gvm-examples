@@ -1,7 +1,7 @@
 ---
 lang: pl
-title: Odblokowanie artykułu — „Latarnik”
-description: Bezpłatny początek artykułu i mikropłatność za resztę. Najprostszy use case GetViaMsg dla wydawców.
+title: Odblokowanie artykułu
+description: Bezpłatny początek artykułu i mikropłatność za resztę.
 crumb: Wydawcy · Odblokowanie artykułu
 altUrl: /en/publisher/unlock-article/
 gvm: true
@@ -10,64 +10,47 @@ gvm: true
 {% extends "layouts/base.njk" %}
 {% from "gvm/payment-dialog.njk" import paymentDialog %}
 {% from "gvm/paywall-inline.njk" import paywallInline %}
+{% set article = catalog[lang].article %}
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-dialog.njk" import paymentDialog %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+{% set article = catalog[lang].article %}
 
 {% block content %}
 <div class="container">
     <article class="article">
         <header class="article-head">
-            <p class="kicker">Archiwum literackie</p>
-            <h1>{{ texts.latarnik.title.pl }}</h1>
-            <p class="byline">
-                {{ texts.latarnik.author }} · {{ texts.latarnik.year }} ·
-                opowiadanie
-            </p>
-            <p class="lead">
-                „Latarnik” to jedno z najczęściej czytanych opowiadań Henryka
-                Sienkiewicza — historia starego żołnierza, który po latach
-                tułaczki obejmuje posadę latarnika w Aspinwall. Poniżej
-                pierwsze akapity czytasz bezpłatnie; resztę odblokowujesz
-                jedną mikropłatnością.
-            </p>
+            <p class="kicker">Wydawcy · artykuł</p>
+            <h1 lang="{{ article.contentLang }}">{{ article.title }}</h1>
+            <p class="byline">{{ article.minutes }} min czytania</p>
         </header>
 
-        {#
-          The gated element. gvm.js reads `data-gvm-price` / `-reference` from
-          here and hides everything after `data-gvm-hide-sections` sections,
-          then injects the `paywall` template into `#article`.
-        #}
         <div
             id="article"
             class="article-body wait-for-script"
-            data-gvm-reference="latarnik-pl"
+            lang="{{ article.contentLang }}"
+            data-gvm-reference="artykul-{{ lang }}"
             data-gvm-price="1.99"
             data-gvm-template-name="payment"
             data-gvm-hide-template-name="paywall"
             data-gvm-hide-strategy="hide"
-            data-gvm-hide-sections="6"
-            data-gvm-metadata-title="{{ texts.latarnik.title.pl }}"
+            data-gvm-hide-words="{{ article.previewWords }}"
+            data-gvm-metadata-title="{{ article.title }}"
             data-gvm-category="article"
         >
-            {% for paragraph in texts.latarnik.paras.pl %}
-            <p>{{ paragraph }}</p>
-            {% endfor %}
+            {{ article.html | safe }}
         </div>
 
         <footer class="article-source">
-            <p>
-                Tekst: {{ texts.latarnik.author }}, „{{ texts.latarnik.title.pl
-                }}” ({{ texts.latarnik.year }}) — domena publiczna, źródło:
-                {{ texts.latarnik.source.pl }}. To przykład sprzedaży
-                pojedynczego artykułu w GetViaMsg; treść nie została zmieniona.
-            </p>
             <details>
                 <summary>Jak to działa (dla deweloperów)</summary>
                 <p>
                     Cały tekst jest w DOM, ale gvm.js ukrywa wszystko po
-                    szóstym akapicie i wstrzykuje szablon
-                    <code>paywall</code> w miejsce
-                    <code>#article</code>. Płatność obsługuje jeden wspólny
-                    szablon <code>payment</code>, a kwotę i identyfikator
-                    treści czyta z atrybutów <code>data-gvm-*</code>.
+                    bezpłatnym wstępie ({{ article.previewWords }} słów) i
+                    wstrzykuje szablon <code>paywall</code> w miejsce
+                    <code>#article</code>. Płatność obsługuje wspólny szablon
+                    <code>payment</code>.
                 </p>
             </details>
         </footer>

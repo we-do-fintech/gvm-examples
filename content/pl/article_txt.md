@@ -57,12 +57,14 @@ Dotyczy to m.in. jednorazowego wygenerowania rozbudowanego raportu, wykupienia d
 
 ##### Porównanie zastosowania płatności sesyjnych w kluczowych sektorach
 
-Sektor cyfrowy,Wyzwanie tradycyjne (Tarcie UX),Rozwiązanie sesyjne (GetViaMsg / WDFT)  
-Wydawcy i Media,Paywall zmuszający do stałego abonamentu,"Zakup pojedynczego artykułu (np. 0,99 zł) lub dnia bez reklam zwykłym SMS-em"  
-E-commerce (Digital Goods),Wypełnianie koszyka i podawanie karty dla pliku za 2 zł,"Skan QR / kliknięcie, natychmiastowe pobranie PDF, e-booka lub zdjęcia"  
-Entertainment (PPV),Skomplikowane przelogowywanie kont na obcych urządzeniach,Szybki seans jednorazowy bez logowania i zakłócania kont domowych  
-Gry i Aplikacje,"Przerwanie rozgrywki, porzucanie opłat za funkcje Pro",Zakup mikrododatku w trakcie gry lub jednorazowy eksport funkcji premium  
-SaaS,Konieczność wyższego planu dla pojedynczej operacji,Mikropłatność z dołu za jednorazowy dodatek/add-on lub limit API
+| Sektor cyfrowy | Wyzwanie tradycyjne (Tarcie UX) | Rozwiązanie sesyjne (GetViaMsg / WDFT) |
+| --- | --- | --- |
+| Wydawcy i Media | Paywall zmuszający do stałego abonamentu | Zakup pojedynczego artykułu (np. 0,99 zł) lub dnia bez reklam zwykłym SMS-em |
+| E-commerce (Digital Goods) | Wypełnianie koszyka i podawanie karty dla pliku za 2 zł | Skan QR / kliknięcie, natychmiastowe pobranie PDF, e-booka lub zdjęcia |
+| Entertainment (PPV) | Skomplikowane przelogowywanie kont na obcych urządzeniach | Szybki seans jednorazowy bez logowania i zakłócania kont domowych |
+| Gry i Aplikacje | Przerwanie rozgrywki, porzucanie opłat za funkcje Pro | Zakup mikrododatku w trakcie gry lub jednorazowy eksport funkcji premium |
+| SaaS | Konieczność wyższego planu dla pojedynczej operacji | Mikropłatność z dołu za jednorazowy dodatek/add-on lub limit API |
+
 
 #### 7\. Podsumowanie: Zakupy cyfrowe bez barier i przyszłość mikropłatności
 

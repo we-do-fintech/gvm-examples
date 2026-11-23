@@ -1,0 +1,27 @@
+{#
+  Download strategy.
+
+  The element itself is the payment trigger: gvm.js opens the shared `payment`
+  dialog, and once the commitment is resolved it downloads
+  `data-gvm-http-download` with signed query parameters appended. That is why
+  every file gets its own trigger with its own reference and price.
+
+    {% from "gvm/download-trigger.njk" import downloadTrigger %}
+    {{ downloadTrigger({ reference: "poster1", price: "9.00",
+                         href: poster.full.href, title: "Poster 1",
+                         label: "Pobierz za 9,00 zł" }) }}
+#}
+{% macro downloadTrigger(opts) %}
+<button
+    type="button"
+    class="btn {{ opts.class or 'btn--accent' }}"
+    data-gvm-reference="{{ opts.reference }}"
+    data-gvm-price="{{ opts.price }}"
+    data-gvm-template-name="payment"
+    data-gvm-metadata-title="{{ opts.title }}"
+    data-gvm-category="{{ opts.category or 'file' }}"
+    data-gvm-http-download="{{ opts.href }}"
+>
+    {{ opts.label }}
+</button>
+{% endmacro %}

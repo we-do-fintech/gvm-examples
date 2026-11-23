@@ -27,7 +27,13 @@ src/
   index.njk                 showcase index (PL) -> /
   en/index.njk              showcase index (EN) -> /en/
   publisher/                category: publishers
-    unlock-article.njk      the first, simplest use case
+    unlock-article.njk      hide strategy, inline paywall
+    download-hi-res-pic.njk download strategy, poster previews
+  digital-ecommerce/        category: digital goods
+    download-ebook.njk      download strategy
+    download-music-file.njk one trigger per track
+    pay-per-view.njk        hide strategy, video
+    audiobook.njk           download strategy
   en/                       English mirrors of the pages above
   archive/                  previous flat examples (reference only, NOT built)
   assets/                   css, logos, favicon, agg bridge
@@ -38,7 +44,7 @@ src/
   _data/
     site.js                 tenant, env, currency, SDK + outbound URLs
     i18n/pl.json, en.json   shared chrome + payment/paywall strings
-    texts/latarnik.json     public-domain source text (PL + EN)
+    catalog.js              build-time catalogue of ./content
 ```
 
 ## URL map
@@ -48,10 +54,43 @@ src/
 | `/` | `/en/` |
 | `/publisher/` | `/en/publisher/` |
 | `/publisher/unlock-article/` | `/en/publisher/unlock-article/` |
+| `/publisher/download-hi-res-pic/` | `/en/publisher/download-hi-res-pic/` |
+| `/digital-ecommerce/` | `/en/digital-ecommerce/` |
+| `/digital-ecommerce/download-ebook/` | `/en/digital-ecommerce/download-ebook/` |
+| `/digital-ecommerce/download-music-file/` | `/en/digital-ecommerce/download-music-file/` |
+| `/digital-ecommerce/pay-per-view/` | `/en/digital-ecommerce/pay-per-view/` |
+| `/digital-ecommerce/audiobook/` | `/en/digital-ecommerce/audiobook/` |
 
-Planned next: `/publisher/remove-ads/`, `/publisher/download-hi-res-pic/`,
-`/digital-ecommerce/download-ebook/`, `/digital-ecommerce/download-music-file/`,
-`/saas-licenses/`, `/add-ons/`. Hyphens in URLs, one language per page.
+Planned next: `/publisher/remove-ads/`, `/saas-licenses/`, `/add-ons/`.
+Hyphens in URLs, one language per page.
+
+## Content (`content/`)
+
+Editorial files live outside `src/` and are read at build time by
+`src/_data/catalog.js`. Drop a file in and the next build picks it up
+(`npm run serve` watches the directory).
+
+```
+content/
+  pl/       Polish copy: article_txt.md, vod.md, *.pdf, *.epub, *.mp3
+  en/       English copy; anything missing falls back to pl/
+  common/   shared binaries: posterN.jpg + posterN_small.jpg, lofi_*.ogg
+```
+
+Resolution rules:
+
+- `<lang>/` wins, then `pl/`, then `common/`.
+- Markdown: the file matching `article*.md` is the article; a `.md` holding
+  only a URL is the VOD link. The first heading becomes the page `<h1>`, the
+  rest is re-levelled to h2/h3 and rendered to HTML.
+- The free preview ends right before the first section heading; the word count
+  is passed to gvm.js as `data-gvm-hide-words`.
+- `.pdf`, `.epub`, `.mp3`, `.ogg`, `.jpg` are copied to `dist/content/` so the
+  download strategy has real URLs. Durations (ffprobe) and image sizes are read
+  at build time for the file metadata.
+
+The article page sets `lang="{{ article.contentLang }}"` on the body, so an EN
+page still using PL copy keeps correct language metadata.
 
 ## How examples are built
 

@@ -23,10 +23,17 @@
 - [x] Treść z publicznego źródła: Sienkiewicz, „Latarnik” (PL, wolnelektury.pl)
       i „The Light-House Keeper of Aspinwall” (EN, tłum. Curtin 1893, Wikisource).
 - [x] Nowy `gvm.css` bez pico.css (tokeny 1:1 z getviamsg.com).
+- [x] Treści z `content/` wpięte przez `src/_data/catalog.js`: PL z `content/pl`,
+      EN z `content/en`, binaria z `content/common`; fallback EN -> PL z
+      zachowanym `lang="pl"`. Markdown renderowany w buildzie, nagłówki
+      normalizowane do h2/h3, podgląd liczony w słowach
+      (`data-gvm-hide-words`).
+- [x] Nowe use case'y: `/publisher/download-hi-res-pic/`,
+      `/digital-ecommerce/{download-ebook,download-music-file,pay-per-view,audiobook}/`
+      (+ wersje EN z angielskim UI).
+- [x] Partial `gvm/download-trigger.njk` dla strategii download.
 
-**Następne:** kolejne use case'y, warianty paywalla, `remove-ads`,
-`download-hi-res-pic`, e-commerce, SaaS, dodatki; potem domknięcie CSS i
-usunięcie `showcase.css`/`pico.css`.
+**Następne:** remove-ads, /saas-licenses/, /add-ons/, warianty paywalla (overlay, sticky, widget, banner, drawer), potem domknięcie CSS.
 
 ---
 

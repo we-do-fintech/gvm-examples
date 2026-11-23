@@ -1,0 +1,39 @@
+---
+lang: pl
+title: E-commerce cyfrowy
+description: Przykłady sprzedaży plików cyfrowych — e-book, muzyka, wideo, audiobook.
+altUrl: /en/digital-ecommerce/
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>E-commerce cyfrowy</h1>
+    </div>
+
+    <div class="card-grid">
+        <a class="card" href="/digital-ecommerce/download-ebook/">
+            <span class="badge">Live · download</span>
+            <h2>E-book</h2>
+            <p>Pobranie pliku EPUB po mikropłatności.</p>
+        </a>
+        <a class="card" href="/digital-ecommerce/download-music-file/">
+            <span class="badge">Live · download</span>
+            <h2>Plik muzyczny</h2>
+            <p>Pojedyncze utwory do pobrania.</p>
+        </a>
+        <a class="card" href="/digital-ecommerce/pay-per-view/">
+            <span class="badge">Live · hide</span>
+            <h2>Pay-per-view</h2>
+            <p>Dostęp do pojedynczego nagrania wideo.</p>
+        </a>
+        <a class="card" href="/digital-ecommerce/audiobook/">
+            <span class="badge">Live · download</span>
+            <h2>Audiobook</h2>
+            <p>Pobranie nagrania audio.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

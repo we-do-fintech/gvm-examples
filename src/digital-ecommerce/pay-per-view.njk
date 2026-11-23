@@ -1,0 +1,44 @@
+---
+lang: pl
+title: Pay-per-view
+description: Dostęp do pojedynczego nagrania wideo po mikropłatności.
+crumb: E-commerce cyfrowy · Pay-per-view
+altUrl: /en/digital-ecommerce/pay-per-view/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-dialog.njk" import paymentDialog %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+{% set poster = catalog[lang].posters | last %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Pay-per-view</h1>
+    </div>
+
+    <div id="video" class="wait-for-script"
+         data-gvm-reference="vod"
+         data-gvm-price="4.99"
+         data-gvm-template-name="payment"
+         data-gvm-hide-template-name="paywall"
+         data-gvm-hide-strategy="hide"
+         data-gvm-hide-percent="40"
+         data-gvm-metadata-title="Nagranie wideo"
+         data-gvm-category="video">
+        <p class="lead">
+            Nagranie odblokowujesz jedną mikropłatnością.
+        </p>
+        <a class="video-card" href="{{ catalog[lang].vod.url }}" rel="noopener">
+            {% if poster and poster.preview %}
+            <img src="{{ poster.preview.href }}" alt="" width="{{ poster.preview.width }}" height="{{ poster.preview.height }}" loading="lazy" />
+            {% endif %}
+            <span class="video-card__play">Odtwórz nagranie</span>
+        </a>
+    </div>
+</div>
+
+{{ paymentDialog({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

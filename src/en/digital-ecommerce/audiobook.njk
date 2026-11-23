@@ -1,0 +1,37 @@
+---
+lang: en
+title: Audiobook
+description: An audio recording to download after a micropayment.
+crumb: Digital commerce · Audiobook
+altUrl: /digital-ecommerce/audiobook/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-dialog.njk" import paymentDialog %}
+{% from "gvm/download-trigger.njk" import downloadTrigger %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Audiobook</h1>
+    </div>
+
+    <figure class="media-card">
+        <div class="media-card__body">
+            <h2>{{ catalog[lang].podcast.title }}</h2>
+            <p class="file-meta">MP3 · {{ catalog[lang].podcast.seconds | duration }} · {{ catalog[lang].podcast.bytes | filesize }}</p>
+            {{ downloadTrigger({
+                reference: "audiobook",
+                price: "14.99",
+                href: catalog[lang].podcast.href,
+                title: "Audiobook",
+                category: "audio",
+                label: "Download for 14.99 PLN"
+            }) }}
+        </div>
+    </figure>
+</div>
+
+{{ paymentDialog({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{% endblock %}
