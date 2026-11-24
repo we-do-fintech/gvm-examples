@@ -2,13 +2,11 @@
   Brand lockup. Uses the real logotype instead of the words "GetViaMsg" — a
   wordmark set in text always drifts from the brand.
 
-  Two flavours:
-    - plain wordmark (SVG)      — the site bar and the payment surfaces;
-    - "GetViaMsg by WDFT"       — the site footer, where there is room for the
-                                  full lockup. `gvmBrand({ lockup: true })`.
-
-  Every flavour ships a dark-theme and a light-theme file; the swap reuses the
-  same classes as the site bar (see assets/theme.css).
+  Two flavours, both theme-aware (the light/dark swap reuses the same classes as
+  the site bar, see assets/theme.css):
+    - plain mono lockup  — the site bar and the payment surfaces;
+    - "GetViaMsg by WDFT" — the site footer, where there is room for the full
+      lockup. `gvmBrand({ lockup: true })`.
 #}
 {% macro gvmBrand(opts) %}
 {% set o = opts or {} %}
@@ -32,18 +30,18 @@
     {% else %}
     <img
         class="brand-logo brand__logo--dark"
-        src="/assets/gvm-logo-dark.svg"
+        src="/assets/getviamsg-logo-white-t-icon-mono.png"
         alt="GetViaMsg"
-        width="249"
-        height="71"
+        width="400"
+        height="120"
     />
     <img
         class="brand-logo brand__logo--light"
-        src="/assets/gvm-logo-light.svg"
+        src="/assets/getviamsg-logo-dark-t-icon-mono.png"
         alt=""
         aria-hidden="true"
-        width="249"
-        height="71"
+        width="400"
+        height="120"
     />
     {% endif %}
 </a>
