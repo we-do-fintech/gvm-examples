@@ -50,11 +50,12 @@
         "circleLead": "Send a text message to unlock the content"
     },
     "consent": {
-        "infoBefore": "Dostęp do tej Treści jest odpłatny:",
-        "infoAfter": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w",
-        "terms": "Regulaminie",
-        "legal": "Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.",
-        "note": "The binding wording of the consent is the Polish text above (§ 11 (2) of the GetViaMsg terms)."
+        "infoBefore": "Access to this content is paid:",
+        "infoAfter": "will be added to the collective settlement of your Session. The sublicence to the content expires on Payment. Details in the",
+        "terms": "Terms",
+        "legal": "I request that the service begin before the withdrawal period expires and I acknowledge that, once the content is made available, I lose the right to withdraw from the contract.",
+        "note": "",
+        "lang": "en"
     },
     "paywall": {
         "ariaLabel": "Paid access to this content",

@@ -54,7 +54,8 @@
         "infoAfter": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w",
         "terms": "Regulaminie",
         "legal": "Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.",
-        "note": ""
+        "note": "",
+        "lang": "pl"
     },
     "paywall": {
         "ariaLabel": "Płatny dostęp do treści",

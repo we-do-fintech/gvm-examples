@@ -588,7 +588,7 @@
                     </span>
                 </p>
 
-                <p class="gvm-payment__info" lang="pl">
+                <p class="gvm-payment__info" lang="{{ t.consent.lang }}">
                     {{ t.consent.infoBefore }}
                     <strong><span data-gvm-bind-price></span>&nbsp;<span data-gvm-bind-currency></span></strong>
                     {{ t.consent.infoAfter }}
@@ -602,7 +602,7 @@
                         data-gvm-accept-terms-version="{{ opts.termsVersion }}"
                         data-gvm-accept-terms-label="{{ t.payment.consentLabel }}"
                     />
-                    <span lang="pl">{{ t.consent.legal }}</span>
+                    <span lang="{{ t.consent.lang }}">{{ t.consent.legal }}</span>
                 </label>
 
                 <div class="gvm-payment__actions">

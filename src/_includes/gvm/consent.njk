@@ -5,8 +5,10 @@
     - the price + terms info line (consentInfo), and
     - an UNCHECKED checkbox with `data-gvm-accept-terms` and the consent version.
 
-  The binding consent wording is the Polish § 11 ust. 2 text, so it always keeps
-  `lang="pl"` — even on the English pages of this showcase.
+  The consent copy is translated per language (`t.consent.*`), and the wrapper
+  carries `lang="{{ t.consent.lang }}"` so the announced language matches the
+  text. In production the binding wording is the Polish § 11 ust. 2 text; this
+  showcase also ships an English translation so the English pages read cleanly.
 
   The macros take everything through `opts` on purpose: Nunjucks imports are
   isolated from the Eleventy render context, so `t` (i18n strings) and the terms
@@ -15,7 +17,7 @@
 
 {% macro consentInfo(opts) %}
 {% set t = opts.t %}
-<p class="consent-info {{ opts.classes or '' }}" lang="pl">
+<p class="consent-info {{ opts.classes or '' }}" lang="{{ t.consent.lang }}">
     {{ t.consent.infoBefore }}
     <strong
         ><span data-gvm-bind-price></span>&nbsp;<span
@@ -43,7 +45,7 @@
             data-gvm-accept-terms-version="{{ opts.termsVersion }}"
             data-gvm-accept-terms-label="{{ t.payment.consentLabel }}"
         />
-        <span lang="pl">{{ t.consent.legal }}</span>
+        <span lang="{{ t.consent.lang }}">{{ t.consent.legal }}</span>
     </label>
 </div>
 {% endmacro %}
