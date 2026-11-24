@@ -213,6 +213,22 @@ for (const file of htmlFiles) {
             problems.push(`${url}: data-gvm-price "${m[1]}" is not a number`);
         }
     }
+
+    // every payment trigger must also declare a success action, otherwise the
+    // SDK throws "No action matched for payment element" when it is clicked
+    const ACTIONS = [
+        "data-gvm-http-redirect-to",
+        "data-gvm-http-download",
+        "data-gvm-http-inject",
+        "data-gvm-hide-strategy",
+    ];
+    for (const m of html.matchAll(/<[^>]*data-gvm-price="[^"]*"[^>]*>/g)) {
+        if (!ACTIONS.some((a) => m[0].includes(a))) {
+            problems.push(
+                `${url}: payment trigger without an action → ${m[0].replace(/\s+/g, " ").slice(0, 90)}`
+            );
+        }
+    }
 }
 
 /* --- report -------------------------------------------------------------- */

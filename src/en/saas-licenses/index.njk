@@ -24,6 +24,10 @@ gvm: true
         </p>
     </div>
 
+    <p class="notice" id="plan-success" role="status" hidden>
+        The <strong id="plan-success-name"></strong> plan is active.
+    </p>
+
     <div class="card-grid">
         <article class="card plan-card">
             <span class="badge">Basic</span>
@@ -44,6 +48,7 @@ gvm: true
                 data-gvm-template-name="payment"
                 data-gvm-metadata-title="Basic plan"
                 data-gvm-category="plan"
+                data-gvm-http-redirect-to="/en/saas-licenses/?plan=basic"
             >
                 Choose Basic · 9.99 PLN
             </button>
@@ -68,6 +73,7 @@ gvm: true
                 data-gvm-template-name="payment"
                 data-gvm-metadata-title="Plus plan"
                 data-gvm-category="plan"
+                data-gvm-http-redirect-to="/en/saas-licenses/?plan=plus"
             >
                 Choose Plus · 19.99 PLN
             </button>
@@ -92,6 +98,7 @@ gvm: true
                 data-gvm-template-name="payment"
                 data-gvm-metadata-title="Pro plan"
                 data-gvm-category="plan"
+                data-gvm-http-redirect-to="/en/saas-licenses/?plan=pro"
             >
                 Choose Pro · 29.99 PLN
             </button>
@@ -102,4 +109,20 @@ gvm: true
 </div>
 
 {{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        var params = new URLSearchParams(window.location.search);
+        var plan = params.get("plan");
+        if (!plan || !(params.get("gvm-status") || params.get("gvm-reference"))) return;
+        var box = document.getElementById("plan-success");
+        var name = document.getElementById("plan-success-name");
+        if (!box || !name) return;
+        name.textContent = plan.charAt(0).toUpperCase() + plan.slice(1);
+        box.hidden = false;
+        box.scrollIntoView({ block: "center" });
+    })();
+</script>
 {% endblock %}
