@@ -4,3 +4,6 @@ dist/
 *.log
 gvm-templates/
 gvm-www/
+
+# OG card staging (rendered by scripts/generate-og-image.mjs)
+.og-build/

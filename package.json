@@ -7,6 +7,7 @@
         "clean": "rm -rf dist",
         "build": "rm -rf dist && eleventy",
         "gate": "node scripts/quality-gate.mjs",
+        "og:image": "node scripts/generate-og-image.mjs",
         "serve": "eleventy --serve",
         "dev": "eleventy --serve --port=8080"
     },
