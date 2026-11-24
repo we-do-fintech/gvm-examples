@@ -4,13 +4,12 @@ title: "Miasto, które czytało drobny druk"
 description: "Archiwum lokalnej gazety, utrzymywane przy życiu przez jedną emerytowaną nauczycielkę — do odblokowania za 2,50 zł."
 crumb: "Overlay · Miasto, które czytało drobny druk"
 altUrl: /en/overlay/article-2/
-legacyCss: true
-mainClass: "container showcase-shell"
 ---
 
 {% extends "layouts/base.njk" %}
 
 {% block head %}
+<link rel="stylesheet" href="/assets/overlay.css" />
 <style>.gvm-cloak{visibility:hidden}</style>
 <script>window.wdftDebug=true;</script>
 <script type="module" data-gvm-tenant="wdft_showcase_qa" data-gvm-env="qa" data-gvm-analytics="custom" src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"></script>
@@ -18,447 +17,386 @@ mainClass: "container showcase-shell"
 {% endblock %}
 
 {% block content %}
-<article class="news-article">
-                <section class="section-card">
-                    <header class="article-head col">
-                        <p class="eyebrow">Media · archiwa</p>
-                        <hgroup>
-                            <h1>Miasto, które czytało drobny druk</h1>
-                            <h2 class="article-standfirst">
-                                Gdy lokalna gazeta przeniosła stulecie archiwum
-                                za płatny dostęp, emerytowana nauczycielka
-                                prowadziła kopię każdej historii, która zniknęła.
-                                Przez dziewiętnaście miesięcy była pamięcią
-                                miasta — i nikt jej o to nie prosił.
-                            </h2>
-                        </hgroup>
-                        <div class="byline">
-                            <span class="byline-author">Jan Nowicki</span>
-                            <span class="byline-dot">·</span>
-                            <time datetime="2026-02-19">19 lutego 2026</time>
-                            <span class="byline-dot">·</span>
-                            <span>7 min czytania</span>
-                        </div>
-                    </header>
+<div class="container">
+    <article class="article">
+        <header class="article-head">
+            <h1>Miasto, które czytało drobny druk</h1>
+            <p class="lead">
+                Gdy lokalna gazeta przeniosła stulecie archiwum za płatny dostęp, emerytowana nauczycielka prowadziła kopię każdej historii, która zniknęła. Przez dziewiętnaście miesięcy była pamięcią miasta — i nikt jej o to nie prosił.
+            </p>
+            <p class="byline">Jan Nowicki · <time datetime="2026-02-19">19 lutego 2026</time> · 7 min czytania</p>
+        </header>
 
-                    <!-- Whole article body — free intro + premium body in one
-                         element; this single container is the selector the
-                         overlay locks (see README.md). -->
-                    <div class="gvm-cloak article-body col">
-                        <p class="lead">
-                            Pierwszą rzeczą, jaką zauważyła Barbara Wiśniewska,
-                            były nekrologi. Przez siedemdziesiąt lat czytała
-                            tygodnik „Nadodrze” od pierwszej strony po ogłoszenia
-                            drobne, a w drugi czwartek marca nekrologów po prostu
-                            już nie było. Nie zniknęły w sensie opóźnienia —
-                            zniknęły w sensie usunięcia, dwanaście lat wcześniej,
-                            z internetowego archiwum gazety, wraz z
-                            dziewiętnastoma innymi numerami z jednego lata.
-                        </p>
-                        <p>
-                            Barbara jest na emeryturze, ma siedemdziesiąt
-                            dziewięć lat i cierpliwość ludzi, którzy spędzili
-                            czterdzieści jeden lat przed tablicą. Nie poskarżyła
-                            się redaktorowi. Kupiła zeszyt, taki z numerowanymi
-                            stronami i płóciennym grzbietem, i zaczęła spisywać
-                            wszystko, co gazeta usuwała: numer, stronę,
-                            nagłówek i jednozdaniowe streszczenie tego, o czym
-                            była historia.
-                        </p>
-                        <figure class="article-figure">
-                            <div
-                                class="img-placeholder"
-                                role="img"
-                                aria-label="Fotografia: otwarty zeszyt w płóciennej oprawie z odręcznymi notatkami, na drewnianym stole"
+        <!-- Whole article body — free intro + premium body in one
+             element; this single container is the selector the
+             overlay locks (see README.md). -->
+        <div class="gvm-cloak article-body">
+            <p class="lead">
+                Pierwszą rzeczą, jaką zauważyła Barbara Wiśniewska,
+                były nekrologi. Przez siedemdziesiąt lat czytała
+                tygodnik „Nadodrze” od pierwszej strony po ogłoszenia
+                drobne, a w drugi czwartek marca nekrologów po prostu
+                już nie było. Nie zniknęły w sensie opóźnienia —
+                zniknęły w sensie usunięcia, dwanaście lat wcześniej,
+                z internetowego archiwum gazety, wraz z
+                dziewiętnastoma innymi numerami z jednego lata.
+            </p>
+            <p>
+                Barbara jest na emeryturze, ma siedemdziesiąt
+                dziewięć lat i cierpliwość ludzi, którzy spędzili
+                czterdzieści jeden lat przed tablicą. Nie poskarżyła
+                się redaktorowi. Kupiła zeszyt, taki z numerowanymi
+                stronami i płóciennym grzbietem, i zaczęła spisywać
+                wszystko, co gazeta usuwała: numer, stronę,
+                nagłówek i jednozdaniowe streszczenie tego, o czym
+                była historia.
+            </p>
+            <figure class="article-figure">
+                <div
+                    class="img-placeholder"
+                    role="img"
+                    aria-label="Fotografia: otwarty zeszyt w płóciennej oprawie z odręcznymi notatkami, na drewnianym stole"
+                >
+                    <svg
+                        viewBox="0 0 1200 675"
+                        xmlns="http://www.w3.org/2000/svg"
+                        preserveAspectRatio="xMidYMid slice"
+                    >
+                        <defs>
+                            <linearGradient
+                                id="ph-a2-1"
+                                x1="0"
+                                y1="0"
+                                x2="1"
+                                y2="1"
                             >
-                                <svg
-                                    viewBox="0 0 1200 675"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    preserveAspectRatio="xMidYMid slice"
-                                >
-                                    <defs>
-                                        <linearGradient
-                                            id="ph-a2-1"
-                                            x1="0"
-                                            y1="0"
-                                            x2="1"
-                                            y2="1"
-                                        >
-                                            <stop
-                                                offset="0"
-                                                stop-color="#eae5d5"
-                                            />
-                                            <stop
-                                                offset="1"
-                                                stop-color="#d8d0b8"
-                                            />
-                                        </linearGradient>
-                                        <pattern
-                                            id="phgrid-a2-1"
-                                            width="26"
-                                            height="26"
-                                            patternUnits="userSpaceOnUse"
-                                        >
-                                            <path
-                                                d="M26 0H0V26"
-                                                fill="none"
-                                                stroke="#c6bda1"
-                                                stroke-width="1"
-                                                opacity="0.55"
-                                            />
-                                        </pattern>
-                                    </defs>
-                                    <rect
-                                        width="1200"
-                                        height="675"
-                                        fill="url(#ph-a2-1)"
-                                    />
-                                    <rect
-                                        width="1200"
-                                        height="675"
-                                        fill="url(#phgrid-a2-1)"
-                                    />
-                                    <g
-                                        transform="translate(600 302)"
-                                        fill="none"
-                                        stroke="#8a8066"
-                                        stroke-width="5"
-                                        opacity="0.95"
-                                        stroke-linejoin="round"
-                                        stroke-linecap="round"
-                                    >
-                                        <rect
-                                            x="-56"
-                                            y="-32"
-                                            width="112"
-                                            height="72"
-                                            rx="9"
-                                        />
-                                        <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
-                                        <circle cx="0" cy="6" r="22" />
-                                    </g>
-                                    <text
-                                        x="600"
-                                        y="452"
-                                        text-anchor="middle"
-                                        font-family="'IBM Plex Mono', monospace"
-                                        font-size="24"
-                                        letter-spacing="7"
-                                        fill="#776d53"
-                                    >
-                                        MIEJSCE NA ZDJĘCIE
-                                    </text>
-                                    <text
-                                        x="600"
-                                        y="496"
-                                        text-anchor="middle"
-                                        font-family="'Source Sans 3', sans-serif"
-                                        font-size="18"
-                                        fill="#887d61"
-                                    >
-                                        1200 × 675 — podmień na zdjęcie redakcyjne
-                                    </text>
-                                </svg>
-                            </div>
-                            <figcaption>
-                                Pierwszy zeszyt Barbary, otwarty na lecie 1988
-                                roku. Mniej więcej strona na tydzień, jej własnym
-                                pismem. <strong>Fot.: J. Nowicki / The Ledger</strong>
-                            </figcaption>
-                        </figure>
-
-                        <h2>Osiem kartonowych pudeł</h2>
-                        <p>
-                            Gazeta przeszła na cyfrowe tory tak jak większość
-                            lokalnych: zecer zeskanował oprawione roczniki z lat
-                            pięćdziesiątych, dostawca archiwum przepuścił
-                            wszystko przez OCR z pogodnym optymizmem co do
-                            rozpoznawania znaków, a ktoś — nikt nie pamięta kto —
-                            zdecydował, że pierwsze dwanaście lat witryny będzie
-                            żyć za płatnym dostępem, artykuł po artykule.
-                        </p>
-                        <p>
-                            Czego zespół redakcyjny nie przewidział, to jak
-                            miasto potraktuje to archiwum. Nadodrze to dzielnica
-                            licząca 27 000 mieszkańców, a jej stuletni tygodnik
-                            to jedyne miejsce, w którym publiczna historia
-                            rodziny istnieje w jednym ciągłym szeregu:
-                            narodziny, śluby, zgony, koncesja na sklep
-                            rzeźniczy, otwarcie mostu, nazwiska dzieci, które
-                            wygrały konkurs ortograficzny w 1987 roku. Gdy
-                            archiwum przeniosło się za płatny dostęp, miasto
-                            zauważyło to głównie dlatego, że Barbara mu o tym
-                            powiedziała.
-                        </p>
-                        <p>
-                            Zaczęła od nekrologów, bo była to najboleśniejsza
-                            strata. Nekrolog nie jest tak naprawdę dokumentem
-                            śmierci; jest dokumentem życia, ściśniętym, i dla
-                            wielu rodzin jedynym zachowanym drukowanym śladem.
-                            Gdy płatny dostęp zabrał i je, zabrał pamięć miasta
-                            w jej najczulszym punkcie.
-                        </p>
-
-                        <h2>Płatny dostęp, uprzejmie</h2>
-                        <p>
-                            Metoda Barbary była drobiazgowa i jawnie uczciwa.
-                            Nigdy nie kopiowała artykułów. Streszczała je
-                            własnymi słowami, z odesłaniem do numeru i strony, i
-                            sprawdzała swoje streszczenia z darmowymi
-                            zapowiedziami, które witryna wciąż udostępniała. Gdy
-                            redaktorzy, najpierw zdezorientowani, a potem
-                            rozbawieni, zapytali ją o zeszyt, wyjaśniła, że nie
-                            jest przeciwko płaceniu — sama przecież płaciła za
-                            subskrypcję. Uważała po prostu, że archiwum miasta
-                            powinno mieć indeks, a indeks gazety kończył się
-                            teraz na płatnym dostępie.
-                        </p>
-                        <p>
-                            Zapewnia, że nie działała przeciwko gazecie. Jej
-                            subskrypcja opłaca numer co tydzień, a z płatnego
-                            archiwum korzysta sama, gdy komputer w bibliotece
-                            jej na to pozwoli; zeszyt jest opisany tak samo, jak
-                            gazeta opisuje własne numery, aż do numerów stron. W
-                            jej oczach wykonuje pracę, którą kiedyś wykonywała
-                            wyszukiwarka witryny, zanim płatny dostęp nauczył ją
-                            zapominać.
-                        </p>
-                        <blockquote class="pull-quote">
-                            Archiwum za płatnym dostępem wciąż jest archiwum.
-                            Ale miasto, które nie potrafi odnaleźć własnej
-                            przeszłości, to już coś innego.
-                            <cite>Barbara Wiśniewska, emerytowana nauczycielka</cite>
-                        </blockquote>
-                        <p>
-                            Redaktor „Nadodrza”, mężczyzna po pięćdziesiątce,
-                            który kiedyś napisał felieton o wolności informacji,
-                            powiedział mi później, że to był najbardziej
-                            uprzejmy spór polityczny w najnowszej historii
-                            miasta. Barbara nie pisała listów do rady. Nie
-                            organizowała petycji. Spisywała, numer po numerze,
-                            wszystko, co znikało, i dzieliła się swoimi
-                            streszczeniami — oczywiście na papierze — z
-                            miejscową biblioteką.
-                        </p>
-
-                        <h2>Co archiwum wie o nas</h2>
-                        <p>
-                            To, co ujawnił zeszyt Barbary, gdy urósł do ośmiuset
-                            wpisów, to fakt, że usunięcia nie były przypadkowe.
-                            Internetowe archiwum gazety powstało w trzech
-                            partiach, od trzech różnych dostawców, a najstarsza
-                            partia miała najgorszy OCR. Artykuły z lat
-                            sześćdziesiątych i siedemdziesiątych — w tym całe
-                            lato z historii miasta — uznano za „nieczytelne” i
-                            wycofano z indeksu wyszukiwania, zamiast je
-                            naprawić.
-                        </p>
-                        <p>
-                            To cicha tragedia archiwów cyfrowych: usuwanie
-                            rzadko bywa złośliwe, a niemal zawsze
-                            administracyjne. Umowa licencyjna wygasa, migracja
-                            bazy gubi pole, wskaźnik pewności OCR spada poniżej
-                            progu — i dekada lokalnej historii przestaje istnieć
-                            z punktu widzenia czytelnika. Nikt nie usunął
-                            danych; po prostu przestało się opłacać utrzymywać
-                            je w zasięgu wyszukiwania.
-                        </p>
-                        <p>
-                            Rada miasta, zawstydzona do działania,
-                            przegłosowała niewielką dotację na odtworzenie lata
-                            1988. Barbara przyszła na głosowanie, usiadła w
-                            drugim rzędzie i nic nie powiedziała. Zeszyt
-                            wykonał swoją pracę.
-                        </p>
-
-                        <h2>Obywatelski zeszyt</h2>
-                        <p>
-                            Szerszy wniosek nie brzmi, że płatny dostęp jest
-                            zły. Płatny dostęp „Nadodrza” jest, jak na lokalne
-                            warunki, sukcesem: utrzymuje tygodnik przy
-                            płynności, a jego archiwum finansuje teraz redaktora
-                            cyfrowego gazety. Wniosek dotyczy sąsiedztwa — tego,
-                            że archiwum nie jest produktem, lecz dobrem
-                            publicznym, a płatny dostęp poprowadzony w poprzek
-                            niego prowadzi linię przez samo miasto.
-                        </p>
-                        <p>
-                            Barbara skończyła pierwszy zeszyt w listopadzie,
-                            dziewiętnaście miesięcy po tym, jak zaczęła.
-                            Redakcja „Nadodrza”, najpierw delikatnie zawstydzona,
-                            a potem szczerze poruszona, zrobiła dwie rzeczy:
-                            odtworzyła osierocone lato 1988 i wydrukowała
-                            pierwszą stronę jej zeszytu na stronie listów,
-                            dokładnie tak, jak wyglądała, z dopiskiem:
-                            „Indeksujemy miasto, numer po numerze.”
-                        </p>
-                        <p>
-                            Zaczęła drugi zeszyt. Mówi się, że biblioteka go
-                            zdigitalizuje, co przyjmuje z głęboką nieufnością
-                            kogoś, kto patrzył, jak trzech dostawców OCR ponosi
-                            porażkę. Prawdopodobnie i tym razem będzie miała
-                            rację.
-                        </p>
-                        <figure class="article-figure">
-                            <div
-                                class="img-placeholder"
-                                role="img"
-                                aria-label="Fotografia: kopia referencyjna odręcznego indeksu na otwartej półce małej biblioteki"
+                                <stop
+                                    offset="0"
+                                    stop-color="#eae5d5"
+                                />
+                                <stop
+                                    offset="1"
+                                    stop-color="#d8d0b8"
+                                />
+                            </linearGradient>
+                            <pattern
+                                id="phgrid-a2-1"
+                                width="26"
+                                height="26"
+                                patternUnits="userSpaceOnUse"
                             >
-                                <svg
-                                    viewBox="0 0 1200 675"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    preserveAspectRatio="xMidYMid slice"
-                                >
-                                    <defs>
-                                        <linearGradient
-                                            id="ph-a2-2"
-                                            x1="0"
-                                            y1="0"
-                                            x2="1"
-                                            y2="1"
-                                        >
-                                            <stop
-                                                offset="0"
-                                                stop-color="#eae5d5"
-                                            />
-                                            <stop
-                                                offset="1"
-                                                stop-color="#d8d0b8"
-                                            />
-                                        </linearGradient>
-                                        <pattern
-                                            id="phgrid-a2-2"
-                                            width="26"
-                                            height="26"
-                                            patternUnits="userSpaceOnUse"
-                                        >
-                                            <path
-                                                d="M26 0H0V26"
-                                                fill="none"
-                                                stroke="#c6bda1"
-                                                stroke-width="1"
-                                                opacity="0.55"
-                                            />
-                                        </pattern>
-                                    </defs>
-                                    <rect
-                                        width="1200"
-                                        height="675"
-                                        fill="url(#ph-a2-2)"
-                                    />
-                                    <rect
-                                        width="1200"
-                                        height="675"
-                                        fill="url(#phgrid-a2-2)"
-                                    />
-                                    <g
-                                        transform="translate(600 302)"
-                                        fill="none"
-                                        stroke="#8a8066"
-                                        stroke-width="5"
-                                        opacity="0.95"
-                                        stroke-linejoin="round"
-                                        stroke-linecap="round"
-                                    >
-                                        <rect
-                                            x="-56"
-                                            y="-32"
-                                            width="112"
-                                            height="72"
-                                            rx="9"
-                                        />
-                                        <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
-                                        <circle cx="0" cy="6" r="22" />
-                                    </g>
-                                    <text
-                                        x="600"
-                                        y="452"
-                                        text-anchor="middle"
-                                        font-family="'IBM Plex Mono', monospace"
-                                        font-size="24"
-                                        letter-spacing="7"
-                                        fill="#776d53"
-                                    >
-                                        MIEJSCE NA ZDJĘCIE
-                                    </text>
-                                    <text
-                                        x="600"
-                                        y="496"
-                                        text-anchor="middle"
-                                        font-family="'Source Sans 3', sans-serif"
-                                        font-size="18"
-                                        fill="#887d61"
-                                    >
-                                        1200 × 675 — podmień na zdjęcie redakcyjne
-                                    </text>
-                                </svg>
-                            </div>
-                            <figcaption>
-                                Kopia referencyjna indeksu w bibliotece. Gazeta
-                                zgodziła się trzymać ją na otwartej półce, obok
-                                oprawionych roczników. <strong>Fot.: J. Nowicki / The Ledger</strong>
-                            </figcaption>
-                        </figure>
-                        <p>
-                            Zanim wyszliśmy, Barbara pokazała mi szufladę, w
-                            której trzyma paragony — każde potwierdzenie
-                            subskrypcji, starannie opatrzone datą. „Gazeta
-                            potrzebuje swoich pieniędzy” — powiedziała, zamykając
-                            szufladę. — „Potrzebuje też pamiętać, na co one są.”
-                            Redaktor, który przyszedł się pożegnać, nie
-                            powiedział ani słowa.
-                        </p>
-                    </div>
+                                <path
+                                    d="M26 0H0V26"
+                                    fill="none"
+                                    stroke="#c6bda1"
+                                    stroke-width="1"
+                                    opacity="0.55"
+                                />
+                            </pattern>
+                        </defs>
+                        <rect
+                            width="1200"
+                            height="675"
+                            fill="url(#ph-a2-1)"
+                        />
+                        <rect
+                            width="1200"
+                            height="675"
+                            fill="url(#phgrid-a2-1)"
+                        />
+                        <g
+                            transform="translate(600 302)"
+                            fill="none"
+                            stroke="#8a8066"
+                            stroke-width="5"
+                            opacity="0.95"
+                            stroke-linejoin="round"
+                            stroke-linecap="round"
+                        >
+                            <rect
+                                x="-56"
+                                y="-32"
+                                width="112"
+                                height="72"
+                                rx="9"
+                            />
+                            <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
+                            <circle cx="0" cy="6" r="22" />
+                        </g>
+                        <text
+                            x="600"
+                            y="452"
+                            text-anchor="middle"
+                            font-family="'IBM Plex Mono', monospace"
+                            font-size="24"
+                            letter-spacing="7"
+                            fill="#776d53"
+                        >
+                            MIEJSCE NA ZDJĘCIE
+                        </text>
+                        <text
+                            x="600"
+                            y="496"
+                            text-anchor="middle"
+                            font-family="'Source Sans 3', sans-serif"
+                            font-size="18"
+                            fill="#887d61"
+                        >
+                            1200 × 675 — podmień na zdjęcie redakcyjne
+                        </text>
+                    </svg>
+                </div>
+                <figcaption>
+                    Pierwszy zeszyt Barbary, otwarty na lecie 1988
+                    roku. Mniej więcej strona na tydzień, jej własnym
+                    pismem. <strong>Fot.: J. Nowicki / The Ledger</strong>
+                </figcaption>
+            </figure>
 
-                    <footer class="article-foot col">
-                        <ul class="article-tags">
-                            <li>Archiwa</li>
-                            <li>Prasa lokalna</li>
-                            <li>Płatny dostęp</li>
-                            <li>Prywatność</li>
-                        </ul>
-                        <div class="author-box">
-                            <div
-                                class="avatar"
-                                role="img"
-                                aria-label="Awatar: Jan Nowicki"
+            <h2>Osiem kartonowych pudeł</h2>
+            <p>
+                Gazeta przeszła na cyfrowe tory tak jak większość
+                lokalnych: zecer zeskanował oprawione roczniki z lat
+                pięćdziesiątych, dostawca archiwum przepuścił
+                wszystko przez OCR z pogodnym optymizmem co do
+                rozpoznawania znaków, a ktoś — nikt nie pamięta kto —
+                zdecydował, że pierwsze dwanaście lat witryny będzie
+                żyć za płatnym dostępem, artykuł po artykule.
+            </p>
+            <p>
+                Czego zespół redakcyjny nie przewidział, to jak
+                miasto potraktuje to archiwum. Nadodrze to dzielnica
+                licząca 27 000 mieszkańców, a jej stuletni tygodnik
+                to jedyne miejsce, w którym publiczna historia
+                rodziny istnieje w jednym ciągłym szeregu:
+                narodziny, śluby, zgony, koncesja na sklep
+                rzeźniczy, otwarcie mostu, nazwiska dzieci, które
+                wygrały konkurs ortograficzny w 1987 roku. Gdy
+                archiwum przeniosło się za płatny dostęp, miasto
+                zauważyło to głównie dlatego, że Barbara mu o tym
+                powiedziała.
+            </p>
+            <p>
+                Zaczęła od nekrologów, bo była to najboleśniejsza
+                strata. Nekrolog nie jest tak naprawdę dokumentem
+                śmierci; jest dokumentem życia, ściśniętym, i dla
+                wielu rodzin jedynym zachowanym drukowanym śladem.
+                Gdy płatny dostęp zabrał i je, zabrał pamięć miasta
+                w jej najczulszym punkcie.
+            </p>
+
+            <h2>Płatny dostęp, uprzejmie</h2>
+            <p>
+                Metoda Barbary była drobiazgowa i jawnie uczciwa.
+                Nigdy nie kopiowała artykułów. Streszczała je
+                własnymi słowami, z odesłaniem do numeru i strony, i
+                sprawdzała swoje streszczenia z darmowymi
+                zapowiedziami, które witryna wciąż udostępniała. Gdy
+                redaktorzy, najpierw zdezorientowani, a potem
+                rozbawieni, zapytali ją o zeszyt, wyjaśniła, że nie
+                jest przeciwko płaceniu — sama przecież płaciła za
+                subskrypcję. Uważała po prostu, że archiwum miasta
+                powinno mieć indeks, a indeks gazety kończył się
+                teraz na płatnym dostępie.
+            </p>
+            <p>
+                Zapewnia, że nie działała przeciwko gazecie. Jej
+                subskrypcja opłaca numer co tydzień, a z płatnego
+                archiwum korzysta sama, gdy komputer w bibliotece
+                jej na to pozwoli; zeszyt jest opisany tak samo, jak
+                gazeta opisuje własne numery, aż do numerów stron. W
+                jej oczach wykonuje pracę, którą kiedyś wykonywała
+                wyszukiwarka witryny, zanim płatny dostęp nauczył ją
+                zapominać.
+            </p>
+            <blockquote class="pull-quote">
+                Archiwum za płatnym dostępem wciąż jest archiwum.
+                Ale miasto, które nie potrafi odnaleźć własnej
+                przeszłości, to już coś innego.
+                <cite>Barbara Wiśniewska, emerytowana nauczycielka</cite>
+            </blockquote>
+            <p>
+                Redaktor „Nadodrza”, mężczyzna po pięćdziesiątce,
+                który kiedyś napisał felieton o wolności informacji,
+                powiedział mi później, że to był najbardziej
+                uprzejmy spór polityczny w najnowszej historii
+                miasta. Barbara nie pisała listów do rady. Nie
+                organizowała petycji. Spisywała, numer po numerze,
+                wszystko, co znikało, i dzieliła się swoimi
+                streszczeniami — oczywiście na papierze — z
+                miejscową biblioteką.
+            </p>
+
+            <h2>Co archiwum wie o nas</h2>
+            <p>
+                To, co ujawnił zeszyt Barbary, gdy urósł do ośmiuset
+                wpisów, to fakt, że usunięcia nie były przypadkowe.
+                Internetowe archiwum gazety powstało w trzech
+                partiach, od trzech różnych dostawców, a najstarsza
+                partia miała najgorszy OCR. Artykuły z lat
+                sześćdziesiątych i siedemdziesiątych — w tym całe
+                lato z historii miasta — uznano za „nieczytelne” i
+                wycofano z indeksu wyszukiwania, zamiast je
+                naprawić.
+            </p>
+            <p>
+                To cicha tragedia archiwów cyfrowych: usuwanie
+                rzadko bywa złośliwe, a niemal zawsze
+                administracyjne. Umowa licencyjna wygasa, migracja
+                bazy gubi pole, wskaźnik pewności OCR spada poniżej
+                progu — i dekada lokalnej historii przestaje istnieć
+                z punktu widzenia czytelnika. Nikt nie usunął
+                danych; po prostu przestało się opłacać utrzymywać
+                je w zasięgu wyszukiwania.
+            </p>
+            <p>
+                Rada miasta, zawstydzona do działania,
+                przegłosowała niewielką dotację na odtworzenie lata
+                1988. Barbara przyszła na głosowanie, usiadła w
+                drugim rzędzie i nic nie powiedziała. Zeszyt
+                wykonał swoją pracę.
+            </p>
+
+            <h2>Obywatelski zeszyt</h2>
+            <p>
+                Szerszy wniosek nie brzmi, że płatny dostęp jest
+                zły. Płatny dostęp „Nadodrza” jest, jak na lokalne
+                warunki, sukcesem: utrzymuje tygodnik przy
+                płynności, a jego archiwum finansuje teraz redaktora
+                cyfrowego gazety. Wniosek dotyczy sąsiedztwa — tego,
+                że archiwum nie jest produktem, lecz dobrem
+                publicznym, a płatny dostęp poprowadzony w poprzek
+                niego prowadzi linię przez samo miasto.
+            </p>
+            <p>
+                Barbara skończyła pierwszy zeszyt w listopadzie,
+                dziewiętnaście miesięcy po tym, jak zaczęła.
+                Redakcja „Nadodrza”, najpierw delikatnie zawstydzona,
+                a potem szczerze poruszona, zrobiła dwie rzeczy:
+                odtworzyła osierocone lato 1988 i wydrukowała
+                pierwszą stronę jej zeszytu na stronie listów,
+                dokładnie tak, jak wyglądała, z dopiskiem:
+                „Indeksujemy miasto, numer po numerze.”
+            </p>
+            <p>
+                Zaczęła drugi zeszyt. Mówi się, że biblioteka go
+                zdigitalizuje, co przyjmuje z głęboką nieufnością
+                kogoś, kto patrzył, jak trzech dostawców OCR ponosi
+                porażkę. Prawdopodobnie i tym razem będzie miała
+                rację.
+            </p>
+            <figure class="article-figure">
+                <div
+                    class="img-placeholder"
+                    role="img"
+                    aria-label="Fotografia: kopia referencyjna odręcznego indeksu na otwartej półce małej biblioteki"
+                >
+                    <svg
+                        viewBox="0 0 1200 675"
+                        xmlns="http://www.w3.org/2000/svg"
+                        preserveAspectRatio="xMidYMid slice"
+                    >
+                        <defs>
+                            <linearGradient
+                                id="ph-a2-2"
+                                x1="0"
+                                y1="0"
+                                x2="1"
+                                y2="1"
                             >
-                                <svg viewBox="0 0 56 56">
-                                    <rect
-                                        width="56"
-                                        height="56"
-                                        fill="#dcd4bd"
-                                    />
-                                    <text
-                                        x="28"
-                                        y="35"
-                                        text-anchor="middle"
-                                        font-family="'Newsreader', Georgia, serif"
-                                        font-size="22"
-                                        fill="#5c5340"
-                                    >
-                                        JN
-                                    </text>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4>Jan Nowicki</h4>
-                                <span class="author-role"
-                                    >Reporter, media i kultura cyfrowa</span
-                                >
-                                <p>
-                                    Pisze o gazetach, archiwach i tym, co
-                                    postanawiają pamiętać. Od 2009 roku prowadzi
-                                    na papierze własny indeks każdego tekstu,
-                                    który oddał.
-                                </p>
-                            </div>
-                        </div>
-                        <p class="article-disclaimer">
-                            Ta strona to demo. Płatności są symulowane.
-                        </p>
-                    </footer>
-                </section>
-            </article>
+                                <stop
+                                    offset="0"
+                                    stop-color="#eae5d5"
+                                />
+                                <stop
+                                    offset="1"
+                                    stop-color="#d8d0b8"
+                                />
+                            </linearGradient>
+                            <pattern
+                                id="phgrid-a2-2"
+                                width="26"
+                                height="26"
+                                patternUnits="userSpaceOnUse"
+                            >
+                                <path
+                                    d="M26 0H0V26"
+                                    fill="none"
+                                    stroke="#c6bda1"
+                                    stroke-width="1"
+                                    opacity="0.55"
+                                />
+                            </pattern>
+                        </defs>
+                        <rect
+                            width="1200"
+                            height="675"
+                            fill="url(#ph-a2-2)"
+                        />
+                        <rect
+                            width="1200"
+                            height="675"
+                            fill="url(#phgrid-a2-2)"
+                        />
+                        <g
+                            transform="translate(600 302)"
+                            fill="none"
+                            stroke="#8a8066"
+                            stroke-width="5"
+                            opacity="0.95"
+                            stroke-linejoin="round"
+                            stroke-linecap="round"
+                        >
+                            <rect
+                                x="-56"
+                                y="-32"
+                                width="112"
+                                height="72"
+                                rx="9"
+                            />
+                            <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
+                            <circle cx="0" cy="6" r="22" />
+                        </g>
+                        <text
+                            x="600"
+                            y="452"
+                            text-anchor="middle"
+                            font-family="'IBM Plex Mono', monospace"
+                            font-size="24"
+                            letter-spacing="7"
+                            fill="#776d53"
+                        >
+                            MIEJSCE NA ZDJĘCIE
+                        </text>
+                        <text
+                            x="600"
+                            y="496"
+                            text-anchor="middle"
+                            font-family="'Source Sans 3', sans-serif"
+                            font-size="18"
+                            fill="#887d61"
+                        >
+                            1200 × 675 — podmień na zdjęcie redakcyjne
+                        </text>
+                    </svg>
+                </div>
+                <figcaption>
+                    Kopia referencyjna indeksu w bibliotece. Gazeta
+                    zgodziła się trzymać ją na otwartej półce, obok
+                    oprawionych roczników. <strong>Fot.: J. Nowicki / The Ledger</strong>
+                </figcaption>
+            </figure>
+            <p>
+                Zanim wyszliśmy, Barbara pokazała mi szufladę, w
+                której trzyma paragony — każde potwierdzenie
+                subskrypcji, starannie opatrzone datą. „Gazeta
+                potrzebuje swoich pieniędzy” — powiedziała, zamykając
+                szufladę. — „Potrzebuje też pamiętać, na co one są.”
+                Redaktor, który przyszedł się pożegnać, nie
+                powiedział ani słowa.
+            </p>
+        </div>
+
+    </article>
+</div>
 {% endblock %}

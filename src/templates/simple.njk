@@ -9,6 +9,7 @@ gvm: true
 
 {% extends "layouts/base.njk" %}
 {% from "gvm/paywall-inline.njk" import paywallInline %}
+{% from "gvm/raw-payment-simple.njk" import paymentSimple %}
 {% block content %}
 <div class="container">
     <div class="page-head">
@@ -30,6 +31,6 @@ gvm: true
     </div>
 </div>
 
-{% include "gvm/raw-payment-simple.njk" %}
+{{ paymentSimple({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
 {{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl, injectTo: "#demo" }) }}
 {% endblock %}

@@ -45,7 +45,9 @@
         "drawerAria": "Payment for access to the content",
         "drawerTitle": "Unlock the content",
         "drawerSubtitle": "Send a text message to unlock access. It is a regular message, usually free (per your operator price list).",
-        "drawerQrHint": "You can also scan the code with your phone."
+        "drawerQrHint": "You can also scan the code with your phone.",
+        "circleArc": "SCAN OR SEND AN SMS",
+        "circleLead": "Send a text message to unlock the content"
     },
     "consent": {
         "infoBefore": "Dostęp do tej Treści jest odpłatny:",

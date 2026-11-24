@@ -7,8 +7,8 @@
    Covers the chrome (bar, footer), editorial content, cards, ad slots, PPV,
    the overlay paywall chrome and the legacy modal payment dialog. The default
    payment form (drawer) ships its own stylesheet, assets/gvm-drawer.css — do
-   not style it from here. The overlay pages additionally pull in
-   assets/legacy.css via the `legacyCss` front-matter flag.
+   not style it from here. The overlay articles reuse the editorial styles from
+   this file and add only their figure/pull-quote helpers in assets/overlay.css.
    ========================================================================== */
 
 /* --- Tokens -------------------------------------------------------------- */
@@ -356,8 +356,6 @@ p {
 
 .article-body p {
     margin: 0 0 1.15em;
-    /* Pin the body size here so the article prose reads identically whether or
-       not legacy.css is also loaded (legacy bumped it to 1.02rem). */
     font-size: var(--fs-base);
     line-height: 1.7;
     text-wrap: pretty;

@@ -4,13 +4,12 @@ title: "Ostatnia strona robiona ręcznie"
 description: "Ostatnia strona robiona ręcznie w 112-letnim tygodniku — do odblokowania za 2,00 zł."
 crumb: "Overlay · Ostatnia strona robiona ręcznie"
 altUrl: /en/overlay/article-3/
-legacyCss: true
-mainClass: "container showcase-shell"
 ---
 
 {% extends "layouts/base.njk" %}
 
 {% block head %}
+<link rel="stylesheet" href="/assets/overlay.css" />
 <style>.gvm-cloak{visibility:hidden}</style>
 <script>window.wdftDebug=true;</script>
 <script type="module" data-gvm-tenant="wdft_showcase_qa" data-gvm-env="qa" data-gvm-analytics="custom" src="https://esm.sh/@wdft/gvm-sdk@latest/gvm-overlay.js"></script>
@@ -18,441 +17,381 @@ mainClass: "container showcase-shell"
 {% endblock %}
 
 {% block content %}
-<article class="news-article">
-                <section class="section-card">
-                    <header class="article-head col">
-                        <p class="eyebrow">Kultura · reportaż</p>
-                        <hgroup>
-                            <h1>Ostatnia strona robiona ręcznie</h1>
-                            <h2 class="article-standfirst">
-                                W zapleczu 112-letniego śląskiego tygodnika
-                                redaktorka wciąż wycina nagłówki z wydruku
-                                laserowego nożyczkami i przykleja je do strony
-                                woskiem. Nie jest sentymentalna. Po prostu uważa,
-                                że nagłówek jest rzeczą fizyczną.
-                            </h2>
-                        </hgroup>
-                        <div class="byline">
-                            <span class="byline-author">Kasia Zielińska</span>
-                            <span class="byline-dot">·</span>
-                            <time datetime="2026-02-26">26 lutego 2026</time>
-                            <span class="byline-dot">·</span>
-                            <span>12 min czytania</span>
-                        </div>
-                    </header>
+<div class="container">
+    <article class="article">
+        <header class="article-head">
+            <h1>Ostatnia strona robiona ręcznie</h1>
+            <p class="lead">
+                W zapleczu 112-letniego śląskiego tygodnika redaktorka wciąż wycina nagłówki z wydruku laserowego nożyczkami i przykleja je do strony woskiem. Nie jest sentymentalna. Po prostu uważa, że nagłówek jest rzeczą fizyczną.
+            </p>
+            <p class="byline">Kasia Zielińska · <time datetime="2026-02-26">26 lutego 2026</time> · 12 min czytania</p>
+        </header>
 
-                    <!-- Whole article body — free intro + premium body in one
-                         element; this single container is the selector the
-                         overlay locks (see README.md). -->
-                    <div class="gvm-cloak article-body col">
-                        <p class="lead">
-                            W zapleczu 112-letniego tygodnika na Śląsku Halina
-                            Bednarek wycina nagłówek z arkusza wydrukowanego
-                            laserowo nożyczkami, przycina lewy margines nożem i
-                            przykleja pasek papieru do fizycznej strony blokiem
-                            ciepłego wosku. Strona leży płasko na stole
-                            kreślarskim, jako część sześćdziesięcioczterostronicowego
-                            numeru, który od trzydziestu jeden lat jest co
-                            środę składany ręcznie, po kolei.
-                        </p>
-                        <p>
-                            Zapytana, czy myślała o programie do składu, Halina
-                            — która ma sześćdziesiąt cztery lata i spokój
-                            kobiety, która nigdy nie spóźniła się z numerem —
-                            patrzy na to pytanie tak, jak patrzy się na
-                            propozycję przestawienia kuchni. „Komputer” — mówi —
-                            „robi nagłówki, które wyglądają, jakby napisał je
-                            komputer.”
-                        </p>
-                        <figure class="article-figure">
-                            <div
-                                class="img-placeholder"
-                                role="img"
-                                aria-label="Fotografia: stół kreślarski z wydrukowanymi próbami stron, nożyczkami i blokiem wosku"
+        <!-- Whole article body — free intro + premium body in one
+             element; this single container is the selector the
+             overlay locks (see README.md). -->
+        <div class="gvm-cloak article-body">
+            <p class="lead">
+                W zapleczu 112-letniego tygodnika na Śląsku Halina
+                Bednarek wycina nagłówek z arkusza wydrukowanego
+                laserowo nożyczkami, przycina lewy margines nożem i
+                przykleja pasek papieru do fizycznej strony blokiem
+                ciepłego wosku. Strona leży płasko na stole
+                kreślarskim, jako część sześćdziesięcioczterostronicowego
+                numeru, który od trzydziestu jeden lat jest co
+                środę składany ręcznie, po kolei.
+            </p>
+            <p>
+                Zapytana, czy myślała o programie do składu, Halina
+                — która ma sześćdziesiąt cztery lata i spokój
+                kobiety, która nigdy nie spóźniła się z numerem —
+                patrzy na to pytanie tak, jak patrzy się na
+                propozycję przestawienia kuchni. „Komputer” — mówi —
+                „robi nagłówki, które wyglądają, jakby napisał je
+                komputer.”
+            </p>
+            <figure class="article-figure">
+                <div
+                    class="img-placeholder"
+                    role="img"
+                    aria-label="Fotografia: stół kreślarski z wydrukowanymi próbami stron, nożyczkami i blokiem wosku"
+                >
+                    <svg
+                        viewBox="0 0 1200 675"
+                        xmlns="http://www.w3.org/2000/svg"
+                        preserveAspectRatio="xMidYMid slice"
+                    >
+                        <defs>
+                            <linearGradient
+                                id="ph-a3-1"
+                                x1="0"
+                                y1="0"
+                                x2="1"
+                                y2="1"
                             >
-                                <svg
-                                    viewBox="0 0 1200 675"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    preserveAspectRatio="xMidYMid slice"
-                                >
-                                    <defs>
-                                        <linearGradient
-                                            id="ph-a3-1"
-                                            x1="0"
-                                            y1="0"
-                                            x2="1"
-                                            y2="1"
-                                        >
-                                            <stop
-                                                offset="0"
-                                                stop-color="#eae5d5"
-                                            />
-                                            <stop
-                                                offset="1"
-                                                stop-color="#d8d0b8"
-                                            />
-                                        </linearGradient>
-                                        <pattern
-                                            id="phgrid-a3-1"
-                                            width="26"
-                                            height="26"
-                                            patternUnits="userSpaceOnUse"
-                                        >
-                                            <path
-                                                d="M26 0H0V26"
-                                                fill="none"
-                                                stroke="#c6bda1"
-                                                stroke-width="1"
-                                                opacity="0.55"
-                                            />
-                                        </pattern>
-                                    </defs>
-                                    <rect
-                                        width="1200"
-                                        height="675"
-                                        fill="url(#ph-a3-1)"
-                                    />
-                                    <rect
-                                        width="1200"
-                                        height="675"
-                                        fill="url(#phgrid-a3-1)"
-                                    />
-                                    <g
-                                        transform="translate(600 302)"
-                                        fill="none"
-                                        stroke="#8a8066"
-                                        stroke-width="5"
-                                        opacity="0.95"
-                                        stroke-linejoin="round"
-                                        stroke-linecap="round"
-                                    >
-                                        <rect
-                                            x="-56"
-                                            y="-32"
-                                            width="112"
-                                            height="72"
-                                            rx="9"
-                                        />
-                                        <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
-                                        <circle cx="0" cy="6" r="22" />
-                                    </g>
-                                    <text
-                                        x="600"
-                                        y="452"
-                                        text-anchor="middle"
-                                        font-family="'IBM Plex Mono', monospace"
-                                        font-size="24"
-                                        letter-spacing="7"
-                                        fill="#776d53"
-                                    >
-                                        MIEJSCE NA ZDJĘCIE
-                                    </text>
-                                    <text
-                                        x="600"
-                                        y="496"
-                                        text-anchor="middle"
-                                        font-family="'Source Sans 3', sans-serif"
-                                        font-size="18"
-                                        fill="#887d61"
-                                    >
-                                        1200 × 675 — podmień na zdjęcie redakcyjne
-                                    </text>
-                                </svg>
-                            </div>
-                            <figcaption>
-                                Stół składu w zamkniętą środę. Blok wosku po
-                                prawej, nożyczki po lewej, a w tle tablica z
-                                licznikiem. <strong>Fot.: K. Zielińska / The Ledger</strong>
-                            </figcaption>
-                        </figure>
-
-                        <h2>Sześćdziesiąt cztery strony ręcznie</h2>
-                        <p>
-                            Proces nie zmienił się od lat dziewięćdziesiątych:
-                            dziennikarze piszą w prostym edytorze tekstu, zespół
-                            składu ustawia strony w starym programie, który
-                            działa na jednym, starannie opisanym komputerze, a
-                            strony są drukowane w pełnym rozmiarze na drukarce
-                            laserowej, jedna na arkusz. Każdy nagłówek jest
-                            potem wycinany, ręcznie dopasowywany, gdy odstępy są
-                            złe, i dociskany do strony woskiem — bo wosk,
-                            inaczej niż klej, pozwala podnieść nagłówek i
-                            przesunąć go o sześć milimetrów w lewo, nie psując
-                            wszystkiego.
-                        </p>
-                        <p>
-                            Pełny numer to sześćdziesiąt cztery strony. Dział
-                            składu na początku każdego tygodnia przewiduje, ile
-                            nagłówków do wycięcia i wklejenia będzie
-                            potrzebnych; rekord, ustanowiony przy specjalnym
-                            wydaniu na wybory samorządowe w 2021 roku, to 214.
-                            Redaktorzy prowadzą licznik na tablicy, długopisem,
-                            obok czajnika.
-                        </p>
-
-                        <h2>Maszyna w kącie</h2>
-                        <p>
-                            W kącie pokoju stoi nieudany system składu gazety —
-                            komputer stacjonarny kupiony w 2010 roku, podłączony
-                            do monitora, który wciąż wyświetla ekran
-                            konfiguracji programu do składu, testowanego przez
-                            redakcję przez sześć miesięcy. Wszyscy w budynku
-                            nazywają go „automatyzacją”. Nie został włączony od
-                            2011 roku. Jego kabel zasilający jest owinięty wokół
-                            podstawy w równą pętlę — to najbliższe, co redakcja
-                            ma do mowy pogrzebowej.
-                        </p>
-                        <p>
-                            Decyzja o powrocie do papieru i wosku nie była
-                            romantyczna; była ekonomiczna. Program do składu
-                            tworzył strony, które wymagały projektanta z
-                            dyplomem, opłaty licencyjnej rosnącej z każdym
-                            rokiem i — co najważniejsze — sprawiał, że strony
-                            wyglądały jak każda inna strona w Polsce. Ręcznie
-                            robione strony zajmowały więcej czasu, ale nie
-                            kosztowały nic, nie wymagały licencji i — jak
-                            twierdzą redaktorzy — czytelnicy widzieli różnicę.
-                            Nakład w powiecie spadł, przyznają, ale wolniej niż
-                            średnia w regionie.
-                        </p>
-                        <blockquote class="pull-quote">
-                            Nagłówek jest rzeczą fizyczną. Powinno się móc go
-                            podnieść, obrócić i odłożyć tam, gdzie jego
-                            miejsce.
-                            <cite>Halina Bednarek, kierowniczka składu</cite>
-                        </blockquote>
-
-                        <h2>Co automatyzacja oszczędza (i zabiera)</h2>
-                        <p>
-                            Standardowy argument za przejściem na nowoczesne
-                            narzędzia to czas. Ręcznie robiona strona zajmuje
-                            czterdzieści pięć minut; zautomatyzowana — cztery.
-                            Debata o automatyzacji rzadko stawia pytanie, gdzie
-                            trafia zaoszczędzony czas. Tutaj w większości nie
-                            trafia nigdzie: tygodnik ma stałą liczbę
-                            pracowników, stałą liczbę reklamodawców i stałą
-                            liczbę stron do zapełnienia. Program do składu nie
-                            uczynił gazety lepszą; uczynił ją szybszą w byciu
-                            taką samą.
-                        </p>
-                        <p>
-                            Redakcja wypracowała kompromis, który przeraziłby
-                            doradców ds. zarządzania. Dziennikarze piszą teksty
-                            na telefonach i laptopach. Tekst jest składany i
-                            paginowany na maszynie. Potem jest drukowany,
-                            cięty i składany ręcznie — nie po to, by zmienić
-                            tekst, lecz by zmienić rytm: dać nagłówkowi oddech,
-                            cofnąć akapit od krawędzi, sprawić, by strona
-                            wydawała się zrobiona dla czytelnika, a nie dla
-                            szablonu.
-                        </p>
-                        <p>
-                            Halina przyznaje, że ten system jest absurdalny.
-                            Mówi to tonem kogoś, kto opisuje ukochany,
-                            nieefektywny dom. „Jest absurdalny” — zgadza się —
-                            „i działa.”
-                        </p>
-
-                        <h2>Ekonomia odmowy</h2>
-                        <p>
-                            Finanse gazety po cichu dowodzą, że tę absurdalność
-                            subsydiuje małość. Tygodnik z nakładem kilku tysięcy
-                            może sobie pozwolić na niedoinwestowanie technologii,
-                            bo jego czytelnicy nie wybierają między nim a
-                            witryną; wybierają między nim a niczym. Płatny
-                            dostęp gazety — małe, uparte rozwiązanie, które
-                            pobiera opłatę za pojedyncze artykuły z archiwum —
-                            przynosi tyle, by opłacić drukarkę laserową i wosk,
-                            a redakcja traktuje właśnie to jako sedno: przychód
-                            istnieje po to, by utrzymać rzemiosło, a nie by je
-                            zastąpić.
-                        </p>
-                        <p>
-                            Łatwo byłoby przedstawić stół z woskiem jako pomnik
-                            nostalgii, a redakcja sprzeciwiłaby się pierwsza.
-                            Rzemiosło, przekonują, to nie metoda; rzemiosło to
-                            osąd. Ręczne wycinanie nagłówka zmusza, by spojrzeć
-                            na nagłówek, poczuć jego ciężar, zauważyć, że „Rada
-                            głosuje” i „Rada decyduje” nie są wymienne.
-                            Automatyzacja nie usunęła tego osądu. Stała się
-                            tylko bardzo dobra w jego ukrywaniu.
-                        </p>
-                        <figure class="article-figure">
-                            <div
-                                class="img-placeholder"
-                                role="img"
-                                aria-label="Fotografia: strony wyborczego wydania specjalnego rozłożone na stole, z ołówkowym licznikiem w rogu"
+                                <stop
+                                    offset="0"
+                                    stop-color="#eae5d5"
+                                />
+                                <stop
+                                    offset="1"
+                                    stop-color="#d8d0b8"
+                                />
+                            </linearGradient>
+                            <pattern
+                                id="phgrid-a3-1"
+                                width="26"
+                                height="26"
+                                patternUnits="userSpaceOnUse"
                             >
-                                <svg
-                                    viewBox="0 0 1200 675"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    preserveAspectRatio="xMidYMid slice"
-                                >
-                                    <defs>
-                                        <linearGradient
-                                            id="ph-a3-2"
-                                            x1="0"
-                                            y1="0"
-                                            x2="1"
-                                            y2="1"
-                                        >
-                                            <stop
-                                                offset="0"
-                                                stop-color="#eae5d5"
-                                            />
-                                            <stop
-                                                offset="1"
-                                                stop-color="#d8d0b8"
-                                            />
-                                        </linearGradient>
-                                        <pattern
-                                            id="phgrid-a3-2"
-                                            width="26"
-                                            height="26"
-                                            patternUnits="userSpaceOnUse"
-                                        >
-                                            <path
-                                                d="M26 0H0V26"
-                                                fill="none"
-                                                stroke="#c6bda1"
-                                                stroke-width="1"
-                                                opacity="0.55"
-                                            />
-                                        </pattern>
-                                    </defs>
-                                    <rect
-                                        width="1200"
-                                        height="675"
-                                        fill="url(#ph-a3-2)"
-                                    />
-                                    <rect
-                                        width="1200"
-                                        height="675"
-                                        fill="url(#phgrid-a3-2)"
-                                    />
-                                    <g
-                                        transform="translate(600 302)"
-                                        fill="none"
-                                        stroke="#8a8066"
-                                        stroke-width="5"
-                                        opacity="0.95"
-                                        stroke-linejoin="round"
-                                        stroke-linecap="round"
-                                    >
-                                        <rect
-                                            x="-56"
-                                            y="-32"
-                                            width="112"
-                                            height="72"
-                                            rx="9"
-                                        />
-                                        <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
-                                        <circle cx="0" cy="6" r="22" />
-                                    </g>
-                                    <text
-                                        x="600"
-                                        y="452"
-                                        text-anchor="middle"
-                                        font-family="'IBM Plex Mono', monospace"
-                                        font-size="24"
-                                        letter-spacing="7"
-                                        fill="#776d53"
-                                    >
-                                        MIEJSCE NA ZDJĘCIE
-                                    </text>
-                                    <text
-                                        x="600"
-                                        y="496"
-                                        text-anchor="middle"
-                                        font-family="'Source Sans 3', sans-serif"
-                                        font-size="18"
-                                        fill="#887d61"
-                                    >
-                                        1200 × 675 — podmień na zdjęcie redakcyjne
-                                    </text>
-                                </svg>
-                            </div>
-                            <figcaption>
-                                Próby z wyborczego wydania specjalnego z 2021
-                                roku — 214 wyciętych i wklejonych nagłówków,
-                                policzonych ołówkiem u góry strony. <strong>Fot.: K. Zielińska / The Ledger</strong>
-                            </figcaption>
-                        </figure>
+                                <path
+                                    d="M26 0H0V26"
+                                    fill="none"
+                                    stroke="#c6bda1"
+                                    stroke-width="1"
+                                    opacity="0.55"
+                                />
+                            </pattern>
+                        </defs>
+                        <rect
+                            width="1200"
+                            height="675"
+                            fill="url(#ph-a3-1)"
+                        />
+                        <rect
+                            width="1200"
+                            height="675"
+                            fill="url(#phgrid-a3-1)"
+                        />
+                        <g
+                            transform="translate(600 302)"
+                            fill="none"
+                            stroke="#8a8066"
+                            stroke-width="5"
+                            opacity="0.95"
+                            stroke-linejoin="round"
+                            stroke-linecap="round"
+                        >
+                            <rect
+                                x="-56"
+                                y="-32"
+                                width="112"
+                                height="72"
+                                rx="9"
+                            />
+                            <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
+                            <circle cx="0" cy="6" r="22" />
+                        </g>
+                        <text
+                            x="600"
+                            y="452"
+                            text-anchor="middle"
+                            font-family="'IBM Plex Mono', monospace"
+                            font-size="24"
+                            letter-spacing="7"
+                            fill="#776d53"
+                        >
+                            MIEJSCE NA ZDJĘCIE
+                        </text>
+                        <text
+                            x="600"
+                            y="496"
+                            text-anchor="middle"
+                            font-family="'Source Sans 3', sans-serif"
+                            font-size="18"
+                            fill="#887d61"
+                        >
+                            1200 × 675 — podmień na zdjęcie redakcyjne
+                        </text>
+                    </svg>
+                </div>
+                <figcaption>
+                    Stół składu w zamkniętą środę. Blok wosku po
+                    prawej, nożyczki po lewej, a w tle tablica z
+                    licznikiem. <strong>Fot.: K. Zielińska / The Ledger</strong>
+                </figcaption>
+            </figure>
 
-                        <h2>Wosk i terminy</h2>
-                        <p>
-                            W środowe popołudnie numer jest zamykany tak, jak
-                            zamyka się go od dziesięcioleci: ostatnia strona
-                            jest drukowana, cięta i dociskana; redaktorzy
-                            podpisują się inicjałami ołówkiem na wierzchnim
-                            arkuszu; a strony są zanoszone na zaplecze w stosie,
-                            gdzie zostaną zeskanowane, spaginowane i wysłane do
-                            drukarni — proces, który w ostatecznej ironii jest
-                            całkowicie cyfrowy.
-                        </p>
-                        <p>
-                            Halina czyści nożyczki, zamyka blok wosku w
-                            szufladzie i zapisuje licznik nagłówków na kolejny
-                            tydzień u góry czystej tablicy. Sześćdziesiąt cztery
-                            strony. Gdzieś za jej plecami automatyzacja dalej
-                            zbiera kurz w swoim kącie, z równo owiniętym kablem,
-                            czekając na decyzję, która nie nadejdzie.
-                        </p>
-                        <p>
-                            „Niektóre rzeczy” — mówi Halina — „wychodzą lepiej
-                            ręcznie. Nagłówek jest jedną z nich. Decyzja
-                            drugą.” Mówi to, nie podnosząc wzroku — tak mówi
-                            wszystko.
-                        </p>
-                    </div>
+            <h2>Sześćdziesiąt cztery strony ręcznie</h2>
+            <p>
+                Proces nie zmienił się od lat dziewięćdziesiątych:
+                dziennikarze piszą w prostym edytorze tekstu, zespół
+                składu ustawia strony w starym programie, który
+                działa na jednym, starannie opisanym komputerze, a
+                strony są drukowane w pełnym rozmiarze na drukarce
+                laserowej, jedna na arkusz. Każdy nagłówek jest
+                potem wycinany, ręcznie dopasowywany, gdy odstępy są
+                złe, i dociskany do strony woskiem — bo wosk,
+                inaczej niż klej, pozwala podnieść nagłówek i
+                przesunąć go o sześć milimetrów w lewo, nie psując
+                wszystkiego.
+            </p>
+            <p>
+                Pełny numer to sześćdziesiąt cztery strony. Dział
+                składu na początku każdego tygodnia przewiduje, ile
+                nagłówków do wycięcia i wklejenia będzie
+                potrzebnych; rekord, ustanowiony przy specjalnym
+                wydaniu na wybory samorządowe w 2021 roku, to 214.
+                Redaktorzy prowadzą licznik na tablicy, długopisem,
+                obok czajnika.
+            </p>
 
-                    <footer class="article-foot col">
-                        <ul class="article-tags">
-                            <li>Kultura</li>
-                            <li>Druk</li>
-                            <li>Praca</li>
-                            <li>Śląsk</li>
-                        </ul>
-                        <div class="author-box">
-                            <div
-                                class="avatar"
-                                role="img"
-                                aria-label="Awatar: Kasia Zielińska"
+            <h2>Maszyna w kącie</h2>
+            <p>
+                W kącie pokoju stoi nieudany system składu gazety —
+                komputer stacjonarny kupiony w 2010 roku, podłączony
+                do monitora, który wciąż wyświetla ekran
+                konfiguracji programu do składu, testowanego przez
+                redakcję przez sześć miesięcy. Wszyscy w budynku
+                nazywają go „automatyzacją”. Nie został włączony od
+                2011 roku. Jego kabel zasilający jest owinięty wokół
+                podstawy w równą pętlę — to najbliższe, co redakcja
+                ma do mowy pogrzebowej.
+            </p>
+            <p>
+                Decyzja o powrocie do papieru i wosku nie była
+                romantyczna; była ekonomiczna. Program do składu
+                tworzył strony, które wymagały projektanta z
+                dyplomem, opłaty licencyjnej rosnącej z każdym
+                rokiem i — co najważniejsze — sprawiał, że strony
+                wyglądały jak każda inna strona w Polsce. Ręcznie
+                robione strony zajmowały więcej czasu, ale nie
+                kosztowały nic, nie wymagały licencji i — jak
+                twierdzą redaktorzy — czytelnicy widzieli różnicę.
+                Nakład w powiecie spadł, przyznają, ale wolniej niż
+                średnia w regionie.
+            </p>
+            <blockquote class="pull-quote">
+                Nagłówek jest rzeczą fizyczną. Powinno się móc go
+                podnieść, obrócić i odłożyć tam, gdzie jego
+                miejsce.
+                <cite>Halina Bednarek, kierowniczka składu</cite>
+            </blockquote>
+
+            <h2>Co automatyzacja oszczędza (i zabiera)</h2>
+            <p>
+                Standardowy argument za przejściem na nowoczesne
+                narzędzia to czas. Ręcznie robiona strona zajmuje
+                czterdzieści pięć minut; zautomatyzowana — cztery.
+                Debata o automatyzacji rzadko stawia pytanie, gdzie
+                trafia zaoszczędzony czas. Tutaj w większości nie
+                trafia nigdzie: tygodnik ma stałą liczbę
+                pracowników, stałą liczbę reklamodawców i stałą
+                liczbę stron do zapełnienia. Program do składu nie
+                uczynił gazety lepszą; uczynił ją szybszą w byciu
+                taką samą.
+            </p>
+            <p>
+                Redakcja wypracowała kompromis, który przeraziłby
+                doradców ds. zarządzania. Dziennikarze piszą teksty
+                na telefonach i laptopach. Tekst jest składany i
+                paginowany na maszynie. Potem jest drukowany,
+                cięty i składany ręcznie — nie po to, by zmienić
+                tekst, lecz by zmienić rytm: dać nagłówkowi oddech,
+                cofnąć akapit od krawędzi, sprawić, by strona
+                wydawała się zrobiona dla czytelnika, a nie dla
+                szablonu.
+            </p>
+            <p>
+                Halina przyznaje, że ten system jest absurdalny.
+                Mówi to tonem kogoś, kto opisuje ukochany,
+                nieefektywny dom. „Jest absurdalny” — zgadza się —
+                „i działa.”
+            </p>
+
+            <h2>Ekonomia odmowy</h2>
+            <p>
+                Finanse gazety po cichu dowodzą, że tę absurdalność
+                subsydiuje małość. Tygodnik z nakładem kilku tysięcy
+                może sobie pozwolić na niedoinwestowanie technologii,
+                bo jego czytelnicy nie wybierają między nim a
+                witryną; wybierają między nim a niczym. Płatny
+                dostęp gazety — małe, uparte rozwiązanie, które
+                pobiera opłatę za pojedyncze artykuły z archiwum —
+                przynosi tyle, by opłacić drukarkę laserową i wosk,
+                a redakcja traktuje właśnie to jako sedno: przychód
+                istnieje po to, by utrzymać rzemiosło, a nie by je
+                zastąpić.
+            </p>
+            <p>
+                Łatwo byłoby przedstawić stół z woskiem jako pomnik
+                nostalgii, a redakcja sprzeciwiłaby się pierwsza.
+                Rzemiosło, przekonują, to nie metoda; rzemiosło to
+                osąd. Ręczne wycinanie nagłówka zmusza, by spojrzeć
+                na nagłówek, poczuć jego ciężar, zauważyć, że „Rada
+                głosuje” i „Rada decyduje” nie są wymienne.
+                Automatyzacja nie usunęła tego osądu. Stała się
+                tylko bardzo dobra w jego ukrywaniu.
+            </p>
+            <figure class="article-figure">
+                <div
+                    class="img-placeholder"
+                    role="img"
+                    aria-label="Fotografia: strony wyborczego wydania specjalnego rozłożone na stole, z ołówkowym licznikiem w rogu"
+                >
+                    <svg
+                        viewBox="0 0 1200 675"
+                        xmlns="http://www.w3.org/2000/svg"
+                        preserveAspectRatio="xMidYMid slice"
+                    >
+                        <defs>
+                            <linearGradient
+                                id="ph-a3-2"
+                                x1="0"
+                                y1="0"
+                                x2="1"
+                                y2="1"
                             >
-                                <svg viewBox="0 0 56 56">
-                                    <rect
-                                        width="56"
-                                        height="56"
-                                        fill="#dcd4bd"
-                                    />
-                                    <text
-                                        x="28"
-                                        y="35"
-                                        text-anchor="middle"
-                                        font-family="'Newsreader', Georgia, serif"
-                                        font-size="22"
-                                        fill="#5c5340"
-                                    >
-                                        KZ
-                                    </text>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4>Kasia Zielińska</h4>
-                                <span class="author-role"
-                                    >Starsza redaktorka, media i praca</span
-                                >
-                                <p>
-                                    Pisze o ludziach stojących za maszynami.
-                                    Była redaktorka składu — wosk zostawia w
-                                    biurze, ale nożyczki trzyma.
-                                </p>
-                            </div>
-                        </div>
-                        <p class="article-disclaimer">
-                            Ta strona to demo. Płatności są symulowane.
-                        </p>
-                    </footer>
-                </section>
-            </article>
+                                <stop
+                                    offset="0"
+                                    stop-color="#eae5d5"
+                                />
+                                <stop
+                                    offset="1"
+                                    stop-color="#d8d0b8"
+                                />
+                            </linearGradient>
+                            <pattern
+                                id="phgrid-a3-2"
+                                width="26"
+                                height="26"
+                                patternUnits="userSpaceOnUse"
+                            >
+                                <path
+                                    d="M26 0H0V26"
+                                    fill="none"
+                                    stroke="#c6bda1"
+                                    stroke-width="1"
+                                    opacity="0.55"
+                                />
+                            </pattern>
+                        </defs>
+                        <rect
+                            width="1200"
+                            height="675"
+                            fill="url(#ph-a3-2)"
+                        />
+                        <rect
+                            width="1200"
+                            height="675"
+                            fill="url(#phgrid-a3-2)"
+                        />
+                        <g
+                            transform="translate(600 302)"
+                            fill="none"
+                            stroke="#8a8066"
+                            stroke-width="5"
+                            opacity="0.95"
+                            stroke-linejoin="round"
+                            stroke-linecap="round"
+                        >
+                            <rect
+                                x="-56"
+                                y="-32"
+                                width="112"
+                                height="72"
+                                rx="9"
+                            />
+                            <path d="M-56 -18 h22 l9 -13 h26 l9 13" />
+                            <circle cx="0" cy="6" r="22" />
+                        </g>
+                        <text
+                            x="600"
+                            y="452"
+                            text-anchor="middle"
+                            font-family="'IBM Plex Mono', monospace"
+                            font-size="24"
+                            letter-spacing="7"
+                            fill="#776d53"
+                        >
+                            MIEJSCE NA ZDJĘCIE
+                        </text>
+                        <text
+                            x="600"
+                            y="496"
+                            text-anchor="middle"
+                            font-family="'Source Sans 3', sans-serif"
+                            font-size="18"
+                            fill="#887d61"
+                        >
+                            1200 × 675 — podmień na zdjęcie redakcyjne
+                        </text>
+                    </svg>
+                </div>
+                <figcaption>
+                    Próby z wyborczego wydania specjalnego z 2021
+                    roku — 214 wyciętych i wklejonych nagłówków,
+                    policzonych ołówkiem u góry strony. <strong>Fot.: K. Zielińska / The Ledger</strong>
+                </figcaption>
+            </figure>
+
+            <h2>Wosk i terminy</h2>
+            <p>
+                W środowe popołudnie numer jest zamykany tak, jak
+                zamyka się go od dziesięcioleci: ostatnia strona
+                jest drukowana, cięta i dociskana; redaktorzy
+                podpisują się inicjałami ołówkiem na wierzchnim
+                arkuszu; a strony są zanoszone na zaplecze w stosie,
+                gdzie zostaną zeskanowane, spaginowane i wysłane do
+                drukarni — proces, który w ostatecznej ironii jest
+                całkowicie cyfrowy.
+            </p>
+            <p>
+                Halina czyści nożyczki, zamyka blok wosku w
+                szufladzie i zapisuje licznik nagłówków na kolejny
+                tydzień u góry czystej tablicy. Sześćdziesiąt cztery
+                strony. Gdzieś za jej plecami automatyzacja dalej
+                zbiera kurz w swoim kącie, z równo owiniętym kablem,
+                czekając na decyzję, która nie nadejdzie.
+            </p>
+            <p>
+                „Niektóre rzeczy” — mówi Halina — „wychodzą lepiej
+                ręcznie. Nagłówek jest jedną z nich. Decyzja
+                drugą.” Mówi to, nie podnosząc wzroku — tak mówi
+                wszystko.
+            </p>
+        </div>
+
+    </article>
+</div>
 {% endblock %}

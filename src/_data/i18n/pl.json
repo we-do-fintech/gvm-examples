@@ -45,7 +45,9 @@
         "drawerAria": "Płatność za dostęp do materiału",
         "drawerTitle": "Odblokuj materiał",
         "drawerSubtitle": "Wyślij SMS, aby odblokować dostęp. To zwykła wiadomość, zwykle bezpłatna (zgodnie z cennikiem operatora).",
-        "drawerQrHint": "Możesz też zeskanować kod telefonem."
+        "drawerQrHint": "Możesz też zeskanować kod telefonem.",
+        "circleArc": "ZESKANUJ LUB WYŚLIJ SMS",
+        "circleLead": "Wyślij SMS, aby odblokować treść"
     },
     "consent": {
         "infoBefore": "Dostęp do tej Treści jest odpłatny:",

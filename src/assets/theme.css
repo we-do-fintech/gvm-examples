@@ -42,11 +42,6 @@
         --danger: #c0281c;
         --scrim: rgba(23, 25, 27, 0.5);
 
-        /* legacy.css (overlay article pages) defines these too */
-        --bg-3: #e6e6e2;
-        --accent-2: #e8a600;
-        --shadow: 0 22px 60px rgba(23, 25, 27, 0.14);
-
         --gvm-bg: #ffffff;
         --gvm-bg-subtle: #f4f4f1;
         --gvm-bg-muted: #ebebe7;
@@ -90,11 +85,6 @@
     --ok: #1c7a4d;
     --danger: #c0281c;
     --scrim: rgba(23, 25, 27, 0.5);
-
-    /* legacy.css (overlay article pages) defines these too */
-    --bg-3: #e6e6e2;
-    --accent-2: #e8a600;
-    --shadow: 0 22px 60px rgba(23, 25, 27, 0.14);
 
     --gvm-bg: #ffffff;
     --gvm-bg-subtle: #f4f4f1;

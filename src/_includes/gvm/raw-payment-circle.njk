@@ -1,3 +1,15 @@
+{#
+  Circular payment dialog for Templates → Circle (raw variant).
+
+    {% from "gvm/raw-payment-circle.njk" import paymentCircle %}
+    {{ paymentCircle({ t: i18n[lang], termsUrl: site.termsUrl,
+                       termsVersion: site.termsVersion }) }}
+
+  Imports are isolated from the render context, so `t` and the terms data
+  are passed in explicitly. All visible copy comes from `t`.
+#}
+{% macro paymentCircle(opts) %}
+{% set t = opts.t %}
 <template
     data-gvm-template="payment"
     data-gvm-template-inject-to="body"
@@ -502,7 +514,7 @@
     <dialog
         open
         class="gvm-payment-dialog gvm-payment-dialog--circle"
-        aria-label="Potwierdź SMS-em, aby odblokować treść"
+        aria-label="{{ t.payment.heading }}"
     >
         <article class="gvm-payment gvm-payment--circle">
             <div class="gvm-payment__circle">
@@ -525,7 +537,7 @@
                             startOffset="50%"
                             text-anchor="middle"
                         >
-                            ZESKANUJ LUB WYŚLIJ SMS
+                            {{ t.payment.circleArc }}
                         </textPath>
                     </text>
                 </svg>
@@ -547,24 +559,24 @@
                     </div>
 
                     <div class="gvm-payment__qr-cover">
-                        Zaznacz zgodę poniżej, aby wyświetlić kod QR.
+                        {{ t.payment.qrHint }}
                     </div>
                 </div>
             </div>
 
             <div class="gvm-payment__panel">
                 <p class="gvm-payment__lead">
-                    Wyślij SMS, aby odblokować treść
+                    {{ t.payment.circleLead }}
                 </p>
 
                 <p class="gvm-payment__status">
                     <span
                         data-gvm-bind-status
-                        data-gvm-bind-status-initializing="Przygotowywanie kodu QR…"
-                        data-gvm-bind-status-waiting="Oczekiwanie na wiadomość SMS…"
-                        data-gvm-bind-status-duplicated="Ten numer ma już odblokowany materiał."
-                        data-gvm-bind-status-resolved="Płatność potwierdzona. Odblokowujemy materiał…"
-                        data-gvm-bind-status-rejected="Nie udało się potwierdzić płatności. Spróbuj ponownie."
+                        data-gvm-bind-status-initializing="{{ t.payment.statusInitializing }}"
+                        data-gvm-bind-status-waiting="{{ t.payment.statusWaiting }}"
+                        data-gvm-bind-status-duplicated="{{ t.payment.statusDuplicated }}"
+                        data-gvm-bind-status-resolved="{{ t.payment.statusResolved }}"
+                        data-gvm-bind-status-rejected="{{ t.payment.statusRejected }}"
                     ></span>
 
                     <span class="gvm-payment__time">
@@ -576,22 +588,21 @@
                     </span>
                 </p>
 
-                <p class="gvm-payment__info">
-                    Dostęp do tej Treści jest odpłatny:
+                <p class="gvm-payment__info" lang="pl">
+                    {{ t.consent.infoBefore }}
                     <strong><span data-gvm-bind-price></span>&nbsp;<span data-gvm-bind-currency></span></strong>
-                    zostanie doliczone do zbiorczego rozliczenia Twojej Sesji.
-                    Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w
-                    <a href="https://getviamsg.com/terms" target="_blank" rel="noopener">Regulaminie</a>.
+                    {{ t.consent.infoAfter }}
+                    <a href="{{ opts.termsUrl }}" target="_blank" rel="noopener">{{ t.consent.terms }}</a>.
                 </p>
 
                 <label class="gvm-payment__terms">
                     <input
                         type="checkbox"
                         data-gvm-accept-terms=".gvm-payment__qr-gate, [data-gvm-bind-send-sms]"
-                        data-gvm-accept-terms-version="pl-2026-10-23"
-                        data-gvm-accept-terms-label="Zaznacz zgodę, aby kontynuować"
+                        data-gvm-accept-terms-version="{{ opts.termsVersion }}"
+                        data-gvm-accept-terms-label="{{ t.payment.consentLabel }}"
                     />
-                    <span>Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.</span>
+                    <span lang="pl">{{ t.consent.legal }}</span>
                 </label>
 
                 <div class="gvm-payment__actions">
@@ -600,7 +611,7 @@
                         class="gvm-payment__send"
                         data-gvm-bind-send-sms
                     >
-                        Wyślij SMS
+                        {{ t.payment.sendSms }}
                     </button>
                 </div>
             </div>
@@ -611,10 +622,11 @@
                 type="button"
                 class="gvm-payment__close"
                 data-gvm-bind-cancel
-                aria-label="Zamknij"
+                aria-label="{{ t.payment.close }}"
             >
                 <span aria-hidden="true">×</span>
             </button>
         </article>
     </dialog>
 </template>
+{% endmacro %}

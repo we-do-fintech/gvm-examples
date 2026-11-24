@@ -1,0 +1,55 @@
+/* ==========================================================================
+   Overlay article extras
+   --------------------------------------------------------------------------
+   The overlay articles reuse the editorial styles from gvm.css (.article,
+   .article-head, .article-body, .lead, .byline). Only the figure and
+   pull-quote helpers are not part of the shared stylesheet, so they live
+   here — scoped to these pages and built from the same tokens.
+   ========================================================================== */
+
+.article-figure {
+    margin: 1.5rem 0;
+}
+
+.article-figure figcaption {
+    margin-top: 0.5rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.img-placeholder {
+    display: grid;
+    place-items: center;
+    min-height: 240px;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--bg-2);
+    color: var(--muted);
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+.img-placeholder svg {
+    width: 100%;
+    height: auto;
+}
+
+.pull-quote {
+    margin: 1.5rem 0;
+    padding: 0.3rem 0 0.3rem 1.1rem;
+    border-left: 3px solid var(--accent);
+    color: var(--ink);
+    font-size: 1.18rem;
+    font-style: italic;
+    line-height: 1.55;
+    text-wrap: pretty;
+}
+
+.pull-quote cite {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-style: normal;
+}

@@ -53,7 +53,7 @@ src/
   assets/                   css, logos, favicon, agg bridge
     gvm.css                 foundation: chrome, content, cards, prose, PPV
     gvm-drawer.css          payment drawer (default form), linked when gvm: true
-    legacy.css              overlay pages only (front matter: legacyCss: true)
+    overlay.css             overlay article figures + pull-quotes only
     <page>.css / <page>.js  page-specific styles and scripts
   _includes/
     layouts/base.njk        html, head, skip link, header, main, footer
@@ -165,9 +165,10 @@ content itself — no per-element `data-gvm-*` markup.
   `<style>.gvm-cloak{visibility:hidden}</style>` hides it before the SDK boots,
   so the paid text never flashes. The SDK drops the class once it has taken
   over.
-- **`legacyCss: true`** in front matter pulls in `assets/legacy.css`, the
-  article layout the overlay demos were authored against (`news-article`,
-  `section-card`, `article-figure`, …). It is confined to these pages.
+- **Standard editorial layout**: the articles extend `layouts/base.njk` and
+  reuse the shared `.article` / `.article-head` / `.article-body` styles from
+  `gvm.css`. A small `assets/overlay.css` adds only the figure and pull-quote
+  helpers.
 - **Selectors come from remote config**, not from the page: the tenant decides
   which element gets locked, which strategy runs (`blur`, `hide`,
   `mangle-blur`) and the price. `?gvm_admin=1` exposes the in-page editor.
