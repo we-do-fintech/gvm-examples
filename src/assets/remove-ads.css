@@ -1,0 +1,393 @@
+/* ==========================================================================
+   /publisher/remove-ads/ — publisher front page with ad slots & an ad-free
+   day pass. Page-specific styles only; the foundation lives in gvm.css.
+
+   The `.ad-slot` convention and `html.ads-free` switch come straight from the
+   archived flat example (src/archive/ads): the class is set inline in <head>
+   before the first paint, so a reader who already bought the pass never sees
+   an ad placeholder flash on the redirect landing.
+   ========================================================================== */
+
+/* --- Ad-free pass -------------------------------------------------------- */
+.ads-pass {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+    padding: 1.25rem 1.4rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    border-radius: var(--radius);
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--accent) 10%, transparent),
+        color-mix(in srgb, var(--accent) 2%, transparent)
+    );
+}
+
+.ads-pass__copy {
+    flex: 1 1 22rem;
+    min-width: 0;
+}
+
+.ads-pass__copy h2 {
+    margin-bottom: 0.35rem;
+    font-size: var(--fs-xl);
+}
+
+.ads-pass__copy p {
+    margin-bottom: 0.7rem;
+    max-width: var(--measure);
+    line-height: 1.7;
+    text-wrap: pretty;
+    color: var(--ink-2);
+}
+
+.ads-pass__perks {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: var(--fs-sm);
+    color: var(--ink-2);
+}
+
+.ads-pass__perks li {
+    margin: 0.2rem 0;
+}
+
+.ads-pass__perks li::marker {
+    color: var(--accent-text);
+}
+
+.ads-pass__cta {
+    flex: 1 1 16rem;
+    display: grid;
+    gap: 0.8rem;
+    text-align: left;
+}
+
+.ads-pass__cta .consent-info {
+    margin: 0;
+}
+
+.ads-pass__button {
+    width: 100%;
+    padding: 0.75rem 1.1rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--accent-ink);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.ads-pass__button:hover {
+    background: var(--accent-hover);
+}
+
+.ads-pass__button[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* --- Ad-free status banner (replaces the pass while active) -------------- */
+.ads-free-status {
+    display: none;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 1.5rem 0;
+    padding: 0.9rem 1.2rem;
+    border: 1px solid var(--ok);
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--ok) 8%, transparent);
+    color: var(--ink);
+}
+
+.ads-free-status__countdown {
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums;
+}
+
+html.ads-free .ads-free-status {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+html.ads-free .ads-pass {
+    display: none;
+}
+
+/* --- Ad slots ------------------------------------------------------------ */
+.ad-slot {
+    display: grid;
+    place-items: center;
+    gap: 0.35rem;
+    margin: 1.25rem 0;
+    padding: 0.85rem 1rem;
+    border: 1px dashed var(--line-2);
+    border-radius: var(--radius-sm);
+    background: var(--bg-1);
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.ad-slot__label {
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.ad-slot__box {
+    display: grid;
+    place-items: center;
+    gap: 0.25rem;
+    width: 100%;
+}
+
+.ad-slot__size {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--ink-2);
+}
+
+.ad-slot__hint {
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--muted);
+}
+
+.ad-slot__cta {
+    margin-top: 0.2rem;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--accent-text);
+}
+
+.ad-slot--leaderboard {
+    width: 100%;
+    min-height: 90px;
+}
+
+.ad-slot--inline {
+    min-height: 250px;
+    max-width: 300px;
+    margin-inline: auto;
+}
+
+.ad-slot--native {
+    min-height: 110px;
+    text-align: left;
+    justify-items: start;
+}
+
+.ad-slot--native .ad-slot__box {
+    justify-items: start;
+    text-align: left;
+}
+
+.ad-slot--rail {
+    min-height: 600px;
+    max-width: 300px;
+    margin: 0;
+}
+
+.ad-slot--rail-small {
+    min-height: 250px;
+    max-width: 300px;
+    margin: 0;
+}
+
+.ad-slot--sticky {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 1.5rem 0 0;
+    border-style: solid;
+    text-align: left;
+}
+
+.ad-slot--sticky .ad-slot__box {
+    justify-items: start;
+    text-align: left;
+}
+
+.ad-slot--sticky.is-dismissed {
+    display: none;
+}
+
+.ad-slot__close {
+    flex: 0 0 auto;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--ink-2);
+    font-size: var(--fs-lg);
+    line-height: 1;
+    cursor: pointer;
+}
+
+.ad-slot__close:hover {
+    border-color: var(--accent);
+    color: var(--accent-text);
+}
+
+/* The one switch that removes every ad before the first paint. */
+html.ads-free .ad-slot {
+    display: none !important;
+}
+
+/* --- Front-page grid ----------------------------------------------------- */
+.paper-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 1.75rem;
+    align-items: start;
+    margin-top: 1.5rem;
+}
+
+.paper-main {
+    min-width: 0;
+}
+
+.paper-rail {
+    display: grid;
+    gap: 1.25rem;
+    position: sticky;
+    top: 1rem;
+}
+
+.paper-lead {
+    margin-bottom: 1.5rem;
+}
+
+.paper-kicker {
+    margin: 0 0 0.35rem;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+}
+
+.paper-lead h2 {
+    font-size: var(--fs-2xl);
+    margin-bottom: 0.5rem;
+}
+
+.paper-story {
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+}
+
+.paper-story h3 {
+    font-size: var(--fs-lg);
+    margin-bottom: 0.25rem;
+}
+
+.paper-story p {
+    margin: 0;
+    max-width: var(--measure);
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+.paper-stories {
+    margin-top: 1rem;
+}
+
+.paper-mostread {
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-1);
+}
+
+.paper-mostread h3 {
+    font-size: var(--fs-lg);
+    margin-bottom: 0.5rem;
+}
+
+.paper-mostread ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: var(--fs-sm);
+    color: var(--ink-2);
+}
+
+.paper-mostread li {
+    margin: 0.3rem 0;
+}
+
+.paper-mostread li::marker {
+    color: var(--accent-text);
+}
+
+.note-box {
+    padding: 0.9rem 1.1rem;
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+    background: var(--bg-1);
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    color: var(--ink-2);
+}
+
+.note-box code {
+    font-family: var(--mono);
+    color: var(--ink);
+}
+
+
+/* --- Responsive ---------------------------------------------------------- */
+@media (max-width: 860px) {
+    .paper-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .paper-rail {
+        position: static;
+    }
+}
+
+@media (max-width: 560px) {
+    .ads-pass {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* The sticky bottom banner wraps instead of squeezing, and the strip it
+       parks over stays reachable because html reserves scroll padding. */
+    .ad-slot--sticky {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .ad-slot--sticky .ad-slot__close {
+        margin-left: auto;
+    }
+}
+
+/* Keep anchor targets out from under the sticky banner. */
+html {
+    scroll-padding-bottom: 5rem;
+}
+
+/* --- Reduced motion ------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    .ad-slot__close,
+    .ads-pass__button {
+        transition: none;
+    }
+}

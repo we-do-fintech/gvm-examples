@@ -51,18 +51,18 @@
             mutations.forEach(function (mutation) {
                 mutation.addedNodes.forEach(function (node) {
                     if (!(node instanceof Element)) return;
-                    var dialog = node.matches("dialog.gvm-dialog, dialog.gvm-payment-drawer-overlay")
+                    var dialog = node.matches("dialog.gvm-dialog, dialog.gvm-payment-dialog, dialog.gvm-payment-drawer-overlay")
                         ? node
-                        : node.querySelector("dialog.gvm-dialog, dialog.gvm-payment-drawer-overlay");
+                        : node.querySelector("dialog.gvm-dialog, dialog.gvm-payment-dialog, dialog.gvm-payment-drawer-overlay");
                     if (!dialog) return;
                     setLocked(true);
                     focusFirst(dialog);
                 });
                 mutation.removedNodes.forEach(function (node) {
                     if (!(node instanceof Element)) return;
-                    var dialog = node.matches("dialog.gvm-dialog, dialog.gvm-payment-drawer-overlay")
+                    var dialog = node.matches("dialog.gvm-dialog, dialog.gvm-payment-dialog, dialog.gvm-payment-drawer-overlay")
                         ? node
-                        : node.querySelector("dialog.gvm-dialog, dialog.gvm-payment-drawer-overlay");
+                        : node.querySelector("dialog.gvm-dialog, dialog.gvm-payment-dialog, dialog.gvm-payment-drawer-overlay");
                     if (!dialog) return;
                     setLocked(false);
                     if (lastTrigger && document.contains(lastTrigger)) {
@@ -77,7 +77,7 @@
 
         document.addEventListener("keydown", function (event) {
             if (event.key !== "Escape") return;
-            var dialog = document.querySelector("dialog.gvm-dialog, dialog.gvm-payment-drawer-overlay");
+            var dialog = document.querySelector("dialog.gvm-dialog, dialog.gvm-payment-dialog, dialog.gvm-payment-drawer-overlay");
             if (!dialog) return;
             var cancel = dialog.querySelector("[data-gvm-bind-cancel]");
             if (!cancel) return;
@@ -86,7 +86,7 @@
         });
 
         document.addEventListener("focusin", function (event) {
-            var dialog = document.querySelector("dialog.gvm-dialog, dialog.gvm-payment-drawer-overlay");
+            var dialog = document.querySelector("dialog.gvm-dialog, dialog.gvm-payment-dialog, dialog.gvm-payment-drawer-overlay");
             if (!dialog || dialog.contains(event.target)) return;
             focusFirst(dialog);
         });

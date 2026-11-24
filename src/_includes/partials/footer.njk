@@ -1,8 +1,9 @@
+{% from "gvm/brand.njk" import gvmBrand %}
+
 <footer class="site-footer">
     <div class="container site-footer__inner">
-        <p class="site-footer__brand"><strong>GetViaMsg</strong></p>
+        {{ gvmBrand({ classes: "gvm-brand--footer", lockup: true }) }}
         <nav class="site-footer__nav" aria-label="{{ l.footer.label }}">
-            <a href="{{ site.site }}">getviamsg.com</a>
             <a href="{{ site.termsUrl }}" rel="noopener">{{ l.footer.terms }}</a>
             <a href="{{ site.github }}" rel="noopener">{{ l.nav.github }}</a>
             <a href="{{ site.docs }}" rel="noopener">{{ l.nav.docs }}</a>

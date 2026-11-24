@@ -1,65 +1,85 @@
 {
-  "skipToContent": "Skip to content",
-  "nav": {
-    "label": "Main navigation",
-    "home": "Home",
-    "docs": "Documentation",
-    "github": "GitHub"
-  },
-  "langSwitch": {
-    "label": "Page language",
-    "other": "Polski"
-  },
-  "footer": {
-    "label": "Footer",
-    "terms": "Terms",
-    "contact": "Contact"
-  },
-  "exampleBar": {
-    "label": "Example navigation",
-    "back": "Showcases"
-  },
-  "payment": {
-    "heading": "Unlock in seconds",
-    "sub": "Send a regular text message to get access. You pay later — once, for the whole session.",
-    "priceLabel": "One-time access",
-    "qrHint": "Tick the consent box below to show the QR code.",
-    "statusInitializing": "Preparing the QR code",
-    "statusWaiting": "Waiting for the text message",
-    "statusDuplicated": "This number already has access",
-    "statusResolved": "Confirmed. Unlocking now…",
-    "statusRejected": "We could not verify the confirmation. Please try again.",
-    "sendSms": "Send the text message",
-    "cancel": "Cancel",
-    "consentLabel": "Tick the consent box to continue",
-    "statusConsent": "Tick the consent box to continue",
-    "qrLabel": "QR code with the payment link",
-    "drawerAria": "Payment for access to the content",
-    "drawerEyebrow": "SMS confirmation",
-    "drawerTitle": "Unlock the content",
-    "drawerSubtitle": "Send a text message to unlock access. It is a regular message, usually free (per your operator price list).",
-    "drawerQrHint": "You can also scan the code with your phone.",
-    "drawerFooter": "SMS confirmation · powered by",
-    "promise": "You pay only for what you unlock. The payment link arrives by text message or e-mail when the session closes — after 14 days, above 50 PLN, or earlier if you close it in the customer portal."
-  },
-  "consent": {
-    "infoBefore": "Dostęp do tej Treści jest odpłatny:",
-    "infoAfter": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w",
-    "terms": "Regulaminie",
-    "legal": "Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.",
-    "note": "The binding wording of the consent is the Polish text above (§ 11 (2) of the GetViaMsg terms)."
-  },
-  "paywall": {
-    "ariaLabel": "Paid access to this content",
-    "lead": "The rest of this article is available after unlocking.",
-    "meta": "Added to your session:",
-    "minutes": "minutes of reading",
-    "words": "words",
-    "unlock": "Unlock for",
-    "permanent": "You pay once, with no subscription. The article stays with you."
-  },
-  "a11y": {
-    "newWindow": "opens in a new tab",
-    "publisher": "publisher"
-  }
+    "skipToContent": "Skip to content",
+    "nav": {
+        "label": "Main navigation",
+        "home": "Home",
+        "docs": "Documentation",
+        "github": "GitHub"
+    },
+    "langSwitch": {
+        "label": "Page language",
+        "other": "Polski"
+    },
+    "footer": {
+        "label": "Footer",
+        "terms": "Terms",
+        "contact": "Contact"
+    },
+    "exampleBar": {
+        "label": "Example navigation",
+        "back": "Showcases"
+    },
+    "payment": {
+        "heading": "Unlock in seconds",
+        "sub": "Send a regular text message to get access. You pay later — once, for the whole session.",
+        "howTitle": "How it works",
+        "howSteps": [
+            "Send the text message we prepare for you.",
+            "Wait for the content to unlock on the page.",
+            "Keep going — unlock more content for 14 days.",
+            "Settle the session by card or BLIK."
+        ],
+        "priceLabel": "One-time access",
+        "qrHint": "Tick the consent box below to show the QR code.",
+        "statusInitializing": "Preparing the QR code",
+        "statusWaiting": "Waiting for the text message",
+        "statusDuplicated": "This number already has access",
+        "statusResolved": "Confirmed. Unlocking now…",
+        "statusRejected": "We could not verify the confirmation. Please try again.",
+        "sendSms": "Send the text message",
+        "cancel": "Cancel",
+        "close": "Close",
+        "consentLabel": "Tick the consent box to continue",
+        "statusConsent": "Tick the consent box to continue",
+        "qrLabel": "QR code with the payment link",
+        "drawerAria": "Payment for access to the content",
+        "drawerTitle": "Unlock the content",
+        "drawerSubtitle": "Send a text message to unlock access. It is a regular message, usually free (per your operator price list).",
+        "drawerQrHint": "You can also scan the code with your phone."
+    },
+    "consent": {
+        "infoBefore": "Dostęp do tej Treści jest odpłatny:",
+        "infoAfter": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w",
+        "terms": "Regulaminie",
+        "legal": "Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.",
+        "note": "The binding wording of the consent is the Polish text above (§ 11 (2) of the GetViaMsg terms)."
+    },
+    "paywall": {
+        "ariaLabel": "Paid access to this content",
+        "lead": "The rest of this article is available after unlocking.",
+        "meta": "",
+        "minutes": "minutes left to read",
+        "unlock": "Unlock for",
+        "permanent": "You pay once, with no subscription. The article stays yours.",
+        "widgetToggle": "Finish this article",
+        "drawerToggle": "How to unlock",
+        "drawerAria": "How to unlock this article",
+        "drawerTitle": "How unlocking works",
+        "drawerSteps": [
+            "Tap Unlock — no account, no card and no app to install.",
+            "Send the text message your phone prepares for you. It is only the confirmation — you can cancel it.",
+            "The article appears right away, without moving where you were reading. Once unlocked, it stays that way."
+        ],
+        "drawerWhyTitle": "Why SMS?",
+        "drawerWhyText": "It is the one confirmation that works on every phone. No card form, no wallet and no password — one tap and a confirmation.",
+        "drawerPremiumTitle": "Is this premium SMS?",
+        "drawerPremiumText": "No. This is not a premium service and not a subscription. There are no hidden weekly charges and no renewals. You pay once, for one article.",
+        "drawerPriceLabel": "This article",
+        "drawerTrust": "No card · No account · No renewal",
+        "drawerUnlock": "Unlock this article"
+    },
+    "a11y": {
+        "newWindow": "opens in a new tab",
+        "publisher": "publisher"
+    }
 }

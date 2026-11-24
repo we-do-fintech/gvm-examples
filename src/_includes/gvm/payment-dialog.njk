@@ -12,6 +12,7 @@
   dialog itself stays static and can be shared.
 #}
 {% from "gvm/consent.njk" import consentBox %}
+{% from "gvm/brand.njk" import gvmBrand %}
 
 {% macro paymentDialog(opts) %}
 {% set t = opts.t %}
@@ -70,7 +71,7 @@
                     >
                 </p>
 
-                {{ consentBox({ t: t, termsUrl: opts.termsUrl, termsVersion: opts.termsVersion, targets: ".payment-qr-gate, [data-gvm-bind-send-sms]" }) }}
+                {{ consentBox({ t: t, termsUrl: opts.termsUrl, termsVersion: opts.termsVersion, targets: ".payment-qr-gate, [data-gvm-bind-send-sms]", classes: "consent-info--compact" }) }}
 
                 <div class="payment-actions">
                     <button
@@ -80,22 +81,24 @@
                     >
                         {{ t.payment.sendSms }}
                     </button>
-                    <button
-                        type="button"
-                        class="btn btn--ghost"
-                        data-gvm-bind-cancel
-                    >
-                        {{ t.payment.cancel }}
-                    </button>
                 </div>
             </section>
 
             <footer class="payment-footer">
-                <small>
-                    GetViaMsg ·
-                    <a href="https://getviamsg.com/" rel="noopener">WDFT</a>
-                </small>
+                {{ gvmBrand() }}
             </footer>
+
+            {#  Cancel lives in the corner, not in the action row: the row keeps
+                a single primary action. `data-gvm-bind-cancel` must stay on
+                this button — the SDK, Escape handling and focus return bind to it. #}
+            <button
+                type="button"
+                class="payment-close"
+                data-gvm-bind-cancel
+                aria-label="{{ t.payment.close }}"
+            >
+                <span aria-hidden="true">×</span>
+            </button>
         </article>
     </dialog>
 </template>

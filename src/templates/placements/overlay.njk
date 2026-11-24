@@ -1,0 +1,55 @@
+---
+lang: pl
+title: "Odblokowanie · Nakładka"
+description: "Wyśrodkowana karta na przygaszonym tle — przykrywa obszar treści."
+crumb: "Szablony · Nakładka"
+altUrl: /en/templates/placements/overlay/
+gvm: true
+mainClass: "unlock-demo unlock-demo--overlay"
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/paywall-overlay.njk" import paywallOverlay %}
+{% set article = catalog[lang].article %}
+
+{% block head %}
+<link rel="stylesheet" href="/assets/paywalls.css" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Nakładka</h1>
+        <p class="lead">Karta na przygaszonym tle przykrywa obszar treści; przycisk tylko otwiera formularz płatności.</p>
+    </div>
+
+    <article class="article">
+        <header class="article-head">
+            <p class="kicker">Szablony · odblokowanie</p>
+            <h1 lang="{{ article.contentLang }}">{{ article.title }}</h1>
+            <p class="byline">{{ article.minutes }} min czytania</p>
+        </header>
+
+        <div
+            id="article"
+            class="article-body wait-for-script"
+            lang="{{ article.contentLang }}"
+            data-gvm-reference="paywall-overlay-{{ lang }}"
+            data-gvm-price="1.99"
+            data-gvm-template-name="payment"
+            data-gvm-hide-template-name="paywall"
+            data-gvm-hide-strategy="blur"
+            data-gvm-hide-sections="2"
+            data-gvm-metadata-title="{{ article.title }}"
+            data-gvm-category="article"
+        >
+            {{ article.html | safe }}
+        </div>
+    </article>
+
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paywallOverlay({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

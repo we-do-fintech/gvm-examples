@@ -1,0 +1,38 @@
+---
+lang: pl
+title: SaaS
+description: Sprzedaż planów i dodatków w aplikacji — potwierdzenie SMS-em, rozliczenie zbiorcze.
+altUrl: /en/saas/
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>SaaS</h1>
+        <p class="lead">
+            Sprzedawaj w aplikacji bez własnej bramki płatniczej. Plan
+            potwierdza jeden SMS, dodatki trafiają do koszyka, a rachunek
+            przychodzi raz, na koniec.
+        </p>
+    </div>
+
+    <div class="card-grid">
+        <a class="card" href="/saas-licenses/">
+            <h2>Sprzedaż planów</h2>
+            <p>
+                Trzy plany, jeden SMS i jedna płatność. Bez karty, bez
+                formularza i bez subskrypcji.
+            </p>
+        </a>
+        <a class="card" href="/add-ons/">
+            <h2>Dodatki i koszyk</h2>
+            <p>
+                Wybierasz funkcje, a suma koszyka jest kwotą płatności. Jedna
+                mikropłatność za cały zestaw.
+            </p>
+        </a>
+    </div>
+</div>
+{% endblock %}

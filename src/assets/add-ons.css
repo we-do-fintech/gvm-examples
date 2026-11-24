@@ -1,0 +1,605 @@
+/* ==========================================================================
+   /add-ons/ & /en/add-ons/ — LogoKit configurator with a dynamic basket.
+   Page-specific styles only: gvm.css owns tokens, cards, buttons and the
+   drawer keeps its own stylesheet (gvm-drawer.css).
+   ========================================================================== */
+
+/* --- Page head facts ----------------------------------------------------- */
+.lk-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+}
+
+/* --- App screen ---------------------------------------------------------- */
+.lk-app {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .lk-app {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.lk-config h2,
+.lk-side h2 {
+    margin: 0 0 0.6rem;
+    font-size: var(--fs-xl);
+}
+
+.lk-step {
+    margin-top: 1.6rem;
+}
+
+.lk-hint {
+    margin: 0 0 0.9rem;
+    max-width: var(--measure);
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    text-wrap: pretty;
+    color: var(--muted);
+}
+
+/* --- Brief form ---------------------------------------------------------- */
+.lk-brief {
+    display: grid;
+    gap: 0.7rem;
+    margin-bottom: 0.6rem;
+}
+
+.lk-field-row {
+    display: grid;
+    gap: 0.7rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.lk-field {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.lk-field label {
+    font-size: var(--fs-xs);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.lk-field input,
+.lk-field select {
+    width: 100%;
+    padding: 0.45rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--fs-sm);
+}
+
+.lk-field input:focus-visible,
+.lk-field select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.lk-optional {
+    color: var(--line-2);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+/* --- Catalogue ----------------------------------------------------------- */
+.lk-catalog {
+    display: grid;
+    gap: 1rem;
+}
+
+.lk-group .lk-group__title {
+    margin: 0 0 0.4rem;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+}
+
+.lk-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.65rem;
+    align-items: start;
+    margin-bottom: 0.4rem;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    cursor: pointer;
+}
+
+.lk-item:hover {
+    border-color: var(--line-2);
+}
+
+.lk-item.is-selected {
+    border-color: var(--accent);
+    background: var(--bg-2);
+}
+
+.lk-item input {
+    width: 1.05rem;
+    height: 1.05rem;
+    margin: 0.15rem 0 0;
+    accent-color: var(--accent);
+}
+
+.lk-item:focus-within {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.lk-item__body {
+    display: grid;
+    gap: 0.1rem;
+}
+
+.lk-item__name {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.lk-item__desc {
+    font-size: var(--fs-xs);
+    line-height: 1.55;
+    color: var(--muted);
+}
+
+.lk-item__price {
+    font-size: var(--fs-sm);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--ink-2);
+}
+
+.lk-item.is-selected .lk-item__price {
+    color: var(--accent-text);
+}
+
+/* --- Side column --------------------------------------------------------- */
+.lk-side {
+    display: grid;
+    gap: 1rem;
+}
+
+/* --- Live preview -------------------------------------------------------- */
+/* Documented exception: these are the six logo palettes the configurator can
+   preview, i.e. content, not chrome. They must stay identical in both themes,
+   so they stay literal rather than following --bg / --ink. */
+.lk-preview,
+.lk-success__logo {
+    --lk-ink: #1d1d1b;
+    --lk-accent: #7a7463;
+    --lk-soft: #ece8dc;
+    --lk-paper: #f5f2ea;
+}
+
+[data-palette="graphite"] {
+    --lk-ink: #1d1d1b;
+    --lk-accent: #7a7463;
+    --lk-soft: #ece8dc;
+    --lk-paper: #f5f2ea;
+}
+
+[data-palette="navy"] {
+    --lk-ink: #14213d;
+    --lk-accent: #3d5a80;
+    --lk-soft: #e7eef7;
+    --lk-paper: #f4f6fa;
+}
+
+[data-palette="forest"] {
+    --lk-ink: #1f3d2b;
+    --lk-accent: #6f8f5f;
+    --lk-soft: #e8efe3;
+    --lk-paper: #f3f7f0;
+}
+
+[data-palette="wine"] {
+    --lk-ink: #4a1c2a;
+    --lk-accent: #9b4a5c;
+    --lk-soft: #f2e5e8;
+    --lk-paper: #faf3f4;
+}
+
+[data-palette="terracotta"] {
+    --lk-ink: #3a1f1a;
+    --lk-accent: #b5654a;
+    --lk-soft: #f4e5dc;
+    --lk-paper: #faf1ec;
+}
+
+[data-palette="mono"] {
+    --lk-ink: #111111;
+    --lk-accent: #555555;
+    --lk-soft: #ededed;
+    --lk-paper: #f7f7f7;
+}
+
+.lk-logo {
+    display: flex;
+    gap: 0.65rem;
+    align-items: center;
+    padding: 0.9rem;
+    border-radius: var(--radius-sm);
+    background: var(--lk-paper);
+    color: var(--lk-ink);
+}
+
+.lk-logo__mark {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0;
+    background: var(--lk-ink);
+    color: var(--lk-paper);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.lk-logo__type {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 0;
+}
+
+.lk-logo__name {
+    overflow: hidden;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lk-logo__tagline {
+    font-size: var(--fs-xs);
+    color: var(--lk-accent);
+}
+
+/* Type-style presets: the logo reacts to the <select>, not just a label. */
+.lk-logo[data-mood="editorial"] .lk-logo__name {
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.lk-logo[data-mood="grotesk"] .lk-logo__name {
+    font-family: var(--font);
+    letter-spacing: -0.01em;
+}
+
+.lk-logo[data-mood="mono"] .lk-logo__name {
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.lk-logo[data-mood="round"] .lk-logo__mark {
+    border-radius: 50%;
+    font-family: var(--font);
+}
+
+.lk-logo[data-mood="round"] .lk-logo__name {
+    font-family: var(--font);
+    font-weight: 600;
+}
+
+/* Swatch rows are pre-rendered per palette; JS unhides the active one. */
+.lk-swatches {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0.7rem 0;
+}
+
+.lk-swatches__set {
+    display: flex;
+    gap: 0.4rem;
+    margin: 0;
+}
+
+.lk-swatches__set[hidden] {
+    display: none;
+}
+
+.lk-swatch {
+    display: grid;
+    gap: 0.2rem;
+    width: 3.6rem;
+    padding: 0.35rem 0.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    text-align: center;
+    color: var(--ink-2);
+}
+
+.lk-swatch__chip {
+    display: block;
+    height: 1.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--line-2);
+}
+
+/* --- Mock stationery previews -------------------------------------------- */
+.lk-assets {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+.lk-mock {
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.55rem;
+    border-radius: 4px;
+    background: var(--lk-paper);
+    color: var(--lk-ink);
+    font-size: 0.62rem;
+    line-height: 1.2;
+}
+
+.lk-mock__mark {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--lk-ink);
+    color: var(--lk-paper);
+    font-size: 0.6rem;
+    font-weight: 700;
+}
+
+.lk-mock__name {
+    font-weight: 600;
+}
+
+.lk-mock__tagline {
+    color: var(--lk-accent);
+}
+
+.lk-mock__caption {
+    margin-top: 0.25rem;
+    padding-top: 0.25rem;
+    border-top: 1px solid var(--lk-soft);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--lk-accent);
+}
+
+.lk-mock--social {
+    background: var(--lk-ink);
+    color: var(--lk-paper);
+}
+
+.lk-mock--social .lk-mock__mark {
+    background: var(--lk-paper);
+    color: var(--lk-ink);
+}
+
+.lk-mock--social .lk-mock__caption {
+    border-top-color: var(--lk-accent);
+    color: var(--lk-paper);
+}
+
+.lk-mock--letter {
+    grid-column: 1 / -1;
+}
+
+/* --- Basket -------------------------------------------------------------- */
+.lk-basket__list {
+    display: grid;
+    gap: 0.3rem;
+    margin: 0 0 0.7rem;
+    padding: 0;
+    list-style: none;
+}
+
+.lk-basket__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 0.5rem;
+    align-items: center;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px dashed var(--line);
+    font-size: var(--fs-sm);
+}
+
+.lk-basket__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--ink-2);
+}
+
+.lk-basket__price {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+}
+
+.lk-basket__remove {
+    padding: 0 0.3rem;
+    border: 1px solid var(--line-2);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    line-height: 1.4;
+    cursor: pointer;
+}
+
+.lk-basket__remove:hover,
+.lk-basket__remove:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent-text);
+}
+
+.lk-basket__empty {
+    color: var(--muted);
+    font-size: var(--fs-sm);
+}
+
+.lk-total {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--line);
+    font-size: var(--fs-sm);
+    color: var(--muted);
+}
+
+.lk-total strong {
+    font-size: var(--fs-xl);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+}
+
+.lk-total__unit {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+}
+
+.lk-terms {
+    margin-bottom: 0.9rem;
+}
+
+.lk-basket .btn {
+    width: 100%;
+    font-variant-numeric: tabular-nums;
+}
+
+.lk-checkout-note {
+    margin: 0.5rem 0 0;
+    font-size: var(--fs-xs);
+    line-height: 1.55;
+    color: var(--muted);
+}
+
+.lk-checkout-note.is-error {
+    color: var(--danger);
+}
+
+.lk-basket__note {
+    margin: 0.8rem 0 0;
+    font-size: var(--fs-xs);
+    line-height: 1.6;
+    text-wrap: pretty;
+    color: var(--muted);
+}
+
+.lk-basket__note code {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+}
+
+/* Slot for the CTA that gvm.js injects with the `hide` strategy. */
+.lk-cta-slot {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.lk-cta:not(:empty) {
+    margin-top: 0.6rem;
+}
+
+.lk-cta .lk-pay {
+    width: 100%;
+    margin-top: 0.4rem;
+}
+
+.lk-cta__note {
+    margin: 0;
+    font-size: var(--fs-xs);
+    color: var(--muted);
+}
+
+/* --- Delivery panel ------------------------------------------------------ */
+.lk-success {
+    margin-top: 1.5rem;
+}
+
+.lk-success h2 {
+    margin: 0 0 0.3rem;
+}
+
+.lk-success p {
+    max-width: var(--measure);
+    color: var(--ink-2);
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    text-wrap: pretty;
+}
+
+.lk-success__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+    align-items: start;
+    margin-top: 0.7rem;
+}
+
+@media (max-width: 640px) {
+    .lk-success__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.lk-success__logo .lk-logo {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.lk-success__list {
+    display: grid;
+    gap: 0.2rem;
+    margin: 0.4rem 0 0.7rem;
+    padding-left: 1.1rem;
+    font-size: var(--fs-sm);
+    color: var(--ink-2);
+}
+
+.lk-success__list li::marker {
+    color: var(--accent-text);
+}
+
+.lk-success__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.6rem 0;
+}
+
+/* --- Reduced motion ------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    .lk-item,
+    .lk-basket__remove,
+    .lk-swatch__chip,
+    .lk-basket .btn {
+        transition: none !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}

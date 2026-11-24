@@ -1,0 +1,55 @@
+---
+lang: en
+title: "Unlock · Side panel"
+description: "An informational panel on the right — a bottom sheet on phones."
+crumb: "Templates · Side panel"
+altUrl: /templates/placements/drawer/
+gvm: true
+mainClass: "unlock-demo unlock-demo--drawer"
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/paywall-drawer.njk" import paywallDrawer %}
+{% set article = catalog[lang].article %}
+
+{% block head %}
+<link rel="stylesheet" href="/assets/paywalls.css" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Side panel</h1>
+        <p class="lead">A panel on the right explains how the SMS unlock works and carries the pay button. On phones it becomes a bottom sheet.</p>
+    </div>
+
+    <article class="article">
+        <header class="article-head">
+            <p class="kicker">Templates · unlock</p>
+            <h1 lang="{{ article.contentLang }}">{{ article.title }}</h1>
+            <p class="byline">{{ article.minutes }} min read</p>
+        </header>
+
+        <div
+            id="article"
+            class="article-body wait-for-script"
+            lang="{{ article.contentLang }}"
+            data-gvm-reference="paywall-drawer-{{ lang }}"
+            data-gvm-price="1.99"
+            data-gvm-template-name="payment"
+            data-gvm-hide-template-name="paywall"
+            data-gvm-hide-strategy="blur"
+            data-gvm-hide-sections="2"
+            data-gvm-metadata-title="{{ article.title }}"
+            data-gvm-category="article"
+        >
+            {{ article.html | safe }}
+        </div>
+    </article>
+
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paywallDrawer({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

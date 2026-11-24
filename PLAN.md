@@ -1,405 +1,194 @@
-# gvm-examples — plan przebudowy showcase
+# gvm-examples — stan i plan showcase
 
-> Dokument zbiera cały wątek (prompt + późniejsze ustalenia) i stan repo po poprzednim agencie.
-> Cel: jedno źródło prawdy, żeby nie przepalać tokenów na budowanie czegoś, co zaraz będziemy orać.
+> Jedno źródło prawdy: jak zbudowany jest showcase, co jest zrobione, a co
+> zostało. Decyzje projektowe i historia na końcu.
 
 ---
 
-## 0. Status realizacji (na teraz)
+## 0. Stan realizacji
+
+**Build:** `npm run build` → `dist/`, **46 stron** + `sitemap.xml`, `robots.txt`,
+`llms.txt`. Zero brakujących linków wewnętrznych, zero błędnych
+`data-gvm-template-inject-to`, zero polskiego tekstu na stronach EN.
 
 **Zrobione:**
 
-- [x] Build działa: `npm run build` → `dist/`, 34 strony, brak martwych `pico.css` w nowych stronach.
-- [x] Stare przykłady przeniesione do `src/archive/` jako **biblioteka referencyjna** (Eleventy ignoruje cały katalog - nie budujemy archiwum, służy do odzyskiwania layoutów i use case'ów).
-- [x] Layout + e11y: skip-link, landmarki, poprawny `lang`, focus w dialogu,
-      `inert` na stronie pod dialogiem, Escape → anulowanie, `prefers-reduced-motion`.
-- [x] Partiale: `head`, `header`, `footer`, `example-bar`, `lang-switch`,
-      `gvm/consent` (info + checkbox), `gvm/payment-dialog` (jeden, z propsami),
-      `gvm/paywall-inline`, `gvm/dialog-a11y`.
-- [x] i18n PL/EN: PL na `/`, EN pod `/en/`, `hreflang` na przełączniku;
-      tekst prawny zgody zawsze po polsku z `lang="pl"`.
-- [x] Pierwszy use case pionowo: `/publisher/unlock-article/` (hide + inline paywall),
-      przetestowany pełny flow: paywall → consent → QR → „Czekamy na SMS”.
-- [x] Treść z publicznego źródła: Sienkiewicz, „Latarnik” (PL, wolnelektury.pl)
-      i „The Light-House Keeper of Aspinwall” (EN, tłum. Curtin 1893, Wikisource).
-- [x] Nowy `gvm.css` bez pico.css (tokeny 1:1 z getviamsg.com).
-- [x] Treści z `content/` wpięte przez `src/_data/catalog.js`: PL z `content/pl`,
-      EN z `content/en`, binaria z `content/common`; fallback EN -> PL z
-      zachowanym `lang="pl"`. Markdown renderowany w buildzie, nagłówki
-      normalizowane do h2/h3, podgląd liczony w słowach
-      (`data-gvm-hide-words`).
-- [x] Nowe use case'y: `/publisher/download-hi-res-pic/`,
-      `/digital-ecommerce/{download-ebook,download-music-file,pay-per-view,audiobook}/`
-      (+ wersje EN z angielskim UI).
-- [x] Partial `gvm/download-trigger.njk` dla strategii download.
-- [x] Strona główna w trzech sekcjach: **Use cases** (karty), **No-code**
-      (overlay), **Templates** (warianty formularza płatności).
-- [x] **Drawer jako główny formularz płatności**: `gvm/payment-drawer.njk`
-      + `assets/gvm-drawer.css` (panel z prawej / bottom sheet na mobile).
-      Dialog modalny zostaje wyłącznie w sekcji Templates jako pokaz wariantu.
-- [x] Sekcja **No-code**: `/no-code/` + trzy artykuły overlay
-      (`article-1..3`, strategie blur / hide / mangle-blur) na `gvm-overlay.js`,
-      z `.gvm-cloak` (brak flasha), `legacyCss: true` i selektorami z remote config.
-- [x] Sekcja **Templates**: `/templates/{drawer,modal,simple,circle}/` — cztery
-      warianty tego samego procesu płatności.
-- [x] Kolejne use case'y: `/publisher/remove-ads/` (sloty reklamowe + sticky
-      `adbar`, stan `html.ads-free`), `/digital-ecommerce/download-report/`,
-      `/saas-licenses/` (plany, rozliczenie zbiorcze),
-      `/add-ons/` (konfigurator, basket).
-- [x] Pay-per-view przez `data-gvm-http-inject`: przycisk wstrzykuje odtwarzacz
-      do `#player` (`/ppv/player.html`).
+- [x] Nowy layout, partiale i e11y jako fundament: skip-link, landmarki,
+      poprawny `lang`, focus w dialogu, `inert` na stronie pod dialogiem,
+      Escape, `prefers-reduced-motion`.
+- [x] i18n PL/EN: PL na `/`, EN pod `/en/`, `hreflang` + `x-default` w `<head>`,
+      przełącznik języka. Tekst prawny zgody zawsze po polsku (`lang="pl"`).
+- [x] Jeden formularz płatności (drawer) + modal / simple / circle jako warianty
+      w sekcji Templates. Consent jest w drawerze, paywall pokazuje tylko cenę.
+- [x] Siedem wariantów paywalla jako osobne partiale + strony demo pod
+      `/templates/placements/`: inline, overlay, sticky-bottom, sticky-right,
+      widget, banner, drawer.
+- [x] Use case'y pogrupowane w trzy obszary (patrz §2) — na stronie głównej
+      i w sekcjach kategorii.
+- [x] **Digital commerce**: landing + dwie podstrony — `/digital-ecommerce/download/`
+      (e-book, raport PDF, muzyka, zdjęcie HD) i `/digital-ecommerce/streaming/`
+      (audiobook, wideo). Miniatura pay-per-view pochodzi z YouTube (`ytThumb`).
+- [x] **SaaS** (`/saas/`): uproszczona strona planów (wybór planu → SMS →
+      koniec, bez e-maila i kodów aktywacyjnych) + konfigurator dodatków
+      z dynamicznym koszykiem.
+- [x] **Bez reklam**: pełny inwentarz slotów reklamowych, brak mignięcia
+      (check w `<head>` przed pierwszym renderem), dzień bez reklam
+      w `localStorage`, baner statusu z licznikiem, SDK nieładowany, gdy pass
+      jest aktywny.
+- [x] Sekcja **Overlay** (`/overlay/`) na `gvm-overlay.js` — trzy artykuły
+      (blur / hide / mangle-blur), treść EN-only.
+- [x] SEO/maszyny: `sitemap.xml`, `robots.txt`, `llms.txt`, hreflang.
+- [x] **Light mode**: jasna paleta obok ciemnej, domyślnie wg preferencji
+      systemu + ręczny przełącznik w headerze (`theme.css` / `theme.js`,
+      pre-paint bez mignięcia, podmiana logotypu, `theme-color`).
+- [x] **Quality gate**: `npm run build && npm run gate` — skrypt
+      `scripts/quality-gate.mjs` (copy na `src/`, struktura na `dist/`).
+- [x] Copy pass: usunięte meta-badge („Live · hide”, „10 pozycji”, „1 SMS”),
+      żargon („paywall”, „tenant”, „partial”, „gvm.js”) i teksty-logi
+      („Do Twojej sesji dojdzie:”) ze wszystkich stron.
+- [x] Archiwum `src/archive/` **usunięte** — wszystkie use case'y odtworzone na
+      nowej architekturze (historia gita je trzyma).
 
-**Następne:** treści EN dla artykułów overlay (dziś EN jest tylko chrome i karty),
-warianty paywalla poza drawer/modal/simple/circle, końcowy przegląd wizualny
-(kontrast, mobile, QA pełnego flow).
+**Następne:**
+
+- [ ] Wizualny QA na desktopie i mobile (kontrast w obu motywach, długie
+      teksty, sticky placements, pełny flow płatności).
 
 ---
 
----
+## 1. Narracja
 
-## 1. W skrócie — czego chcemy
+> Jesteśmy **GetViaMsg** i dajemy nowoczesne możliwości monetyzacji treści
+> (mikropłatności).
 
-Przebudować `showcase.getviamsg.com` **od nowa**, jako dwujęzyczny (PL/EN) showcase
-GetViaMsg, który opowiada jedną spójną narrację:
-
-> Jesteśmy **GetViaMsg** i dajemy nowoczesne możliwości monetyzacji treści (mikropłatności).
-
-Zamiast miliona przeklejonych plików robiących to samo:
-
-1. **Build**: `src/` (źródła) → `npm run build` → `dist/` (to, co na produkcję).
-2. **e11y** (dostępność) jako fundament, nie dodatek na końcu.
-3. **Partiale**: layout, header, footer, `head`, skrypty + **jeden** partial szablonu
-   płatności (z propsami) i **osobne** partiale na każdy wariant paywalla.
-4. **Przepisujemy example po example** — z zachowaniem sensu, na nowym layoucie.
-5. **Layout/CSS od nowa**: bez `pico.css` (za „kanciasty”), tokeny 1:1 z getviamsg.com.
-6. Mały, spokojny footer („to getviamsg”), **nie** wielki header na samej górze.
+Showcase jest dwujęzyczny (PL/EN), a każdy przykład to działająca strona:
+można przejść cały proces płatności (tenant QA, bez prawdziwego obciążenia).
 
 ---
 
-## 2. Stan repo (stan faktyczny)
-
-### 2.1 Gałęzie
-
-| Gałąź | Co tam jest |
-|---|---|
-| `origin/main` | Stan „stary”: flat repo, `assets/pico.css` + `assets/showcase.css` (2889 linii), `BRAND.md`, 25 plików HTML w katalogach najwyższego poziomu. |
-| `new` (**aktualna**) | Próba poprzedniego agenta: `src/` + `dist/`, Eleventy, dane w `src/_data/`, nowy ciemny `showcase.css`. |
-| `origin/audit-fixes` | Gałąź z PR-a #1 (consent checkbox / terms) — już zmergowana w `main`. |
-
-`git status`: czysto. Brak stashy, brak `node_modules`, brak `dist`.
-
-### 2.2 Co zdążył zrobić poprzedni agent (commit `3ea6f71` + `39eadf8`)
-
-- Wszystko przeniósł do `src/` (foldery przykładów + `src/assets`).
-- Dodał `eleventy.config.js` + `package.json` (`build` → `dist/`, `serve`).
-- Dodał `src/_data/site.js`, `src/_data/examples.js`, `src/_data/articles.js`.
-- Zadeklarował passthrough copy dla `*.js`, `*.data`, `*.png` i `inject/swan.html`.
-- Napisał **nowy** `src/assets/showcase.css` (1055 linii, ciemny motyw z tokenami
-  zgodnymi z getviamsg.com) — w miejsce `pico.css` + starego CSS.
-- Dodał `src/plan/*`, `src/_data/*`, zmienił pojedyncze linie w kilku przykładach.
-- Usunął `BRAND.md` (o to prosił użytkownik).
-
-### 2.3 Co jest zepsute / dlaczego to nie działa
-
-1. **Nic się nie renderuje.** `eleventy.config.js` ma `templateFormats: ["njk"]`,
-   a wszystkie strony to `.html`. Eleventy ich nie przetwarza → `dist/` nie zawiera
-   ani jednej strony (tylko to, co leci passthrough copem).
-2. **`/assets/pico.css` nie istnieje** (usunięte w `3ea6f71`), a **20 plików HTML
-   nadal go linkuje** → każda strona po ewentualnym buildzie jest bez stylu/rozjechana.
-3. **Zero partiali / layoutów.** Nie ma `src/_includes`. Header, footer, `<head>`,
-   dialog płatności i blok consent są **kopiowane ręcznie** w każdym pliku.
-   - `src/_data/*` i `examples.js` są napisane, ale **nieużywane** przez żaden szablon.
-4. **Duplikacja potwierdzona liczbowo**: szablon `data-gvm-template="payment"`
-   występuje w 17 plikach, w tym **11 identycznych kopii** (ten sam md5 treści,
-   4861 znaków), plus 3 warianty. Header `.site-header` powtarza się w każdym pliku.
-5. **Brak i18n.** Wszystkie strony mają `lang="en"`, ale legalna treść (consent
-   § 11 ust. 2, teksty paywalla) jest po polsku. Mieszanka PL/EN w jednym `<html>`.
-6. **Brak e11y**: brak skip-linku, `aria-hidden`/`inert` na zamaskowanej treści
-   przed bootem SDK, brak `prefers-reduced-motion`, ikony bez etykiet itd.
-7. Eleventy nie ma skonfigurowanego `njk`/layoutów, brak pluginów (np. `@11ty/eleventy-plugin-rss` nie jest potrzebny, ale `markdown`/`i18n` do przemyślenia).
-
-> Wniosek: poprzedni agent wykonał 80% „przestawienia katalogów” i 0% „złożenia strony”.
-> Struktura `src/`/`dist/` + nowy CSS jest wartościowa, ale strony trzeba napisać od zera.
-
----
-
-## 3. Ustalenia z rozmowy (decyzje)
-
-### 3.1 Kolejność prac (z promptu)
-
-1. **e11y** — dostępność jako pierwsza.
-2. **Partiale** — ustalić, jakie są i co dziedziczy propsy.
-3. **Przepisywanie przykładów** po kolei, z zachowaniem sensu.
-4. **Layout + CSS od nowa** — bez `pico.css`; „szukamy czegoś nowego i fajnego”;
-   mały footer zamiast wielkiego headera.
-
-### 3.2 Pivot (późniejsza korekta)
-
-> „A może zaczniemy inaczej? Najpierw zrobimy layout, stare wpisy przesuniemy do
-> archiwum i będziemy budować po kolei na nowym layoucie. Konkretne use case’y?”
-
-Czyli **odwracamy kolejność**: nowy layout + jeden pionowy use case, dopiero potem
-hurtowe przepisywanie reszty. Sens: najpierw walidujemy fundament na najprostszym
-przypadku, nie przepalamy tokenów na masowe przenoszenie.
-
-### 3.3 Najprostszy use case na start
-
-**Odblokowanie artykułu** (`/publisher/unlock-article/`): hide strategy,
-paywall inline, jeden partial płatności, PL + EN.
-
-### 3.4 Mapa docelowa (z promptu)
+## 2. Mapa URL i informacja architektoniczna
 
 ```
-/showcases                          → index showcase
-  /publisher                        → wydawcy
-    /remove-ads
-    /unlock-article                 ← START
-    /download-hi-res-pic
-  /digital_ecommerce                → e-commerce cyfrowy
-    /download_ebook
-    /download_music_file
-  /saas_licenses
-  /add_ons
+/                                        /en/
+  # Use cases
+    ## Wydawcy           /publisher/          /en/publisher/
+       /publisher/unlock-article/             (hide + paywall inline)
+       /publisher/remove-ads/                 (redirect + dzień bez reklam)
+    ## E-commerce cyfrowy /digital-ecommerce/  (landing)
+       /digital-ecommerce/download/           (e-book, raport PDF, muzyka, zdjęcie)
+       /digital-ecommerce/streaming/          (audiobook, wideo)
+    ## SaaS              /saas/                /en/saas/
+       /saas-licenses/                        (plany: wybór → SMS)
+       /add-ons/                              (konfigurator + koszyk)
+  # Overlay              /overlay/             /en/overlay/
+       /overlay/article-1|2|3/                (EN-only: blur / hide / mangle-blur)
+  # Szablony (sekcja na stronie głównej, bez osobnego landingu)
+       /templates/{drawer,modal,simple,circle}/  (warianty formularza)
+       /templates/placements/                 (7 położeń paywalla)
+  /ppv/player.html                          — wstrzykiwany iframe (bez strony)
 ```
 
-Zasady:
-
-- Piszemy **dwujęzycznie** (PL i EN).
-- Narracja: getviamsg = nowoczesna monetyzacja treści / mikropłatności.
-- Kolorystyka: **1:1 z getviamsg.com**.
-
-### 3.5 TODO produktowe (do rozpisania w późniejszych use case’ach)
-
-- [ ] księgarnia („wyślij na Kindle”)
-- [ ] audiobooki
-- [ ] pay-per-view
-- [ ] app
-- [ ] in-game payments
+Zasady: myślniki w URL-ach, jeden język na stronę, PL domyślnie na `/`.
 
 ---
 
-## 4. Architektura docelowa
+## 3. Architektura
 
-### 4.1 Build
+- `src/` = źródła (`.njk`, dane, CSS, JS, obrazki), `dist/` = output.
+- `npm run build` czyści `dist/` i uruchamia Eleventy; `npm run serve` = dev.
+- `templateFormats: ["njk", "11ty.js"]`, `htmlTemplateEngine: "njk"`.
+- `content/` = materiały redakcyjne (artykuł, PDF, EPUB, audio, plakaty),
+  czytane w buildzie przez `src/_data/catalog.js`; binaria kopiowane do
+  `dist/content/`.
 
-- `src/` = źródła (njk, dane, css, js, obrazki), `dist/` = output.
-- `npm run build` = `eleventy`, `npm run serve` = `eleventy --serve`.
-- **Poprawka krytyczna**: `templateFormats: ["njk", "html", "11ty.js"]` +
-  `htmlTemplateEngine: "njk"`, żeby `.njk` faktycznie renderował layouty.
-  (Albo konwersja stron na `.njk` — do decyzji; prościej: rozszerzyć templateFormats.)
-- `passthroughCopy`: `src/assets` (bez CSS-owego src, bo ten przetwarza build),
-  `src/**/*.js`, `src/**/*.data`, `src/**/*.png`, `src/inject/swan.html`.
-- Nowe CSS/JS tylko przez `addPassthroughCopy` lub prosty bundling (do decyzji:
-  natywny CSS + `<link>`, bez PostCSS/NPM-bundlera na start).
-
-### 4.2 Layouty (Eleventy `_includes/layouts`)
+### Layouty i partiale
 
 | Plik | Odpowiedzialność |
 |---|---|
-| `layouts/base.njk` | `<html lang>`, `<head>`, skip-link, `<body>`, bloki `content` |
-| `layouts/showcase.njk` | base + `header` + `footer` showcase’u |
-| `layouts/example.njk` | showcase + rama „przykład” (tytuł, opis, kod/badge strategii) |
-| `layouts/article.njk` | editorial: treść artykułu + slot na paywall |
-
-### 4.3 Partiale — konkretna lista
-
-**Struktura strony** (`src/_includes/partials/`):
-
-- `head.njk` — meta, title, favicon, `<link rel=stylesheet>`, agg analytics,
-  `defer` bridge. Props: `title`, `description`, `lang`, `noindex?`.
-- `header.njk` — **mały**: logo + link do getviamsg.com + przełącznik PL/EN.
-  Bez „wielkiego hero”.
-- `footer.njk` — **mały**: „getviamsg — mikropłatności za treści”, linki
-  (github / docs / terms / kontakt), rok. Bez brand-md.
-- `skip-link.njk` / w `base.njk`.
-- `lang-switch.njk` — PL/EN na podstawie `page.lang` + `page.altUrl`.
-- `breadcrumbs.njk` — dla `/showcases/...`.
-
-**gvm** (`src/_includes/gvm/`):
-
-- `gvm/cloak.njk` — wrapper `.gvm-cloak` + inline `<style>` (no-flash).
-- `gvm/scripts.njk` — bootstrap `gvm.js` / `gvm-overlay.js`, `data-gvm-*` na `<body>`,
-  `window.wdftDebug`, zdejmowanie `.wait-for-script`.
-- `gvm/consent.njk` — checkbox `data-gvm-accept-terms` + tekst § 11 ust. 2 (wersja
-  `pl-2026-10-23`) — **wymagane** w każdym dialogu płatności.
-- `gvm/terms-line.njk` — linia cena + link do `getviamsg.com/terms`.
-- **`gvm/payment-dialog.njk`** — JEDEN partial, dziedziczy propsy (patrz §7).
-  Zastępuje 11 identycznych kopii.
-- Paywalle (każdy osobny, bo mają inny markup/inject-target):
-  `paywall-inline.njk`, `paywall-overlay.njk`, `paywall-sticky-bottom.njk`,
-  `paywall-sticky-right.njk`, `paywall-widget.njk`, `paywall-banner.njk`,
-  `paywall-drawer.njk`.
-
-Zasada z promptu: *„jak example ma płatność ale różne skutki i ten sam template
-płatniczy, to ten template jako osobny jeden partial ale dziedziczy propsy; a jak
-mamy różne templates, to osobne partiale per template, żeby się nie gryzło.”*
-
-### 4.4 i18n
-
-- Dane: `src/_data/i18n/pl.json`, `src/_data/i18n/en.json` (+ `t` helper w Eleventy).
-- Routing: **PL domyślnie na `/`**, EN pod `/en/...` (getviamsg.com jest PL).
-- `lang` na `<html>` zgodny z językiem strony; `hreflang` + `alternate` na parę PL/EN.
-- Wersje legalne (consent) zawsze z wersją `pl-...` — tekst prawny zostaje PL,
-  UI może być EN.
-
-### 4.5 CSS / design system
-
-- **Rezygnujemy z `pico.css`** (decyzja użytkownika: „too squared”).
-- Piszemy własny, mały CSS od podstaw, oparty na tokenach z getviamsg.com:
-
-| Token | Wartość |
-|---|---|
-| `--bg` | `#232526` |
-| `--ink` | `#ffffff` |
-| `--ink-2` | `#c9ccce` |
-| `--muted` | `#909090` |
-| `--line` | `#434343` / `#3c3f40` |
-| `--accent` | `#ffba00` (amber; na getviamsg.com to `--mint`/`--coral`) |
-| `--accent-ink` | `#232526` |
-| font | `Inter`, mono: `ui-monospace, SFMono-Regular, Menlo, Consolas` |
-
-- Struktura plików CSS (do decyzji: tokeny / base / layout / components / gvm / examples),
-  ładowane jednym `<link>` do zbudowanego `showcase.css` (albo kilka linków).
-- „Wszystkie fonty, odstępy są bardzo duże” → skala typografii i spacingu do
-  przepisania od zera (mniejsza, gęstsza).
-- `prefers-reduced-motion`, `prefers-color-scheme` (opcjonalnie jasny wariant) —
-  do decyzji; na teraz jeden ciemny motyw zgodny z getviamsg.com.
-
-### 4.6 e11y — konkretna lista wymagań
-
-- Skip-link „Przejdź do treści” jako pierwszy focusable.
-- Landmarki: `<header>`, `<nav aria-label>`, `<main id="main">`, `<footer>`.
-- `<html lang>` poprawny per język (nie `en` przy polskim copy).
-- Dialogi: natywny `<dialog>` + focus trap, `aria-labelledby`, `Esc`, focus wraca
-  na trigger; consent checkbox ma realne `<label>`.
-- Gated treść: `aria-hidden`/`inert` na `.gvm-cloak`, dopóki SDK nie wystartuje
-  (żeby screen reader nie czytał zamaskowanego premium).
-- Kontrast: `#909090` na `#232526` ≈ 4.8:1 (OK dla tekstu ≥ 16px),
-  `#ffba00` na `#232526` ≈ 9:1 (OK) — trzymać te wartości.
-- Obrazki: sensowne `alt`, dekoracyjne `alt=""`.
-- Formularze: `label`, `autocomplete`, komunikaty błędów powiązane z polem.
-- `prefers-reduced-motion`: wyłączyć animacje blur/scroll.
-- Nawigacja klawiaturą po całym flow płatności (QR/SMS/consent).
+| `layouts/base.njk` | `<html lang>`, `<head>`, skip-link, `main`, footer, opcjonalny a11y-glue |
+| `partials/head.njk` | meta, hreflang, CSS, bootstrap SDK, agg |
+| `partials/header.njk` / `footer.njk` | mały header + mały footer |
+| `partials/lang-switch.njk` | PL/EN na podstawie `lang` + `altUrl` |
+| `partials/example-bar.njk` | pasek „przykład" z breadcrumbem |
+| `gvm/payment-drawer.njk` | **jeden** formularz płatności (drawer) |
+| `gvm/payment-dialog.njk` | wariant modal (tylko Templates) |
+| `gvm/raw-payment-{simple,circle}.njk` | surowe warianty (tylko Templates) |
+| `gvm/consent.njk` | cena + link do terms + checkbox zgody (§ 11 ust. 2) |
+| `gvm/dialog-a11y.njk` | `inert`, focus, Escape dla natywnego `<dialog>` |
+| `gvm/paywall-{inline,overlay,sticky-bottom,sticky-right,widget,banner,drawer}.njk` | 7 miejsc CTA |
+| `gvm/download-trigger.njk` | strategia `download` |
 
 ---
 
-## 5. Docelowa mapa URL (PL → EN)
+## 4. Konwencje
 
-```
-/                                   /en/
-/showcases/                         /en/showcases/
-/publisher/                         /en/publisher/
-/publisher/unlock-article/          /en/publisher/unlock-article/     ← pierwszy pion
-/publisher/remove-ads/              /en/publisher/remove-ads/
-/publisher/download-hi-res-pic/     /en/publisher/download-hi-res-pic/
-/digital-ecommerce/                 /en/digital-ecommerce/
-/digital-ecommerce/download-ebook/  ...
-/digital-ecommerce/download-music-file/
-/saas-licenses/                     /en/saas-licenses/
-/add-ons/                           /en/add-ons/
-/archive/...                        — stare przykłady (hide/blur/templates/overlay/plan/ads/app-basket)
-```
-
-Uwaga: w prompcie zapisano `digital_ecommerce` i `download_ebook` z podkreśleniami.
-Proponuję myślniki w URL (`digital-ecommerce`, `download-ebook`); katalogi w `src/`
-mogą zostać z podkreśleniami — do potwierdzenia.
-
----
-
-## 6. Etapy
-
-### Etap 0 — decyzje + naprawa buildu
-- [ ] Decyzja: kontynuujemy na `new` czy startujemy z `origin/main` (patrz §8).
-- [ ] `npm install`, `npm run build` faktycznie produkuje strony w `dist/`.
-- [ ] `templateFormats` naprawione; `.njk` renderują layouty.
-- [ ] Usunięcie martwych referencji `pico.css`.
-- [ ] `README.md` zaktualizowany o strukturę `src/`/`dist/`.
-
-### Etap 1 — e11y (fundament)
-- [ ] `base.njk` z landmarkami, skip-linkiem, `lang`.
-- [ ] Checklist e11y z §4.6 wpięta w layout i dialogi.
-- [ ] Test: klawiatura + screen reader na jednej stronie.
-
-### Etap 2 — partiale
-- [ ] `head/header/footer/lang-switch/cloak/scripts/consent/terms-line`.
-- [ ] `payment-dialog.njk` z propsami (§7) — redukcja 11 kopii do 1.
-- [ ] 7 partiali paywalla.
-- [x] Stare przykłady w `src/archive/` (niebudowane, referencyjne).
-
-### Etap 3 — pierwszy use case pionowo
-- [ ] `/publisher/unlock-article/` PL + EN, strategia `hide`, paywall inline.
-- [ ] Pełny flow: preview → paywall → consent → QR/SMS → unlock.
-- [ ] Sensowna treść (nie „lorem”), nawiązująca do narracji getviamsg.
-
-### Etap 4 — layout + CSS od nowa
-- [ ] Nowy CSS bez pico.css, gęstsza typografia/spacing, mały footer.
-- [x] Główna strona = lista przykładów (jak `/showcases/`), tylko jedno zdanie o środowisku testowym, bez powielania treści z getviamsg.com.
-- [ ] Wizualna weryfikacja na desktop + mobile.
-
-### Etap 5 — kolejne use case’y
-- [ ] `/publisher/remove-ads/`, `/publisher/download-hi-res-pic/`.
-- [ ] `/digital-ecommerce/download-ebook/`, `/download-music-file/`.
-- [ ] `/saas-licenses/`, `/add-ons/`.
-- [ ] TODO produktowe §3.5 (księgarnia/Kindle, audiobooki, pay-per-view, app, in-game).
-
-### Etap 6 — domknięcie
-- [ ] Analitics (agg + bridge) wpięty przez partial, nie kopiowany.
-- [ ] `llms.txt` / sitemap / hreflang.
-- [ ] Usunięcie archiwum, gdy ostatni przykład zostanie przepisany.
+- **Front matter strony:** `lang`, `title`, `description`, `altUrl`, `crumb?`,
+  `mainClass?`, `legacyCss?` i jedna z flag:
+  - `gvm: true` — SDK w `<head>`, drawer CSS, a11y-glue, agg. Cena i referencja
+    są znane w HTML.
+  - `gvmLazy: true` — drawer CSS, a11y-glue, agg i `data-gvm-*` na `<body>`, ale
+    **bez SDK**. Strona sama ładuje gvm.js po ustawieniu ceny/referencji
+    (dynamiczny koszyk, przekierowanie, plan zależny od danych).
+- **Cena/referencja:** gvm.js czyta `data-gvm-price` / `data-gvm-reference`
+  raz, przy starcie. Dlatego wszystko, co liczy kwotę w przeglądarce, używa
+  `gvmLazy`.
+- **Paywall vs formularz:** paywall (`data-gvm-bind-pay`) tylko otwiera
+  dialog — checkbox zgody jest w dialogu. Paywall pokazuje linię ceny + terms.
+- **CSS:** `gvm.css` to fundament (tokeny 1:1 z getviamsg.com). Drawer ma własny
+  `gvm-drawer.css`. Każdy przykład z własnym UI dokłada **swój** plik CSS
+  (`saas-licenses.css`, `add-ons.css`, `remove-ads.css`, `paywalls.css`,
+  `digital-ecommerce.css`) — nie dopisujemy do `gvm.css`.
+- **Proza:** `--measure` ≈ 68ch, `line-height` 1.72, `text-wrap: pretty`,
+  bez justowania (rivers) — patrz `gvm.css` `.article-body`.
 
 ---
 
-## 7. Kontrakt `payment-dialog.njk` (props)
+## 5. e11y
 
-```
-{% from "gvm/payment-dialog.njk" import paymentDialog %}
-
-{{ paymentDialog({
-  lang:        "pl",              // pl | en
-  price:       "1.99",
-  currency:    "PLN",
-  reference:   "article_1987_flood",
-  strategy:    "hide",            // hide | blur | mangle-blur
-  methods:     ["qr", "sms"],     // qr | sms | pwa-unlock
-  env:         "qa",              // qa | demo | prod
-  tenant:      "wdft_showcase_qa",
-  termsVersion:"pl-2026-10-23",
-  title:       "Odblokuj w kilka sekund",
-  description: "Wyślij SMS, żeby uzyskać dostęp.",
-  payload:     {}                 // np. e-mail / kod dla /plan
-}) }}
-```
-
-Zasady:
-
-- **Consent jest obowiązkowy** w każdym dialogu (`data-gvm-bind-qr|send-sms|unlock`).
-  Wariant `demo` używa mockowanych płatności.
-- Paywall (sam `data-gvm-bind-pay`) **nie ma** checkboxa — tylko linia ceny + terms.
-- Paywalle są osobne per layout, bo różnią się miejscem wstrzyknięcia
-  (`data-gvm-template-inject-to`) i markupem.
-- Reference / price są dynamiczne: strony, które je liczą (np. koszyk, plan),
-  dalej bootują SDK po ustawieniu wartości — ten mechanizm zostaje (patrz
-  `src/plan/plan.js`, `src/app-basket/app-basket.js`).
+- Skip-link jako pierwszy focusable; landmarki `header`/`nav`/`main`/`footer`.
+- `<html lang>` zgodny z językiem strony.
+- Dialogi: natywny `<dialog>`, focus trap, `aria-labelledby`, Escape → anulowanie,
+  powrót focusu na trigger, `inert` na resztę strony.
+- Gated treść: `aria-hidden`/`inert` przez `.gvm-cloak` do startu SDK.
+- Kontrast: `#909090` na `#232526` ≈ 4.8:1; `#ffba00` na `#232526` ≈ 9:1.
+- Obrazki z sensownym `alt`; dekoracyjne `alt=""`.
+- `prefers-reduced-motion` wyłącza animacje (overlay, licznik, transition).
 
 ---
 
-## 8. Otwarte pytania / decyzje
+## 6. Decyzje (rozstrzygnięte)
 
-1. **Gałąź**: **rozstrzygnięte — kontynuujemy na `new`.**
-2. **Język domyślny**: **rozstrzygnięte — PL na `/`, EN pod `/en/`.**
-3. **CSS**: **rozstrzygnięte — własny `gvm.css` od zera, bez pico.css.**
-4. **Nazewnictwo katalogów**: **rozstrzygnięte — myślniki w URL-ach**
-   (`digital-ecommerce`, `download-ebook`).
-5. **Archiwum**: przeniesione do `src/archive/` i nadal budowane pod `/archive/…`;
-   usuwamy dopiero po przepisaniu ostatniego przykładu.
-6. **Wersja SDK**: `@wdft/gvm-sdk@latest` (obecnie 0.3.0). PWA unlock wymaga
-   `>= 0.2.1`; przy przepisywaniu `blur-pwa` wróci temat pinu wersji.
+1. Gałąź: kontynuujemy na `new` (dziś `main`).
+2. Język domyślny: PL na `/`, EN pod `/en/`.
+3. CSS: własny `gvm.css`, bez `pico.css`.
+4. Nazewnictwo: myślniki w URL-ach.
+5. Archiwum: stare płaskie przykłady usunięte (były referencją w trakcie
+   przebudowy).
+6. Sekcja overlay: URL **`/overlay/`** (zgodny ze starą ścieżką i konfiguracją
+   overlay) — nie `/no-code/`.
+7. Artykuły overlay: EN-only, `lang="en"`, bez tłumaczenia.
+8. Showcase jest dla **nietechnicznych** odbiorców — brak bloków „Developer Kit"
+   i snippetów kodu na stronach.
 
 ---
 
-## 9. Źródła
+## 7. Archiwum vs obecne use case'y
 
-- `README.md` w repo (wymagania dot. consent/terms, PWA unlock, strategii).
+Porównanie zakresu funkcjonalnego (szczegóły w README / historii sesji):
+
+| Obszar | Archiwum | Obecnie |
+|---|---|---|
+| Plany (`/saas-licenses/`) | `/plan`: e-mail→referencja, kod aktywacyjny, panel sukcesu, FAQ | Uproszczone świadomie: 3 plany → SMS → koniec, porównanie + FAQ. Bez e-maila i kodów. |
+| Dodatki (`/add-ons/`) | `/app-basket`: konfigurator, ~10 pozycji, koszyk w groszach, dynamiczny trigger, dostawa | Konfigurator + dynamiczny koszyk odtworzone (patrz `src/archive/app-basket/`). |
+| Bez reklam (`/publisher/remove-ads/`) | `/ads`: masthead + sloty + pass 24 h + brak mignięcia | Sloty, pass 24 h, brak mignięcia, baner statusu. Masthead usunięty (był „stroną w stronie"). |
+| Paywalle | `templates/{inline,overlay,sticky-*,widget,banner,drawer}` | 7 partiali + strony demo pod `/templates/placements/`. |
+
+---
+
+## 8. Źródła
+
+- `README.md` w repo (struktura, URL-e, consent/terms, flow gvm.js).
 - `getviamsg.com/llms.txt` (narracja: mikropłatności SMS, grupy docelowe).
 - `getviamsg.com` → `assets/impuls/css/impuls.css` (tokeny kolorów, `Inter`).
-- Historia gita: `3ea6f71`, `39eadf8` (praca poprzedniego agenta).
+- Archiwum w `src/archive/` (plan, app-basket, ads, templates, …) — pierwotne
+  implementacje i README opisujące intencję.

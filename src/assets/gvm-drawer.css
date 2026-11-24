@@ -66,6 +66,8 @@
          * Mobile: bottom sheet.
          */
         .gvm-payment-drawer {
+            position: relative;
+
             display: flex;
             flex-direction: column;
 
@@ -102,24 +104,52 @@
         }
 
         /* ------------------------------------------------------- header */
+        /* Close (×) in the top-right corner — replaces the old text button. */
+        .gvm-payment-drawer__close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 2;
+
+            display: grid;
+            place-items: center;
+
+            width: 34px;
+            height: 34px;
+            padding: 0;
+
+            border: 1px solid var(--gvm-border-subtle, #e1e1e1);
+            border-radius: 50%;
+
+            background: transparent;
+            color: var(--gvm-fg-muted, #666);
+
+            font-size: 19px;
+            line-height: 1;
+
+            cursor: pointer;
+        }
+
+        .gvm-payment-drawer__close:hover {
+            border-color: var(--gvm-border, #d0d0d0);
+            color: var(--gvm-fg, #111);
+        }
+
+        .gvm-payment-drawer__close:focus-visible {
+            outline: 2px solid var(--gvm-accent, #111);
+            outline-offset: 2px;
+        }
+
         .gvm-payment-drawer__header {
             flex: 0 0 auto;
 
-            padding: var(--gvm-drawer-pad);
+            /* room for the corner close button */
+            padding: calc(var(--gvm-drawer-pad) + 8px) var(--gvm-drawer-pad)
+                var(--gvm-drawer-pad);
 
             border-bottom: 1px solid var(--gvm-border-subtle, #e1e1e1);
         }
 
-        .gvm-payment-drawer__eyebrow {
-            margin: 0 0 7px;
-
-            color: var(--gvm-fg-subtle, #777);
-
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
 
         .gvm-payment-drawer__title {
             margin: 0;
@@ -288,17 +318,36 @@
             white-space: nowrap;
         }
 
-        .gvm-payment-drawer__promise {
+        /* "How it works" — collapsed by default so the form stays short. */
+        .gvm-payment-drawer__how {
             margin: 16px 0 0;
-            padding: 11px 13px;
 
-            background: var(--gvm-bg-muted, #f7f7f7);
-            border-left: 2px solid var(--gvm-accent, #111);
+            background: var(--gvm-bg-subtle, #fafafa);
+            border: 1px solid var(--gvm-border-subtle, #e1e1e1);
+            border-radius: 8px;
 
             color: var(--gvm-fg-muted, #666);
 
             font-size: 12px;
             line-height: 1.5;
+        }
+
+        .gvm-payment-drawer__how > summary {
+            padding: 10px 12px;
+
+            color: var(--gvm-fg, #111);
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .gvm-payment-drawer__how > ol {
+            margin: 0;
+            padding: 0 14px 12px 30px;
+        }
+
+        .gvm-payment-drawer__how > ol li {
+            margin: 4px 0;
         }
 
         /*
@@ -403,15 +452,7 @@
             border-color: var(--gvm-blocked-hover, #666);
         }
 
-        .gvm-payment-drawer__cancel {
-            background: var(--gvm-bg, #fff);
-            color: var(--gvm-fg-2, #333);
-            border: 1px solid var(--gvm-border, #d5d5d5);
-        }
 
-        .gvm-payment-drawer__cancel:hover {
-            background: var(--gvm-bg-muted, #f5f5f5);
-        }
 
         /* ------------------------------------------------------- footer */
         .gvm-payment-drawer__footer {
@@ -438,36 +479,14 @@
         .gvm-brand {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
 
             vertical-align: middle;
 
-            font-weight: 600;
             text-decoration: none;
         }
 
-        .gvm-brand:hover {
-            text-decoration: underline;
-        }
-
-        .gvm-brand__mark {
-            display: block;
-
-            flex: 0 0 auto;
-
-            width: 14px;
-            height: 14px;
-        }
-
-        .gvm-brand__mark-bubble {
-            fill: none;
-            stroke: var(--gvm-brand, #ffc21a);
-            stroke-width: 32;
-            stroke-linejoin: round;
-        }
-
-        .gvm-brand__mark-dot {
-            fill: var(--gvm-brand, #ffc21a);
+        .gvm-brand .brand-logo {
+            width: 124px;
         }
 
         /* ---------------------------------------------------- bottom sheet */
@@ -510,7 +529,7 @@
                 --gvm-drawer-pad: 16px;
             }
 
-            .gvm-payment-drawer__promise {
+            .gvm-payment-drawer__how {
                 display: none;
             }
         }
@@ -525,5 +544,27 @@
             }
         }
     
-/* site palette */
-:root{--gvm-bg:#292b2c;--gvm-bg-subtle:#2f3132;--gvm-fg:#ffffff;--gvm-fg-2:#c9ccce;--gvm-fg-muted:#909090;--gvm-border:#3c3f40;--gvm-border-subtle:#333638;--gvm-accent:#ffba00;--gvm-accent-fg:#232526;--gvm-overlay:rgba(15,16,17,.72)}
+/* site palette — every `--gvm-*` the drawer falls back on, so no light
+   default ever leaks through in the dark theme. */
+:root {
+    --gvm-bg: #292b2c;
+    --gvm-bg-subtle: #2f3132;
+    --gvm-bg-muted: #333638;
+    --gvm-bg-glass: color-mix(in srgb, var(--bg-1) 88%, transparent);
+    --gvm-fg: #ffffff;
+    --gvm-fg-2: #c9ccce;
+    --gvm-fg-3: #b9bdbf;
+    --gvm-fg-muted: #909090;
+    --gvm-fg-subtle: #8a8f92;
+    --gvm-border: #3c3f40;
+    --gvm-border-subtle: #333638;
+    --gvm-accent: #ffba00;
+    --gvm-accent-fg: #232526;
+    --gvm-accent-hover: #ffcd4d;
+    --gvm-brand: #ffc21a;
+    --gvm-overlay: var(--scrim);
+    --gvm-shadow-color: rgba(0, 0, 0, 0.2);
+    --gvm-danger: #ff6b5e;
+    --gvm-blocked: #6b6f71;
+    --gvm-blocked-hover: #7d8284;
+}

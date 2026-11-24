@@ -2,15 +2,62 @@
     <div class="container site-bar__inner">
         <a class="brand" href="{{ homeUrl }}" aria-label="GetViaMsg — {{ l.nav.home }}">
             <img
-                src="/assets/getviamsg-logo-white-alpha.png"
+                class="brand-logo brand__logo--dark"
+                src="/assets/gvm-logo-dark.svg"
                 alt="GetViaMsg"
-                width="116"
-                height="35"
+                width="249"
+                height="71"
+            />
+            <img
+                class="brand-logo brand__logo--light"
+                src="/assets/gvm-logo-light.svg"
+                alt=""
+                aria-hidden="true"
+                width="249"
+                height="71"
             />
         </a>
         <nav class="site-nav" aria-label="{{ l.nav.label }}">
             <a href="{{ site.docs }}" rel="noopener">{{ l.nav.docs }}</a>
         </nav>
         {% include "partials/lang-switch.njk" %}
+        <button
+            class="theme-toggle"
+            type="button"
+            data-theme-toggle
+            aria-pressed="false"
+            aria-label="{% if lang == 'en' %}Switch theme{% else %}Zmień motyw{% endif %}"
+            data-label-light="{% if lang == 'en' %}Switch to light theme{% else %}Włącz jasny motyw{% endif %}"
+            data-label-dark="{% if lang == 'en' %}Switch to dark theme{% else %}Włącz ciemny motyw{% endif %}"
+        >
+            <svg
+                class="theme-toggle__sun"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+            >
+                <circle cx="12" cy="12" r="4.1" />
+                <path
+                    d="M12 2.6v2.1M12 19.3v2.1M2.6 12h2.1M19.3 12h2.1M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5"
+                />
+            </svg>
+            <svg
+                class="theme-toggle__moon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M20.2 14.4A8.3 8.3 0 1 1 9.6 3.8a6.7 6.7 0 0 0 10.6 10.6Z" />
+            </svg>
+        </button>
     </div>
 </header>

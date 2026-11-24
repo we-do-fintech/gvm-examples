@@ -1,65 +1,85 @@
 {
-  "skipToContent": "Przejdź do treści",
-  "nav": {
-    "label": "Nawigacja główna",
-    "home": "Start",
-    "docs": "Dokumentacja",
-    "github": "GitHub"
-  },
-  "langSwitch": {
-    "label": "Język strony",
-    "other": "English"
-  },
-  "footer": {
-    "label": "Stopka",
-    "terms": "Regulamin",
-    "contact": "Kontakt"
-  },
-  "exampleBar": {
-    "label": "Nawigacja przykładu",
-    "back": "Showcase"
-  },
-  "payment": {
-    "heading": "Odblokuj w kilka sekund",
-    "sub": "Wyślij zwykłego SMS-a, żeby uzyskać dostęp. Płacisz później, raz za całą sesję.",
-    "priceLabel": "Dostęp jednorazowy",
-    "qrHint": "Zaznacz zgodę poniżej, aby wyświetlić kod QR.",
-    "statusInitializing": "Przygotowujemy kod QR",
-    "statusWaiting": "Czekamy na SMS",
-    "statusDuplicated": "Ten numer ma już dostęp",
-    "statusResolved": "Potwierdzone. Odblokowujemy…",
-    "statusRejected": "Nie udało się potwierdzić. Spróbuj ponownie.",
-    "sendSms": "Wyślij SMS i odblokuj",
-    "cancel": "Anuluj",
-    "consentLabel": "Zaznacz zgodę, aby kontynuować",
-    "statusConsent": "Zaznacz zgodę, aby kontynuować",
-    "qrLabel": "Kod QR z linkiem do płatności",
-    "drawerAria": "Płatność za dostęp do materiału",
-    "drawerEyebrow": "Potwierdzenie SMS",
-    "drawerTitle": "Odblokuj materiał",
-    "drawerSubtitle": "Wyślij SMS, aby odblokować dostęp. To zwykła wiadomość, zwykle bezpłatna (zgodnie z cennikiem operatora).",
-    "drawerQrHint": "Możesz też zeskanować kod telefonem.",
-    "drawerFooter": "Potwierdzenie SMS · system obsługuje",
-    "promise": "Płacisz tylko za odblokowane treści. Link do płatności otrzymasz SMS-em lub e-mailem po zakończeniu zbierania — po 14 dniach, po przekroczeniu 50 zł albo wcześniej, gdy zakończysz je w Portalu klienta."
-  },
-  "consent": {
-    "infoBefore": "Dostęp do tej Treści jest odpłatny:",
-    "infoAfter": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w",
-    "terms": "Regulaminie",
-    "legal": "Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.",
-    "note": ""
-  },
-  "paywall": {
-    "ariaLabel": "Płatny dostęp do treści",
-    "lead": "Dalsza część jest dostępna po odblokowaniu.",
-    "meta": "Do Twojej sesji dojdzie:",
-    "minutes": "minut czytania",
-    "words": "słów",
-    "unlock": "Odblokuj za",
-    "permanent": "Płacisz raz, bez abonamentu. Kupiony artykuł zostaje z Tobą."
-  },
-  "a11y": {
-    "newWindow": "otwiera się w nowej karcie",
-    "publisher": "wydawca"
-  }
+    "skipToContent": "Przejdź do treści",
+    "nav": {
+        "label": "Nawigacja główna",
+        "home": "Start",
+        "docs": "Dokumentacja",
+        "github": "GitHub"
+    },
+    "langSwitch": {
+        "label": "Język strony",
+        "other": "English"
+    },
+    "footer": {
+        "label": "Stopka",
+        "terms": "Regulamin",
+        "contact": "Kontakt"
+    },
+    "exampleBar": {
+        "label": "Nawigacja przykładu",
+        "back": "Showcase"
+    },
+    "payment": {
+        "heading": "Odblokuj w kilka sekund",
+        "sub": "Wyślij zwykłego SMS-a, żeby uzyskać dostęp. Płacisz później, raz za całą sesję.",
+        "howTitle": "Jak to działa",
+        "howSteps": [
+            "Wyślij SMS z wygenerowaną treścią.",
+            "Poczekaj, aż treść odblokuje się na stronie.",
+            "Kontynuuj sesję — odblokowuj kolejne treści przez 14 dni.",
+            "Rozlicz sesję kartą albo BLIK-iem."
+        ],
+        "priceLabel": "Dostęp jednorazowy",
+        "qrHint": "Zaznacz zgodę poniżej, aby wyświetlić kod QR.",
+        "statusInitializing": "Przygotowujemy kod QR",
+        "statusWaiting": "Czekamy na SMS",
+        "statusDuplicated": "Ten numer ma już dostęp",
+        "statusResolved": "Potwierdzone. Odblokowujemy…",
+        "statusRejected": "Nie udało się potwierdzić. Spróbuj ponownie.",
+        "sendSms": "Wyślij SMS i odblokuj",
+        "cancel": "Anuluj",
+        "close": "Zamknij",
+        "consentLabel": "Zaznacz zgodę, aby kontynuować",
+        "statusConsent": "Zaznacz zgodę, aby kontynuować",
+        "qrLabel": "Kod QR z linkiem do płatności",
+        "drawerAria": "Płatność za dostęp do materiału",
+        "drawerTitle": "Odblokuj materiał",
+        "drawerSubtitle": "Wyślij SMS, aby odblokować dostęp. To zwykła wiadomość, zwykle bezpłatna (zgodnie z cennikiem operatora).",
+        "drawerQrHint": "Możesz też zeskanować kod telefonem."
+    },
+    "consent": {
+        "infoBefore": "Dostęp do tej Treści jest odpłatny:",
+        "infoAfter": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w",
+        "terms": "Regulaminie",
+        "legal": "Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.",
+        "note": ""
+    },
+    "paywall": {
+        "ariaLabel": "Płatny dostęp do treści",
+        "lead": "Dalsza część jest dostępna po odblokowaniu.",
+        "meta": "Pozostało",
+        "minutes": "minut czytania",
+        "unlock": "Odblokuj za",
+        "permanent": "Płacisz raz, bez abonamentu. Artykuł zostaje na stałe.",
+        "widgetToggle": "Dokończ artykuł",
+        "drawerToggle": "Jak odblokować",
+        "drawerAria": "Jak odblokować artykuł",
+        "drawerTitle": "Jak działa odblokowanie",
+        "drawerSteps": [
+            "Kliknij Odblokuj — bez konta, karty i instalowania aplikacji.",
+            "Wyślij SMS-a, którego przygotuje Twój telefon. To tylko potwierdzenie — możesz go anulować.",
+            "Treść pojawia się od razu, bez zmiany miejsca czytania. Odblokowanie zostaje na stałe."
+        ],
+        "drawerWhyTitle": "Dlaczego SMS?",
+        "drawerWhyText": "To jedyny sposób potwierdzenia, który działa na każdym telefonie. Bez formularza karty, bez portfela i bez hasła — jedno kliknięcie i potwierdzenie.",
+        "drawerPremiumTitle": "Czy to SMS premium?",
+        "drawerPremiumText": "Nie. To nie jest usługa premium ani subskrypcja. Nie ma ukrytych opłat tygodniowych ani odnawiania. Płacisz raz, za jeden artykuł.",
+        "drawerPriceLabel": "Ten artykuł",
+        "drawerTrust": "Bez karty · Bez konta · Bez odnawiania",
+        "drawerUnlock": "Odblokuj ten artykuł"
+    },
+    "a11y": {
+        "newWindow": "otwiera się w nowej karcie",
+        "publisher": "wydawca"
+    }
 }

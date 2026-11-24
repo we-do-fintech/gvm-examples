@@ -1,0 +1,49 @@
+---
+lang: pl
+title: "Odblokowanie"
+description: "Siedem miejsc, w których propozycja odblokowania pojawia się na stronie."
+crumb: "Szablony · Odblokowanie"
+altUrl: /en/templates/placements/
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Odblokowanie</h1>
+        <p class="lead">Ten sam formularz płatności w każdym przykładzie. Różni się tylko miejsce, w którym stoi wezwanie do odblokowania. Każdy wariant to osobna strona.</p>
+    </div>
+
+    <div class="card-grid">
+        <a class="card" href="/templates/placements/inline/">
+            <h2>Karta w treści</h2>
+            <p>W miejscu, w którym kończy się darmowy podgląd.</p>
+        </a>
+        <a class="card" href="/templates/placements/overlay/">
+            <h2>Nakładka</h2>
+            <p>Przykrywa obszar treści przygaszonym tłem.</p>
+        </a>
+        <a class="card" href="/templates/placements/sticky-bottom/">
+            <h2>Pasek dolny</h2>
+            <p>Pełnoszerokościowy pasek przy dole okna.</p>
+        </a>
+        <a class="card" href="/templates/placements/sticky-right/">
+            <h2>Karta boczna</h2>
+            <p>Karta przy prawej krawędzi, na środku wysokości.</p>
+        </a>
+        <a class="card" href="/templates/placements/widget/">
+            <h2>Widżet</h2>
+            <p>Zwijany widżet w prawym dolnym narożniku.</p>
+        </a>
+        <a class="card" href="/templates/placements/banner/">
+            <h2>Baner górny</h2>
+            <p>Pełnoszerokościowy pasek przy górze okna.</p>
+        </a>
+        <a class="card" href="/templates/placements/drawer/">
+            <h2>Panel boczny</h2>
+            <p>Informacyjny panel z prawej; na telefonie dolny arkusz.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

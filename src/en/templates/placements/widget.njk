@@ -1,0 +1,55 @@
+---
+lang: en
+title: "Unlock · Corner widget"
+description: "A small corner widget that expands into the card on click."
+crumb: "Templates · Corner widget"
+altUrl: /templates/placements/widget/
+gvm: true
+mainClass: "unlock-demo unlock-demo--widget"
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/paywall-widget.njk" import paywallWidget %}
+{% set article = catalog[lang].article %}
+
+{% block head %}
+<link rel="stylesheet" href="/assets/paywalls.css" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Corner widget</h1>
+        <p class="lead">A collapsible widget in the bottom-right corner; opening it reveals the card with the price and button.</p>
+    </div>
+
+    <article class="article">
+        <header class="article-head">
+            <p class="kicker">Templates · unlock</p>
+            <h1 lang="{{ article.contentLang }}">{{ article.title }}</h1>
+            <p class="byline">{{ article.minutes }} min read</p>
+        </header>
+
+        <div
+            id="article"
+            class="article-body wait-for-script"
+            lang="{{ article.contentLang }}"
+            data-gvm-reference="paywall-widget-{{ lang }}"
+            data-gvm-price="1.99"
+            data-gvm-template-name="payment"
+            data-gvm-hide-template-name="paywall"
+            data-gvm-hide-strategy="blur"
+            data-gvm-hide-sections="2"
+            data-gvm-metadata-title="{{ article.title }}"
+            data-gvm-category="article"
+        >
+            {{ article.html | safe }}
+        </div>
+    </article>
+
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paywallWidget({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

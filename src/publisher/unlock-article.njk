@@ -12,11 +12,6 @@ gvm: true
 {% from "gvm/paywall-inline.njk" import paywallInline %}
 {% set article = catalog[lang].article %}
 
-{% extends "layouts/base.njk" %}
-{% from "gvm/payment-drawer.njk" import paymentDrawer %}
-{% from "gvm/paywall-inline.njk" import paywallInline %}
-{% set article = catalog[lang].article %}
-
 {% block content %}
 <div class="container">
     <article class="article">

@@ -31,5 +31,5 @@ gvm: true
 </div>
 
 {% include "gvm/raw-payment-simple.njk" %}
-{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl, injectTo: "#demo" }) }}
 {% endblock %}

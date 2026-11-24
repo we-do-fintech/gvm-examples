@@ -1,12 +1,43 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#232526" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f6f6f4" media="(prefers-color-scheme: light)" />
+{#  Theme before the first paint, so a stored choice never flashes the wrong
+    palette. The OS preference is handled by the @media rules in theme.css. #}
+<script>
+    (function () {
+        try {
+            var choice = localStorage.getItem("gvm-theme");
+            if (choice === "light" || choice === "dark") {
+                document.documentElement.setAttribute("data-theme", choice);
+            }
+        } catch (err) {
+            /* private mode — fall back to the OS preference */
+        }
+    })();
+</script>
 <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
 <meta name="description" content="{{ description or site.description }}" />
+{#  hreflang alternates: only for pages that declare their counterpart in
+    `altUrl`. Pages without a translation (e.g. the English-only overlay
+    articles) emit no alternate instead of pointing at the wrong language. #}
+{% if altUrl %}
+{% set isEn = lang == "en" %}
+{% set altLang = "pl" if isEn else "en" %}
+<link rel="alternate" hreflang="{{ lang }}" href="{{ site.baseUrl }}{{ page.url }}" />
+<link rel="alternate" hreflang="{{ altLang }}" href="{{ site.baseUrl }}{{ altUrl }}" />
+<link rel="alternate" hreflang="x-default" href="{{ site.baseUrl }}{{ altUrl if isEn else page.url }}" />
+{% endif %}
 <link rel="icon" href="/assets/favicon.ico" sizes="any" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 {% if legacyCss %}<link rel="stylesheet" href="/assets/legacy.css" />{% endif %}
 <link rel="stylesheet" href="/assets/gvm.css" />
-{% if gvm %}<link rel="stylesheet" href="/assets/gvm-drawer.css" />{% endif %}
+{#  `gvmLazy` = page loads gvm.js itself (after it knows the price/reference),
+    so we ship the drawer CSS + a11y glue but NOT the SDK bootstrap. #}
+{% if gvm or gvmLazy %}<link rel="stylesheet" href="/assets/gvm-drawer.css" />{% endif %}
+{#  Light/dark palette + the site-bar switch. Loaded last so it can re-map the
+    tokens of gvm.css and gvm-drawer.css without touching them. #}
+<link rel="stylesheet" href="/assets/theme.css" />
 
 {#
   gvm.js bootstrap.
@@ -15,6 +46,10 @@
   (and out of the accessibility tree) until the SDK has hidden the premium part.
 #}
 {% if gvm %}
+{#  Runs before the SDK (both are deferred, document order wins) and rewrites
+    `data-gvm-http-download` to an absolute URL, working around the extra "/"
+    the SDK adds to root-relative paths. See assets/gvm-download-url.js. #}
+<script defer src="/assets/gvm-download-url.js"></script>
 <script type="module" src="{{ site.sdk }}"></script>
 <script>
     // Verbose gvm.js logs, handy while editing an example.
@@ -38,6 +73,6 @@
 
 <!-- agg (self-hosted analytics) -->
 <script async src="{{ site.aggScript }}" data-site="{{ site.aggSite }}"></script>
-{% if gvm %}
+{% if gvm or gvmLazy %}
 <script defer src="{{ site.aggBridge }}"></script>
 {% endif %}

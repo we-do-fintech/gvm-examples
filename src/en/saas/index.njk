@@ -1,0 +1,38 @@
+---
+lang: en
+title: SaaS
+description: Sell plans and add-ons inside your app — SMS confirmation, settled together.
+altUrl: /saas/
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>SaaS</h1>
+        <p class="lead">
+            Sell inside your app without a payment gateway of your own. One text
+            message confirms the plan, add-ons go to a basket, and a single bill
+            arrives at the end.
+        </p>
+    </div>
+
+    <div class="card-grid">
+        <a class="card" href="/en/saas-licenses/">
+            <h2>Selling plans</h2>
+            <p>
+                Three plans, one text message and one payment. No card, no
+                form and no subscription.
+            </p>
+        </a>
+        <a class="card" href="/en/add-ons/">
+            <h2>Add-ons and basket</h2>
+            <p>
+                Pick the features you need and the basket total becomes the
+                payment amount. One micropayment for the whole set.
+            </p>
+        </a>
+    </div>
+</div>
+{% endblock %}

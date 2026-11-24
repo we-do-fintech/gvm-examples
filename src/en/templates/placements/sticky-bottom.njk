@@ -1,0 +1,55 @@
+---
+lang: en
+title: "Unlock · Sticky bottom bar"
+description: "An unlock bar pinned to the bottom edge of the viewport."
+crumb: "Templates · Sticky bottom bar"
+altUrl: /templates/placements/sticky-bottom/
+gvm: true
+mainClass: "unlock-demo unlock-demo--bottom"
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/paywall-sticky-bottom.njk" import paywallStickyBottom %}
+{% set article = catalog[lang].article %}
+
+{% block head %}
+<link rel="stylesheet" href="/assets/paywalls.css" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Sticky bottom bar</h1>
+        <p class="lead">A full-width bar pinned to the bottom of the viewport, so the offer stays within reach while reading.</p>
+    </div>
+
+    <article class="article">
+        <header class="article-head">
+            <p class="kicker">Templates · unlock</p>
+            <h1 lang="{{ article.contentLang }}">{{ article.title }}</h1>
+            <p class="byline">{{ article.minutes }} min read</p>
+        </header>
+
+        <div
+            id="article"
+            class="article-body wait-for-script"
+            lang="{{ article.contentLang }}"
+            data-gvm-reference="paywall-sticky-bottom-{{ lang }}"
+            data-gvm-price="1.99"
+            data-gvm-template-name="payment"
+            data-gvm-hide-template-name="paywall"
+            data-gvm-hide-strategy="blur"
+            data-gvm-hide-sections="2"
+            data-gvm-metadata-title="{{ article.title }}"
+            data-gvm-category="article"
+        >
+            {{ article.html | safe }}
+        </div>
+    </article>
+
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paywallStickyBottom({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

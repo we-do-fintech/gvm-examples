@@ -1,0 +1,41 @@
+---
+lang: en
+title: Overlay
+description: Paid content on static pages — with no rebuild of your site.
+altUrl: /overlay/
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Overlay: paid content on your page</h1>
+        <p class="lead">
+            We add paid content to the page you already have. No rebuild of the
+            site and no work for your IT team.
+        </p>
+    </div>
+
+    <div class="card-grid">
+        <a class="card" href="/en/overlay/article-1/">
+            <h2>The invisible checkout</h2>
+            <p>
+                A long read: the opening paragraphs are free, the rest costs
+                1.45 PLN.
+            </p>
+        </a>
+        <a class="card" href="/en/overlay/article-2/">
+            <h2>The town that read the fine print</h2>
+            <p>Each further section opens with a 2.50 PLN payment.</p>
+        </a>
+        <a class="card" href="/en/overlay/article-3/">
+            <h2>The last hand-made page</h2>
+            <p>
+                Blurred text and shuffled letters — after 2.00 PLN it reads like
+                any other page.
+            </p>
+        </a>
+    </div>
+</div>
+{% endblock %}

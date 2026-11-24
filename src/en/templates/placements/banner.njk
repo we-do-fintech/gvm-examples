@@ -1,0 +1,55 @@
+---
+lang: en
+title: "Unlock · Sticky top banner"
+description: "A full-width bar pinned to the top edge of the viewport."
+crumb: "Templates · Sticky top banner"
+altUrl: /templates/placements/banner/
+gvm: true
+mainClass: "unlock-demo unlock-demo--top"
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/paywall-banner.njk" import paywallBanner %}
+{% set article = catalog[lang].article %}
+
+{% block head %}
+<link rel="stylesheet" href="/assets/paywalls.css" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Sticky top banner</h1>
+        <p class="lead">A slim, full-width bar pinned to the top of the viewport while the premium part is on screen.</p>
+    </div>
+
+    <article class="article">
+        <header class="article-head">
+            <p class="kicker">Templates · unlock</p>
+            <h1 lang="{{ article.contentLang }}">{{ article.title }}</h1>
+            <p class="byline">{{ article.minutes }} min read</p>
+        </header>
+
+        <div
+            id="article"
+            class="article-body wait-for-script"
+            lang="{{ article.contentLang }}"
+            data-gvm-reference="paywall-banner-{{ lang }}"
+            data-gvm-price="1.99"
+            data-gvm-template-name="payment"
+            data-gvm-hide-template-name="paywall"
+            data-gvm-hide-strategy="blur"
+            data-gvm-hide-sections="2"
+            data-gvm-metadata-title="{{ article.title }}"
+            data-gvm-category="article"
+        >
+            {{ article.html | safe }}
+        </div>
+    </article>
+
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paywallBanner({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

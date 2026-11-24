@@ -7,12 +7,8 @@
  * - `content/` is editorial material (article, PDFs, EPUB, audio, posters).
  *   Markdown is rendered at build time by `src/_data/catalog.js`; binary files
  *   are copied as-is so the download-strategy examples have real URLs.
- * - `src/archive/` is a reference library of the previous flat examples and is
- *   intentionally NOT built.
  */
 module.exports = function (eleventyConfig) {
-    eleventyConfig.ignores.add("src/archive/**");
-
     eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
     for (const ext of ["pdf", "epub", "mp3", "ogg", "jpg", "jpeg", "png", "webp", "mp4"]) {
@@ -42,11 +38,29 @@ module.exports = function (eleventyConfig) {
         return `${min}:${String(sec).padStart(2, "0")}`;
     });
 
+    // Extract a YouTube video id from any common URL shape (watch, youtu.be,
+    // /embed, /shorts, /live). Returns null when the URL is not YouTube.
+    const ytVideoId = (url) =>
+        (
+            /(?:[?&]v=|youtu\.be\/|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{6,})/.exec(
+                url || ""
+            ) || []
+        )[1] || null;
+
+    eleventyConfig.addFilter("ytId", ytVideoId);
+
     eleventyConfig.addFilter("ytEmbed", (url) => {
-        const match = /[?&]v=([^&]+)/.exec(url || "");
-        return match
-            ? "https://www.youtube.com/embed/" + match[1] + "?autoplay=1"
-            : url;
+        const id = ytVideoId(url);
+        return id ? "https://www.youtube.com/embed/" + id + "?autoplay=1" : url;
+    });
+
+    // Poster frame straight from YouTube, so the pay-per-view thumbnail is
+    // always the frame of the video that is actually behind the paywall.
+    // `maxresdefault` (1280x720) is not guaranteed for every video — the
+    // templates fall back to `hqdefault` via onerror.
+    eleventyConfig.addFilter("ytThumb", (url, quality = "maxresdefault") => {
+        const id = ytVideoId(url);
+        return id ? `https://img.youtube.com/vi/${id}/${quality}.jpg` : null;
     });
     return {
         dir: {

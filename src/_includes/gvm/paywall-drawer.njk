@@ -1,0 +1,95 @@
+{#
+  Unlock-drawer paywall placement (archive: templates/drawer.html).
+
+  An informational panel docked to the right edge of the viewport that explains
+  the unlock flow (why SMS, why this is not premium SMS, when the charge is
+  settled) and then unlocks in place. gvm.js injects it into `<body>`; the fixed
+  layout lives in assets/paywalls.css. Below 1000px it becomes a bottom sheet.
+
+  This is a PAYWALL placement, distinct from `gvm/payment-drawer.njk` (the
+  payment FORM used by every example). The panel only opens the form.
+
+    {% from "gvm/paywall-drawer.njk" import paywallDrawer %}
+    {{ paywallDrawer({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+
+  Keyboard/a11y: the collapse toggle is a native `<details>`/`<summary>`
+  (keyboard-operable, open by default), the panel does not trap focus, and the
+  only tab stops are the summary, the disclosure rows and the pay button. No
+  consent checkbox — that lives in the payment dialog.
+#}
+{% from "gvm/consent.njk" import consentInfo %}
+
+{% macro paywallDrawer(opts) %}
+{% set t = opts.t %}
+<template
+    data-gvm-template="paywall"
+    data-gvm-template-inject-to="{{ opts.injectTo or 'body' }}"
+>
+    <aside
+        class="paywall-drawer"
+        role="complementary"
+        aria-label="{{ t.paywall.drawerAria }}"
+    >
+        <details open>
+            <summary class="paywall-drawer__toggle">
+                {{ t.paywall.drawerToggle }}
+            </summary>
+
+            <div class="paywall-drawer__panel">
+                <header class="paywall-drawer__head">
+                    <h2 class="paywall-drawer__title">
+                        {{ t.paywall.drawerTitle }}
+                    </h2>
+                </header>
+
+                <div class="paywall-drawer__scroll">
+                    <ol class="paywall-drawer__steps">
+                        {% for step in t.paywall.drawerSteps %}
+                        <li>
+                            <span class="paywall-drawer__num">{{ loop.index }}</span>
+                            <p>{{ step }}</p>
+                        </li>
+                        {% endfor %}
+                    </ol>
+
+                    <details>
+                        <summary>{{ t.paywall.drawerWhyTitle }}</summary>
+                        <p>{{ t.paywall.drawerWhyText }}</p>
+                    </details>
+
+                    <details>
+                        <summary>{{ t.paywall.drawerPremiumTitle }}</summary>
+                        <p>{{ t.paywall.drawerPremiumText }}</p>
+                    </details>
+
+                    <details class="paywall-drawer__how" open>
+                        <summary>{{ t.payment.howTitle }}</summary>
+                        <ol>
+                            {% for step in t.payment.howSteps %}
+                            <li>{{ step }}</li>
+                            {% endfor %}
+                        </ol>
+                    </details>
+                </div>
+
+                <div class="paywall-drawer__foot">
+                    <div class="paywall-drawer__price">
+                        <span>{{ t.paywall.drawerPriceLabel }}</span>
+                        <strong>
+                            <span data-gvm-bind-price></span>
+                            <span data-gvm-bind-currency></span>
+                        </strong>
+                    </div>
+                    {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: "consent-info--compact" }) }}
+                    <button type="button" class="btn btn--accent paywall-cta" data-gvm-bind-pay>
+                        {{ t.paywall.drawerUnlock }}
+                    </button>
+                    <p class="paywall-drawer__trust">
+                        {{ t.paywall.drawerTrust }}
+                    </p>
+                </div>
+            </div>
+        </details>
+    </aside>
+</template>
+{% endmacro %}

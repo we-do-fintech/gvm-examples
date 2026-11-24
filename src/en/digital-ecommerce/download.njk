@@ -1,0 +1,224 @@
+---
+lang: en
+title: File downloads
+description: Selling files to download — e-book, PDF report, music and photos.
+altUrl: /digital-ecommerce/download/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/download-trigger.njk" import downloadTrigger %}
+{% set c = catalog[lang] %}
+{% set ebook = c.ebook %}
+{% set podcast = c.podcast %}
+{% set poster = c.posters | last %}
+{% set vodUrl = c.vod.url if c.vod else "" %}
+{% set vodThumb = vodUrl | ytThumb %}
+{% set vodThumbFallback = vodUrl | ytThumb("hqdefault") %}
+{% set firstTrack = c.music | first %}
+{% set firstPdf = c.pdfs | first %}
+{% set ebookTitle = "Session micropayments: the implementation handbook" %}
+{% set audioTitle = "The whole session on one bill: buying without a card" %}
+
+
+{% block head %}
+<link rel="stylesheet" href="/assets/digital-ecommerce.css" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>File downloads</h1>
+        <p class="lead">
+            The customer pays and downloads the file. Four kinds of files below — an e-book, a PDF report, a music track and a high-resolution photo.
+        </p>
+    </div>
+
+    <nav class="de-nav" aria-label="Sections of this page">
+        <a href="#ebook">E-book</a>
+        <a href="#report">PDF report</a>
+        <a href="#music">Music file</a>
+        <a href="#photo">Photo</a>
+    </nav>
+    <section class="de-section" id="ebook" aria-labelledby="ebook-title">
+        <h2 id="ebook-title">E-book</h2>
+        <p class="de-model">
+            One price per file. No basket and no account.
+        </p>
+
+        <figure class="media-card de-ebook">
+            <div class="de-cover" aria-hidden="true">
+                <p class="de-cover__kicker">E-book · {{ ebook.ext | upper }}</p>
+                <p class="de-cover__title">{{ ebookTitle }}</p>
+                <p class="de-cover__foot">{{ ebook.name }} · {{ ebook.bytes | filesize }}</p>
+            </div>
+            <div class="media-card__body">
+                <h3>{{ ebookTitle }}</h3>
+                <p class="file-meta">
+                    {{ ebook.ext | upper }} · {{ ebook.bytes | filesize }} · file {{ ebook.name }}
+                    · DRM-free, opens on Kindle, Apple Books and PocketBook
+                </p>
+                <p>
+                    Ten pages on why readers close the tab at the first request
+                    to pay, how a single bill replaces a card, and why
+                    transactions below 2 EUR only start to pay off now.
+                    Includes checkout-abandonment data and a four-week rollout
+                    plan.
+                </p>
+                <p class="de-blurb-note">
+                    The cover and the table of contents are free to browse. The
+                    EPUB file is ready to download the moment the charge is
+                    confirmed.
+                </p>
+                {{ downloadTrigger({
+                    reference: "ebook",
+                    price: "4.99",
+                    href: ebook.href,
+                    title: "E-book",
+                    category: "ebook",
+                    label: "Download the EPUB for 4.99 PLN"
+                }) }}
+            </div>
+        </figure>
+
+    </section>
+
+    <section class="de-section" id="report" aria-labelledby="report-title">
+        <h2 id="report-title">PDF report</h2>
+        <p class="de-model">
+            A document for one micropayment. Every file has its own price, so
+            the PDF report and its EPUB edition can cost different amounts.
+        </p>
+        <p>
+            Industry reports are the classic "buy one, do not subscribe"
+            product. A price per file, no basket and no shop account.
+        </p>
+
+        <ul class="track-list">
+            {% for pdf in c.pdfs %}
+            <li class="track de-track">
+                <div class="de-track__body">
+                    <p class="track__name">{{ pdf.name }}</p>
+                    <p class="track__meta">PDF · {{ pdf.bytes | filesize }} · no watermark, yours to keep</p>
+                </div>
+                {{ downloadTrigger({
+                    reference: "report-" ~ loop.index,
+                    price: "12.00",
+                    href: pdf.href,
+                    title: pdf.name,
+                    category: "report",
+                    label: "Download the PDF for 12.00 PLN"
+                }) }}
+            </li>
+            {% endfor %}
+            <li class="track de-track">
+                <div class="de-track__body">
+                    <p class="track__name">{{ ebook.name }} (EPUB edition of the report)</p>
+                    <p class="track__meta">EPUB · {{ ebook.bytes | filesize }} · the same text, easier on a phone</p>
+                </div>
+                {{ downloadTrigger({
+                    reference: "report-epub",
+                    price: "8.00",
+                    href: ebook.href,
+                    title: ebook.name,
+                    category: "report",
+                    label: "Download the EPUB for 8.00 PLN"
+                }) }}
+            </li>
+        </ul>
+
+    </section>
+
+    <section class="de-section" id="music" aria-labelledby="music-title">
+        <h2 id="music-title">Music file</h2>
+        <p class="de-model">
+            0.99 PLN per track. Every file is its own line on the bill.
+        </p>
+        <p>
+            Listening is free. You only pay for the file to download in full
+            quality.
+        </p>
+
+        <ul class="track-list">
+            {% for track in c.music %}
+            <li class="track de-track">
+                <div class="de-track__body">
+                    <p class="track__name">{{ track.title | capitalize }}</p>
+                    <p class="track__meta">
+                        OGG · {{ track.seconds | duration }} · {{ track.bytes | filesize }}
+                    </p>
+                    <audio
+                        class="de-audio"
+                        controls
+                        preload="none"
+                        src="{{ track.href }}"
+                        aria-label="Listen to the track {{ track.title | capitalize }} ({{ track.seconds | duration }})"
+                    ></audio>
+                </div>
+                {{ downloadTrigger({
+                    reference: track.id or ("music-" ~ loop.index),
+                    price: "0.99",
+                    href: track.href,
+                    title: track.title,
+                    category: "music_file",
+                    label: "Download for 0.99 PLN"
+                }) }}
+            </li>
+            {% endfor %}
+        </ul>
+
+    </section>
+
+    <section class="de-section" id="photo" aria-labelledby="photo-title">
+        <h2 id="photo-title">High-resolution photo</h2>
+        <p class="de-model">
+            The preview is free. The full print-ready file costs 9.00 PLN.
+        </p>
+        <p>
+            Three posters from one photo shoot. The small preview loads right
+            away, and the full file — up to 1433×2048 px and 1.2 MB — is yours
+            once you pay.
+        </p>
+
+        <div class="media-grid">
+            {% for item in c.posters %}
+            <figure class="media-card">
+                {% if item.preview %}
+                <img
+                    src="{{ item.preview.href }}"
+                    alt="Free preview of poster {{ loop.index }} at {{ item.preview.width }} by {{ item.preview.height }} pixels"
+                    width="{{ item.preview.width }}"
+                    height="{{ item.preview.height }}"
+                    loading="lazy"
+                />
+                {% endif %}
+                <figcaption class="media-card__body">
+                    <h3>Poster {{ loop.index }}</h3>
+                    <p class="file-meta">
+                        Full file: JPG {{ item.full.width }}×{{ item.full.height }} px
+                        · {{ item.full.bytes | filesize }}
+                    </p>
+                    <p class="file-meta">
+                        Preview: JPG {{ item.preview.width }}×{{ item.preview.height }} px
+                        · {{ item.preview.bytes | filesize }}
+                    </p>
+                    {{ downloadTrigger({
+                        reference: item.id,
+                        price: "9.00",
+                        href: item.full.href,
+                        title: "Poster " ~ loop.index,
+                        category: "photo",
+                        label: "Download the full file for 9.00 PLN"
+                    }) }}
+                </figcaption>
+            </figure>
+            {% endfor %}
+        </div>
+
+    </section>
+
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{% endblock %}

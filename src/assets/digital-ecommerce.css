@@ -1,0 +1,184 @@
+/* ==========================================================================
+   /digital-ecommerce/ — one page, six monetization models.
+   --------------------------------------------------------------------------
+   Only what the foundation stylesheet does not already provide is defined
+   here: the section rhythm, the anchor nav, the typographic e-book cover, the
+   track rows with an inline <audio> player and the category blocks on the
+   homepage. Everything else (.media-card, .track,
+   .ppv, .btn, .badge, .file-meta) comes from assets/gvm.css.
+   ========================================================================== */
+
+/* --- Page anchor nav ---------------------------------------------------- */
+.de-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 2.2rem;
+}
+
+.de-nav a {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    color: var(--ink-2);
+    font-size: var(--fs-sm);
+    text-decoration: none;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.de-nav a:hover,
+.de-nav a:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent-text);
+}
+
+/* --- Section rhythm ----------------------------------------------------- */
+.de-section {
+    padding-top: 1.6rem;
+    margin-top: 2.4rem;
+    border-top: 1px solid var(--line);
+    scroll-margin-top: 1rem;
+}
+
+.de-section h2 {
+    margin-bottom: 0.5rem;
+}
+
+/* Explanatory copy sits directly under the heading and used to run the full
+   container width. Cap it at the shared measure and give it the same leading
+   as .article-body, so the six shop sections read as one column. */
+/* `:where()` keeps this rule at the specificity of `.de-section`, so `.de-model`
+   and `.de-blurb-note` keep their own spacing. */
+.de-section > :where(p) {
+    max-width: var(--measure);
+    margin: 0 0 1.15em;
+    line-height: 1.7;
+    text-wrap: pretty;
+    hyphens: auto;
+    overflow-wrap: break-word;
+}
+
+.de-section > h2 + .de-model {
+    margin-top: 0;
+}
+
+/* The monetization model of the section, stated in words (never by colour). */
+.de-model {
+    max-width: var(--measure);
+    margin: 0 0 1.2rem;
+    font-size: var(--fs-sm);
+    line-height: 1.65;
+    text-wrap: pretty;
+    color: var(--ink-2);
+}
+
+.de-model strong {
+    color: var(--accent-text);
+}
+
+.de-model code {
+    padding: 0.05em 0.35em;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--bg-2);
+    font-family: var(--mono);
+    font-size: 0.92em;
+    color: var(--ink);
+}
+
+.de-blurb-note {
+    margin: 0 0 1em;
+    font-size: var(--fs-xs);
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+/* --- E-book: typographic cover + body, side by side on wide screens ----- */
+.media-card.de-ebook {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.de-cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.2rem;
+    aspect-ratio: 5 / 7;
+    border-bottom: 1px solid var(--line);
+    background:
+        radial-gradient(
+            120% 80% at 80% 0%,
+            color-mix(in srgb, var(--bg-2) 85%, var(--ink)) 0%,
+            transparent 60%
+        ),
+        linear-gradient(
+            165deg,
+            var(--bg-2) 0%,
+            var(--bg) 55%,
+            color-mix(in srgb, var(--bg) 70%, #000) 100%
+        );
+    color: var(--ink);
+}
+
+.de-cover__kicker {
+    margin: 0;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+}
+
+.de-cover__title {
+    margin: 0;
+    font-size: var(--fs-xl);
+    line-height: 1.2;
+    color: var(--ink);
+    text-wrap: balance;
+}
+
+.de-cover__foot {
+    margin: 0;
+    font-size: var(--fs-xs);
+    line-height: 1.55;
+    color: var(--muted);
+}
+
+/* --- Track rows with an inline player ---------------------------------- */
+.track.de-track {
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.de-track__body {
+    flex: 1 1 260px;
+    min-width: 0;
+}
+
+.de-audio {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    height: 2.25rem;
+    margin-top: 0.45rem;
+    border-radius: var(--radius-sm);
+    background: var(--bg-2);
+}
+
+@media (min-width: 560px) {
+    .media-card.de-ebook {
+        grid-template-columns: 190px 1fr;
+    }
+
+    .de-cover {
+        border-bottom: 0;
+        border-right: 1px solid var(--line);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .de-nav a {
+        transition: none;
+    }
+}

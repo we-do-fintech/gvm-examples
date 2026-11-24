@@ -1,7 +1,7 @@
 ---
 lang: pl
 title: Showcases
-description: Use case'y, rozwiązania no-code i szablony formularza płatności.
+description: Use case'y, rozwiązania overlay i szablony formularza płatności.
 altUrl: /en/
 ---
 
@@ -12,116 +12,144 @@ altUrl: /en/
     <div class="page-head">
         <h1>Showcases</h1>
         <p class="lead">
-            Zobacz naszą usługę w środowisku testowym: możesz śmiało wysyłać
-            SMS-y, płatności są symulowane, a późniejsze rozliczenia opłacisz
-            mockami kart. Warto przejść cały proces zakupu i rozliczenia.
+            Wszystkie przykłady działają w środowisku testowym — płatności są
+            symulowane, więc cały proces zakupu i rozliczenia można przejść do
+            końca.
         </p>
     </div>
 
     <h2 class="section-title" id="usecases">Use cases</h2>
-    <div class="card-grid">
-        <a class="card" href="/publisher/unlock-article/">
-            <span class="badge">Live · hide</span>
-            <h3>Odblokowanie artykułu</h3>
-            <p>Bezpłatny początek tekstu i mikropłatność za resztę.</p>
-        </a>
-        <a class="card" href="/publisher/download-hi-res-pic/">
-            <span class="badge">Live · download</span>
-            <h3>Zdjęcie w wysokiej rozdzielczości</h3>
-            <p>Bezpłatny podgląd i płatne pobranie plakatu.</p>
-        </a>
-        <a class="card" href="/publisher/remove-ads/">
-            <span class="badge">Live · redirect</span>
-            <h3>Bez reklam</h3>
-            <p>Jednodniowy dostęp bez reklam.</p>
-        </a>
-        <a class="card" href="/digital-ecommerce/download-ebook/">
-            <span class="badge">Live · download</span>
-            <h3>E-book</h3>
-            <p>Pobranie pliku EPUB po mikropłatności.</p>
-        </a>
-        <a class="card" href="/digital-ecommerce/download-music-file/">
-            <span class="badge">Live · download</span>
-            <h3>Plik muzyczny</h3>
-            <p>Pojedyncze utwory do pobrania.</p>
-        </a>
-        <a class="card" href="/digital-ecommerce/pay-per-view/">
-            <span class="badge">Live · hide</span>
-            <h3>Pay-per-view</h3>
-            <p>Dostęp do pojedynczego nagrania wideo.</p>
-        </a>
-        <a class="card" href="/digital-ecommerce/audiobook/">
-            <span class="badge">Live · download</span>
-            <h3>Audiobook</h3>
-            <p>Pobranie nagrania audio.</p>
-        </a>
-        <a class="card" href="/digital-ecommerce/download-report/">
-            <span class="badge">Live · download</span>
-            <h3>Raport PDF</h3>
-            <p>Raport analityczny do pobrania.</p>
-        </a>
-        <a class="card" href="/saas-licenses/">
-            <span class="badge">Live · plan</span>
-            <h3>Licencje SaaS</h3>
-            <p>Plany aplikacji potwierdzane SMS-em.</p>
-        </a>
-        <a class="card" href="/add-ons/">
-            <span class="badge">Live · basket</span>
-            <h3>Dodatki</h3>
-            <p>Konfigurator dodatków rozliczany zbiorczo.</p>
-        </a>
-    </div>
-
-    <h2 class="section-title" id="no-code">No-code</h2>
     <p class="lead">
-        Brak czasu w IT? Nie ma problemu — dla stron statycznych mamy gotowe
-        rozwiązania. Usługa overlay pokryje wszystkie Twoje potrzeby: wklejasz
-        jeden skrypt, a resztą zajmuje się konfiguracja.
+        Ta sama mikropłatność działa w treściach wydawców, w sprzedaży plików
+        cyfrowych i w aplikacjach SaaS.
     </p>
-    <div class="card-grid">
-        <a class="card" href="/no-code/article-1/">
-            <span class="badge">blur · 1.45 PLN</span>
-            <h3>The invisible checkout</h3>
-            <p>Długi artykuł, treść rozmyta za paywallem.</p>
-        </a>
-        <a class="card" href="/no-code/article-2/">
-            <span class="badge">hide · 2.50 PLN</span>
-            <h3>The town that read the fine print</h3>
-            <p>Treść ukryta, overlay usuwa ją z DOM.</p>
-        </a>
-        <a class="card" href="/no-code/article-3/">
-            <span class="badge">mangle-blur · 2.00 PLN</span>
-            <h3>The last hand-made page</h3>
-            <p>Rozmycie plus pomieszane słowa.</p>
-        </a>
+    <div class="de-cats">
+        <section class="de-cat" aria-labelledby="cat-publishers">
+            <h3 id="cat-publishers"><a href="/publisher/">Wydawcy</a></h3>
+            <p class="de-cat__lede">Sprzedaż treści redakcyjnych.</p>
+            <ul class="de-cat__list">
+                <li>
+                    <a href="/publisher/unlock-article/">Odblokowanie pojedynczego artykułu</a>
+                    <span class="de-cat__desc">Bezpłatny początek tekstu, reszta po mikropłatności.</span>
+                </li>
+                <li>
+                    <a href="/publisher/remove-ads/">Cały serwis bez reklam na 24 godziny</a>
+                    <span class="de-cat__desc">Dostęp bez reklam potwierdzany SMS-em.</span>
+                </li>
+            </ul>
+        </section>
+
+        <section class="de-cat" aria-labelledby="cat-ecommerce">
+            <h3 id="cat-ecommerce"><a href="/digital-ecommerce/">E-commerce cyfrowy</a></h3>
+            <p class="de-cat__lede">Przykładowy sklep, w którym kupisz, pobierzesz i obejrzysz.</p>
+            <ul class="de-cat__list">
+                <li>
+                    <a href="/digital-ecommerce/download/">Pobieranie plików</a>
+                    <span class="de-cat__desc">E-book, raport PDF, plik muzyczny i zdjęcie w pełnej rozdzielczości.</span>
+                </li>
+                <li>
+                    <a href="/digital-ecommerce/streaming/">Streaming</a>
+                    <span class="de-cat__desc">Audiobook i pojedynczy seans wideo.</span>
+                </li>
+            </ul>
+        </section>
+
+        <section class="de-cat" aria-labelledby="cat-saas">
+            <h3 id="cat-saas"><a href="/saas/">SaaS</a></h3>
+            <p class="de-cat__lede">Rozliczenia w aplikacjach, bez kart i subskrypcji.</p>
+            <ul class="de-cat__list">
+                <li>
+                    <a href="/add-ons/">Dodatki w koszyku</a>
+                    <span class="de-cat__desc">Zestaw dodatków opłacany jedną kwotą.</span>
+                </li>
+                <li>
+                    <a href="/saas-licenses/">Sprzedaż planów</a>
+                    <span class="de-cat__desc">Plany potwierdzane SMS-em, bez formularza.</span>
+                </li>
+            </ul>
+        </section>
     </div>
 
     <h2 class="section-title" id="templates">Templates</h2>
     <p class="lead">
-        Zobacz, jak może wyglądać Twój formularz płatności. To przykłady z
-        biblioteki GetViaMsg — docelowy formularz zaprojektujemy razem z Tobą.
+        Twój formularz płatności może wyglądać tak. To przykłady z biblioteki
+        GetViaMsg — docelowy projekt przygotujemy razem z Tobą.
     </p>
+    <h3 class="section-title" id="templates-form">Formularz płatności</h3>
     <div class="card-grid">
         <a class="card" href="/templates/drawer/">
-            <span class="badge">drawer · główny</span>
             <h3>Drawer</h3>
             <p>Panel płatności wysuwany z prawej strony.</p>
         </a>
         <a class="card" href="/templates/modal/">
-            <span class="badge">modal</span>
             <h3>Modal</h3>
             <p>Klasyczny dialog na środku ekranu.</p>
         </a>
         <a class="card" href="/templates/simple/">
-            <span class="badge">simple</span>
             <h3>Simple</h3>
             <p>Minimalny formularz: cena, QR i SMS.</p>
         </a>
         <a class="card" href="/templates/circle/">
-            <span class="badge">circle</span>
             <h3>Circle</h3>
             <p>Duży przycisk, QR odsłaniany zgodą.</p>
         </a>
     </div>
+
+    <h3 class="section-title" id="templates-placements">Położenie wezwania do odblokowania</h3>
+    <p class="lead">
+        To samo wezwanie może stać w różnych miejscach strony — od karty
+        w treści po pełnoekranową nakładkę.
+    </p>
+    <div class="card-grid">
+        <a class="card" href="/templates/placements/inline/">
+            <h3>Karta w treści</h3>
+            <p>W miejscu, w którym kończy się darmowy podgląd.</p>
+        </a>
+        <a class="card" href="/templates/placements/overlay/">
+            <h3>Nakładka</h3>
+            <p>Przykrywa obszar treści przygaszonym tłem.</p>
+        </a>
+        <a class="card" href="/templates/placements/sticky-bottom/">
+            <h3>Pasek dolny</h3>
+            <p>Pełnoszerokościowy pasek przy dole okna.</p>
+        </a>
+        <a class="card" href="/templates/placements/sticky-right/">
+            <h3>Karta boczna</h3>
+            <p>Karta przy prawej krawędzi, na środku wysokości.</p>
+        </a>
+        <a class="card" href="/templates/placements/widget/">
+            <h3>Widżet</h3>
+            <p>Zwijany widżet w prawym dolnym narożniku.</p>
+        </a>
+        <a class="card" href="/templates/placements/banner/">
+            <h3>Baner górny</h3>
+            <p>Pełnoszerokościowy pasek przy górze okna.</p>
+        </a>
+        <a class="card" href="/templates/placements/drawer/">
+            <h3>Panel boczny</h3>
+            <p>Informacyjny panel z prawej; na telefonie dolny arkusz.</p>
+        </a>
+    </div>
+
+    <h2 class="section-title" id="overlay">Overlay</h2>
+    <p class="lead">
+        Nie musisz przebudowywać serwisu. Nakładka działa na stronie takiej,
+        jaka jest, a po opłaceniu treść sama się odsłania.
+    </p>
+    <div class="card-grid">
+        <a class="card" href="/overlay/article-1/">
+            <h3>Niewidzialna kasa</h3>
+            <p>Długi artykuł z dostępem za 1,45 zł.</p>
+        </a>
+        <a class="card" href="/overlay/article-2/">
+            <h3>Miasto, które czytało drobny druk</h3>
+            <p>Tekst widoczny dopiero po opłaceniu. 2,50 zł.</p>
+        </a>
+        <a class="card" href="/overlay/article-3/">
+            <h3>Ostatnia strona robiona ręcznie</h3>
+            <p>Dostęp do reportażu za 2,00 zł.</p>
+        </a>
+    </div>
+
 </div>
 {% endblock %}

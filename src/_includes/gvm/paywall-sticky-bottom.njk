@@ -1,0 +1,43 @@
+{#
+  Sticky bottom paywall placement (archive: templates/sticky-bottom.html).
+
+  A full-width bar fixed to the bottom edge of the viewport. gvm.js injects it
+  into `<body>`; assets/paywalls.css pins it with `position: fixed`. The page
+  needs bottom padding so the bar does not hide the last line — the demo pages
+  add it through the `unlock-demo--bottom` main class.
+
+    {% from "gvm/paywall-sticky-bottom.njk" import paywallStickyBottom %}
+    {{ paywallStickyBottom({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+
+  Differs from the other placements: it spans the full width and is always in
+  reach while reading. Keyboard/a11y: reachable, no focus trap, sits under the
+  skip link and the payment drawer. No consent checkbox — that lives in the
+  payment dialog.
+#}
+{% from "gvm/consent.njk" import consentInfo %}
+
+{% macro paywallStickyBottom(opts) %}
+{% set t = opts.t %}
+<template
+    data-gvm-template="paywall"
+    data-gvm-template-inject-to="{{ opts.injectTo or 'body' }}"
+>
+    <aside
+        class="paywall-card paywall-sticky-bottom"
+        role="complementary"
+        aria-label="{{ t.paywall.ariaLabel }}"
+    >
+        <p class="paywall-lead">{{ t.paywall.lead }}</p>
+        <p class="paywall-meta">
+            <span>{{ t.paywall.meta }}</span>
+            <span data-gvm-bind-reading-time></span> {{ t.paywall.minutes }}
+        </p>
+        {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: "consent-info--compact" }) }}
+        <button type="button" class="btn btn--accent paywall-cta" data-gvm-bind-pay>
+            {{ t.paywall.unlock }}
+            <span data-gvm-bind-price></span>
+            <span data-gvm-bind-currency></span>
+        </button>
+    </aside>
+</template>
+{% endmacro %}

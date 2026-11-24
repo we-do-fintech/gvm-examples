@@ -6,7 +6,11 @@
  * examples DRY: no example hardcodes a tenant or a script URL.
  */
 module.exports = {
-    title: "gvm.js Developer Showcase",
+    // Absolute origin of the deployed showcase — used for canonical URLs,
+    // hreflang alternates, the sitemap and llms.txt.
+    baseUrl: "https://showcase.getviamsg.com",
+
+    title: "GetViaMsg Showcase",
     description:
         "GetViaMsg showcases: modern content monetization (micropayments) for publishers, digital commerce, SaaS and apps.",
 
@@ -34,5 +38,5 @@ module.exports = {
     termsUrl: "https://getviamsg.com/terms",
     github: "https://github.com/we-do-fintech/gvm-examples",
     docs: "https://docs.wdft.ovh/gvm-js",
-    site: "https://getviamsg.com",
+    site: "https://getviamsg.com"
 };

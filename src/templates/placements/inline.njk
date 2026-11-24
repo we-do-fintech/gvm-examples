@@ -1,0 +1,55 @@
+---
+lang: pl
+title: "Odblokowanie · Karta w treści"
+description: "Karta odblokowania w treści, w miejscu końca darmowego podglądu."
+crumb: "Szablony · Karta w treści"
+altUrl: /en/templates/placements/inline/
+gvm: true
+mainClass: "unlock-demo"
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/paywall-inline.njk" import paywallInline %}
+{% set article = catalog[lang].article %}
+
+{% block head %}
+<link rel="stylesheet" href="/assets/paywalls.css" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Karta w treści</h1>
+        <p class="lead">Karta pojawia się w kolumnie tekstu dokładnie tam, gdzie kończy się darmowy podgląd.</p>
+    </div>
+
+    <article class="article">
+        <header class="article-head">
+            <p class="kicker">Szablony · odblokowanie</p>
+            <h1 lang="{{ article.contentLang }}">{{ article.title }}</h1>
+            <p class="byline">{{ article.minutes }} min czytania</p>
+        </header>
+
+        <div
+            id="article"
+            class="article-body wait-for-script"
+            lang="{{ article.contentLang }}"
+            data-gvm-reference="paywall-inline-{{ lang }}"
+            data-gvm-price="1.99"
+            data-gvm-template-name="payment"
+            data-gvm-hide-template-name="paywall"
+            data-gvm-hide-strategy="hide"
+            data-gvm-hide-words="30"
+            data-gvm-metadata-title="{{ article.title }}"
+            data-gvm-category="article"
+        >
+            {{ article.html | safe }}
+        </div>
+    </article>
+
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{% endblock %}

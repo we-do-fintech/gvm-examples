@@ -186,6 +186,13 @@ function list(lang, test) {
             .filter(test)
             .map((name) => ({
                 ...fileInfo(path.join(DIR, d, name)),
+                // A stable, URL-safe id for payment references (`data-gvm-reference`
+                // must be 3–60 chars, so the file name alone is not enough).
+                id: name
+                    .replace(/\.[^.]+$/, "")
+                    .replace(/[^a-z0-9]+/gi, "-")
+                    .replace(/^-+|-+$/g, "")
+                    .toLowerCase(),
                 title: name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " "),
                 contentLang: d,
             }));

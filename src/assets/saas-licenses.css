@@ -1,0 +1,100 @@
+/* ==========================================================================
+   SaaS plans (/saas-licenses/)
+   --------------------------------------------------------------------------
+   Page-specific styles only. Everything that already exists in gvm.css
+   (.container, .page-head, .card, .card-grid, .badge, .btn, .lead) is reused
+   as-is; this file adds the plan cards. Tokens come from gvm.css, so both
+   themes stay in sync.
+   ========================================================================== */
+
+/* --- Plan cards ---------------------------------------------------------- */
+.plan-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.5rem 1.4rem;
+}
+
+/* A flex column stretches its children; the tier tag must hug its text. */
+.plan-card .badge {
+    align-self: flex-start;
+    margin-bottom: 1rem;
+}
+
+.plan-price {
+    margin: 0;
+    font-size: var(--fs-3xl);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+}
+
+.plan-period {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: var(--fs-sm);
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--muted);
+}
+
+.plan-card__note {
+    margin: 0.8rem 0 0;
+    line-height: 1.6;
+    color: var(--muted);
+    text-wrap: pretty;
+}
+
+.plan-features {
+    margin: 1.2rem 0 1.6rem;
+    padding: 0;
+    list-style: none;
+    font-size: var(--fs-sm);
+    color: var(--ink-2);
+}
+
+.plan-features li {
+    position: relative;
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    line-height: 1.5;
+    text-wrap: pretty;
+}
+
+/* A small accent tick instead of a bullet. */
+.plan-features li::before {
+    content: "";
+    position: absolute;
+    left: 0.2rem;
+    top: 0.45em;
+    width: 0.5rem;
+    height: 0.28rem;
+    border-left: 2px solid var(--accent-text);
+    border-bottom: 2px solid var(--accent-text);
+    transform: rotate(-45deg);
+}
+
+/* The featured plan is carried by the accent, not by a louder badge. */
+.plan-card--featured {
+    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+    box-shadow: 0 20px 45px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.plan-card--featured .badge {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--accent-ink);
+}
+
+/* The plan card is the payment trigger: it opens the shared payment drawer. */
+.plan-card__cta {
+    margin-top: auto;
+    width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .plan-card {
+        transition: none;
+    }
+}

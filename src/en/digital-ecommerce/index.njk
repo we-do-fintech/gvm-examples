@@ -1,7 +1,7 @@
 ---
 lang: en
 title: Digital commerce
-description: Przykłady sprzedaży plików cyfrowych — e-book, muzyka, wideo, audiobook.
+description: Selling digital files — downloads and streaming.
 altUrl: /digital-ecommerce/
 ---
 
@@ -11,29 +11,31 @@ altUrl: /digital-ecommerce/
 <div class="container">
     <div class="page-head">
         <h1>Digital commerce</h1>
+        <p class="lead">
+            Sell digital files one at a time: a single micropayment, no basket and no account. Two models — file downloads and streaming.
+        </p>
     </div>
 
-    <div class="card-grid">
-        <a class="card" href="/digital-ecommerce/download-ebook/">
-            <span class="badge">Live · download</span>
-            <h2>E-book</h2>
-            <p>An EPUB download after a micropayment.</p>
-        </a>
-        <a class="card" href="/digital-ecommerce/download-music-file/">
-            <span class="badge">Live · download</span>
-            <h2>Music file</h2>
-            <p>Single tracks to download.</p>
-        </a>
-        <a class="card" href="/digital-ecommerce/pay-per-view/">
-            <span class="badge">Live · hide</span>
-            <h2>Pay-per-view</h2>
-            <p>Access to a single video.</p>
-        </a>
-        <a class="card" href="/digital-ecommerce/audiobook/">
-            <span class="badge">Live · download</span>
-            <h2>Audiobook</h2>
-            <p>An audio recording to download.</p>
-        </a>
+    <h2 class="section-title" id="models">Two ways to sell</h2>
+    <div class="de-cats">
+        <section class="de-cat" aria-labelledby="cat-download">
+            <h3 id="cat-download"><a href="/en/digital-ecommerce/download/">File downloads</a></h3>
+            <p class="de-cat__lede">The customer pays and downloads the file.</p>
+            <ul class="de-cat__list">
+                <li><a href="/en/digital-ecommerce/download/#ebook">E-book</a></li>
+                <li><a href="/en/digital-ecommerce/download/#report">PDF report</a></li>
+                <li><a href="/en/digital-ecommerce/download/#music">Music file</a></li>
+                <li><a href="/en/digital-ecommerce/download/#photo">High-resolution photo</a></li>
+            </ul>
+        </section>
+        <section class="de-cat" aria-labelledby="cat-streaming">
+            <h3 id="cat-streaming"><a href="/en/digital-ecommerce/streaming/">Streaming</a></h3>
+            <p class="de-cat__lede">The content plays right away, with no download.</p>
+            <ul class="de-cat__list">
+                <li><a href="/en/digital-ecommerce/streaming/#audiobook">Audiobook</a></li>
+                <li><a href="/en/digital-ecommerce/streaming/#ppv">Single viewing</a></li>
+            </ul>
+        </section>
     </div>
 </div>
 {% endblock %}

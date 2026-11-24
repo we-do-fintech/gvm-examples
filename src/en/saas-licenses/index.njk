@@ -1,7 +1,7 @@
 ---
 lang: en
-title: SaaS licences
-description: App plans confirmed by SMS and settled together.
+title: SaaS plans
+description: App plans confirmed with a single text message and settled together.
 altUrl: /saas-licenses/
 gvm: true
 ---
@@ -9,54 +9,97 @@ gvm: true
 {% extends "layouts/base.njk" %}
 {% from "gvm/payment-drawer.njk" import paymentDrawer %}
 
+{% block head %}
+<link rel="stylesheet" href="/assets/saas-licenses.css" />
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="page-head">
-        <h1>SaaS licences</h1>
-        <p class="lead">Choose a plan. SMS confirmation, settled together with the rest of the session.</p>
-    </div>
-
-    <div id="activation" class="notice" hidden>
-        Plan <strong id="plan-name"></strong> is active. Activation code: <code id="code"></code>
+        <h1>Plans</h1>
+        <p class="lead">
+            Pick a plan and confirm it with a single text message — no card, no
+            form, no subscription. Every purchase in the period lands on one
+            bill.
+        </p>
     </div>
 
     <div class="card-grid">
-        <div class="card">
+        <article class="card plan-card">
             <span class="badge">Basic</span>
-            <h2>9.99 PLN / month</h2>
-            <p>1 seat, CSV export.</p>
-            <button type="button" class="btn btn--accent" data-gvm-reference="plan-basic" data-gvm-price="9.99" data-gvm-template-name="payment" data-gvm-metadata-title="Plan Basic" data-gvm-category="plan" data-gvm-http-redirect-to="/en/saas-licenses/?plan=basic">Choose Basic</button>
-        </div>
-        <div class="card">
+            <p class="plan-price">9.99 PLN <span class="plan-period">/ month</span></p>
+            <p class="plan-card__note">For apps looking for their first paying users.</p>
+            <ul class="plan-features">
+                <li>1 app</li>
+                <li>1,000 unlocked sessions / month</li>
+                <li>SMS + QR payment</li>
+                <li>One bill for the whole period</li>
+                <li>E-mail support</li>
+            </ul>
+            <button
+                type="button"
+                class="btn btn--accent plan-card__cta"
+                data-gvm-price="9.99"
+                data-gvm-reference="plan-basic"
+                data-gvm-template-name="payment"
+                data-gvm-metadata-title="Basic plan"
+                data-gvm-category="plan"
+            >
+                Choose Basic · 9.99 PLN
+            </button>
+        </article>
+
+        <article class="card plan-card plan-card--featured">
             <span class="badge">Plus</span>
-            <h2>19.99 PLN / month</h2>
-            <p>3 seats, CSV and PDF export.</p>
-            <button type="button" class="btn btn--accent" data-gvm-reference="plan-plus" data-gvm-price="19.99" data-gvm-template-name="payment" data-gvm-metadata-title="Plan Plus" data-gvm-category="plan" data-gvm-http-redirect-to="/en/saas-licenses/?plan=plus">Choose Plus</button>
-        </div>
-        <div class="card">
+            <p class="plan-price">19.99 PLN <span class="plan-period">/ month</span></p>
+            <p class="plan-card__note">For teams shipping paid features every month.</p>
+            <ul class="plan-features">
+                <li>Everything in Basic</li>
+                <li>3 apps</li>
+                <li>10,000 unlocked sessions / month</li>
+                <li>Your own pricing rules for plans and add-ons</li>
+                <li>Priority e-mail support</li>
+            </ul>
+            <button
+                type="button"
+                class="btn btn--accent plan-card__cta"
+                data-gvm-price="19.99"
+                data-gvm-reference="plan-plus"
+                data-gvm-template-name="payment"
+                data-gvm-metadata-title="Plus plan"
+                data-gvm-category="plan"
+            >
+                Choose Plus · 19.99 PLN
+            </button>
+        </article>
+
+        <article class="card plan-card">
             <span class="badge">Pro</span>
-            <h2>29.99 PLN / month</h2>
-            <p>10 seats, API and priority support.</p>
-            <button type="button" class="btn btn--accent" data-gvm-reference="plan-pro" data-gvm-price="29.99" data-gvm-template-name="payment" data-gvm-metadata-title="Plan Pro" data-gvm-category="plan" data-gvm-http-redirect-to="/en/saas-licenses/?plan=pro">Choose Pro</button>
-        </div>
+            <p class="plan-price">29.99 PLN <span class="plan-period">/ month</span></p>
+            <p class="plan-card__note">For apps that need verified pricing and reporting.</p>
+            <ul class="plan-features">
+                <li>Everything in Plus</li>
+                <li>Unlimited apps and sessions</li>
+                <li>Prices signed on the server</li>
+                <li>Automatic notifications, exports and monthly reports</li>
+                <li>Dedicated onboarding</li>
+            </ul>
+            <button
+                type="button"
+                class="btn btn--accent plan-card__cta"
+                data-gvm-price="29.99"
+                data-gvm-reference="plan-pro"
+                data-gvm-template-name="payment"
+                data-gvm-metadata-title="Pro plan"
+                data-gvm-category="plan"
+            >
+                Choose Pro · 29.99 PLN
+            </button>
+        </article>
     </div>
+
+
 </div>
 
 {{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
-{% endblock %}
-
-{% block scripts %}
-<script>
-    (function () {
-        var params = new URLSearchParams(window.location.search);
-        var plan = params.get("plan");
-        if (!plan) return;
-        if (!params.get("gvm-status") && !params.get("gvm-reference")) return;
-        var box = document.getElementById("activation");
-        document.getElementById("plan-name").textContent = plan.toUpperCase();
-        document.getElementById("code").textContent =
-            "GVM-" + plan.toUpperCase() + "-" + (1000 + Math.floor(Math.random() * 9000));
-        box.hidden = false;
-    })();
-</script>
 {% endblock %}

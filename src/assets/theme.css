@@ -1,0 +1,208 @@
+/* ==========================================================================
+   Theme — light palette + the site-bar switch
+   --------------------------------------------------------------------------
+   The showcase inherited getviamsg.com's dark palette, but it is not bound to
+   it. This file adds a light palette and a switch, re-mapping both the showcase
+   tokens (assets/gvm.css) and the payment-drawer tokens (assets/gvm-drawer.css)
+   without editing either file.
+
+   Resolution order:
+     1. an explicit choice stored by assets/theme.js → [data-theme="light|dark"]
+     2. otherwise the operating-system preference   → @media (prefers-color-scheme)
+     3. otherwise the dark palette from gvm.css
+
+   Loaded last from partials/head.njk, so it wins the cascade.
+   ========================================================================== */
+
+/** gvm.css owns the dark defaults (`color-scheme`, `--accent-text`, `--scrim`);
+    everything below only re-maps them for the light palette. */
+
+/* --- Light palette -------------------------------------------------------
+   Kept in two blocks on purpose: one for an explicit choice, one for the OS
+   preference. They must stay identical. */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+        color-scheme: light;
+
+        --bg: #f6f6f4;
+        --bg-1: #ffffff;
+        --bg-2: #eeeeeb;
+        --ink: #15171a;
+        --ink-2: #3c4145;
+        --muted: #676d72;
+        --line: #e3e3df;
+        --line-2: #c9cbc6;
+
+        --accent: #ffba00;
+        --accent-hover: #e8a600;
+        --accent-ink: #232526;
+        --accent-text: #8a5a00;
+
+        --ok: #1c7a4d;
+        --danger: #c0281c;
+        --scrim: rgba(23, 25, 27, 0.5);
+
+        /* legacy.css (overlay article pages) defines these too */
+        --bg-3: #e6e6e2;
+        --accent-2: #e8a600;
+        --shadow: 0 22px 60px rgba(23, 25, 27, 0.14);
+
+        --gvm-bg: #ffffff;
+        --gvm-bg-subtle: #f4f4f1;
+        --gvm-bg-muted: #ebebe7;
+        --gvm-bg-glass: rgba(255, 255, 255, 0.86);
+        --gvm-fg: #15171a;
+        --gvm-fg-2: #3c4145;
+        --gvm-fg-3: #565c61;
+        --gvm-fg-muted: #676d72;
+        --gvm-fg-subtle: #8a9096;
+        --gvm-border: #e3e3df;
+        --gvm-border-subtle: #ededeb;
+        --gvm-accent: #ffba00;
+        --gvm-accent-fg: #232526;
+        --gvm-accent-hover: #e8a600;
+        --gvm-brand: #c98a00;
+        --gvm-overlay: rgba(23, 25, 27, 0.5);
+        --gvm-shadow-color: rgba(23, 25, 27, 0.12);
+        --gvm-danger: #c0281c;
+        --gvm-blocked: #b9bdbf;
+        --gvm-blocked-hover: #9aa0a3;
+    }
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+
+    --bg: #f6f6f4;
+    --bg-1: #ffffff;
+    --bg-2: #eeeeeb;
+    --ink: #15171a;
+    --ink-2: #3c4145;
+    --muted: #676d72;
+    --line: #e3e3df;
+    --line-2: #c9cbc6;
+
+    --accent: #ffba00;
+    --accent-hover: #e8a600;
+    --accent-ink: #232526;
+    --accent-text: #8a5a00;
+
+    --ok: #1c7a4d;
+    --danger: #c0281c;
+    --scrim: rgba(23, 25, 27, 0.5);
+
+    /* legacy.css (overlay article pages) defines these too */
+    --bg-3: #e6e6e2;
+    --accent-2: #e8a600;
+    --shadow: 0 22px 60px rgba(23, 25, 27, 0.14);
+
+    --gvm-bg: #ffffff;
+    --gvm-bg-subtle: #f4f4f1;
+    --gvm-bg-muted: #ebebe7;
+    --gvm-bg-glass: rgba(255, 255, 255, 0.86);
+    --gvm-fg: #15171a;
+    --gvm-fg-2: #3c4145;
+    --gvm-fg-3: #565c61;
+    --gvm-fg-muted: #676d72;
+    --gvm-fg-subtle: #8a9096;
+    --gvm-border: #e3e3df;
+    --gvm-border-subtle: #ededeb;
+    --gvm-accent: #ffba00;
+    --gvm-accent-fg: #232526;
+    --gvm-accent-hover: #e8a600;
+    --gvm-brand: #c98a00;
+    --gvm-overlay: rgba(23, 25, 27, 0.5);
+    --gvm-shadow-color: rgba(23, 25, 27, 0.12);
+    --gvm-danger: #c0281c;
+    --gvm-blocked: #b9bdbf;
+    --gvm-blocked-hover: #9aa0a3;
+}
+
+/* --- Switch -------------------------------------------------------------- */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2.1rem;
+    height: 2.1rem;
+    margin-left: 0.35rem;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.theme-toggle:hover {
+    border-color: var(--line-2);
+    color: var(--ink);
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--accent-text);
+    outline-offset: 2px;
+}
+
+.theme-toggle svg {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Show the target of the click: a sun in dark mode, a moon in light mode.
+   The `.theme-toggle` prefix is needed to outrank `.theme-toggle svg`. */
+.theme-toggle .theme-toggle__moon {
+    display: none;
+}
+
+:root[data-theme="light"] .theme-toggle .theme-toggle__sun {
+    display: none;
+}
+
+:root[data-theme="light"] .theme-toggle .theme-toggle__moon {
+    display: block;
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) .theme-toggle .theme-toggle__sun {
+        display: none;
+    }
+
+    :root:not([data-theme="dark"]) .theme-toggle .theme-toggle__moon {
+        display: block;
+    }
+}
+
+/* --- Brand logo ----------------------------------------------------------
+   The white logo disappears on a light bar, so the site ships a dark one too
+   and shows exactly one of them. */
+.brand__logo--light {
+    display: none;
+}
+
+:root[data-theme="light"] .brand__logo--dark {
+    display: none;
+}
+
+:root[data-theme="light"] .brand__logo--light {
+    display: block;
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) .brand__logo--dark {
+        display: none;
+    }
+
+    :root:not([data-theme="dark"]) .brand__logo--light {
+        display: block;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .theme-toggle {
+        transition: none;
+    }
+}

@@ -4,81 +4,299 @@ title: Ad-free
 description: A one-day ad-free pass after a micropayment.
 crumb: Publishers · Ad-free
 altUrl: /publisher/remove-ads/
-gvm: true
+gvmLazy: true
 ---
 
 {% extends "layouts/base.njk" %}
 {% from "gvm/payment-drawer.njk" import paymentDrawer %}
 {% set article = catalog[lang].article %}
 
+{% block head %}
+<link rel="stylesheet" href="/assets/remove-ads.css" />
+<!--
+    No-flash ad-free check. Runs before the first paint, so a reader who
+    already bought the ad-free day never sees a single ad placeholder. The same
+    check grants the pass right after a resolved payment redirect
+    (`?noads=1&gvm-status=resolved&…`).
+-->
+<script>
+    (function () {
+        try {
+            var DAY = 24 * 60 * 60 * 1000;
+            var key = "gvm_ads_free_until";
+            var until = parseInt(localStorage.getItem(key) || "0", 10);
+            if (!(until > Date.now())) {
+                var params = new URLSearchParams(location.search);
+                var status = params.get("gvm-status");
+                var noAds = params.get("noads") === "1";
+                var paid =
+                    !status ||
+                    status === "resolved" ||
+                    status === "duplicated";
+                if (noAds && paid) {
+                    until = Date.now() + DAY;
+                    localStorage.setItem(key, String(until));
+                }
+            }
+            if (until > Date.now()) {
+                document.documentElement.classList.add("ads-free");
+            }
+        } catch (err) {
+            /* storage disabled — ads simply stay visible */
+        }
+    })();
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="page-head">
         <h1>Ad-free</h1>
         <p class="lead">
-            The same article, but with ads. Pay for an ad-free day and every
-            slot disappears for 24 hours.
+            This is the article with ads. Pay for an ad-free day and every ad
+            disappears for 24 hours — on this device.
         </p>
     </div>
 
-    <div class="ad ad--leaderboard" role="complementary" aria-label="Advertisement">
-        Ad space · leaderboard
-    </div>
-
-    <article class="article">
-        <header class="article-head">
-            <p class="kicker">Publishers · article</p>
-            <h1 lang="{{ article.contentLang }}">{{ article.title }}</h1>
-            <p class="byline">{{ article.minutes }} min read</p>
-        </header>
-
-        <div class="article-body" lang="{{ article.contentLang }}">
-            {{ article.html | safe }}
+    <!--
+        Ad-free day pass. The button is a plain payment trigger using the
+        `redirect` strategy: after a resolved payment gvm.js returns to this
+        page with signed query params (`?noads=1&gvm-status=resolved&…`) and the
+        page hides every `.ad-slot`.
+    -->
+    <div class="ads-pass" id="ads-pass">
+        <div class="ads-pass__copy">
+            <h2>Read without ads for a day</h2>
+            <p>
+                One payment, and you read without ads for a day. Only on this
+                device.
+            </p>
+            <ul class="ads-pass__perks">
+                <li>Every ad disappears</li>
+                <li>Access starts right away</li>
+                <li>No subscription, no renewal</li>
+            </ul>
         </div>
-    </article>
-
-    <div class="ad ad--inline" role="complementary" aria-label="Advertisement">
-        Ad space · in-article
+        <div class="ads-pass__cta">
+            <p class="consent-info">
+                This access costs
+                <strong>1.49&nbsp;PLN</strong>, added to your session bill.
+                Details in the
+                <a href="{{ site.termsUrl }}" target="_blank" rel="noopener"
+                    >Terms</a
+                >
+                (the Polish version is binding).
+            </p>
+            <button
+                type="button"
+                class="ads-pass__button"
+                id="ads-free-button"
+                data-gvm-price="1.49"
+                data-gvm-reference="ads_free_day"
+                data-gvm-template-name="payment"
+                data-gvm-http-redirect-to="/en/publisher/remove-ads/?noads=1"
+                data-gvm-metadata-title="Ad-free day pass"
+                data-gvm-category="ad_free"
+            >
+                Remove ads for a day · 1.49 PLN
+            </button>
+        </div>
     </div>
 
-    <div class="adbar">
-        <span>Ad · sticky bottom</span>
+    <!-- Shown instead of the pass and the ads while the day is active -->
+    <div class="ads-free-status" role="status" aria-live="polite">
+        <strong>Ad-free day active.</strong>
+        <span>
+            Ads are hidden on this device until
+            <time id="ads-free-until">later</time>.
+        </span>
+        <span class="ads-free-status__countdown" aria-hidden="true">
+            No ads for another <span id="ads-free-countdown">—</span>
+        </span>
+    </div>
+
+    <!-- Top leaderboard -->
+    <aside
+        class="ad-slot ad-slot--leaderboard"
+        data-ad-unit="top-leaderboard"
+        role="note"
+        aria-label="Advertisement: top banner"
+    >
+        <span class="ad-slot__label">Advertisement</span>
+        <div class="ad-slot__box">
+            <span class="ad-slot__hint"
+                >Ad above the first screen</span
+            >
+        </div>
+    </aside>
+
+    <div class="paper-grid">
+        <div class="paper-main">
+            <!-- Lead story (the shared catalogue article) -->
+            <article class="article paper-lead">
+                <header class="article-head">
+                    <p class="kicker">Publishers · article</p>
+                    <h2 lang="{{ article.contentLang }}">{{ article.title }}</h2>
+                    <p class="byline">{{ article.minutes }} min read</p>
+                </header>
+
+                <div
+                    class="article-body paper-body"
+                    lang="{{ article.contentLang }}"
+                >
+                    {{ article.html | safe }}
+                </div>
+            </article>
+
+            <!-- In-article placeholder -->
+            <aside
+                class="ad-slot ad-slot--inline"
+                data-ad-unit="in-article"
+                role="note"
+                aria-label="Advertisement: rectangle inside the article"
+            >
+                <span class="ad-slot__label">Advertisement</span>
+                <div class="ad-slot__box">
+                    <span class="ad-slot__hint"
+                        >Ad inside the article · disappears with the ad-free
+                        day</span
+                    >
+                    <a class="ad-slot__cta" href="#ads-pass"
+                        >Remove ads for a day →</a
+                    >
+                </div>
+            </aside>
+
+            <!-- Native / sponsored placeholder in the feed -->
+            <aside
+                class="ad-slot ad-slot--native"
+                data-ad-unit="native-feed"
+                role="note"
+                aria-label="Advertisement: sponsored story in the feed"
+            >
+                <span class="ad-slot__label">Advertisement</span>
+                <div class="ad-slot__box">
+                    <span class="ad-slot__size">Advertisement in the feed</span>
+                    <span class="ad-slot__hint"
+                        >Sponsored story between the headlines</span
+                    >
+                    <a class="ad-slot__cta" href="#ads-pass"
+                        >Go ad-free →</a
+                    >
+                </div>
+            </aside>
+
+            <!-- Story cards -->
+            <div class="paper-stories">
+                <article class="paper-story">
+                    <p class="paper-kicker">Technology</p>
+                    <h3>
+                        Banner blindness is real — and the fix is a price, not a
+                        pop-up
+                    </h3>
+                    <p>
+                        Why the most effective ad-blocker a publisher ships is
+                        sometimes a checkout button.
+                    </p>
+                </article>
+                <article class="paper-story">
+                    <p class="paper-kicker">Media</p>
+                    <h3>
+                        What 90 days of single unlocks taught a city desk
+                    </h3>
+                    <p>
+                        Three prices, three audiences, and one number the
+                        editors did not expect.
+                    </p>
+                </article>
+                <article class="paper-story">
+                    <p class="paper-kicker">Business</p>
+                    <h3>
+                        Paying on the phone bill: the quiet checkout nobody
+                        designed
+                    </h3>
+                    <p>
+                        The payment rail that needs no card, no bank, and no app
+                        to install.
+                    </p>
+                </article>
+            </div>
+        </div>
+
+        <!-- Rail -->
+        <aside class="paper-rail">
+            <div
+                class="ad-slot ad-slot--rail"
+                data-ad-unit="rail-halfpage"
+                role="note"
+                aria-label="Advertisement: side column"
+            >
+                <span class="ad-slot__label">Advertisement</span>
+                <div class="ad-slot__box">
+                    <span class="ad-slot__hint">Advertisement in the side column</span>
+                    <a class="ad-slot__cta" href="#ads-pass">Hide this →</a>
+                </div>
+            </div>
+
+            <div class="paper-mostread">
+                <h3>Most read</h3>
+                <ol>
+                    <li>The one-złoty reader</li>
+                    <li>Banner blindness is real</li>
+                    <li>90 days of single unlocks</li>
+                    <li>Paying on the phone bill</li>
+                </ol>
+            </div>
+
+            <div
+                class="ad-slot ad-slot--rail-small"
+                data-ad-unit="rail-mpu"
+                role="note"
+                aria-label="Advertisement: smaller side column"
+            >
+                <span class="ad-slot__label">Advertisement</span>
+                <div class="ad-slot__box">
+                    <span class="ad-slot__hint">Smaller ad in the side column</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="note-box">
+        <strong>Test environment.</strong> Payments are simulated.
+    </div>
+
+    <!-- Sticky bottom banner (removed with the ad-free day) -->
+    <aside
+        class="ad-slot ad-slot--sticky"
+        id="ads-sticky"
+        data-ad-unit="sticky-bottom"
+        role="note"
+        aria-label="Advertisement: pinned bottom banner"
+    >
+        <div class="ad-slot__box">
+            <span class="ad-slot__hint">Ad pinned to the bottom</span>
+            <a class="ad-slot__cta" href="#ads-pass">Remove ads →</a>
+        </div>
         <button
             type="button"
-            class="btn btn--accent"
-            data-gvm-reference="noads-day"
-            data-gvm-price="2.00"
-            data-gvm-template-name="payment"
-            data-gvm-metadata-title="Ad-free day"
-            data-gvm-category="ad_free"
-            data-gvm-http-redirect-to="/en/publisher/remove-ads/?noads=1"
+            class="ad-slot__close"
+            id="ads-sticky-close"
+            aria-label="Dismiss advertisement"
         >
-            Ad-free day for 2.00 PLN
+            ×
         </button>
-    </div>
+    </aside>
 </div>
 
 {{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
 {% endblock %}
 
 {% block scripts %}
-<script>
-    (function () {
-        var KEY = "gvm_ads_free_until";
-        var params = new URLSearchParams(window.location.search);
-        if (params.get("noads") === "1" && (params.get("gvm-status") || params.get("gvm-reference"))) {
-            localStorage.setItem(KEY, String(Date.now() + 24 * 60 * 60 * 1000));
-            params.delete("noads");
-            params.delete("gvm-status");
-            params.delete("gvm-commitment-id");
-            params.delete("gvm-reference");
-            params.delete("gvm-tenant");
-            params.delete("gvm-signature");
-            var q = params.toString();
-            history.replaceState(null, "", window.location.pathname + (q ? "?" + q : ""));
-        }
-        var until = Number(localStorage.getItem(KEY) || 0);
-        if (until > Date.now()) document.documentElement.classList.add("ads-free");
-    })();
-</script>
+<script
+    src="/assets/remove-ads.js"
+    data-gvm-sdk="{{ site.sdk }}"
+    data-gvm-lang="{{ lang }}"
+    defer
+></script>
 {% endblock %}

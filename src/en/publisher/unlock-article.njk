@@ -1,16 +1,11 @@
 ---
 lang: en
-title: Odblokowanie artykułu
-description: Bezpłatny początek artykułu i mikropłatność za resztę.
-crumb: Wydawcy · Odblokowanie artykułu
+title: Unlock an article
+description: A free opening, then a micropayment for the rest.
+crumb: Publishers · Unlock an article
 altUrl: /publisher/unlock-article/
 gvm: true
 ---
-
-{% extends "layouts/base.njk" %}
-{% from "gvm/payment-drawer.njk" import paymentDrawer %}
-{% from "gvm/paywall-inline.njk" import paywallInline %}
-{% set article = catalog[lang].article %}
 
 {% extends "layouts/base.njk" %}
 {% from "gvm/payment-drawer.njk" import paymentDrawer %}
@@ -21,7 +16,7 @@ gvm: true
 <div class="container">
     <article class="article">
         <header class="article-head">
-            <p class="kicker">Wydawcy · artykuł</p>
+            <p class="kicker">Publishers · article</p>
             <h1 lang="{{ article.contentLang }}">{{ article.title }}</h1>
             <p class="byline">{{ article.minutes }} min read</p>
         </header>

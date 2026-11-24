@@ -1,0 +1,46 @@
+{#
+  Overlay paywall placement (archive: templates/overlay.html).
+
+  A centred card on a dimmed backdrop, pinned to the viewport with
+  `position: fixed; inset: 0`, so it covers the content area (pair it with the
+  `blur` strategy). gvm.js injects it into `<body>`, next to the payment
+  drawer, because the scrim is viewport-level chrome.
+
+    {% from "gvm/paywall-overlay.njk" import paywallOverlay %}
+    {{ paywallOverlay({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+
+  Layout lives in assets/paywalls.css. Unique among the placements: it dims the
+  whole page. Keyboard/a11y: it does not trap focus, its only tab stop is the
+  pay button, and the skip link (z-index 100) stays above the scrim
+  (z-index 30). The consent checkbox is NOT here — it lives in the payment
+  dialog; this card only opens it.
+#}
+{% from "gvm/consent.njk" import consentInfo %}
+
+{% macro paywallOverlay(opts) %}
+{% set t = opts.t %}
+<template
+    data-gvm-template="paywall"
+    data-gvm-template-inject-to="{{ opts.injectTo or 'body' }}"
+>
+    <div class="paywall-overlay">
+        <aside
+            class="paywall-card paywall-overlay__panel"
+            role="complementary"
+            aria-label="{{ t.paywall.ariaLabel }}"
+        >
+            <p class="paywall-lead">{{ t.paywall.lead }}</p>
+            <p class="paywall-meta">
+                <span>{{ t.paywall.meta }}</span>
+                <span data-gvm-bind-reading-time></span> {{ t.paywall.minutes }}
+            </p>
+            {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: "consent-info--compact" }) }}
+            <button type="button" class="btn btn--accent paywall-cta" data-gvm-bind-pay>
+                {{ t.paywall.unlock }}
+                <span data-gvm-bind-price></span>
+                <span data-gvm-bind-currency></span>
+            </button>
+        </aside>
+    </div>
+</template>
+{% endmacro %}

@@ -10,7 +10,7 @@
         {% include "partials/head.njk" %}
         {% block head %}{% endblock %}
     </head>
-    <body{% if gvm %} data-gvm data-gvm-analytics="custom" data-gvm-tenant="{{ site.tenant }}" data-gvm-env="{{ env or site.env }}" data-gvm-currency="{{ site.currency }}"{% endif %}>
+    <body{% if gvm or gvmLazy %} data-gvm data-gvm-analytics="custom" data-gvm-tenant="{{ site.tenant }}" data-gvm-env="{{ env or site.env }}" data-gvm-currency="{{ site.currency }}"{% endif %}>
         <a class="skip-link" href="#main">{{ l.skipToContent }}</a>
         {% include "partials/header.njk" %}
         {% if crumb %}{% include "partials/example-bar.njk" %}{% endif %}
@@ -18,7 +18,8 @@
             {% block content %}{{ content | safe }}{% endblock %}
         </main>
         {% include "partials/footer.njk" %}
-        {% if gvm %}{% include "gvm/dialog-a11y.njk" %}{% endif %}
+        {% if gvm or gvmLazy %}{% include "gvm/dialog-a11y.njk" %}{% endif %}
+        <script src="/assets/theme.js" defer></script>
         {% block scripts %}{% endblock %}
     </body>
 </html>

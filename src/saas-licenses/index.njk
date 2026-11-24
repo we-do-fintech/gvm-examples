@@ -1,7 +1,7 @@
 ---
 lang: pl
-title: Licencje SaaS
-description: Plany aplikacji potwierdzane SMS-em i rozliczane zbiorczo.
+title: Plany SaaS
+description: Plany aplikacji potwierdzane jednym SMS-em i rozliczane zbiorczo.
 altUrl: /en/saas-licenses/
 gvm: true
 ---
@@ -9,54 +9,97 @@ gvm: true
 {% extends "layouts/base.njk" %}
 {% from "gvm/payment-drawer.njk" import paymentDrawer %}
 
+{% block head %}
+<link rel="stylesheet" href="/assets/saas-licenses.css" />
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="page-head">
-        <h1>Licencje SaaS</h1>
-        <p class="lead">Wybierz plan. Potwierdzenie SMS-em, rozliczenie zbiorczo z resztą sesji.</p>
-    </div>
-
-    <div id="activation" class="notice" hidden>
-        Plan <strong id="plan-name"></strong> aktywny. Kod aktywacyjny: <code id="code"></code>
+        <h1>Plany</h1>
+        <p class="lead">
+            Wybierz plan i potwierdź go jednym SMS-em — bez karty, bez
+            formularza i bez subskrypcji. Wszystkie zakupy z okresu trafiają na
+            jeden rachunek.
+        </p>
     </div>
 
     <div class="card-grid">
-        <div class="card">
+        <article class="card plan-card">
             <span class="badge">Basic</span>
-            <h2>9,99 zł / mies.</h2>
-            <p>1 stanowisko, eksport CSV.</p>
-            <button type="button" class="btn btn--accent" data-gvm-reference="plan-basic" data-gvm-price="9.99" data-gvm-template-name="payment" data-gvm-metadata-title="Plan Basic" data-gvm-category="plan" data-gvm-http-redirect-to="/saas-licenses/?plan=basic">Wybierz Basic</button>
-        </div>
-        <div class="card">
+            <p class="plan-price">9,99 zł <span class="plan-period">/ mies.</span></p>
+            <p class="plan-card__note">Dla aplikacji, które szukają pierwszych płacących użytkowników.</p>
+            <ul class="plan-features">
+                <li>1 aplikacja</li>
+                <li>1 000 odblokowanych sesji / mies.</li>
+                <li>Płatność SMS + QR</li>
+                <li>Jeden rachunek za cały okres</li>
+                <li>Wsparcie e-mail</li>
+            </ul>
+            <button
+                type="button"
+                class="btn btn--accent plan-card__cta"
+                data-gvm-price="9.99"
+                data-gvm-reference="plan-basic"
+                data-gvm-template-name="payment"
+                data-gvm-metadata-title="Plan Basic"
+                data-gvm-category="plan"
+            >
+                Wybierz Basic · 9,99 zł
+            </button>
+        </article>
+
+        <article class="card plan-card plan-card--featured">
             <span class="badge">Plus</span>
-            <h2>19,99 zł / mies.</h2>
-            <p>3 stanowiska, eksport CSV i PDF.</p>
-            <button type="button" class="btn btn--accent" data-gvm-reference="plan-plus" data-gvm-price="19.99" data-gvm-template-name="payment" data-gvm-metadata-title="Plan Plus" data-gvm-category="plan" data-gvm-http-redirect-to="/saas-licenses/?plan=plus">Wybierz Plus</button>
-        </div>
-        <div class="card">
+            <p class="plan-price">19,99 zł <span class="plan-period">/ mies.</span></p>
+            <p class="plan-card__note">Dla zespołów, które co miesiąc wypuszczają płatne funkcje.</p>
+            <ul class="plan-features">
+                <li>Wszystko z planu Basic</li>
+                <li>3 aplikacje</li>
+                <li>10 000 odblokowanych sesji / mies.</li>
+                <li>Twoje zasady cen planów i dodatków</li>
+                <li>Priorytetowe wsparcie e-mail</li>
+            </ul>
+            <button
+                type="button"
+                class="btn btn--accent plan-card__cta"
+                data-gvm-price="19.99"
+                data-gvm-reference="plan-plus"
+                data-gvm-template-name="payment"
+                data-gvm-metadata-title="Plan Plus"
+                data-gvm-category="plan"
+            >
+                Wybierz Plus · 19,99 zł
+            </button>
+        </article>
+
+        <article class="card plan-card">
             <span class="badge">Pro</span>
-            <h2>29,99 zł / mies.</h2>
-            <p>10 stanowisk, API i priorytet.</p>
-            <button type="button" class="btn btn--accent" data-gvm-reference="plan-pro" data-gvm-price="29.99" data-gvm-template-name="payment" data-gvm-metadata-title="Plan Pro" data-gvm-category="plan" data-gvm-http-redirect-to="/saas-licenses/?plan=pro">Wybierz Pro</button>
-        </div>
+            <p class="plan-price">29,99 zł <span class="plan-period">/ mies.</span></p>
+            <p class="plan-card__note">Dla aplikacji, które potrzebują weryfikowanych cen i raportów.</p>
+            <ul class="plan-features">
+                <li>Wszystko z planu Plus</li>
+                <li>Bez limitu aplikacji i sesji</li>
+                <li>Ceny podpisane po stronie serwera</li>
+                <li>Automatyczne powiadomienia, eksporty i raporty miesięczne</li>
+                <li>Dedykowane wdrożenie</li>
+            </ul>
+            <button
+                type="button"
+                class="btn btn--accent plan-card__cta"
+                data-gvm-price="29.99"
+                data-gvm-reference="plan-pro"
+                data-gvm-template-name="payment"
+                data-gvm-metadata-title="Plan Pro"
+                data-gvm-category="plan"
+            >
+                Wybierz Pro · 29,99 zł
+            </button>
+        </article>
     </div>
+
+
 </div>
 
 {{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
-{% endblock %}
-
-{% block scripts %}
-<script>
-    (function () {
-        var params = new URLSearchParams(window.location.search);
-        var plan = params.get("plan");
-        if (!plan) return;
-        if (!params.get("gvm-status") && !params.get("gvm-reference")) return;
-        var box = document.getElementById("activation");
-        document.getElementById("plan-name").textContent = plan.toUpperCase();
-        document.getElementById("code").textContent =
-            "GVM-" + plan.toUpperCase() + "-" + (1000 + Math.floor(Math.random() * 9000));
-        box.hidden = false;
-    })();
-</script>
 {% endblock %}

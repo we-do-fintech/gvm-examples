@@ -1,0 +1,49 @@
+---
+lang: en
+title: "Unlock"
+description: "Seven places where the option to unlock appears on a page."
+crumb: "Templates · Unlock"
+altUrl: /templates/placements/
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Unlock</h1>
+        <p class="lead">The same payment form in every example. Only the place where the request to unlock sits changes. Each variant is its own page.</p>
+    </div>
+
+    <div class="card-grid">
+        <a class="card" href="/en/templates/placements/inline/">
+            <h2>Inline card</h2>
+            <p>Where the free preview ends.</p>
+        </a>
+        <a class="card" href="/en/templates/placements/overlay/">
+            <h2>Centered overlay</h2>
+            <p>Covers the content area with a dimmed backdrop.</p>
+        </a>
+        <a class="card" href="/en/templates/placements/sticky-bottom/">
+            <h2>Sticky bottom bar</h2>
+            <p>A full-width bar at the bottom of the viewport.</p>
+        </a>
+        <a class="card" href="/en/templates/placements/sticky-right/">
+            <h2>Sticky side card</h2>
+            <p>A card at the right edge, vertically centred.</p>
+        </a>
+        <a class="card" href="/en/templates/placements/widget/">
+            <h2>Corner widget</h2>
+            <p>A collapsible widget in the bottom-right corner.</p>
+        </a>
+        <a class="card" href="/en/templates/placements/banner/">
+            <h2>Sticky top banner</h2>
+            <p>A full-width bar at the top of the viewport.</p>
+        </a>
+        <a class="card" href="/en/templates/placements/drawer/">
+            <h2>Side panel</h2>
+            <p>An informational panel on the right; a bottom sheet on phones.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

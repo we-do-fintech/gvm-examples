@@ -25,8 +25,6 @@
         <p class="paywall-meta">
             <span>{{ t.paywall.meta }}</span>
             <span data-gvm-bind-reading-time></span> {{ t.paywall.minutes }}
-            <span class="paywall-sep" aria-hidden="true">·</span>
-            <span data-gvm-bind-reading-words></span> {{ t.paywall.words }}
         </p>
         {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: "consent-info--compact" }) }}
         <button type="button" class="btn btn--accent paywall-cta" data-gvm-bind-pay>
@@ -34,7 +32,6 @@
             <span data-gvm-bind-price></span>
             <span data-gvm-bind-currency></span>
         </button>
-        <p class="paywall-note">{{ t.paywall.permanent }}</p>
     </aside>
 </template>
 {% endmacro %}

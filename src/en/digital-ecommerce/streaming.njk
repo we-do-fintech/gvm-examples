@@ -1,0 +1,141 @@
+---
+lang: en
+title: Streaming
+description: Selling content to play — an audiobook and a single viewing.
+altUrl: /digital-ecommerce/streaming/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/download-trigger.njk" import downloadTrigger %}
+{% set c = catalog[lang] %}
+{% set ebook = c.ebook %}
+{% set podcast = c.podcast %}
+{% set poster = c.posters | last %}
+{% set vodUrl = c.vod.url if c.vod else "" %}
+{% set vodThumb = vodUrl | ytThumb %}
+{% set vodThumbFallback = vodUrl | ytThumb("hqdefault") %}
+{% set firstTrack = c.music | first %}
+{% set firstPdf = c.pdfs | first %}
+{% set ebookTitle = "Session micropayments: the implementation handbook" %}
+{% set audioTitle = "The whole session on one bill: buying without a card" %}
+
+
+{% block head %}
+<link rel="stylesheet" href="/assets/digital-ecommerce.css" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Streaming</h1>
+        <p class="lead">
+            The content plays the moment it is paid for — no download, no account.
+        </p>
+    </div>
+
+    <nav class="de-nav" aria-label="Sections of this page">
+        <a href="#audiobook">Audiobook</a>
+        <a href="#ppv">Pay-per-view</a>
+    </nav>
+    <section class="de-section" id="audiobook" aria-labelledby="audiobook-title">
+        <h2 id="audiobook-title">Audiobook</h2>
+        <p class="de-model">
+            Listening in the browser is free. The MP3 file to download costs
+            14.99 PLN.
+        </p>
+
+        <figure class="media-card de-audiobook">
+            <div class="media-card__body">
+                <h3>{{ audioTitle }}</h3>
+                <p class="file-meta">
+                    MP3 · {{ podcast.seconds | duration }} · {{ podcast.bytes | filesize }}
+                    · file {{ podcast.name }}
+                </p>
+                <p>
+                    A conversation about buying without a card: scan a QR code,
+                    send a plain text message, get instant access and settle
+                    once after fourteen days. No login, no app.
+                </p>
+                <audio
+                    class="de-audio"
+                    controls
+                    preload="none"
+                    src="{{ podcast.href }}"
+                    aria-label="Listen to the audiobook “{{ audioTitle }}” ({{ podcast.seconds | duration }})"
+                ></audio>
+                {{ downloadTrigger({
+                    reference: "audiobook",
+                    price: "14.99",
+                    href: podcast.href,
+                    title: "Audiobook",
+                    category: "audio",
+                    label: "Download the MP3 for 14.99 PLN"
+                }) }}
+            </div>
+        </figure>
+
+    </section>
+
+    <section class="de-section" id="ppv" aria-labelledby="ppv-title">
+        <h2 id="ppv-title">Pay-per-view</h2>
+        <p class="de-model">
+            One viewing for 4.99 PLN, with no account and no subscription. The
+            player opens once you pay.
+        </p>
+        <p>
+            Once you pay, the player starts right where the poster was. You
+            watch without leaving the page.
+        </p>
+
+        <div class="ppv">
+            <div id="player" class="player-slot">
+                <div class="video-card">
+                    {% if vodThumb %}
+                    <!-- Frame from YouTube — the very video the payment unlocks. -->
+                    <img
+                        src="{{ vodThumb }}"
+                        onerror="this.onerror=null;this.src='{{ vodThumbFallback }}'"
+                        alt="Video thumbnail"
+                        width="1280"
+                        height="720"
+                        loading="lazy"
+                    />
+                    {% elif poster and poster.preview %}
+                    <img
+                        src="{{ poster.preview.href }}"
+                        alt="Video thumbnail: poster {{ poster.id }}"
+                        width="{{ poster.preview.width }}"
+                        height="{{ poster.preview.height }}"
+                        loading="lazy"
+                    />
+                    {% endif %}
+                    <span class="video-card__play">The player unlocks after payment</span>
+                </div>
+            </div>
+
+            <div class="ppv__bar">
+                <p class="track__meta">Video recording · 1080p · 4.99 PLN</p>
+                <button
+                    type="button"
+                    class="btn btn--accent"
+                    data-gvm-reference="vod"
+                    data-gvm-price="4.99"
+                    data-gvm-template-name="payment"
+                    data-gvm-metadata-title="Video recording"
+                    data-gvm-category="video"
+                    data-gvm-http-inject="/ppv/player.html"
+                    data-gvm-http-inject-to="#player"
+                >
+                    Watch for 4.99 PLN
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{% endblock %}

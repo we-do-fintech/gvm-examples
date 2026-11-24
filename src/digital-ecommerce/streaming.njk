@@ -1,0 +1,141 @@
+---
+lang: pl
+title: Streaming
+description: Sprzedaż treści do odtworzenia — audiobook i pojedynczy seans wideo.
+altUrl: /en/digital-ecommerce/streaming/
+gvm: true
+---
+
+{% extends "layouts/base.njk" %}
+{% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% from "gvm/download-trigger.njk" import downloadTrigger %}
+{% set c = catalog[lang] %}
+{% set ebook = c.ebook %}
+{% set podcast = c.podcast %}
+{% set poster = c.posters | last %}
+{% set vodUrl = c.vod.url if c.vod else "" %}
+{% set vodThumb = vodUrl | ytThumb %}
+{% set vodThumbFallback = vodUrl | ytThumb("hqdefault") %}
+{% set firstTrack = c.music | first %}
+{% set firstPdf = c.pdfs | first %}
+{% set ebookTitle = "Mikropłatności sesyjne. Podręcznik wdrożenia" %}
+{% set audioTitle = "Cała sesja na jednym rachunku. Rozmowa o zakupach bez karty" %}
+
+
+{% block head %}
+<link rel="stylesheet" href="/assets/digital-ecommerce.css" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Streaming</h1>
+        <p class="lead">
+            Treść odtwarza się od razu po opłaceniu — bez pobierania i bez konta.
+        </p>
+    </div>
+
+    <nav class="de-nav" aria-label="Sekcje tej strony">
+        <a href="#audiobook">Audiobook</a>
+        <a href="#ppv">Pay-per-view</a>
+    </nav>
+    <section class="de-section" id="audiobook" aria-labelledby="audiobook-title">
+        <h2 id="audiobook-title">Audiobook</h2>
+        <p class="de-model">
+            Odsłuch w przeglądarce jest darmowy. Plik MP3 do pobrania kosztuje
+            14,99 zł.
+        </p>
+
+        <figure class="media-card de-audiobook">
+            <div class="media-card__body">
+                <h3>{{ audioTitle }}</h3>
+                <p class="file-meta">
+                    MP3 · {{ podcast.seconds | duration }} · {{ podcast.bytes | filesize }}
+                    · plik {{ podcast.name }}
+                </p>
+                <p>
+                    Rozmowa o tym, jak wygląda zakup bez karty: skan QR,
+                    zwykły SMS, natychmiastowy dostęp i jedno rozliczenie po
+                    czternastu dniach. Bez logowania i bez aplikacji.
+                </p>
+                <audio
+                    class="de-audio"
+                    controls
+                    preload="none"
+                    src="{{ podcast.href }}"
+                    aria-label="Odsłuchaj audiobook „{{ audioTitle }}” ({{ podcast.seconds | duration }})"
+                ></audio>
+                {{ downloadTrigger({
+                    reference: "audiobook",
+                    price: "14.99",
+                    href: podcast.href,
+                    title: "Audiobook",
+                    category: "audio",
+                    label: "Pobierz MP3 za 14,99 zł"
+                }) }}
+            </div>
+        </figure>
+
+    </section>
+
+    <section class="de-section" id="ppv" aria-labelledby="ppv-title">
+        <h2 id="ppv-title">Pay-per-view</h2>
+        <p class="de-model">
+            Jeden seans za 4,99 zł, bez konta i bez subskrypcji. Odtwarzacz
+            odsłania się po opłaceniu.
+        </p>
+        <p>
+            Po opłaceniu w miejscu plakatu włącza się odtwarzacz. Oglądasz bez
+            wychodzenia ze strony.
+        </p>
+
+        <div class="ppv">
+            <div id="player" class="player-slot">
+                <div class="video-card">
+                    {% if vodThumb %}
+                    <!-- Klatka z YouTube — ta sama treść, którą odblokowuje płatność. -->
+                    <img
+                        src="{{ vodThumb }}"
+                        onerror="this.onerror=null;this.src='{{ vodThumbFallback }}'"
+                        alt="Miniaturka nagrania wideo"
+                        width="1280"
+                        height="720"
+                        loading="lazy"
+                    />
+                    {% elif poster and poster.preview %}
+                    <img
+                        src="{{ poster.preview.href }}"
+                        alt="Miniaturka nagrania wideo: plakat {{ poster.id }}"
+                        width="{{ poster.preview.width }}"
+                        height="{{ poster.preview.height }}"
+                        loading="lazy"
+                    />
+                    {% endif %}
+                    <span class="video-card__play">Odtwarzacz odblokuje się po opłaceniu</span>
+                </div>
+            </div>
+
+            <div class="ppv__bar">
+                <p class="track__meta">Nagranie wideo · jakość 1080p · 4,99 zł</p>
+                <button
+                    type="button"
+                    class="btn btn--accent"
+                    data-gvm-reference="vod"
+                    data-gvm-price="4.99"
+                    data-gvm-template-name="payment"
+                    data-gvm-metadata-title="Nagranie wideo"
+                    data-gvm-category="video"
+                    data-gvm-http-inject="/ppv/player.html"
+                    data-gvm-http-inject-to="#player"
+                >
+                    Obejrzyj za 4,99 zł
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{% endblock %}

@@ -1,81 +1,273 @@
 ---
 lang: en
 title: Add-ons
-description: Single app features confirmed by SMS and settled together.
+description: Build a set of brand materials and pay for the whole basket with one text message.
 altUrl: /add-ons/
-gvm: true
+gvmLazy: true
 ---
 
 {% extends "layouts/base.njk" %}
 {% from "gvm/payment-drawer.njk" import paymentDrawer %}
+{% set t = i18n[lang] %}
+
+{% block head %}
+<link rel="stylesheet" href="/assets/add-ons.css" />
+{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="page-head">
-        <h1>Add-ons</h1>
-        <p class="lead">Buy single features for your app. SMS confirmation, settled together with the rest of the session.</p>
+        <h1>Add-ons: build your own kit</h1>
+        <p class="lead">
+            The customer describes the brand, picks the materials, and pays
+            with one text message — exactly what the basket shows.
+        </p>
     </div>
 
-    <div id="activation" class="notice" hidden>
-        Add-on <strong id="addon-name"></strong> is active. Activation code: <code id="code"></code>
+    <div
+        class="lk-app"
+        id="lk-app"
+        data-sdk="{{ site.sdk }}"
+        data-currency="{{ site.currency }}"
+        data-decimal="."
+        data-unit="PLN"
+        data-copy-pay="Pay"
+        data-copy-opening="Opening checkout"
+        data-copy-empty="The basket is empty — pick at least one item."
+        data-copy-dirty="You changed the kit. Click “Pay” to check out."
+        data-copy-load-failed="Could not load. Check your connection and reload the page."
+        data-copy-open-failed="The payment window did not open. Reload the page and try again."
+        data-copy-remove="Remove from basket"
+        data-copy-count-one="1 item"
+        data-copy-count-many="%s items"
+        data-copy-brand-default="Your Company"
+        data-copy-tagline-default="brand &amp; identity"
+        data-copy-mark-default="YC"
+        data-copy-mock-card="Business card"
+        data-copy-mock-social="Social post"
+        data-copy-mock-letter="Letterhead"
+    >
+        <div class="lk-config card">
+            <h2>Describe the brand</h2>
+            <form id="lk-brief" class="lk-brief" novalidate>
+                <div class="lk-field">
+                    <label for="lk-company">Company name</label>
+                    <input
+                        id="lk-company"
+                        name="company"
+                        type="text"
+                        maxlength="40"
+                        placeholder="Northwind Studio"
+                        autocomplete="organization"
+                        spellcheck="false"
+                    />
+                </div>
+                <div class="lk-field">
+                    <label for="lk-tagline">Tagline <span class="lk-optional">optional</span></label>
+                    <input
+                        id="lk-tagline"
+                        name="tagline"
+                        type="text"
+                        maxlength="48"
+                        placeholder="design &amp; print"
+                        spellcheck="false"
+                    />
+                </div>
+                <div class="lk-field-row">
+                    <div class="lk-field">
+                        <label for="lk-industry">Industry</label>
+                        <select id="lk-industry" name="industry">
+                            {% for industry in logokit.industries %}
+                            <option value="{{ industry.id }}">{{ industry.name[lang] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="lk-field">
+                        <label for="lk-mood">Type style</label>
+                        <select id="lk-mood" name="mood">
+                            {% for mood in logokit.moods %}
+                            <option value="{{ mood.id }}">{{ mood.name[lang] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="lk-field">
+                    <label for="lk-palette">Color palette</label>
+                    <select id="lk-palette" name="palette">
+                        {% for palette in logokit.palettes %}
+                        <option value="{{ palette.id }}">{{ palette.name[lang] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+
+            <h2>Choose your materials</h2>
+            <p class="lk-hint">
+                Tick what you need — the total updates as you go.
+            </p>
+
+            <div id="lk-catalog" class="lk-catalog">
+                {% for group in logokit.groups %}
+                <div class="lk-group">
+                    <p class="lk-group__title">{{ group.name[lang] }}</p>
+                    {% for it in logokit.items %}
+                    {% if it.group == group.id %}
+                    <label
+                        class="lk-item"
+                        data-item="{{ it.id }}"
+                        data-item-name="{{ it.name[lang] }}"
+                        data-item-cents="{{ it.cents }}"
+                    >
+                        <input type="checkbox" value="{{ it.id }}" />
+                        <span class="lk-item__body">
+                            <span class="lk-item__name">{{ it.name[lang] }}</span>
+                            <span class="lk-item__desc">{{ it.desc[lang] }}</span>
+                        </span>
+                        <span class="lk-item__price">{{ it.price[lang] }}</span>
+                    </label>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <aside class="lk-side">
+            <div class="lk-preview card" id="lk-preview">
+                <div class="lk-logo" id="lk-logo" data-mood="editorial">
+                    <span class="lk-logo__mark" id="lk-mark">YC</span>
+                    <span class="lk-logo__type">
+                        <span class="lk-logo__name" id="lk-name">Your Company</span>
+                        <span class="lk-logo__tagline" id="lk-tagline-preview">brand &amp; identity</span>
+                    </span>
+                </div>
+                <div class="lk-swatches" id="lk-swatches" aria-hidden="true">
+                    {% for palette in logokit.palettes %}
+                    <div class="lk-swatches__set" data-palette="{{ palette.id }}"{% if palette.id != "graphite" %} hidden{% endif %}>
+                        <span class="lk-swatch">
+                            <span class="lk-swatch__chip" style="background: {{ palette.ink }}"></span>
+                            {{ palette.ink | upper }}
+                        </span>
+                        <span class="lk-swatch">
+                            <span class="lk-swatch__chip" style="background: {{ palette.accent }}"></span>
+                            {{ palette.accent | upper }}
+                        </span>
+                        <span class="lk-swatch">
+                            <span class="lk-swatch__chip" style="background: {{ palette.soft }}"></span>
+                            {{ palette.soft | upper }}
+                        </span>
+                        <span class="lk-swatch">
+                            <span class="lk-swatch__chip" style="background: {{ palette.paper }}"></span>
+                            {{ palette.paper | upper }}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="lk-assets" id="lk-assets" aria-hidden="true"></div>
+            </div>
+
+            <div class="lk-basket card" id="lk-basket">
+                <h2>Amount due</h2>
+                <ul class="lk-basket__list" id="lk-basket-list"></ul>
+
+                <div class="lk-total">
+                    <span>Total</span>
+                    <strong>
+                        <span id="lk-total" aria-live="polite">0.00</span>
+                        <span class="lk-total__unit">PLN</span>
+                    </strong>
+                </div>
+
+                <p class="consent-info lk-terms" id="lk-terms-line">
+                    {{ t.consent.infoBefore }}
+                    <strong>
+                        <span id="lk-total-terms">0.00</span> PLN
+                    </strong>
+                    {{ t.consent.infoAfter }}
+                    <a href="{{ site.termsUrl }}" target="_blank" rel="noopener">{{ t.consent.terms }}</a>.
+                </p>
+
+                <button id="lk-checkout" type="button" class="btn btn--accent" aria-busy="false" disabled>
+                    <span id="lk-checkout-label">Pay</span>
+                    <span id="lk-checkout-total">0.00</span> PLN
+                </button>
+
+                <p id="lk-checkout-note" class="lk-checkout-note" role="status" aria-live="polite" hidden></p>
+
+                <div id="basket-cta-slot" class="lk-cta-slot"></div>
+
+                <p class="lk-basket__note">
+                    Test environment — payments are simulated.
+                </p>
+            </div>
+        </aside>
     </div>
 
-    <div class="card-grid">
-        <div class="card">
-            <span class="badge">Export</span>
-            <h2>4K export</h2>
-            <p>Render and export recordings in 4K quality.</p>
-            <p class="file-meta">9.00 PLN</p>
-            <button type="button" class="btn btn--accent" data-gvm-reference="addon-eksport-4k" data-gvm-price="9.00" data-gvm-template-name="payment" data-gvm-metadata-title="4K export" data-gvm-category="add_on" data-gvm-http-redirect-to="/en/add-ons/?addon=eksport-4k">Add for 9.00 PLN</button>
+    <section class="lk-success card" id="lk-success" aria-live="polite" hidden>
+        <h2>Your brand kit is ready</h2>
+        <p>
+            The payment for <strong id="lk-success-company">your brand</strong>
+            is confirmed. You can download the files right away.
+        </p>
+
+        <div class="lk-success__grid">
+            <div class="lk-success__logo" id="lk-success-logo"></div>
+            <div>
+                <p>
+                    <span id="lk-success-count">0 items</span> ·
+                    <strong id="lk-success-total">0.00 PLN</strong>
+                </p>
+                <ul id="lk-success-list" class="lk-success__list"></ul>
+                <p class="file-meta">
+                    Order number: <span id="lk-success-reference">…</span>
+                </p>
+                <div class="lk-success__actions">
+                    <button type="button" id="lk-download-logo" class="btn btn--ghost">Download logo (SVG)</button>
+                    <button type="button" id="lk-download-spec" class="btn btn--ghost">Download brand spec (JSON)</button>
+                </div>
+            </div>
         </div>
-        <div class="card">
-            <span class="badge">Report</span>
-            <h2>PDF report</h2>
-            <p>A shareable PDF summary of your project.</p>
-            <p class="file-meta">6.00 PLN</p>
-            <button type="button" class="btn btn--accent" data-gvm-reference="addon-raport-pdf" data-gvm-price="6.00" data-gvm-template-name="payment" data-gvm-metadata-title="PDF report" data-gvm-category="add_on" data-gvm-http-redirect-to="/en/add-ons/?addon=raport-pdf">Add for 6.00 PLN</button>
-        </div>
-        <div class="card">
-            <span class="badge">API</span>
-            <h2>Extra API limit</h2>
-            <p>Raise the monthly API quota by 100k calls.</p>
-            <p class="file-meta">12.00 PLN</p>
-            <button type="button" class="btn btn--accent" data-gvm-reference="addon-limit-api" data-gvm-price="12.00" data-gvm-template-name="payment" data-gvm-metadata-title="Extra API limit" data-gvm-category="add_on" data-gvm-http-redirect-to="/en/add-ons/?addon=limit-api">Add for 12.00 PLN</button>
-        </div>
-        <div class="card">
-            <span class="badge">Filters</span>
-            <h2>Pro filter</h2>
-            <p>Advanced filters with saved presets and rules.</p>
-            <p class="file-meta">15.00 PLN</p>
-            <button type="button" class="btn btn--accent" data-gvm-reference="addon-filtr-pro" data-gvm-price="15.00" data-gvm-template-name="payment" data-gvm-metadata-title="Pro filter" data-gvm-category="add_on" data-gvm-http-redirect-to="/en/add-ons/?addon=filtr-pro">Add for 15.00 PLN</button>
-        </div>
-    </div>
+    </section>
+
 </div>
 
-{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{#
+    Hidden payment trigger. add-ons.js writes the price, the reference and the
+    title here right before importing gvm.js, then clicks the injected CTA.
+#}
+<div
+    id="basket-trigger"
+    hidden
+    data-gvm-template-name="payment"
+    data-gvm-hide-template-name="basket-cta"
+    data-gvm-hide-strategy="hide"
+></div>
+
+{#
+    Basket CTA template. The `hide` strategy is declared with no split config,
+    so nothing is hidden — gvm.js only injects this bound pay button into
+    #basket-cta-slot. The consent checkbox itself lives in the payment drawer.
+#}
+<template data-gvm-template="basket-cta" data-gvm-template-inject-to="#basket-cta-slot">
+    <div class="lk-cta">
+        <p class="consent-info consent-info--compact">
+            {{ t.consent.infoBefore }}
+            <strong>
+                <span data-gvm-bind-price></span>&nbsp;<span data-gvm-bind-currency></span>
+            </strong>
+            {{ t.consent.infoAfter }}
+            <a href="{{ site.termsUrl }}" target="_blank" rel="noopener">{{ t.consent.terms }}</a>.
+        </p>
+        <button type="button" class="btn btn--accent lk-pay" data-gvm-bind-pay>
+            Pay <span data-gvm-bind-price></span>
+            <span data-gvm-bind-currency></span> securely
+        </button>
+    </div>
+</template>
+
+{{ paymentDrawer({ t: t, termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
 {% endblock %}
 
 {% block scripts %}
-<script>
-    (function () {
-        var params = new URLSearchParams(window.location.search);
-        var slug = params.get("addon");
-        if (!slug) return;
-        if (!params.get("gvm-status") && !params.get("gvm-reference")) return;
-
-        var box = document.getElementById("activation");
-        var nameEl = document.getElementById("addon-name");
-        var codeEl = document.getElementById("code");
-        if (!box || !nameEl || !codeEl) return;
-
-        var trigger = document.querySelector('[data-gvm-reference="addon-' + slug + '"]');
-        nameEl.textContent = trigger
-            ? trigger.getAttribute("data-gvm-metadata-title") || slug
-            : slug;
-
-        codeEl.textContent =
-            "GVM-" + slug.toUpperCase() + "-" + (1000 + Math.floor(Math.random() * 9000));
-        box.hidden = false;
-    })();
-</script>
+<script type="module" src="/assets/add-ons.js"></script>
 {% endblock %}

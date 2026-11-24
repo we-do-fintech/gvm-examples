@@ -1,0 +1,38 @@
+---
+permalink: /llms.txt
+eleventyExcludeFromCollections: true
+---
+# GetViaMsg showcase
+
+> gvm.js developer showcase: working, bilingual (PL/EN) examples of content
+> monetization with GetViaMsg micropayments (SMS / QR). Every example runs
+> against the QA tenant — no real charge.
+
+## Use cases
+
+### Publishers — /publisher/
+- Unlock an article — /publisher/unlock-article/ — free opening, inline paywall, `hide` strategy.
+- Ad-free day — /publisher/remove-ads/ — ad slots + sticky bar, 24-hour pass via the `redirect` strategy.
+
+### Digital commerce — /digital-ecommerce/
+One shop page, one section per use case: e-book, music file, high-resolution
+photo, PDF report, audiobook and pay-per-view. Uses the `download` and `inject`
+strategies.
+
+### SaaS — /saas/
+- Selling plans — /saas-licenses/ — plan cards, confirmed with a single SMS and settled together.
+- Add-ons and basket — /add-ons/ — a configurator whose basket total is the payment amount (dynamic price, lazy SDK boot).
+
+## Overlay — /overlay/
+gvm-overlay.js: drop in one script tag and the service finds and locks the
+content itself. Three English-only editorial demos: blur, hide, mangle-blur.
+
+## Templates (section on the homepage)
+- Payment forms: drawer (the default), modal, simple, circle.
+- Paywall placements — /templates/placements/ — inline, overlay, sticky bottom,
+  sticky right, widget, banner, drawer.
+
+## Docs
+- gvm.js documentation: https://docs.wdft.ovh/gvm-js
+- Product: https://getviamsg.com
+- Terms: https://getviamsg.com/terms

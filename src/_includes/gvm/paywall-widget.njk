@@ -1,0 +1,49 @@
+{#
+  Corner widget paywall placement (archive: templates/widget.html).
+
+  A small pill in the bottom-right corner; opening it expands the unlock card
+  above the pill. gvm.js injects it into `<body>` and assets/paywalls.css keeps
+  it fixed. Unlike the archive's checkbox hack this uses a native `<details>` /
+  `<summary>`, so the toggle is keyboard-operable and announced correctly.
+
+    {% from "gvm/paywall-widget.njk" import paywallWidget %}
+    {{ paywallWidget({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+
+  Differs from the sticky rail: it stays collapsed until the reader asks for it.
+  Keyboard/a11y: the only tab stops are the toggle and the pay button, no focus
+  trap. No consent checkbox — that lives in the payment dialog.
+#}
+{% from "gvm/consent.njk" import consentInfo %}
+
+{% macro paywallWidget(opts) %}
+{% set t = opts.t %}
+<template
+    data-gvm-template="paywall"
+    data-gvm-template-inject-to="{{ opts.injectTo or 'body' }}"
+>
+    <aside
+        class="paywall-widget"
+        role="complementary"
+        aria-label="{{ t.paywall.ariaLabel }}"
+    >
+        <details>
+            <summary class="paywall-widget__toggle">
+                {{ t.paywall.widgetToggle }}
+            </summary>
+            <div class="paywall-card paywall-widget__box">
+                <p class="paywall-lead">{{ t.paywall.lead }}</p>
+                <p class="paywall-meta">
+                    <span>{{ t.paywall.meta }}</span>
+                    <span data-gvm-bind-reading-time></span> {{ t.paywall.minutes }}
+                </p>
+                {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: "consent-info--compact" }) }}
+                <button type="button" class="btn btn--accent paywall-cta" data-gvm-bind-pay>
+                    {{ t.paywall.unlock }}
+                    <span data-gvm-bind-price></span>
+                    <span data-gvm-bind-currency></span>
+                </button>
+            </div>
+        </details>
+    </aside>
+</template>
+{% endmacro %}

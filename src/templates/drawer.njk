@@ -33,5 +33,5 @@ gvm: true
 </div>
 
 {{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
-{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl, injectTo: "#demo" }) }}
 {% endblock %}

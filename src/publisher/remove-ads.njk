@@ -4,81 +4,292 @@ title: Bez reklam
 description: Jednodniowy dostęp bez reklam po mikropłatności.
 crumb: Wydawcy · Bez reklam
 altUrl: /en/publisher/remove-ads/
-gvm: true
+gvmLazy: true
 ---
 
 {% extends "layouts/base.njk" %}
 {% from "gvm/payment-drawer.njk" import paymentDrawer %}
 {% set article = catalog[lang].article %}
 
+{% block head %}
+<link rel="stylesheet" href="/assets/remove-ads.css" />
+<!--
+    Brak mignięcia reklam: sprawdzenie działa przed pierwszym renderowaniem,
+    więc czytelnik, który kupił dzień bez reklam, nie zobaczy ani jednego
+    placeholdera. Ten sam zapis ustawia też dostęp od razu po powrocie z
+    płatności (`?noads=1&gvm-status=resolved&…`).
+-->
+<script>
+    (function () {
+        try {
+            var DAY = 24 * 60 * 60 * 1000;
+            var key = "gvm_ads_free_until";
+            var until = parseInt(localStorage.getItem(key) || "0", 10);
+            if (!(until > Date.now())) {
+                var params = new URLSearchParams(location.search);
+                var status = params.get("gvm-status");
+                var noAds = params.get("noads") === "1";
+                var paid =
+                    !status ||
+                    status === "resolved" ||
+                    status === "duplicated";
+                if (noAds && paid) {
+                    until = Date.now() + DAY;
+                    localStorage.setItem(key, String(until));
+                }
+            }
+            if (until > Date.now()) {
+                document.documentElement.classList.add("ads-free");
+            }
+        } catch (err) {
+            /* brak dostępu do pamięci — reklamy po prostu zostają */
+        }
+    })();
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="page-head">
         <h1>Bez reklam</h1>
         <p class="lead">
-            Ten sam artykuł, ale z reklamami. Opłać dzień bez reklam, a
-            wszystkie sloty znikną na 24 godziny.
+            Tak wygląda artykuł z reklamami. Opłać dzień bez reklam, a wszystkie
+            reklamy znikną na 24 godziny — na tym urządzeniu.
         </p>
     </div>
 
-    <div class="ad ad--leaderboard" role="complementary" aria-label="Reklama">
-        Miejsce reklamowe · leaderboard
-    </div>
-
-    <article class="article">
-        <header class="article-head">
-            <p class="kicker">Wydawcy · artykuł</p>
-            <h1 lang="{{ article.contentLang }}">{{ article.title }}</h1>
-            <p class="byline">{{ article.minutes }} min czytania</p>
-        </header>
-
-        <div class="article-body" lang="{{ article.contentLang }}">
-            {{ article.html | safe }}
+    <!--
+        Dzień bez reklam. Przycisk to zwykły trigger płatności w strategii
+        `redirect`: po opłaceniu gvm.js wraca na tę stronę z podpisanymi
+        parametrami (`?noads=1&gvm-status=resolved&…`), a strona ukrywa
+        wszystkie sloty.
+    -->
+    <div class="ads-pass" id="ads-pass">
+        <div class="ads-pass__copy">
+            <h2>Czytaj bez reklam przez dzień</h2>
+            <p>
+                Jedna płatność i czytasz bez reklam przez dobę. Tylko na tym
+                urządzeniu.
+            </p>
+            <ul class="ads-pass__perks">
+                <li>Wszystkie reklamy znikają</li>
+                <li>Dostęp włącza się od razu</li>
+                <li>Bez subskrypcji i bez odnawiania</li>
+            </ul>
         </div>
-    </article>
-
-    <div class="ad ad--inline" role="complementary" aria-label="Reklama">
-        Miejsce reklamowe · in-article
+        <div class="ads-pass__cta">
+            <p class="consent-info">
+                {{ i18n[lang].consent.infoBefore }}
+                <strong>1,49&nbsp;zł</strong>
+                {{ i18n[lang].consent.infoAfter }}
+                <a href="{{ site.termsUrl }}" target="_blank" rel="noopener"
+                    >{{ i18n[lang].consent.terms }}</a
+                >.
+            </p>
+            <button
+                type="button"
+                class="ads-pass__button"
+                id="ads-free-button"
+                data-gvm-price="1.49"
+                data-gvm-reference="ads_free_day"
+                data-gvm-template-name="payment"
+                data-gvm-http-redirect-to="/publisher/remove-ads/?noads=1"
+                data-gvm-metadata-title="Dzień bez reklam"
+                data-gvm-category="ad_free"
+            >
+                Usuń reklamy na dzień · 1,49 zł
+            </button>
+        </div>
     </div>
 
-    <div class="adbar">
-        <span>Reklama · sticky bottom</span>
+    <!-- Pokazywane zamiast karty i reklam, gdy dzień jest aktywny -->
+    <div class="ads-free-status" role="status" aria-live="polite">
+        <strong>Dzień bez reklam jest aktywny.</strong>
+        <span>
+            Reklamy są ukryte na tym urządzeniu do
+            <time id="ads-free-until">później</time>.
+        </span>
+        <span class="ads-free-status__countdown" aria-hidden="true">
+            Bez reklam jeszcze przez <span id="ads-free-countdown">—</span>
+        </span>
+    </div>
+
+    <!-- Górny leaderboard -->
+    <aside
+        class="ad-slot ad-slot--leaderboard"
+        data-ad-unit="top-leaderboard"
+        role="note"
+        aria-label="Reklama: baner górny"
+    >
+        <span class="ad-slot__label">Reklama</span>
+        <div class="ad-slot__box">
+            <span class="ad-slot__hint">Reklama nad pierwszym ekranem</span>
+        </div>
+    </aside>
+
+    <div class="paper-grid">
+        <div class="paper-main">
+            <!-- Artykuł wiodący -->
+            <article class="article paper-lead">
+                <header class="article-head">
+                    <p class="kicker">Wydawcy · artykuł</p>
+                    <h2 lang="{{ article.contentLang }}">{{ article.title }}</h2>
+                    <p class="byline">{{ article.minutes }} min czytania</p>
+                </header>
+
+                <div
+                    class="article-body paper-body"
+                    lang="{{ article.contentLang }}"
+                >
+                    {{ article.html | safe }}
+                </div>
+            </article>
+
+            <!-- Reklama w treści -->
+            <aside
+                class="ad-slot ad-slot--inline"
+                data-ad-unit="in-article"
+                role="note"
+                aria-label="Reklama: prostokąt w treści"
+            >
+                <span class="ad-slot__label">Reklama</span>
+                <div class="ad-slot__box">
+                    <span class="ad-slot__hint"
+                        >Reklama w treści · znika z dniem bez reklam</span
+                    >
+                    <a class="ad-slot__cta" href="#ads-pass"
+                        >Usuń reklamy na dzień →</a
+                    >
+                </div>
+            </aside>
+
+            <!-- Reklama natywna w kanale -->
+            <aside
+                class="ad-slot ad-slot--native"
+                data-ad-unit="native-feed"
+                role="note"
+                aria-label="Reklama: treść sponsorowana w kanale"
+            >
+                <span class="ad-slot__label">Reklama</span>
+                <div class="ad-slot__box">
+                    <span class="ad-slot__size">Reklama w kanale</span>
+                    <span class="ad-slot__hint"
+                        >Treść sponsorowana między nagłówkami</span
+                    >
+                    <a class="ad-slot__cta" href="#ads-pass"
+                        >Czytaj bez reklam →</a
+                    >
+                </div>
+            </aside>
+
+            <!-- Zapowiedzi -->
+            <div class="paper-stories">
+                <article class="paper-story">
+                    <p class="paper-kicker">Technologia</p>
+                    <h3>
+                        Ślepota bannerowa jest realna — lekarstwem jest cena,
+                        nie pop-up
+                    </h3>
+                    <p>
+                        Dlaczego najskuteczniejszym blokerem reklam bywa
+                        czasem przycisk płatności.
+                    </p>
+                </article>
+                <article class="paper-story">
+                    <p class="paper-kicker">Media</p>
+                    <h3>
+                        Czego 90 dni pojedynczych odblokowań nauczyło redakcję
+                    </h3>
+                    <p>Trzy ceny, trzy grupy odbiorców i jedna niespodzianka.</p>
+                </article>
+                <article class="paper-story">
+                    <p class="paper-kicker">Biznes</p>
+                    <h3>
+                        Płatność na rachunku telefonicznym: cicha kasa, której
+                        nikt nie projektował
+                    </h3>
+                    <p>
+                        Metoda płatności, która nie wymaga karty, banku ani
+                        aplikacji.
+                    </p>
+                </article>
+            </div>
+        </div>
+
+        <!-- Kolumna boczna -->
+        <aside class="paper-rail">
+            <div
+                class="ad-slot ad-slot--rail"
+                data-ad-unit="rail-halfpage"
+                role="note"
+                aria-label="Reklama: reklama w kolumnie bocznej"
+            >
+                <span class="ad-slot__label">Reklama</span>
+                <div class="ad-slot__box">
+                    <span class="ad-slot__hint">Reklama w kolumnie bocznej</span>
+                    <a class="ad-slot__cta" href="#ads-pass">Ukryj to →</a>
+                </div>
+            </div>
+
+            <div class="paper-mostread">
+                <h3>Najczęściej czytane</h3>
+                <ol>
+                    <li>Czytelnik za złotówkę</li>
+                    <li>Ślepota bannerowa jest realna</li>
+                    <li>90 dni pojedynczych odblokowań</li>
+                    <li>Płatność na rachunku telefonicznym</li>
+                </ol>
+            </div>
+
+            <div
+                class="ad-slot ad-slot--rail-small"
+                data-ad-unit="rail-mpu"
+                role="note"
+                aria-label="Reklama: mniejsza reklama w kolumnie bocznej"
+            >
+                <span class="ad-slot__label">Reklama</span>
+                <div class="ad-slot__box">
+                    <span class="ad-slot__hint">Mniejsza reklama w kolumnie bocznej</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="note-box">
+        <strong>Środowisko testowe.</strong> Płatności są symulowane.
+    </div>
+
+    <!-- Przyklejony banner dolny (znika z dniem bez reklam) -->
+    <aside
+        class="ad-slot ad-slot--sticky"
+        id="ads-sticky"
+        data-ad-unit="sticky-bottom"
+        role="note"
+        aria-label="Reklama: przyklejony banner dolny"
+    >
+        <div class="ad-slot__box">
+            <span class="ad-slot__hint">Przyklejony banner dolny</span>
+            <a class="ad-slot__cta" href="#ads-pass">Usuń reklamy →</a>
+        </div>
         <button
             type="button"
-            class="btn btn--accent"
-            data-gvm-reference="noads-day"
-            data-gvm-price="2.00"
-            data-gvm-template-name="payment"
-            data-gvm-metadata-title="Dzień bez reklam"
-            data-gvm-category="ad_free"
-            data-gvm-http-redirect-to="/publisher/remove-ads/?noads=1"
+            class="ad-slot__close"
+            id="ads-sticky-close"
+            aria-label="Zamknij reklamę"
         >
-            Dzień bez reklam za 2,00 zł
+            ×
         </button>
-    </div>
+    </aside>
 </div>
 
 {{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
 {% endblock %}
 
 {% block scripts %}
-<script>
-    (function () {
-        var KEY = "gvm_ads_free_until";
-        var params = new URLSearchParams(window.location.search);
-        if (params.get("noads") === "1" && (params.get("gvm-status") || params.get("gvm-reference"))) {
-            localStorage.setItem(KEY, String(Date.now() + 24 * 60 * 60 * 1000));
-            params.delete("noads");
-            params.delete("gvm-status");
-            params.delete("gvm-commitment-id");
-            params.delete("gvm-reference");
-            params.delete("gvm-tenant");
-            params.delete("gvm-signature");
-            var q = params.toString();
-            history.replaceState(null, "", window.location.pathname + (q ? "?" + q : ""));
-        }
-        var until = Number(localStorage.getItem(KEY) || 0);
-        if (until > Date.now()) document.documentElement.classList.add("ads-free");
-    })();
-</script>
+<script
+    src="/assets/remove-ads.js"
+    data-gvm-sdk="{{ site.sdk }}"
+    data-gvm-lang="{{ lang }}"
+    defer
+></script>
 {% endblock %}

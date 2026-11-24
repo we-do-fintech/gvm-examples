@@ -5,9 +5,9 @@
    charcoal #232526, white ink, amber #ffba00, Inter.
 
    Covers the chrome (bar, footer), editorial content, cards, ad slots, PPV,
-   the no-code paywall chrome and the legacy modal payment dialog. The default
+   the overlay paywall chrome and the legacy modal payment dialog. The default
    payment form (drawer) ships its own stylesheet, assets/gvm-drawer.css — do
-   not style it from here. The no-code overlay pages additionally pull in
+   not style it from here. The overlay pages additionally pull in
    assets/legacy.css via the `legacyCss` front-matter flag.
    ========================================================================== */
 
@@ -27,6 +27,8 @@
     --accent: #ffba00;
     --accent-hover: #ffcd4d;
     --accent-ink: #232526;
+    /* Accent used as TEXT (links, kickers): stays readable on a light page. */
+    --accent-text: var(--accent);
 
     --ok: #7fd6a8;
     --danger: #ff6b5e;
@@ -36,7 +38,19 @@
     --radius-pill: 999px;
 
     --maxw: 1060px;
-    --measure: 68ch;
+    /* One measure for every long-form block, so the four content pages read
+       the same instead of drifting per page. */
+    --measure: 65ch;
+
+    /* Modal / dialog backdrop. Token-based so a light theme can re-map it. */
+    --scrim: color-mix(in srgb, var(--bg) 80%, transparent);
+
+    /* Documented exception: a QR code needs a white quiet zone, so these stay
+       theme-independent instead of following --bg / --ink. */
+    --qr-bg: #fff;
+    --qr-veil: color-mix(in srgb, #fff 92%, transparent);
+    --qr-ink: color-mix(in srgb, #000 64%, #fff);
+    --qr-code: color-mix(in srgb, #000 93%, #fff);
 
     --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -71,7 +85,7 @@ body {
     color: var(--ink-2);
     font-family: var(--font);
     font-size: var(--fs-base);
-    line-height: 1.55;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -83,7 +97,7 @@ video {
 }
 
 a {
-    color: var(--accent);
+    color: var(--accent-text);
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;
 }
@@ -101,8 +115,13 @@ h3 {
     text-wrap: balance;
 }
 
+/* Paragraph leading is set once, at the element, so body copy never inherits
+   the tighter UI rhythm of `body` (1.6). */
 p {
     margin: 0 0 1em;
+    line-height: 1.7;
+    text-wrap: pretty;
+    overflow-wrap: break-word;
 }
 
 :focus-visible {
@@ -192,7 +211,7 @@ p {
 }
 
 .site-nav a:hover {
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 .lang-switch {
@@ -212,7 +231,7 @@ p {
 
 .lang-switch:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 /* --- Example bar -------------------------------------------------------- */
@@ -242,7 +261,7 @@ p {
 }
 
 .example-bar__back:hover {
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 /* --- Buttons ------------------------------------------------------------ */
@@ -302,7 +321,7 @@ p {
     font-size: var(--fs-xs);
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 .article-head h1 {
@@ -319,20 +338,42 @@ p {
 
 .lead {
     margin-top: 1rem;
+    max-width: var(--measure);
     font-size: var(--fs-lg);
+    line-height: 1.6;
     color: var(--ink-2);
 }
 
-.article-body p {
-    margin: 0 0 1.1em;
+/* Long-form prose: a comfortable measure, generous leading and no
+   justification. Ragged-left text avoids the "rivers" that make a narrow
+   dark-theme column tiring to read, and `text-wrap: pretty` removes orphans. */
+.article-body {
+    max-width: var(--measure);
+    text-align: left;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
-.article-source {
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--line);
-    font-size: var(--fs-sm);
-    color: var(--muted);
+.article-body p {
+    margin: 0 0 1.15em;
+    /* Pin the body size here so the article prose reads identically whether or
+       not legacy.css is also loaded (legacy bumped it to 1.02rem). */
+    font-size: var(--fs-base);
+    line-height: 1.7;
+    text-wrap: pretty;
+    hyphens: auto;
+}
+
+/* Meta lines — byline, file metadata, captions, teasers — share one leading
+   everywhere, so a caption looks the same on every page. */
+.byline,
+.file-meta,
+.track__meta,
+.paywall-meta,
+.paywall-note,
+.article-figure figcaption {
+    line-height: 1.55;
+    overflow-wrap: break-word;
 }
 
 /* gvm gating: content is hidden until the SDK has booted. */
@@ -344,12 +385,12 @@ p {
 .paywall-card {
     margin: 1.5rem 0;
     padding: 1.25rem 1.25rem 1.1rem;
-    border: 1px solid rgba(255, 186, 0, 0.45);
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
     border-radius: var(--radius);
     background: linear-gradient(
         135deg,
-        rgba(255, 186, 0, 0.1),
-        rgba(255, 186, 0, 0.02)
+        color-mix(in srgb, var(--accent) 10%, transparent),
+        color-mix(in srgb, var(--accent) 2%, transparent)
     );
 }
 
@@ -395,7 +436,10 @@ p {
 .consent-info {
     margin: 0 0 0.6rem;
     font-size: var(--fs-sm);
+    line-height: 1.5;
     color: var(--ink-2);
+    text-align: left;
+    text-wrap: pretty;
 }
 
 .consent-info--compact {
@@ -420,6 +464,8 @@ p {
     font-size: var(--fs-xs);
     line-height: 1.45;
     color: var(--ink-2);
+    text-align: left;
+    text-wrap: pretty;
     cursor: pointer;
 }
 
@@ -457,7 +503,7 @@ html:has(dialog.gvm-dialog[open])::before {
     position: fixed;
     inset: 0;
     z-index: 40;
-    background: rgba(15, 16, 17, 0.72);
+    background: var(--scrim);
 }
 
 html:has(dialog.gvm-dialog[open]) {
@@ -465,13 +511,21 @@ html:has(dialog.gvm-dialog[open]) {
 }
 
 .payment-modal {
+    position: relative;
     margin: 0;
     padding: 1.25rem;
 }
 
+/* Keeps the title clear of the corner close button. */
+.payment-header {
+    padding-right: 2.75rem;
+}
+
 .payment-title {
     margin: 0 0 0.2rem;
-    font-size: var(--fs-xl);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    line-height: 1.3;
 }
 
 .payment-sub {
@@ -499,6 +553,7 @@ html:has(dialog.gvm-dialog[open]) {
 .payment-price {
     color: var(--ink);
     font-size: var(--fs-lg);
+    font-weight: 700;
 }
 
 .payment-qr-wrap {
@@ -514,7 +569,7 @@ html:has(dialog.gvm-dialog[open]) {
     place-items: center;
     border: 1px solid var(--line);
     border-radius: var(--radius-sm);
-    background: #fff;
+    background: var(--qr-bg);
     overflow: hidden;
 }
 
@@ -539,8 +594,8 @@ html:has(dialog.gvm-dialog[open]) {
     padding: 1rem;
     text-align: center;
     font-size: var(--fs-xs);
-    color: #5c5c5c;
-    background: rgba(255, 255, 255, 0.92);
+    color: var(--qr-ink);
+    background: var(--qr-veil);
 }
 
 .gvm-terms-blocked .payment-qr {
@@ -558,8 +613,9 @@ html:has(dialog.gvm-dialog[open]) {
     gap: 0.4rem;
     min-height: 1.4em;
     margin: 0.85rem 0 0;
-    font-size: var(--fs-sm);
-    color: var(--ink-2);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+    color: var(--muted);
 }
 
 .payment-time {
@@ -573,15 +629,114 @@ html:has(dialog.gvm-dialog[open]) {
     margin-top: 1rem;
 }
 
+.payment-actions button {
+    width: 100%;
+    min-height: 2.75rem;
+    font-size: var(--fs-sm);
+    border-radius: var(--radius);
+}
+
+/*
+ * Cancel is a round × in the card corner, matching .gvm-payment__close in the
+ * circle/simple variants. `data-gvm-bind-cancel` stays on it: the SDK, Escape
+ * handling and focus return bind to that attribute.
+ */
+.payment-close {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+
+    background: transparent;
+    color: var(--muted);
+
+    border: 1px solid var(--line-2);
+    border-radius: 50%;
+
+    font-family: inherit;
+    font-size: var(--fs-lg);
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.payment-close:hover {
+    background: var(--bg-2);
+    color: var(--ink);
+    border-color: var(--ink-2);
+}
+
+.payment-close:focus-visible {
+    outline: 2px solid var(--accent-text);
+    outline-offset: 2px;
+}
+
 .payment-footer {
     margin-top: 1rem;
     padding-top: 0.7rem;
     border-top: 1px solid var(--line);
     color: var(--muted);
+    text-align: center;
 }
 
 .payment-footer a {
     color: var(--ink-2);
+}
+
+/* --- One payment type scale --------------------------------------------
+ * The drawer ships its own stylesheet (assets/gvm-drawer.css), which we leave
+ * untouched; these ancestor-scoped rules only assert the shared scale the
+ * four variants use for status, info, terms and actions. */
+.gvm-payment-drawer-overlay .gvm-payment-drawer__status {
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+    color: var(--muted);
+}
+
+.gvm-payment-drawer-overlay .gvm-payment-drawer__info {
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    text-align: left;
+    text-wrap: pretty;
+}
+
+.gvm-payment-drawer-overlay .gvm-payment-drawer__terms {
+    font-size: var(--fs-xs);
+    line-height: 1.45;
+    text-align: left;
+    text-wrap: pretty;
+}
+
+.gvm-payment-drawer-overlay .gvm-payment-drawer__title {
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.gvm-payment-drawer-overlay .gvm-payment-drawer__subtitle {
+    font-size: var(--fs-sm);
+}
+
+.gvm-payment-drawer-overlay .gvm-payment-drawer__price-value {
+    font-size: var(--fs-lg);
+}
+
+.gvm-payment-drawer-overlay .gvm-payment-drawer__qr-cover {
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+}
+
+.gvm-payment-drawer-overlay .gvm-payment-drawer__actions button {
+    min-height: 2.75rem;
+    font-size: var(--fs-sm);
+    border-radius: var(--radius);
 }
 
 /* --- Footer ------------------------------------------------------------- */
@@ -600,13 +755,17 @@ html:has(dialog.gvm-dialog[open]) {
     flex-wrap: wrap;
 }
 
-.site-footer__brand {
-    margin: 0;
-    color: var(--muted);
+/* Brand logotype (theme-aware). Used in the footer and the payment surfaces;
+   the light/dark swap lives in assets/theme.css. */
+.brand-logo {
+    display: block;
+    width: 124px;
+    height: auto;
 }
 
-.site-footer__brand strong {
-    color: var(--ink);
+/* The footer carries the full "GetViaMsg by WDFT" lockup. */
+.brand-logo--lockup {
+    width: 156px;
 }
 
 .site-footer__nav {
@@ -621,7 +780,7 @@ html:has(dialog.gvm-dialog[open]) {
 }
 
 .site-footer__nav a:hover {
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 /* --- Inline code & disclosures ------------------------------------------ */
@@ -646,7 +805,7 @@ summary {
 }
 
 summary:hover {
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 details p {
@@ -732,12 +891,12 @@ a.card:focus-visible {
     display: inline-block;
     margin-bottom: 0.5rem;
     padding: 0.1rem 0.5rem;
-    border: 1px solid rgba(255, 186, 0, 0.4);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
     border-radius: var(--radius-pill);
     font-size: var(--fs-xs);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
 .badge--muted {
@@ -828,11 +987,15 @@ html.ads-free .adbar {
 }
 
 .article-body li::marker {
-    color: var(--accent);
+    color: var(--accent-text);
 }
 
+/* Wide tables scroll inside their own box instead of forcing the page wide. */
 .article-body table {
+    display: block;
     width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
     margin: 1em 0 1.5em;
     border-collapse: collapse;
     font-size: var(--fs-sm);
@@ -856,6 +1019,15 @@ html.ads-free .adbar {
     padding: 0.2em 0 0.2em 1em;
     border-left: 2px solid var(--accent);
     color: var(--ink-2);
+    text-wrap: pretty;
+}
+
+/* Template demos (`/templates/*`) gate a `#demo` block. Keep it at a reading
+   measure and centred, so the unlock overlays sit over a sane column instead
+   of a full-width page. */
+#demo {
+    max-width: var(--measure);
+    margin-inline: auto;
 }
 
 /* --- Media / file cards ------------------------------------------------- */
@@ -943,6 +1115,9 @@ html.ads-free .adbar {
     position: relative;
     display: block;
     overflow: hidden;
+    /* The pay-per-view poster is a YouTube frame: keep it 16:9 so the slot
+       reserves the right space before the image loads (no layout shift). */
+    aspect-ratio: 16 / 9;
     border: 1px solid var(--line);
     border-radius: var(--radius);
     text-decoration: none;
@@ -951,6 +1126,8 @@ html.ads-free .adbar {
 .video-card img {
     display: block;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .video-card__play {
@@ -958,8 +1135,8 @@ html.ads-free .adbar {
     inset: 0;
     display: grid;
     place-items: center;
-    background: rgba(0, 0, 0, 0.35);
-    color: #fff;
+    background: color-mix(in srgb, var(--bg) 45%, transparent);
+    color: var(--ink);
     font-weight: 600;
     text-align: center;
 }
@@ -1004,7 +1181,9 @@ html.ads-free .adbar {
     width: 100%;
     aspect-ratio: 16 / 9;
     border: 0;
-    background: #000;
+    /* Letterbox stays dark on purpose: a bright frame around a video reads as
+       broken, in either theme. */
+    background: color-mix(in srgb, var(--bg) 30%, #000);
 }
 
 .ppv__bar {
@@ -1101,4 +1280,62 @@ html.ads-free .adbar {
     .adbar .btn {
         flex: 1 1 100%;
     }
+}
+
+/* --- Use-case category groups (homepage, digital-commerce landing) ------- */
+.de-cats {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.de-cat {
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-1);
+}
+
+.de-cat h3 {
+    margin: 0 0 0.25rem;
+    font-size: var(--fs-lg);
+}
+
+.de-cat h3 a {
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.de-cat h3 a:hover,
+.de-cat h3 a:focus-visible {
+    color: var(--accent-text);
+    text-decoration: underline;
+}
+
+.de-cat__lede {
+    margin: 0 0 0.8rem;
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+.de-cat__list {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: var(--fs-sm);
+}
+
+.de-cat__list li {
+    margin-bottom: 0.45rem;
+}
+
+.de-cat__list li:last-child {
+    margin-bottom: 0;
+}
+
+.de-cat__desc {
+    display: block;
+    font-size: var(--fs-xs);
+    line-height: 1.55;
+    color: var(--muted);
 }

@@ -1,0 +1,40 @@
+---
+lang: pl
+title: Overlay
+description: Gotowa płatna treść na stronach statycznych — bez przebudowy serwisu.
+altUrl: /en/overlay/
+---
+
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="page-head">
+        <h1>Overlay: płatna treść na Twojej stronie</h1>
+        <p class="lead">
+            Płatną treść dodajemy do strony, którą już masz. Bez przebudowy
+            serwisu i bez pracy po stronie IT.
+        </p>
+    </div>
+
+    <div class="card-grid">
+        <a class="card" href="/overlay/article-1/">
+            <h2>Niewidzialna kasa</h2>
+            <p>
+                Długi artykuł: pierwsze akapity bezpłatnie, reszta za 1,45 zł.
+            </p>
+        </a>
+        <a class="card" href="/overlay/article-2/">
+            <h2>Miasto, które czytało drobny druk</h2>
+            <p>Płatność 2,50 zł odsłania kolejne sekcje tekstu.</p>
+        </a>
+        <a class="card" href="/overlay/article-3/">
+            <h2>Ostatnia strona robiona ręcznie</h2>
+            <p>
+                Tekst rozmyty i pomieszane litery — po opłaceniu 2,00 zł czyta
+                się zwyczajnie.
+            </p>
+        </a>
+    </div>
+</div>
+{% endblock %}

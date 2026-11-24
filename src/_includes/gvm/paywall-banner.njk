@@ -1,0 +1,43 @@
+{#
+  Top banner paywall placement (archive: templates/banner.html).
+
+  A slim, full-width strip fixed to the top edge of the viewport while the
+  premium part is on screen. gvm.js injects it into `<body>`; the fixed
+  positioning lives in assets/paywalls.css. The page needs top padding so the
+  header is not hidden — the demo pages add it through the
+  `unlock-demo--top` main class.
+
+    {% from "gvm/paywall-banner.njk" import paywallBanner %}
+    {{ paywallBanner({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+
+  Differs from the bottom bar: it keeps the offer at the top of the reading
+  column. Keyboard/a11y: reachable, no focus trap, sits under the skip link and
+  the payment drawer. No consent checkbox — that lives in the payment dialog.
+#}
+{% from "gvm/consent.njk" import consentInfo %}
+
+{% macro paywallBanner(opts) %}
+{% set t = opts.t %}
+<template
+    data-gvm-template="paywall"
+    data-gvm-template-inject-to="{{ opts.injectTo or 'body' }}"
+>
+    <aside
+        class="paywall-card paywall-banner"
+        role="complementary"
+        aria-label="{{ t.paywall.ariaLabel }}"
+    >
+        <p class="paywall-lead">{{ t.paywall.lead }}</p>
+        <p class="paywall-meta">
+            <span>{{ t.paywall.meta }}</span>
+            <span data-gvm-bind-reading-time></span> {{ t.paywall.minutes }}
+        </p>
+        {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: "consent-info--compact" }) }}
+        <button type="button" class="btn btn--accent paywall-cta" data-gvm-bind-pay>
+            {{ t.paywall.unlock }}
+            <span data-gvm-bind-price></span>
+            <span data-gvm-bind-currency></span>
+        </button>
+    </aside>
+</template>
+{% endmacro %}

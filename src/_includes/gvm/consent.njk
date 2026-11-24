@@ -32,7 +32,7 @@
 {% macro consentBox(opts) %}
 {% set t = opts.t %}
 <div class="consent">
-    {{ consentInfo({ t: t, termsUrl: opts.termsUrl }) }}
+    {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: opts.classes }) }}
     {% if t.consent.note %}
     <p class="consent-note">{{ t.consent.note }}</p>
     {% endif %}
