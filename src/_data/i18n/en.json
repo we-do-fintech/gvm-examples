@@ -50,8 +50,36 @@
         "circleLead": "Send a text message to unlock the content"
     },
     "consent": {
-        "infoBefore": "Access to this content is paid:",
-        "infoAfter": "will be added to the collective settlement of your Session. The sublicence to the content expires on Payment. Details in the",
+        "subjects": {
+            "content": {
+                "before": "Access to this content is paid:",
+                "after": "will be added to the collective settlement of your Session. Details in the"
+            },
+            "article": {
+                "before": "Access to this article is paid:",
+                "after": "will be added to the collective settlement of your Session. Details in the"
+            },
+            "file": {
+                "before": "Access to this file is paid:",
+                "after": "will be added to the collective settlement of your Session. Details in the"
+            },
+            "video": {
+                "before": "Access to this video is paid:",
+                "after": "will be added to the collective settlement of your Session. Details in the"
+            },
+            "plan": {
+                "before": "Access to this plan is paid:",
+                "after": "will be added to the collective settlement of your Session. Details in the"
+            },
+            "addon": {
+                "before": "Access to this set of add-ons is paid:",
+                "after": "will be added to the collective settlement of your Session. Details in the"
+            },
+            "pass": {
+                "before": "Access to the ad-free day is paid:",
+                "after": "will be added to the collective settlement of your Session. Details in the"
+            }
+        },
         "terms": "Terms",
         "legal": "I request that the service begin before the withdrawal period expires and I acknowledge that, once the content is made available, I lose the right to withdraw from the contract.",
         "note": "",

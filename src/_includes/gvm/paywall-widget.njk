@@ -36,7 +36,7 @@
                     <span>{{ t.paywall.meta }}</span>
                     <span data-gvm-bind-reading-time></span> {{ t.paywall.minutes }}
                 </p>
-                {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: "consent-info--compact" }) }}
+                {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: "consent-info--compact", subject: opts.subject }) }}
                 <button type="button" class="btn btn--accent paywall-cta" data-gvm-bind-pay>
                     {{ t.paywall.unlock }}
                     <span data-gvm-bind-price></span>

@@ -80,7 +80,7 @@
                             <span data-gvm-bind-currency></span>
                         </strong>
                     </div>
-                    {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: "consent-info--compact" }) }}
+                    {{ consentInfo({ t: t, termsUrl: opts.termsUrl, classes: "consent-info--compact", subject: opts.subject }) }}
                     <button type="button" class="btn btn--accent paywall-cta" data-gvm-bind-pay>
                         {{ t.paywall.drawerUnlock }}
                     </button>

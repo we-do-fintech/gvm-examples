@@ -10,6 +10,7 @@
 #}
 {% macro paymentCircle(opts) %}
 {% set t = opts.t %}
+{% set s = t.consent.subjects[opts.subject] or t.consent.subjects.content %}
 <template
     data-gvm-template="payment"
     data-gvm-template-inject-to="body"
@@ -589,9 +590,9 @@
                 </p>
 
                 <p class="gvm-payment__info" lang="{{ t.consent.lang }}">
-                    {{ t.consent.infoBefore }}
+                    {{ s.before }}
                     <strong><span data-gvm-bind-price></span>&nbsp;<span data-gvm-bind-currency></span></strong>
-                    {{ t.consent.infoAfter }}
+                    {{ s.after }}
                     <a href="{{ opts.termsUrl }}" target="_blank" rel="noopener">{{ t.consent.terms }}</a>.
                 </p>
 

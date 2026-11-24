@@ -179,11 +179,11 @@ gvmLazy: true
                 </div>
 
                 <p class="consent-info lk-terms" id="lk-terms-line">
-                    {{ t.consent.infoBefore }}
+                    {{ t.consent.subjects.addon.before }}
                     <strong>
                         <span id="lk-total-terms">0,00</span> zł
                     </strong>
-                    {{ t.consent.infoAfter }}
+                    {{ t.consent.subjects.addon.after }}
                     <a href="{{ site.termsUrl }}" target="_blank" rel="noopener">{{ t.consent.terms }}</a>.
                 </p>
 
@@ -251,11 +251,11 @@ gvmLazy: true
 <template data-gvm-template="basket-cta" data-gvm-template-inject-to="#basket-cta-slot">
     <div class="lk-cta">
         <p class="consent-info consent-info--compact">
-            {{ t.consent.infoBefore }}
+            {{ t.consent.subjects.addon.before }}
             <strong>
                 <span data-gvm-bind-price></span>&nbsp;<span data-gvm-bind-currency></span>
             </strong>
-            {{ t.consent.infoAfter }}
+            {{ t.consent.subjects.addon.after }}
             <a href="{{ site.termsUrl }}" target="_blank" rel="noopener">{{ t.consent.terms }}</a>.
         </p>
         <button type="button" class="btn btn--accent lk-pay" data-gvm-bind-pay>
@@ -265,7 +265,7 @@ gvmLazy: true
     </div>
 </template>
 
-{{ paymentDrawer({ t: t, termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paymentDrawer({ t: t, termsUrl: site.termsUrl, termsVersion: site.termsVersion, subject: "addon" }) }}
 {% endblock %}
 
 {% block scripts %}

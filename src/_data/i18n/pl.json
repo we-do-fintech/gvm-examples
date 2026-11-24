@@ -50,8 +50,36 @@
         "circleLead": "Wyślij SMS, aby odblokować treść"
     },
     "consent": {
-        "infoBefore": "Dostęp do tej Treści jest odpłatny:",
-        "infoAfter": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Sublicencja do Treści wygasa z chwilą Płatności. Szczegóły w",
+        "subjects": {
+            "content": {
+                "before": "Dostęp do tej Treści jest odpłatny:",
+                "after": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Szczegóły w"
+            },
+            "article": {
+                "before": "Dostęp do tego artykułu jest odpłatny:",
+                "after": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Szczegóły w"
+            },
+            "file": {
+                "before": "Dostęp do tego pliku jest odpłatny:",
+                "after": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Szczegóły w"
+            },
+            "video": {
+                "before": "Dostęp do tego nagrania jest odpłatny:",
+                "after": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Szczegóły w"
+            },
+            "plan": {
+                "before": "Dostęp do tego planu jest odpłatny:",
+                "after": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Szczegóły w"
+            },
+            "addon": {
+                "before": "Dostęp do tego zestawu dodatków jest odpłatny:",
+                "after": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Szczegóły w"
+            },
+            "pass": {
+                "before": "Dostęp do dnia bez reklam jest odpłatny:",
+                "after": "zostanie doliczone do zbiorczego rozliczenia Twojej Sesji. Szczegóły w"
+            }
+        },
         "terms": "Regulaminie",
         "legal": "Żądam rozpoczęcia świadczenia przed upływem terminu do odstąpienia od umowy i przyjmuję do wiadomości, że z chwilą udostępnienia Treści tracę prawo odstąpienia od umowy.",
         "note": "",

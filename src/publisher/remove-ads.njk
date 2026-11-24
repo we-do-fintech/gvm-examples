@@ -79,9 +79,9 @@ gvmLazy: true
         </div>
         <div class="ads-pass__cta">
             <p class="consent-info">
-                {{ i18n[lang].consent.infoBefore }}
+                {{ i18n[lang].consent.subjects.pass.before }}
                 <strong>1,49&nbsp;zł</strong>
-                {{ i18n[lang].consent.infoAfter }}
+                {{ i18n[lang].consent.subjects.pass.after }}
                 <a href="{{ site.termsUrl }}" target="_blank" rel="noopener"
                     >{{ i18n[lang].consent.terms }}</a
                 >.
@@ -282,7 +282,7 @@ gvmLazy: true
     </aside>
 </div>
 
-{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion, subject: "pass" }) }}
 {% endblock %}
 
 {% block scripts %}

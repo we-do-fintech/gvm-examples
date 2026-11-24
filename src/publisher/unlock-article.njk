@@ -41,6 +41,6 @@ gvm: true
     </article>
 </div>
 
-{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion }) }}
-{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl }) }}
+{{ paymentDrawer({ t: i18n[lang], termsUrl: site.termsUrl, termsVersion: site.termsVersion, subject: "article" }) }}
+{{ paywallInline({ t: i18n[lang], termsUrl: site.termsUrl, subject: "article" }) }}
 {% endblock %}
